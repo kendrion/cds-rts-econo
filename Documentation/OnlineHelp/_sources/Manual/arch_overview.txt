@@ -1,0 +1,80 @@
+.. _arch_overview:
+
+Overview
+--------
+
+In the following figure you can see an overview of the architecture of
+the runtime system.
+
+.. figure:: ./images/architecture_overview.svg 
+
+The base component is the **component manager**. This is
+the central component that must exist in every runtime system. The
+component manager loads and initializes all components and enables 
+the connections between the components.
+
+The second important part consists of the so called **system
+components**. These components represent the hardware and operating
+system abstraction layer and hide processor and operating system
+specific stuff from all other components. Via this system interface, all
+other components can be written absolutely portable and independent of
+processor and operating system internals. Every system component has its
+specific functions, e.g. file access, access to heap memory, access to a
+serial RS232 interface, operating system tasks, etc. All system
+components are described in :ref:`overview_kernel`.
+
+The third part is the **communication stack**. It consists of several
+components to enable the communication to clients (CODESYS, HMI, etc.)
+or to other runtime systems. For the last issue, a routing mechanism is
+additionally provided by the communication stack.
+
+At the bottom of the stack there are the so called block drivers. Each
+of them provides one single communication medium (e.g. UDP, a TCP/IP
+protocol via Ethernet). The block drivers use the system components to
+get a neutral access to the physical layer.
+
+The next layer in the communication stack is the router. It provides
+routing to each runtime system in a hierarchical network that consists
+of CODESYS Control V3 runtime systems.
+
+Above the router, there are special service components e.g. for address
+assignment in the network, identification of a runtime system or the
+level 4 server for the block communication.
+
+Each service request from a client first is received by the level 7
+server. Each service is assigned to a specific group of services and
+then is forwarded to the special server, that was registered to the
+special :ref:`service group <comm_layer7>`.
+
+In the architecture overview figure shown above you can see, that the
+communication stack is an integrated part of the runtime system. The
+gateway from version 2.x of CODESYS on version V3 is a special derivate
+of the runtime system that consists only of the component-manager, some
+system components and the :ref:`communication stack <communication>` for
+detailed information)!
+
+The fourth part consists of the **application management** components.
+Here the execution, debugging and monitoring of the IEC application(s)
+is done. A completely new feature in CODESYS Control V3 is the
+management of several applications on ONE runtime system! This offers a
+lot of new application possibilities. The PLC task handling is separated
+up in two components: the IEC task manager and the scheduler. So a new
+scheduler algorithm can be provided only by replacing the scheduler
+component.
+
+The last but not least part consists of the **core** components. These
+components provide the remaining functionality of a runtime system. The
+configuration of the runtime system, the logger to log all states and
+the device component for authentication reside here. The memory
+management and the event handling (for runtime events) are two
+additional components of the core.
+
+For OEM customers there are several ways to :ref:`extend the runtime system <customer>`.
+
+You can:
+
+-  Replace existing components
+
+-  Write own plugins (block drivers, IO-driver)
+
+-  Write OEM components with external libraries, own service handling, etc.

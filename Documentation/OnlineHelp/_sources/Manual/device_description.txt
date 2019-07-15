@@ -1,0 +1,47 @@
+.. _device_description:
+
+Device Description
+==================
+
+A so called device description contains all information for a PLC needed by the CODESYS development system to manage this device 
+(you can think about a printer driver description here). This device description can be installed in the device repository of CODESYS and then you can add this device 
+in the device tree of a project.
+
+Additionally a device description can specify an IO-device (like a fieldbus master, a slave, a local IO-module, etc.) with its IO-channels, connectors and all necessary 
+information. This device description can be installed in the device repository of CODESYS too and afterwards you can add this module in the IO-configuration in CODESYS.
+
+A device description has an XML format and the file extension is named ".devdesc.xml". The XML format must follow a defined scheme (can be downloaded 
+here :ref:`device_description_schema` as a chm-helpfile).
+
+So every device description file has a typical structure:
+
+.. code-block:: xml
+
+    <?xml version='1.0' encoding='UTF-8'?>
+    <DeviceDescription xmlns="http://www.3s-software.com/schemas/DeviceDescription-1.0.xsd" xmlns:ts="http://www.3s-software.com/schemas/TargetSettings-0.1.xsd">
+        <Types></Types>
+        <Strings></Strings>
+        <Files></Files>
+        <Device>
+            <DeviceIdentification></DeviceIdentification>
+            <DeviceInfo></DeviceInfo>
+            <DriverInfo></DriverInfo>
+            <DeviceParameterSet></DeviceParameterSet>
+            <Functional></Functional>
+            <ExtendedSettings></ExtendedSettings>
+            <Connector></Connector>         
+        </Device>
+    </DeviceDescription>
+
+In the chapter :ref:`dev_desc_basics` we describe the *basics* (types, strings, files, etc.).
+
+In the chapter :ref:`dev_desc_device` we describe the *device* node for PLC's.
+
+And in the chapter :ref:`dev_io_configuration` we describe the *device* node for IO-modules.
+
+.. toctree::
+   :maxdepth: 1
+
+   dev_desc_basics
+   dev_desc_device
+   dev_io_configuration

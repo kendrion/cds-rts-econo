@@ -1,0 +1,371 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.7.2.9. Defining parameters and parameter sections &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.7.2. Device" href="dev_desc_device.html" />
+    <link rel="next" title="1.7.2.10. Custom tags" href="dev_desc_device_custom_tags.html" />
+    <link rel="prev" title="1.7.2.8. Defining connectors" href="dev_desc_device_defining_connectors.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="dev_desc_device_custom_tags.html" title="1.7.2.10. Custom tags"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dev_desc_device_defining_connectors.html" title="1.7.2.8. Defining connectors"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="device_description.html" >1.7. Device Description</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="dev_desc_device.html" accesskey="U">1.7.2. Device</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dev_desc_device_defining_connectors.html"
+                        title="previous chapter">1.7.2.8. Defining connectors</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dev_desc_device_custom_tags.html"
+                        title="next chapter">1.7.2.10. Custom tags</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/dev_desc_device_params_and_param_sections.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="dev-params-and-param-sections">
+<span id="id1"></span><h1>1.7.2.9. <span class="target" id="defining-parameters-and-parameter-sections">Defining parameters and parameter sections</span><a class="headerlink" href="#dev-params-and-param-sections" title="Permalink to this headline">¶</a></h1>
+<p>See <a class="reference internal" href="dev_io_conf_device_descriptions.html#parameters"><span class="std std-ref">Parameters</span></a> for general information on parameters in the device
+description.</p>
+<p>Parameters and parameter sections can be defined inside a parameter set.</p>
+<p>Parameter lists in <em>connectors</em> (see <a class="reference internal" href="dev_desc_device_defining_connectors.html#dev-defining-connectors"><span class="std std-ref">Defining connectors</span></a>) are referred to as
+<strong>HostParameterSet</strong>, because they are loaded to the responsible host.
+See below for an example. In contrast a <em>CODESYS-configurable PLC device
+with local I/Os</em> (see <a class="reference internal" href="dev_desc_basics.html#defining-types"><span class="std std-ref">Defining types</span></a>) can define a <strong>DeviceParameterSet</strong>
+(to be defined within the &lt;device&gt; section). This parameter list is
+directly transferred to the device and is independent of the connectors
+used. However, in case of devices with connectors like master or slaves
+the DeviceParameterSet will be ignored by CODESYS.</p>
+<p><strong>Parameter sections</strong> just serve for grouping parameters for
+organizational purposes.</p>
+<p>Example of a parameter section:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;ParameterSection&gt;</span>
+    <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:GeneralParameters&quot;</span><span class="nt">&gt;</span>General Parameters<span class="nt">&lt;/Name&gt;</span>
+    <span class="nt">&lt;Parameter</span> <span class="na">ParameterId=</span><span class="s">&quot;65792&quot;</span> <span class="na">type=</span><span class="s">&quot;std:BOOL&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Attributes</span> <span class="na">download=</span><span class="s">&quot;true&quot;</span> <span class="na">offlineaccess=</span><span class="s">&quot;read&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Default&gt;</span>FALSE<span class="nt">&lt;/Default&gt;</span>
+        <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:SlaveOptional&quot;</span><span class="nt">&gt;</span>Slave optional<span class="nt">&lt;/Name&gt;</span>
+        <span class="nt">&lt;Description</span> <span class="na">name=</span><span class="s">&quot;local:SlaveOptional&quot;</span><span class="nt">&gt;</span>Slave optional<span class="nt">&lt;/Description&gt;</span>
+    <span class="nt">&lt;/Parameter&gt;</span>
+<span class="nt">&lt;/ParameterSection&gt;</span>
+</pre></div>
+</div>
+<p>In this example a parameter section &#8220;General Parameters&#8221; is created and
+one configuration parameter is added. The <strong>name</strong> attribute for the
+section name, parameter name and description is linking to a string
+table for localization (see <a class="reference internal" href="dev_desc_basics.html#defining-strings-for-localization"><span class="std std-ref">Defining strings for localization</span></a>). The value of Name or
+Description will be the default string if the currently selected
+language in CODESYS is not found in the string table.</p>
+<p>The <strong>parameter id</strong> is a unique number within the device description
+and is depending on the module type of the connector (values &lt;32768 are
+maintained by 3S).</p>
+<p>In order to get parameters accessible by the &#8220;<strong>intellisense</strong>&#8221;
+function in the programming system, and by its <strong>full namespace</strong>, as
+from compiler version &gt;= 3.5.1.0 the attribute &#8220;<strong>functional</strong>&#8221; can
+be used in the parameter description. It effects that the CODESYS
+compiler instead of a parameter description at every read access will
+create some external function calls supported by a runtime system
+interface. <strong>Regard</strong> that this functionality is only possible for
+simple datatypes. Structures and Arrays are not supported. External
+functions will be created by the compiler, which are supported by an
+interface in the runtime system.</p>
+<p>Example:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;Parameter</span> <span class="na">ParameterId=</span><span class="s">&quot;1234&quot;</span> <span class="na">type=</span><span class="s">&quot;std:REAL&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Attributes</span> <span class="na">channel=</span><span class="s">&quot;none&quot;</span> <span class="na">download=</span><span class="s">&quot;false&quot;</span> <span class="na">functional=</span><span class="s">&quot;true&quot;</span> <span class="na">offlineaccess=</span><span class="s">&quot;readwrite&quot;</span> <span class="na">onlineaccess=</span><span class="s">&quot;readwrite&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Default&gt;</span>111<span class="nt">&lt;/Default&gt;</span>
+    <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:Id1234&quot;</span><span class="nt">&gt;</span>Velocity<span class="nt">&lt;/Name&gt;</span>
+    <span class="nt">&lt;Description</span> <span class="na">name=</span><span class="s">&quot;local:Id1234.Desc&quot;</span><span class="nt">&gt;</span>Test parameter<span class="nt">&lt;/Description&gt;</span>
+<span class="nt">&lt;/Parameter&gt;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">The parameter can be accessed now by its namespace, e.g. if this parameter is a member of the device &#8220;Drive&#8221;:</div>
+<div class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Drive.Velocity := 1.23;</div>
+</div>
+<div class="line-block">
+<div class="line">Only simple datatypes are possible (BOOL, BYTE, WORD, DWORD, SINT,
+INT, DINT, LWORD, LINT, REAL, LREAL). ENUMs are possible because they
+are handled as INT.</div>
+<div class="line">Structures and arrays are not supported.</div>
+</div>
+<div class="line-block">
+<div class="line">The compiler generates instead of a parameter description at every
+read access the following external function call:</div>
+<div class="line">Only for BOOL types</div>
+<div class="line">RTS_IEC_BOOL ParamGetBit(RTS_IEC_DWORD dwParameterId, DWORD
+dwBitNr);</div>
+<div class="line">For all other simple datatypes. XXX is the IEC datatype like WORD</div>
+<div class="line">RTS_IEC_XXX ParamGetXXX(RTS_IEC_DWORD dwParameterId);</div>
+<div class="line">The ID of the parameter will be transmitted in dwParameterId.</div>
+</div>
+<div class="line-block">
+<div class="line">For every write access on a parameter one of the following external
+functions is called:</div>
+<div class="line">Only for BOOL types</div>
+<div class="line">VOID ParamSetBit(RTS_IEC_DWORD dwParameterId, DWORD dwBitNr, BOOL
+bValue);</div>
+<div class="line">For all other simple datatypes separated for 4 and 8 Byte values</div>
+<div class="line">VOID ParamSet4Byte(RTS_IEC_DWORD dwParameterId, DWORD dwValue);</div>
+<div class="line">VOID ParamSet8Byte(RTS_IEC_DWORD dwParameterId, LWORD lwValue);</div>
+</div>
+<p>With version 3.5 SP3 it is also possible to use the enumerations as the
+enum value instead of the integer value.</p>
+<p>Also structured parameters are possible when using parameter sections.</p>
+<p>Example if parameter is stored in a section:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;ParameterSection&gt;</span>
+    <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:SectionName&quot;</span><span class="nt">&gt;</span>Section<span class="nt">&lt;/Name&gt;</span>
+    <span class="nt">&lt;ParameterSection&gt;</span>
+      <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:SubSectionName&quot;</span><span class="nt">&gt;</span>SubSection<span class="nt">&lt;/Name&gt;</span>
+    <span class="nt">&lt;/ParameterSection&gt;</span>
+<span class="nt">&lt;/ParameterSection&gt;</span>
+</pre></div>
+</div>
+<p>Then the access will be Drive.Section.SubSection.Velocity := 1.23;</p>
+<p>Example for a <strong>host parameter set</strong> (sub-section below &lt;connector&gt;):</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;HostParameterSet&gt;</span>
+    <span class="nt">&lt;Parameter</span> <span class="na">ParameterId=</span><span class="s">&quot;0&quot;</span> <span class="na">type=</span><span class="s">&quot;std:WORD&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Attributes</span> <span class="na">channel=</span><span class="s">&quot;none&quot;</span> <span class="na">download=</span><span class="s">&quot;true&quot;</span> <span class="na">functional=</span><span class="s">&quot;false&quot;</span> <span class="na">offlineaccess=</span><span class="s">&quot;read&quot;</span> <span class="na">onlineaccess=</span><span class="s">&quot;read&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Default&gt;</span>0<span class="nt">&lt;/Default&gt;</span>
+        <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:Id0&quot;</span><span class="nt">&gt;</span>NumberOfInputs<span class="nt">&lt;/Name&gt;</span>
+        <span class="nt">&lt;Description</span> <span class="na">name=</span><span class="s">&quot;local:Id0.Desc&quot;</span><span class="nt">&gt;</span>Number of input channels<span class="nt">&lt;/Description&gt;</span>
+    <span class="nt">&lt;/Parameter&gt;</span>
+    …
+    <span class="nt">&lt;Parameter</span> <span class="na">ParameterId=</span><span class="s">&quot;458759&quot;</span> <span class="na">type=</span><span class="s">&quot;std:BOOL&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Attributes</span> <span class="na">channel=</span><span class="s">&quot;none&quot;</span> <span class="na">download=</span><span class="s">&quot;false&quot;</span> <span class="na">functional=</span><span class="s">&quot;false&quot;</span> <span class="na">offlineaccess=</span><span class="s">&quot;read&quot;</span> <span class="na">onlineaccess=</span><span class="s">&quot;none&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Default&gt;</span>TRUE<span class="nt">&lt;/Default&gt;</span>
+        <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:Id458759&quot;</span><span class="nt">&gt;</span>AutoClearSupported<span class="nt">&lt;/Name&gt;</span>
+        <span class="nt">&lt;Description</span> <span class="na">name=</span><span class="s">&quot;local:Id458759.Desc&quot;</span><span class="nt">&gt;</span>auto-clear supported by master<span class="nt">&lt;/Description&gt;</span>
+    <span class="nt">&lt;/Parameter&gt;</span>
+    …
+<span class="nt">&lt;/HostParameterSet&gt;</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">XML Tag</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ParameterId</td>
+<td><p class="first">Identification number of the parameter;
+see <a class="reference internal" href="dev_io_conf_device_descriptions.html#parameters"><span class="std std-ref">Parameters</span></a></p>
+<p class="last">For defining the NetX configuration dialog in the device editor of the programming
+system use IDs &#8220;1879048194&#8221; and &#8220;1879048195&#8221; as shown in the example below.</p>
+</td>
+</tr>
+<tr class="row-odd"><td>AutoClearSupported</td>
+<td>If TRUE</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For complete documentation on the particular device description elements see the xsd schema provided by <span class="xref std std-ref">device_description_schema</span>.</p>
+</div>
+<p>Special Parameter entries for <strong>NetX configuration</strong> dialog:</p>
+<p>The following entries below a &lt;HostParameterSet&gt; of a &lt;Connector&gt; enable
+the user to select the NetX chip and the communication channel on this
+chip via the &#8220;NetX Configuration&#8221; dialog for a NetX Master in the device
+editor of the programming system:</p>
+<p>Example:</p>
+<p>The following entry establishes a field named &#8220;Slot&#8221; in the configuration dialog and the selection list next to it will offer the available slots, i.e. the available NetX cards as defined by an enumeration &#8220;eSlot&#8221;:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;Parameter</span> <span class="na">ParameterId=</span><span class="s">&quot;1879048194&quot;</span> <span class="na">type=</span><span class="s">&quot;local:eSlot&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Attributes</span> <span class="na">channel=</span><span class="s">&quot;none&quot;</span> <span class="na">download=</span><span class="s">&quot;true&quot;</span> <span class="na">functional=</span><span class="s">&quot;false&quot;</span> <span class="na">offlineaccess=</span><span class="s">&quot;readwrite&quot;</span> <span class="na">onlineaccess=</span><span class="s">&quot;read&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Default&gt;</span>0<span class="nt">&lt;/Default&gt;</span>
+    <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:Id1879048194&quot;</span><span class="nt">&gt;</span>Slot<span class="nt">&lt;/Name&gt;</span>
+    <span class="nt">&lt;Description</span> <span class="na">name=</span><span class="s">&quot;local:1879048194.Desc&quot;</span><span class="nt">&gt;</span>Slot of the NetX chip<span class="nt">&lt;/Description&gt;</span>
+<span class="nt">&lt;/Parameter&gt;</span>
+</pre></div>
+</div>
+<p>The following entry establishes a field named &#8220;NetX Com Channel&#8221; in the configuration dialog and the selection list next to it will offer the available communication channels on the NetX card as defined by an enumeration &#8220;NetXComChannel&#8221;:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span>&lt;Parameter ParameterId=&quot;1879048195&quot; type=&quot;local:NetXComChannel&quot;&gt;
+    &lt;Attributes channel=&quot;none&quot; download=&quot;true&quot; functional=&quot;false&quot; offlineaccess=&quot;readwrite&quot; onlineaccess=&quot;read&quot; /&gt;
+    &lt;Default&gt;0&lt;/Default&gt;
+    &lt;Name name=&quot;local:Id1879048195&quot;&gt;NetX Com Channel&lt;/Name&gt;
+    &lt;Description name= »local :1879048195.Desc »&gt;NetX Communcation channel&lt;/Description&gt;
+&lt;/Parameter&gt;
+</pre></div>
+</div>
+<p>Parameters in a Device Parameter Set for defining input and output
+channels:</p>
+<p>A device parameter set (Note: only usable with a CODESYS-configurable
+PLC device with local I/Os !) can contain fix settings for input and
+output channels:</p>
+<p>Example:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;DeviceParameterSet</span> <span class="na">fixedInputAddress=</span><span class="s">&quot;%IB10&quot;</span> <span class="na">fixedOutputAddress=</span><span class="s">&quot;%QB10&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Parameter</span> <span class="na">ParameterId=</span><span class="s">&quot;1&quot;</span> <span class="na">type=</span><span class="s">&quot;std:BYTE&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Attributes</span> <span class="na">channel=</span><span class="s">&quot;output&quot;</span> <span class="na">download=</span><span class="s">&quot;true&quot;</span> <span class="na">offlineaccess=</span><span class="s">&quot;readwrite&quot;</span> <span class="na">noManualAddress=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;Default&gt;</span>0<span class="nt">&lt;/Default&gt;</span>
+        <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:None&quot;</span><span class="nt">&gt;</span>Output<span class="nt">&lt;/Name&gt;</span>
+        <span class="nt">&lt;Description</span> <span class="na">name=</span><span class="s">&quot;local:None&quot;</span><span class="nt">&gt;</span>Output<span class="nt">&lt;/Description&gt;</span>
+    <span class="nt">&lt;/Parameter&gt;</span>
+    <span class="nt">&lt;Parameter</span> <span class="na">ParameterId=</span><span class="s">&quot;2&quot;</span> <span class="na">type=</span><span class="s">&quot;std:BYTE&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Attributes</span> <span class="na">channel=</span><span class="s">&quot;input&quot;</span> <span class="na">download=</span><span class="s">&quot;true&quot;</span> <span class="na">offlineaccess=</span><span class="s">&quot;readwrite&quot;</span> <span class="na">noManualAddress=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;Default&gt;</span>0<span class="nt">&lt;/Default&gt;</span>
+        <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:None&quot;</span><span class="nt">&gt;</span>Input<span class="nt">&lt;/Name&gt;</span>
+        <span class="nt">&lt;Description</span> <span class="na">name=</span><span class="s">&quot;local:None&quot;</span><span class="nt">&gt;</span>Input<span class="nt">&lt;/Description&gt;</span>
+    <span class="nt">&lt;/Parameter&gt;</span>
+<span class="nt">&lt;/DeviceParameterSet&gt;</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">XML Tag</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>fixedInputAddress</td>
+<td>Start address of the first input channel</td>
+</tr>
+<tr class="row-odd"><td>fixedOutputAddress</td>
+<td>Start address of the first output channel</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">XML Tag</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ParameterId</td>
+<td>Identification number of the parameter;
+see <a class="reference internal" href="dev_io_conf_device_descriptions.html#parameters"><span class="std std-ref">Parameters</span></a></td>
+</tr>
+<tr class="row-odd"><td>type</td>
+<td>datatype of the parameter</td>
+</tr>
+<tr class="row-even"><td>Attribute
+channel</td>
+<td>Channel type of the parameter. Possible values are &#8220;output&#8221; and &#8220;input&#8221;</td>
+</tr>
+<tr class="row-odd"><td>Attribute
+download</td>
+<td>Set this (optional) attribute, if no i/o configuration should be downloaded to the device
+(ie. The device does not support the IoManager)</td>
+</tr>
+<tr class="row-even"><td>Attribute
+offlineaccess</td>
+<td>Boolean value. If set, secure online mode is by default activated for the device. Secure
+online mode means that the user will have to confirm most of the online commands before
+they become effective.</td>
+</tr>
+<tr class="row-odd"><td>Attribute
+noManualAddress</td>
+<td>If this attribute is set to TRUE, no manual change of the address of the input or output
+channel is possible</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="dev_desc_device_custom_tags.html" title="1.7.2.10. Custom tags"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dev_desc_device_defining_connectors.html" title="1.7.2.8. Defining connectors"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="device_description.html" >1.7. Device Description</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="dev_desc_device.html" >1.7.2. Device</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

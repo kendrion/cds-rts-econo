@@ -1,0 +1,245 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.11.5. Documentation &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.11. Coding Guidelines" href="coding_guidelines.html" />
+    <link rel="next" title="1.11.6. Startup sequence" href="coding_guide_startup_sequence.html" />
+    <link rel="prev" title="1.11.4. Component interfaces and dependencies" href="coding_guide_comp_itf_dep.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="coding_guide_startup_sequence.html" title="1.11.6. Startup sequence"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="coding_guide_comp_itf_dep.html" title="1.11.4. Component interfaces and dependencies"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="coding_guidelines.html" accesskey="U">1.11. Coding Guidelines</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="coding_guide_comp_itf_dep.html"
+                        title="previous chapter">1.11.4. Component interfaces and dependencies</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="coding_guide_startup_sequence.html"
+                        title="next chapter">1.11.6. Startup sequence</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/coding_guide_documentation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="documentation">
+<span id="coding-guide-documentation"></span><h1>1.11.5. Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<p>All public interface functions, the parameters, settings, events, static
+Defines, compiler switches, etc. must be fully documented in the
+interface header files!</p>
+<p>The documentation of the RTS sourcecode leant on html. Actually we use
+no standard format (like doxygen, reStructuredText, javadoc or similar).</p>
+<p>Compiler Switches:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">* &lt;category&gt;Compiler switch&lt;/category&gt;</span>
+<span class="cm">* &lt;description&gt;</span>
+<span class="cm">* Compiler switches to enable/disable single features in the component.</span>
+<span class="cm">* &lt;/description&gt;</span>
+<span class="cm">* &lt;element name=&quot;TACEMGR_DISABLE_PERSISTENT_STORAGE&quot;&gt;Switch to disable persistent storing of trace configuration in file&lt;/element&gt;</span>
+<span class="cm">* &lt;element name=&quot;TACEMGR_DISABLE_SYMBOLIC_VARACCESS&quot;&gt;Switch to disable support for symbolic access of variables (see address flag TRACE_VAR_ADDRESS_FLAGS_SYMBOLIC))&lt;/element&gt;</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+<p>Static Defines:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">* &lt;category&gt;Static defines&lt;/category&gt;</span>
+<span class="cm">* &lt;description&gt;Bootproject file extension&lt;/description&gt;</span>
+<span class="cm">*/</span>
+<span class="cp">#ifndef APP_BOOTPROJECT_FILE_EXTENSION</span>
+<span class="cp">#define APP_BOOTPROJECT_FILE_EXTENSION &quot;.app&quot;</span>
+<span class="cp">#endif</span>
+
+<span class="nl">Settings</span><span class="p">:</span>
+</pre></div>
+</div>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">* &lt;category&gt;Settings&lt;/category&gt;</span>
+<span class="cm">* &lt;type&gt;Int&lt;/type&gt;</span>
+<span class="cm">* &lt;description&gt;</span>
+<span class="cm">* Setting to enable/disable creating bootproject implicitly on download:</span>
+<span class="cm">* 1: Create bootproject implicit</span>
+<span class="cm">* 0: Don‘t create bootproject implicit</span>
+<span class="cm">* &lt;/description&gt;</span>
+<span class="cm">*/</span>
+<span class="cp">#define APPKEY_INT_CREATE_BOOTPROJECT_ON_DOWNLOAD „Bootproject.CreateOnDownload&quot;</span>
+<span class="cp">#ifndef APPVALUE_INT_CREATE_BOOTPROJECT_ON_DOWNLOAD_DEFAULT</span>
+<span class="cp">#define</span>
+</pre></div>
+</div>
+<p>Events:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">* &lt;category&gt;Event parameter&lt;/category&gt;</span>
+<span class="cm">* &lt;element name=&quot;pApp&quot; type=&quot;IN&quot;&gt;Pointer to application description&lt;/element&gt;</span>
+<span class="cm">* &lt;element name=&quot;pszConfigApplication&quot; type=&quot;IN&quot;&gt;Pointer to the name of the config application&lt;/element&gt;</span>
+<span class="cm">*/</span>
+<span class="k">typedef</span> <span class="k">struct</span>
+<span class="p">{</span>
+<span class="k">struct</span> <span class="n">tagAPPLICATION</span><span class="o">*</span> <span class="n">pApp</span><span class="p">;</span>
+<span class="kt">char</span><span class="o">*</span> <span class="n">pszConfigApplication</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EVTPARAM_CmpAppConfig</span><span class="p">;</span>
+<span class="cp">#define EVTPARAMID_CmpAppConfig 0x0001</span>
+<span class="cp">#define EVTVERSION_CmpAppConfig 0x0001</span>
+<span class="cm">/**</span>
+<span class="cm">* &lt;category&gt;Events&lt;/category&gt;</span>
+<span class="cm">* &lt;description&gt;Event is sent on Reset, after global exit and before global init.&lt;/description&gt;</span>
+<span class="cm">* &lt;param name=&quot;pEventParam&quot; type=&quot;IN&quot;&gt;EVTPARAM_CmpAppConfig&lt;/param&gt;</span>
+<span class="cm">*/</span>
+<span class="cp">#define EVT_GlobalExitOnResetDone MAKE_EVENTID(EVTCLASS_INFO, 26)</span>
+
+<span class="nl">States</span><span class="p">:</span>
+</pre></div>
+</div>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">* &lt;category&gt;Application state&lt;/category&gt;</span>
+<span class="cm">* &lt;description&gt;</span>
+<span class="cm">*   &lt;ul&gt;</span>
+<span class="cm">*     &lt;li&gt;AS_NONE: Unspecified state&lt;/li&gt;</span>
+<span class="cm">*     &lt;li&gt;AS_RUN: Application in run&lt;/li&gt;</span>
+<span class="cm">*     &lt;li&gt;AS_STOP: Application in stop&lt;/li&gt;</span>
+<span class="cm">*     &lt;li&gt;AS_DEBUG_HALT_ON_BP: Application halted on breakpoint&lt;/li&gt;</span>
+<span class="cm">*     &lt;li&gt;AS_DEBUG_STEP: Not used actually&lt;/li&gt;</span>
+<span class="cm">*     &lt;li&gt;AS_SYSTEM_APPLICATION: State of a system application&lt;/li&gt;</span>
+<span class="cm">*   &lt;/ul&gt;</span>
+<span class="cm">* &lt;/description&gt;</span>
+<span class="cm">*/</span>
+<span class="cp">#define AS_NONE                        UINT32_C(0x00000000)</span>
+<span class="cp">#define AS_RUN                         UINT32_C(0x00000001)</span>
+<span class="cp">#define AS_STOP                        UINT32_C(0x00000002)</span>
+<span class="cp">#define AS_DEBUG_HALT_ON_BP UINT32_C(0x00000003)</span>
+<span class="cp">#define AS_DEBUG_STEP          UINT32_C(0x00000004)</span>
+<span class="cp">#define AS_SINGLE_CYCLE        UINT32_C(0x00000005)</span>
+<span class="cp">#define AS_SYSTEM_APPLICATION UINT32_C(0xFFFFFFFF)</span>
+</pre></div>
+</div>
+<p>Structures:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">* &lt;category&gt;Application information&lt;/category&gt;</span>
+<span class="cm">* &lt;description&gt;</span>
+<span class="cm">* Contains the application information as specified in the application property dialog in CoDeSys.</span>
+<span class="cm">* &lt;/description&gt;</span>
+<span class="cm">* &lt;element name=&quot;pstProjectName&quot; type=&quot;OUT&quot;&gt;Pointer project name&lt;/element&gt;</span>
+<span class="cm">* &lt;element name=&quot;pstAuthor&quot; type=&quot;OUT&quot;&gt;Pointer to author&lt;/element&gt;</span>
+<span class="cm">* &lt;element name=&quot;pstVersion&quot; type=&quot;OUT&quot;&gt;Pointer to version as string in the format „x.x.x.x&quot;&lt;/element&gt;</span>
+<span class="cm">* &lt;element name=&quot;pstDescription&quot; type=&quot;OUT&quot;&gt;Pointer to description&lt;/element&gt;</span>
+<span class="cm">* &lt;element name=&quot;pstProfile&quot; type=&quot;OUT&quot;&gt;Pointer to used CoDeSys profile name&lt;/element&gt;</span>
+<span class="cm">* &lt;element name=&quot;dtLastChanges&quot; type=&quot;OUT&quot;&gt;Time and date of last modification of the application (UTC)&lt;/element&gt;</span>
+<span class="cm">*/</span>
+<span class="k">typedef</span> <span class="k">struct</span>
+<span class="p">{</span>
+ <span class="n">RTS_IEC_STRING</span> <span class="o">*</span><span class="n">pstProjectName</span><span class="p">;</span>
+ <span class="n">RTS_IEC_STRING</span> <span class="o">*</span><span class="n">pstAuthor</span><span class="p">;</span>
+ <span class="n">RTS_IEC_STRING</span> <span class="o">*</span><span class="n">pstVersion</span><span class="p">;</span>
+ <span class="n">RTS_IEC_STRING</span> <span class="o">*</span><span class="n">pstDescription</span><span class="p">;</span>
+ <span class="n">RTS_IEC_STRING</span> <span class="o">*</span><span class="n">pstProfile</span><span class="p">;</span>
+ <span class="n">RTS_IEC_DATE_AND_TIME</span> <span class="n">dtLastChanges</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">APPLICATION_INFO</span><span class="p">;</span>
+
+<span class="n">Function</span> <span class="n">prototypes</span> <span class="n">in</span> <span class="n">m4</span><span class="o">-</span><span class="nl">File</span><span class="p">:</span>
+</pre></div>
+</div>
+<div class="highlight-C"><div class="highlight"><pre><span></span>/**
+* &lt;description&gt;Stop an application&lt;/description&gt;
+* &lt;param name=&quot;pApp&quot; type=&quot;IN&quot;&gt;Pointer to the application&lt;/param&gt;
+* &lt;param name=&quot;ulTimeoutMs&quot; type=&quot;IN&quot;&gt;Timeout in milliseconds to wait for stop. RTS_TIMEOUT_DEFAULT can be used as the default value&lt;/param&gt;
+* &lt;param name=&quot;ulStopReason&quot; type=&quot;IN&quot;&gt;Stop reason, See corresponding category&lt;/param&gt;
+* &lt;result&gt;error code&lt;/result&gt;
+*/
+DEF_ITF_API(`RTS_RESULT‘, `CDECL‘, `
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="coding_guide_startup_sequence.html" title="1.11.6. Startup sequence"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="coding_guide_comp_itf_dep.html" title="1.11.4. Component interfaces and dependencies"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="coding_guidelines.html" >1.11. Coding Guidelines</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

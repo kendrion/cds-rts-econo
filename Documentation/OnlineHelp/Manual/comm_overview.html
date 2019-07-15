@@ -1,0 +1,225 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.5.1. Overview &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.5. Communication" href="communication.html" />
+    <link rel="next" title="1.5.2. General" href="comm_general.html" />
+    <link rel="prev" title="1.5. Communication" href="communication.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="comm_general.html" title="1.5.2. General"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="communication.html" title="1.5. Communication"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="communication.html" accesskey="U">1.5. Communication</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.5.1. Overview</a><ul>
+<li><a class="reference internal" href="#usage-scenarios">1.5.1.1. Usage scenarios</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="communication.html"
+                        title="previous chapter">1.5. Communication</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="comm_general.html"
+                        title="next chapter">1.5.2. General</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/comm_overview.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="overview">
+<span id="comm-overview"></span><h1>1.5.1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>In the communication system for CODESYS V3 a distinction is made between
+four main communication device types. Simple <strong>nodes</strong> form the core of
+the communication system. They form a logic tree referred to as the
+<strong>control network</strong> and implement the CODESYS communication stack. A
+<strong>gateway</strong> is itself a node within this tree and in addition offers an
+access point to this network from outside. <strong>Clients</strong>, on the other
+hand, are not part of the network. Instead they use a gateway to
+communicate with nodes in the network. <strong>Proprietary devices</strong> generally
+have no CODESYS runtime system and use any non-CODESYS communication
+protocol.</p>
+<p>The communication is based on existing network protocols such as UDP,
+CAN, serial etc. They can be located at different levels. The
+communication protocol within the network is defined in layers, based on
+the ISO/OSI Reference Model. The following table provides a comparison
+of the ISO/OSI layers and the components specified for CODESYS:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="4%" />
+<col width="16%" />
+<col width="11%" />
+<col width="69%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Layer</th>
+<th class="head">ISO/OSI</th>
+<th class="head">CODESYS</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>Physical layer</td>
+<td>&nbsp;</td>
+<td>Not specified (defined through lower-level communication systems).</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>Data link layer</td>
+<td>Block driver</td>
+<td>Mapping of the communication to lower-level network protocols. Ensuring data consistency (CRC). Sending of blocks with defined maximum length.</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>Network layer</td>
+<td>Router</td>
+<td>Sending of packets across several stations, &#8220;routing&#8221;/multiplexing of packets from several senders/receivers on a single &#8220;line&#8221;</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>Transport layer</td>
+<td>Channel management</td>
+<td>Secure, connection-oriented end-to-end communication with packet repetition, timeout monitoring, ...</td>
+</tr>
+<tr class="row-even"><td>5,6</td>
+<td>Session or presentation layer</td>
+<td>&nbsp;</td>
+<td>Not specified</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>Application layer</td>
+<td>Application services</td>
+<td>Specification of the data exchange format, distribution of requests to service handlers</td>
+</tr>
+</tbody>
+</table>
+<p>Table 1 – Comparison of ISO/OSI and CODESYS model</p>
+<p>The following diagram illustrates the structure of the communication
+stacks and the communication between different device types:</p>
+<img alt="../_images/communication_overview.png" src="../_images/communication_overview.png" />
+<div class="section" id="usage-scenarios">
+<h2>1.5.1.1. Usage scenarios<a class="headerlink" href="#usage-scenarios" title="Permalink to this headline">¶</a></h2>
+<p>In order to be able to work conveniently (Plug&amp;Play), securely and
+reliably within different project phases, a distinction is made between
+three operating modes, with associated network behavior.</p>
+<ul class="simple">
+<li>Commissioning
+During commissioning the addresses of all nodes are determined
+dynamically. Manual intervention is reduced to a minimum.
+During this phase the node addresses may change fundamentally.</li>
+<li>Normal operation
+During the transition to normal operation all node addresses
+are „frozen&#8221;, i.e. each node stores its address permanently and
+automatically reloads it after a restart. Adding/removing nodes
+in this state has no effect on the addresses of the other
+nodes. Addresses are only changed if requested explicitly.</li>
+<li>Maintenance
+If a programming or service PC is connected during operation
+for maintenance of individual nodes, this PC will automatically
+be assigned an address, although it will not be able to change
+the addresses of the other nodes.
+In the delivery state new nodes are set to commissioning, i.e.
+the node address is automatically assigned according to the
+network topology, without affecting the addresses of other
+nodes in the event of misconfiguration. Once the new node has
+been implemented correctly, it is set to normal operation,
+which means its address is fixed.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="comm_general.html" title="1.5.2. General"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="communication.html" title="1.5. Communication"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="communication.html" >1.5. Communication</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,236 @@
+.. _portings_linux_specific:
+
+Linux specific information
+--------------------------
+
+On Linux systems the runtime is a user space application. For realtime  
+behavior the realtime-preempt patches from Ingo Molnar and Thomas Gleixner 
+are needed. But the integration is transparent, so a standard vanilla kernel 
+or a standard Linux distribution like e.g. debian also may be used.
+
+For full functionality the runtime has to be started with root
+  privileges. Starting it as a regular user is possible, but the
+  following functionality will fail and this causes severe drawbacks.
+  There might be the possibility to set specific capabilities (see
+  manpage capabilities) or resource limits (see manpage setrlimit) to
+  avoid this:
+
+- set realtime priority (SCHED\_FIFO) for threads -> no realtime tasks
+  possible
+- lock process memory via mlockall() -> realtime behavior might be bad
+- creating raw sockets -> ethernet based fieldbusses will not work
+- ifconfig up/down -> baudrate for CAN bus can't be set
+
+CAN bus
+~~~~~~~
+
+For CAN bus access you have to provide a script for setting the
+baudrate of the CAN bus. The default name is "rts\_set\_baud.sh" and
+it will be called "./rts\_set\_baud.sh <interfacename>
+<baudrate/1000>".
+Usually this can be done by the "ip link" command and the
+implementation may look like this:
+
+.. code-block:: C
+
+ #!/bin/sh
+ BITRATE=`expr $2 \\* 1000`
+ ifconfig $1 down
+ echo ip link set $1 type can bitrate $BITRATE
+ ip link set $1 type can bitrate $BITRATE
+ ifconfig $1 up;
+
+For further templates refer to the
+Platforms/Linux/Templates/rts\_set\_baud folder of your toolkit.
+Configuration options are documented in the Online Help ->
+CmpSocketCanDrvItf.
+
+Environment variables and command line parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Environment variables:
+^^^^^^^^^^^^^^^^^^^^^^
+
++---------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+| PlcConfigFile=<path/filename>   | use this file as configuration file. Path is optional. Only evaluated if the configuration file was not set as a command line parameter.   |
++=================================+============================================================================================================================================+
+| QWS\_COMMANDLINE\_PARAM         | QT parameters to be passed to the implicitly generated QT Application (default: "-qws").                                                   |
++---------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+
+Target visualization on top of X11 based QT only:
+
++---------------------------------+-----------------------------------------------------------------------+
+| RTS\_WINDOW\_MAXIMIZED          | not set: full screen mode(default) set(any value): maximized window   |
++=================================+=======================================================================+
+| RTS\_CURSER\_VISIBLE=0\|1       | 0: hide cursor 1: show cursor(default)                                |
++---------------------------------+-----------------------------------------------------------------------+
+
+Command line parameters:
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+| Usage: codesyscontrol [OPTION]... [ConfigurationFile]
+| If [ConfigurationFile] isn't specified, a file named
+  CODESYSControl.cfg is expected to reside in the working directory of
+  the runtime system
+  
+| Valid options:
+| -h, --help display this help and exit
+| -v, --version display version information and exit
+| d[level], --debug print additonal debug output
+| -b, --daemon run in the background
+| --printlostcycles print debug output if a cycle in a realtime iec
+  tasks is lost
+
+Task Mapping
+~~~~~~~~~~~~
+
+For information about task priorities in the runtime refer to chapter
+3.7. The runtime priorities are mapped to the Linux priorities according
+to this scheme:
+
++----------------------+---------------------------+----------------------------------+----------------------------+
+| runtime priority     | Linux priority (default)  | Corresponding IEC Task priority  |                            |
++======================+===========================+==================================+============================+
+| Name                 | Value (default)           |                                  |                            |
++----------------------+---------------------------+----------------------------------+----------------------------+
+| System Base          | 0                         | 99 (SCHED\_FIFO)                 | --                         |
++----------------------+---------------------------+----------------------------------+----------------------------+
+| System End           | 31                        | 68 (SCHED\_FIFO)                 | --                         |
++----------------------+---------------------------+----------------------------------+----------------------------+
+| RealTime Base        | 32                        | 67 (SCHED\_FIFO)                 | 0 (highest realtime Prio)  |
++----------------------+---------------------------+----------------------------------+----------------------------+
+| RealTime Base + 15   | 47                        | 52 (SCHED\_FIFO)                 | 15 (lowest realtime Prio)  |
++----------------------+---------------------------+----------------------------------+----------------------------+
+| RealTime Base + 16   | 48                        | 0 (SCHED\_OTHER)                 | 16 (non realtime Prio)     |
++----------------------+---------------------------+----------------------------------+----------------------------+
+| RealTime End         | 63                        | 0 (SCHED\_OTHER)                 | 31 (non realtime Prio)     |
++----------------------+---------------------------+----------------------------------+----------------------------+
+| High Base …          | >= 64                     | 0 (SCHED\_OTHER)                 | --                         |
++----------------------+---------------------------+----------------------------------+----------------------------+
+
+| If the runtime priority is in the range SystemBase-RealtimeBase+15 the
+  Linux scheduling policy is set to SCHED\_FIFO and the priority is
+  computed this way:
+| sched\_get\_priority\_max(SCHED\_FIFO) – <value of runtime priority>.
+| Otherwise it is set to SCHED\_OTHER with priority 0.
+| So it is possible to change this mapping by changing the values of the
+  runtime priorities as described in the documentation of SysTaskItf .
+
+Multicore
+~~~~~~~~~
+
+.. _multicore:
+
+By default Linux is balancing the processes and threads across all
+available cores. To avoid this behavior on multicore systems, it is
+recommended to use the Linux tool "taskset".
+
+For example:
+
+taskset -a 02 codesyscontrol /etc/CODESYSControl.cfg
+
+.. note::
+ 
+   CODESYS doesn't support the multicore processing on all systems. 
+   Please ask our support if you are unsure if your system supports this.
+
+Filesystem layout
+~~~~~~~~~~~~~~~~~
+
+Based on the "Filesystem Hierarchy Standard", we are recommending the
+following filesystem layout for CODESYS Runtime, running on Linux:
+
+-  | /etc – runtime configuration files (e.g. CODESYSControl.cfg)
+   | As some sections of the runtime configuration file are changed
+     during runtime (e.g. [CmpApp]), you may want to split the file into
+     a user writeable and a static one. If /etc is write protected, you
+     may want to move the user writeable file to a writeable directory
+     and link it to /etc.
+   | Also the license file 3S.dat, shall be placed under /etc. It can be
+     mapped there with the following entry in the configuration file:
+   | [SysFile]
+   | FilePath.1=/etc/, 3S.dat
+
+-  | /var/opt/<package-name> - application specific files
+   | The application specific files can be mapped with a setting in the
+     configuration file:
+   | [SysFile]
+   | FilePath=/var/opt/<package-name>/
+   | By default the working directory of the runtime will be used.
+
+-  | /opt/<package-name> - CODESYS Control binaries, scripts, etc...
+   | All binaries, scripts, etc. which are necessary to run CODESYS,
+     should be placed under "/opt/<package-name>/".
+
+.. note::
+
+   Shared libraries, which are solely runtime dependent, should be placed 
+   under /opt/<package-name>, too. Otherwise they will be mixed up with system libraries.
+
+In general it is recommended to use read-only mounted file-systems as
+far as possible. It is good to differentiate between three categories of
+files:
+
+1. | Read-Only:
+   | The whole filesystem shall be read-only by default.
+
+2. | Read/Write:
+   | All files, which are accessible by CODESYS have to be writeable and
+     readable. Specifically this will be /var/opt/<package-name>, but
+     might also be the whole /var folder.
+
+3. | Temporary:
+   | Log files and those which don't have to be stored across reboots,
+     could be placed in a temporary filesystem (of type tempfs).
+     Specifically this is important for /tmp.
+
+Build own components
+~~~~~~~~~~~~~~~~~~~~
+         
+In the folder Templates/ of the runtime toolkit, there are several
+Makefiles which can be used as a template to build your own components.
+In general, you need to call the cross compiler and set the following
+settings additionally:
+
+-  | Compiler:
+   | -DALIGNATTRIB= -DCDECL= -DHANDLE\_WIN32\_PRAGMA -DDLL\_DECL=
+     -D\_REENTRANT= -DHUGEPTR= -DLINUX –fPIC
+
+-  | Linker:
+   | -shared -Wl,-soname,libCmpTemplates
+
+   
+Dynamic components
+~~~~~~~~~~~~~~~~~~
+
+The CODESYS Control runtime is able to load components during runtime,
+which are not statically linked into the runtime binary. Those
+components have to fulfil the following criteria:
+
+-  | They have to be found by the Linux system call "dlopen".
+   | So they can either be placed in the default search path for
+     libraries, or the path can be given with the environment variable
+     LD\_LIBRARY\_PATH.
+
+-  They have to contain the prefix "lib".
+
+-  They should not use versioning of shared objects.
+
+Build static runtime
+~~~~~~~~~~~~~~~~~~~~
+
+| Every CODESYS Linux Toolkit contains a static library beside the
+  CODESYS binary. This library archive can be used to statically build
+  customized runtimes. For example:
+| gcc -o codesyscontrol main.c codesyscontrol.a
+
+To extend the runtime with more components, which are also statically
+linked, the list of static components from "profile.h" has to be
+extended.
+
+.. note::
+
+   The use of the CODESYS Runtime as a shared object is not recommended, 
+   and no longer supported. Instead it is recommended to use the static 
+   library approach to link all runtime components together. If it is 
+   necessary to use the CODESYS Runtime as shared object, no dynamic components shall be used.

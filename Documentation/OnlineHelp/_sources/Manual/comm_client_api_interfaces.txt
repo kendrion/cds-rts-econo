@@ -1,0 +1,74 @@
+.. _comm_client_api_interfaces:
+
+Client API Interfaces
+---------------------
+
+There are three different levels to enter the CODESYS V3 PLC network.
+
+The lowest level is to enter the network in the runtime system itself.
+This is typically used, if you write your own component and want to
+communicate with another plc.
+
+The next level is the Gateway Client. This is typically used by a PlugIn
+in CODESYS or by CODESYS itself.
+
+The highest interface is the PLCHandler. It provides to enter the
+communication network from any other proprietary client.
+
+Channel client (CmpChannelClient)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The channel client component can be used from a component in the runtime
+system to enter the PLC communication network. The channel client can be
+used to open the communication to another PLC and to send native online
+service though this channel.
+
+Gateway client (GwClient)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Gateway-Client has a native C++ interface, so it can be used from
+.NET and C++ clients (like PlugIns in CODESYS). This interface provides
+to open the communication and to send native online service though this
+channel. In this layer, no symbolic access to variables in possible! To
+use symbolic access, you have to use the PLCHandler interface.
+
+PLCHandler
+~~~~~~~~~~
+
+This is the highest level API that is provided by 3S.
+
+The PLCHandler is a C++-class which on a comfortable level provides
+services for the communication between a client (e.g. visualization) and
+a 3S Automation-Alliance compliant PLC (controller).
+
+The following features and services are available:
+
+-  Establishing and terminating the communication with the PLC
+
+-  Reading all variables on the PLC
+
+-  Cyclic reading of variables' values from the PLC
+
+-  Synchronous reading of variables' values from the PLC
+
+-  Synchronous writing of variables' values to the PLC
+
+-  Possibility of instancing for the purpose of a simultaneous
+       communication with several PLCs
+
+-  Automatic reconnecting with the PLC after an break of the connection
+
+-  Automatic restart after a program download from CODESYS to the PLC
+
+-  Data transfer to and from PLC
+
+Thus the PLCHandler can be used as a basic component for OPC Servers or
+visualizations. The Handler is delivered as a SDK, i.e. all C++ header
+files, the static link library (PLCHandler.lib resp.
+PLCHandlerComplete.lib) and a sample program (main.cpp) are part of the
+package.
+
+The PLCHandler supports beneath the CODESYS V3 generation runtime
+systems additionally the CODESYS V2.x generation runtime systems! So you
+only have to handle one interface for all runtime systems in the field.
+

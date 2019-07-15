@@ -1,0 +1,77 @@
+.. _dev_desc_device:
+
+Device
+------
+
+A PLC (or device or target) is described in a device description. Such a device description typically contains the following entries:
+
+    - Identification of the PLC (Vendor name, target ID, target type, version, etc.)
+    
+    - Type of the processor (which CODESYS codegenerator is used)
+    
+    - Limit and default values for memory areas of the IEC program (e.g. retain, code, data)
+    
+    - Features switched on/off in CODESYS
+    
+    - Library profile (list of implemented external libraries in the runtime system)
+    
+    - What types and numbers of IEC-tasks are possible on the controller
+
+    - IO-configuration or specification of connectors to plugin fieldbus cards/IO-devices
+
+    - ...
+
+Here is an example of a typical device description for a PLC with the most important sections:
+
+.. code-block:: xml
+
+    <?xml version='1.0' encoding='UTF-8'?>
+    <DeviceDescription xmlns="http://www.3s-software.com/schemas/DeviceDescription-1.0.xsd" xmlns:ts="http://www.3s-software.com/schemas/TargetSettings-0.1.xsd">
+        <Types></Types>
+        <Strings></Strings>
+        <Files></Files>
+        <Device>
+            <DeviceIdentification></DeviceIdentification>
+            <DeviceInfo></DeviceInfo>
+            <DriverInfo></DriverInfo>
+            <DeviceParameterSet></DeviceParameterSet>
+            <Functional></Functional>
+            <CompatibleVersions></CompatibleVersions>           
+            <ExtendedSettings>
+                <ts:TargetSettings>
+                    <ts:section name="runtime_identification">
+                    <ts:section name="onlinemanager">
+                    <ts:section name="runtime_features">
+                    <ts:section name="taskconfiguration">
+                    <ts:section name="library-management">
+                    <ts:section name="recipemanagement"/>
+                    <ts:section name="symbolconfiguration">
+                    <ts:section name="memory-layout">
+                    <ts:section name="codegenerator">
+                    <ts:section name="visualization">
+                    <ts:section name="alarmmanager">
+                    <ts:section name="trace">
+                    <ts:section name="trendrecording">
+                    <ts:section name="networkvariables">
+                    <ts:section name="dataserver">
+                </ts:TargetSettings>
+            </ExtendedSettings>
+            <Connector></Connector>
+        </Device>
+    </DeviceDescription>
+
+The following chapters describes all of these sections in detail:
+
+.. toctree::
+   :maxdepth: 1
+
+   dev_desc_device_attributes
+   dev_desc_device_device_identification
+   dev_desc_device_device_info
+   dev_desc_device_driver_info
+   dev_desc_device_functional
+   dev_desc_device_compatible_versions
+   dev_desc_device_extended_settings
+   dev_desc_device_defining_connectors
+   dev_desc_device_params_and_param_sections
+   dev_desc_device_custom_tags

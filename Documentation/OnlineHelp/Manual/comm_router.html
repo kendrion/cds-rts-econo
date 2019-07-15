@@ -1,0 +1,250 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.5.5. Router Communication &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.5. Communication" href="communication.html" />
+    <link rel="next" title="1.5.6. Layer 3 Services" href="comm_layer3_services.html" />
+    <link rel="prev" title="1.5.4. Network Topology and Addressing" href="comm_topology.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="comm_layer3_services.html" title="1.5.6. Layer 3 Services"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="comm_topology.html" title="1.5.4. Network Topology and Addressing"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="communication.html" accesskey="U">1.5. Communication</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.5.5. Router Communication</a><ul>
+<li><a class="reference internal" href="#hop-count">1.5.5.1. Hop count</a></li>
+<li><a class="reference internal" href="#router-signaling">1.5.5.2. Router signaling</a></li>
+<li><a class="reference internal" href="#variable-maximum-block-length-for-a-transmission-route">1.5.5.3. Variable maximum block length for a transmission route</a></li>
+<li><a class="reference internal" href="#multiple-router-instances">1.5.5.4. Multiple router instances</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="comm_topology.html"
+                        title="previous chapter">1.5.4. Network Topology and Addressing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="comm_layer3_services.html"
+                        title="next chapter">1.5.6. Layer 3 Services</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/comm_router.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="router-communication">
+<span id="comm-router"></span><h1>1.5.5. Router Communication<a class="headerlink" href="#router-communication" title="Permalink to this headline">¶</a></h1>
+<p>A router packet consists of a <strong>header</strong> and the actual message
+(<strong>data</strong>). The length of the header is variable, since node addresses
+have different lengths. Irrespective of this the data always start at a
+4-byte limit within the packet. Correct alignment is therefore always
+ensured, provided the data are structured accordingly.</p>
+<p>The following diagram illustrates the header structure:</p>
+<img alt="../_images/comm_router_header_structure.png" src="../_images/comm_router_header_structure.png" />
+<ul class="simple">
+<li>HC/AdrOff: Depending on the hop count addressing type hop count
+(direct addresses) or the address offset (relative addresses)</li>
+<li>HL: Length of the static header in words. Corresponds to the offset
+of ReceiverAdr. Currently 3, i.e. 6 bytes.</li>
+<li>AdrType: 0 for direct addresses, 1 for relative</li>
+<li>Prio: Packet priority: 0 low, 1 normal, 2 high, 3 emergency. Packets
+with higher priority are given preference by routers.</li>
+<li>SR: SignalRouter. Is set by a router to indicate en error (e.g. block
+size).</li>
+<li>BlkLen<sub>Max</sub>: Field for maximum block length. The maximum block
+length is calculated as <em>(BlkLen:sub:`Max`+ 1)*32</em>. ( 0: 32 bytes,
+1: 64 bytes, 2: 96 bytes, ..., 15: 512 bytes)</li>
+<li>ServiceId: A kind of port number for the called service.</li>
+<li>MessageId: Is set by the sender. Is used for identification of a
+message, detection of duplicates for unsecured services, etc.</li>
+<li>SL: Length of the sender address in words</li>
+<li>RL: Length of the receiver address in words.</li>
+<li>Filler word: 0. Is inserted if SenderAdr does not end at a 4
+byte-limit, in order to align the user data with a 4-byte limit.</li>
+</ul>
+<p>Minimum packet length (both addresses one word, no content): 12 bytes</p>
+<div class="section" id="hop-count">
+<h2>1.5.5.1. Hop count<a class="headerlink" href="#hop-count" title="Permalink to this headline">¶</a></h2>
+<p>This field is initialized to 31 (the maximum number of nodes that a
+packet has to pass through when the network reaches the maximum depth of
+15). Each node that forwards a packet reduces the value of this field by
+1. Once the field value has reached 0 the packet can no longer be
+forwarded. The field also has to be decremented for broadcasts that are
+forwarded to subnets.</p>
+<p>This mechanism offers reliable protection from broadcast floods and
+infinite packet loops, both for cycles and in the event of
+misconfiguration.</p>
+</div>
+<div class="section" id="router-signaling">
+<h2>1.5.5.2. Router signaling<a class="headerlink" href="#router-signaling" title="Permalink to this headline">¶</a></h2>
+<p>This header flag identifies a message as a router message. If a router
+is unable to deliver a message due to particular circumstances, it
+generates a new message that is sent back to the sender of the original
+message, which sets the router flag. The service ID is taken from the
+undelivered packet, while bit 0 is toggled. A request thus becomes a
+response and vice versa (see <a class="reference internal" href="ov_kernel_scheduling.html#timer-scheduler"><span class="std std-ref">ov_kernel_scheduling</span></a>). With separate client/server
+implementation of a service this ensures that the sending component
+receives the message back.</p>
+<p>A router message contains the complete header of the discarded packet.
+It also contains an ErrorId of the router and further, error-dependent
+information. The original sender then forwards the packet to the
+corresponding service as usual. Via a &#8220;MessageId&#8221; header field, which is
+generated by the service when a message is sent, the returned message
+can be assigned to a current request. The router can first analyze the
+error itself and adapt internal information as required (e.g. the
+maximum block length for a particular transmission route).</p>
+<p>If a message with active router flag cannot be delivered it is discarded
+without generating a further router message, in order to avoid endless
+message floods.</p>
+<div class="line-block">
+<div class="line">Possible router messages:</div>
+<div class="line">BLOCKLEN_OVERRUN: Maximum block length for a transmission route
+exceeded.</div>
+<div class="line">INVALID_SUBNET: The subnet for the next node does not exist.</div>
+<div class="line">INVALID_NODE: Node does not exist (not detectable for all block
+drivers).</div>
+<div class="line">CONGESTION: Next transmission route blocked, but return channel is
+available.</div>
+<div class="line">INVALID_SERVICE: The specified ServiceId is not used on the target
+computer.</div>
+</div>
+</div>
+<div class="section" id="variable-maximum-block-length-for-a-transmission-route">
+<h2>1.5.5.3. Variable maximum block length for a transmission route<a class="headerlink" href="#variable-maximum-block-length-for-a-transmission-route" title="Permalink to this headline">¶</a></h2>
+<p>Not all block drivers can send up to 512 bytes (the maximum size of a
+router packet) in once piece. With many transmission protocols 512 bytes
+no longer fit into 1, 2, .. frames, which means that for each packet an
+additional, almost empty frame would have to be generated and sent,
+resulting in useless overhead. This problem may arise for any fixed
+block length. Shorter block lengths may therefore be selected, depending
+on the transmission route (in steps of 32 bytes).</p>
+<p>A field in the Level 3 header is reserved for the maximum block length
+of the transmission route. In the absence of further information this
+field is initialized with 512 bytes. Each router checks whether the next
+transmission route has a smaller block length (information from block
+driver) and updates the field as required. The header of the receiver
+then contains the smallest maximum block length for the whole
+communication path. If a packet cannot be forwarded due to excessive
+block length, it is discarded and the problem is reported to the sender
+via the signaling mechanism ( 5.5.2).</p>
+<p>Router components should remember the values determined in this way, at
+least for the last communication partners. Since the first packets
+between two end points are generally relatively small packets (e.g.
+connection setup, network scan, ...) no packets should have to be
+discarded due to this mechanism during normal operation.</p>
+</div>
+<div class="section" id="multiple-router-instances">
+<h2>1.5.5.4. Multiple router instances<a class="headerlink" href="#multiple-router-instances" title="Permalink to this headline">¶</a></h2>
+<p>Routers are Instantiable, i.e. for each device several router instances
+can exist simultaneously. Each router exclusively manages part of the
+block drivers, i.e. there is no joint block driver access. Each router
+instance has its own main network configuration, and therefore has its
+own address and forms its own (partial) network. There is no provision
+for direct routing between router instances. Consequently, a router
+instance always has to be specified in order to be able to send network
+packets. Router instances are given a name for identification and are
+addressed via an Id.</p>
+<p>In order to keep the configuration simple, a default router is available
+that can be used for standard communication. Further routers are
+available for redundant network connections, service channels etc.</p>
+<p>The default configuration of a router comprises a main network
+connection but no subnets. Subnets have to be configured explicitly in
+order to avoid problems.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="comm_layer3_services.html" title="1.5.6. Layer 3 Services"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="comm_topology.html" title="1.5.4. Network Topology and Addressing"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="communication.html" >1.5. Communication</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+.. _comm_layer3_services:
+
+Layer 3 Services
+----------------
+
+In addition to the Layer 4 handler various other services are based on
+Layer 3 that are addressed via protocol numbers (**ServiceId** field in
+the router header). Each of these services uses two protocol numbers –
+one for the requesting the service, the second one for responses. The
+two numbers differ in the lowest-order bit: for requests this bit is
+set, for responses the bit is deleted.
+
+When defining such a service certain specifications should be followed.
+A service packet always consists of a fixed header and user data. In
+order to ensure expandability, the first two bytes specify the length of
+the header ( = user data offset). Extensions must be designed such that
+older services can handle more recent packets and vice versa.
+
+In order to enable communication between different systems, the byte
+order is always little-endian. In addition, all fields are based on
+natural alignment. Structures, particularly user data, always start at
+4-byte boundaries (filler byte must be used if necessary).
+
+The following service groups are defined:
+
++-----------------+---------------------------------------------------------+
+|     Req/Reply   |     Associated service                                  |
++=================+=========================================================+
+|     1 / 2       |     Address service                                     |
++-----------------+---------------------------------------------------------+
+|     3 / 4       |     Name service (name resolution, network scan, ...)   |
++-----------------+---------------------------------------------------------+
+|     5 / 6       |     Network variables                                   |
++-----------------+---------------------------------------------------------+
+|     63 / 64     |     Channel management (Layer 4)                        |
++-----------------+---------------------------------------------------------+
+

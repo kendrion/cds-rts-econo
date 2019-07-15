@@ -1,0 +1,46 @@
+.. _security:
+
+Security
+========
+
+More and more controllers and plants are networked with each other and so there is an increasing need to improve the security aspects in every controller,
+which is envolved in this plant or security area!
+
+Basic infrastructure
+--------------------
+
+In the runtime system there are some basic infrastructure components, on which most of the security components are based on:
+
+Security manager
+~~~~~~~~~~~~~~~~
+
+The security manager component hold the security policy of all security relevant components.
+
+The security manager implements the following interface and must be added, if at least one security component is used in the runtime system:
+
+    - :ref:`CmpSecurityManagerItf <group___cmp_security_manager_itf>`
+
+    
+OpenSSL
+~~~~~~~
+
+We use OpenSSL for variant security aspects. This is the most important and critical component for security.
+
+OpenSSL implements the following interfaces:
+
+    - :ref:`CmpCryptoItf <group___cmp_crypto_itf>`
+    
+    - :ref:`CmpTlsItf <group___cmp_tls_itf>`
+    
+    - :ref:`CmpX509Cert <group___cmp_x509_cert_itf>`
+    
+    - :ref:`SysSocket2Itf <group___sys_socket2_itf>`
+
+Security features
+-----------------
+
+All current available security features of the runtime system are described in the :ref:`security feature documentation <Security Features>`.
+
+.. node:
+    We recommend to use all available features to protect your controller as best! But dependent on the performance and available resources of your controller,
+    you can add each feature separately.

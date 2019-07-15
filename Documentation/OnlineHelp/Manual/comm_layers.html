@@ -1,0 +1,305 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.5.3. Communication Layers &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.5. Communication" href="communication.html" />
+    <link rel="next" title="1.5.4. Network Topology and Addressing" href="comm_topology.html" />
+    <link rel="prev" title="1.5.2. General" href="comm_general.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="comm_topology.html" title="1.5.4. Network Topology and Addressing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="comm_general.html" title="1.5.2. General"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="communication.html" accesskey="U">1.5. Communication</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.5.3. Communication Layers</a><ul>
+<li><a class="reference internal" href="#block-driver-layer-2">1.5.3.1. Block driver (Layer 2)</a></li>
+<li><a class="reference internal" href="#router-layer-3">1.5.3.2. Router (Layer 3)</a></li>
+<li><a class="reference internal" href="#channel-management-layer-4">1.5.3.3. Channel management (Layer 4)</a></li>
+<li><a class="reference internal" href="#application-services-layer-7">1.5.3.4. Application services (Layer 7)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="comm_general.html"
+                        title="previous chapter">1.5.2. General</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="comm_topology.html"
+                        title="next chapter">1.5.4. Network Topology and Addressing</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/comm_layers.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="communication-layers">
+<span id="comm-layers"></span><h1>1.5.3. Communication Layers<a class="headerlink" href="#communication-layers" title="Permalink to this headline">¶</a></h1>
+<p>The components of the communication system are based on the ISO/OSI
+Layer Model. There are 4 components:</p>
+<ul>
+<li><div class="first line-block">
+<div class="line"><strong>Medium and datagram layer</strong> (Layer 2, „block driver&#8221;)
+| This layer handles the transfer of frames between nodes. Media
+  access is located in this layer. In addition, this layer
+  prevents delivery of faulty frames (bit errors). Frame
+  repetition etc. can be implemented as an option.</div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line"><strong>Network layer</strong> (Layer 3, &#8220;router&#8221;)
+| This layer handles routing and addressing. There is no error
+  protection in this layer.</div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line"><strong>Messages/protocol layer</strong> (Layer 4, &#8220;channel management&#8221;)
+| This layer defines a protocol for safe transmission of
+  asynchronous services of any length. This service is
+  asymmetric. It consists of a common part and an associated
+  client or server component.</div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line"><strong>Application layer</strong> (Layer 7)
+| This layer defines services based on Layer 4.</div>
+</div>
+</li>
+</ul>
+<p>The following figure provides an overview of the communication system
+layers:</p>
+<img alt="../_images/communication_overview.png" src="../_images/communication_overview.png" />
+<div class="section" id="block-driver-layer-2">
+<h2>1.5.3.1. Block driver (Layer 2)<a class="headerlink" href="#block-driver-layer-2" title="Permalink to this headline">¶</a></h2>
+<p>Block drivers map the 3S communication model onto the lower-level
+network (e.g. Ethernet, CAN, serial). Each network type has its own
+block driver. The block drivers always send blocks with a specified
+maximum size. The maximum size (512 bytes) is specified by the block
+driver. If necessary the packet has to be subdivided into suitable
+pieces and reassembled at the receiving end. The block driver must
+ensure that only correct blocks, i.e. blocks without transmission
+errors, are transferred to the higher-level layer (router). If necessary
+this must be ensured with suitable measures, e.g. CRC. Faulty blocks may
+be discarded, since layer 2 is not connection-oriented. Block repetition
+can optionally be implemented for connections that are particularly
+susceptible to failure, in order to minimize the fault rate in the
+overall system.</p>
+<p>A block driver can manage several physical (e.g. 2 Ethernet cards) or
+logical connections simultaneously, although each connection has to be
+registered separately with the higher-level router.</p>
+<p>Block drivers are configured on system startup and are available from
+that time, provided the lower-level network is available. They can only
+handle primitive <strong>send</strong> and <strong>receive</strong>, i.e. no explicit connection
+setup or termination. Only one network address is specified as target
+(see 5.4.4.1), without additional configuration (such as baud rate or
+start/stop bits).</p>
+<p>Communication between two block drivers is on an equal basis, i.e. each
+of two devices can initiate the communication at any time. If
+master/slave operation is required for a special communication medium,
+it must be mapped accordingly. Ideally the connection between the two
+devices should be permanent.</p>
+</div>
+<div class="section" id="router-layer-3">
+<h2>1.5.3.2. Router (Layer 3)<a class="headerlink" href="#router-layer-3" title="Permalink to this headline">¶</a></h2>
+<p>The router is based on Layer 2 (block driver) and is responsible for
+sending blocks via any number of intermediate levels or lower-level
+network types. Since block drivers already abstract from the actual
+network type, routers only see logical CODESYS nodes.</p>
+<p>Each node supporting the CODESYS communication system – and therefore
+any runtime system – implements the router and can therefore pass on
+packets itself.</p>
+<p>With regard to higher levels, the router offers the option of sending
+packets to any receiver within a control network or receiving packets
+for certain services (corresponding to ports). Channel management (Layer
+4), which offers a secure connection, is one of the services based on
+the router. The service number is 64. Further services include automatic
+address assignment, name resolution, or network variable exchange.</p>
+</div>
+<div class="section" id="channel-management-layer-4">
+<h2>1.5.3.3. Channel management (Layer 4)<a class="headerlink" href="#channel-management-layer-4" title="Permalink to this headline">¶</a></h2>
+<p>Channel management offers a connection-oriented, secure end-to-end
+transmission between any two nodes in the control network. Packets of
+any size can be sent. The maximum size only depends on the resources
+available in the two end nodes. To this end the size of the
+communication buffer is determined when the connection is set up.
+Without optimization, two buffers are required on both sides (send
+buffer and receive buffer). In general a static buffer for a fixed
+number of maximum simultaneous connections (<strong>channels</strong>) is provided in
+runtime systems.</p>
+<p>Layer 4 deals with subdivision of potentially large packets into
+suitable blocks for the lower-level layers, packet repetition, and
+correct reassembly of the packets on the receiver side. In addition, the
+status of the connection is continuously monitored via keep-alive
+packets and (dynamic) timeouts, so that any interruption of the
+connection can already be detected at this level, irrespective of the
+size and type of the service.</p>
+<p>Channel management uses a request reply procedure to avoid requests
+having to be discarded due to insufficient resources. The node that has
+initiated the connection is the <strong>master</strong> and therefore the node that
+may send requests. A new request may only be sent once a reply for the
+previous request has been received. Similarly, the remote terminal (the
+<strong>slave</strong>) must send exactly one reply for each request it receives.</p>
+<img alt="../_images/comm_layer4.png" src="../_images/comm_layer4.png" />
+<p>This service is basically divided asymmetrically into a client and a
+server component using a common base component. The client component is
+always used on the gateway, the server component on a target device.
+However, there is no reason why both components should not be
+implemented on the same node. This node can then execute server and
+client services simultaneously. This is of interest if two runtime
+systems are to communicate directly with each other, for example.</p>
+</div>
+<div class="section" id="application-services-layer-7">
+<span id="comm-layer7"></span><h2>1.5.3.4. Application services (Layer 7)<a class="headerlink" href="#application-services-layer-7" title="Permalink to this headline">¶</a></h2>
+<p>Application services use a format with binary tagging in order to
+achieve upward and downward compatibility of the services. Each node is
+identified with a unique number (<strong>tag</strong>) and its length. Together, the
+tag and the length form the <strong>header</strong> of a node. The node either
+contains data with a fixed structure or sub nodes, but never both at the
+same time.</p>
+<p>Each Layer 7 packet starts with a general header that defines, among
+other parameters, the service to be executed via <strong>service group</strong> and
+<strong>service number</strong>. The service group corresponds to a communication
+port. A service handler can thus register on a certain service group and
+will then receive all requests for this service.</p>
+<p>If a service requires more space than is offered by the communication
+buffer for the associated connection, the request has to be split into
+several service-specific requests (each of which has to be acknowledged
+with an associated reply).</p>
+<p>Each level 7 service handler must be registered at the generic level 7
+server (CmpSrv). This can be done in a C component with the following
+interface function: CAL_ServerRegisterServiceHandler(&lt;ServiceGroupt&gt;,
+&lt;Handler&gt;);</p>
+<p>To handle level 7 services in IEC, there is a different way. For this,
+the component must register a callback handler at the event manager. So
+CmpEventMgr.library must be added. Additionally the CmpSrv.library must
+be added to see, which event parameters are transmitted.</p>
+<p>Example:</p>
+<p>Declaration:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>Result : RTS\_IEC\_RESULT;
+hEvent : RTS\_IEC\_EVENT;
+</pre></div>
+</div>
+<p>Implementation (first cycle in a program or FB_Init method in a
+function block):</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>hEvent := EventOpen(EVTPARAMID\_CmpSrv, CMPID\_CmpSrv, Result);
+Result := EventRegisterCallbackFunction(hEvent, ADR(&lt;Handler&gt;));
+</pre></div>
+</div>
+<p>After that, all services with the specified service group are generating
+an event, at which the IEC event handler is called, e.g.:</p>
+<p>Declaration:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>FUNCTION EventCallbackFunction : UDINT
+VAR_INPUT
+   pEventParam : POINTER TO EventParam;
+END_VAR
+VAR
+  pServiceParam : POINTER TO EVTPARAM_CmpSrv;
+END_VAR
+</pre></div>
+</div>
+<p>Implementation:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="nl">pServiceParam</span> <span class="p">:</span><span class="o">=</span> <span class="n">pEventParam</span><span class="o">^</span><span class="p">.</span><span class="n">pParameter</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>With pServiceParam, all parameters of a standard service handler are
+accessible!</p>
+<p>The feature of the event manager provides to register a callback method
+of a function block too. So level 7 services can be handled in an
+encapsulated function block.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="comm_topology.html" title="1.5.4. Network Topology and Addressing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="comm_general.html" title="1.5.2. General"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="communication.html" >1.5. Communication</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

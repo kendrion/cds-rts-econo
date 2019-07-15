@@ -1,0 +1,204 @@
+.. _io_drivers_diagnostic:
+
+Diagnostic Information
+----------------------
+
+The diagnostic information consists of two different parts:
+
+1. Bit-Field in every connector for the **general** diagnostic
+   information
+
+1. Extended diagnostic information of a device with **detailed**
+   information
+
+The Bit-Field can be used e.g. for the online-diagnostic information in
+the device tree to see, if one device has an error or has some
+information for the user.
+
+The extended diagnostic information can be used to display some device
+specific information about an error or a special detected state.
+
+These parameters are explained now in detail.
+
+General diagnostic information bit-field
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The actual state of a device can be published in a bit-field, that is a
+generic part of each connector. This is a bit-field (32-Bit) with the
+following meaning:
+
++------------------------------------+------------+------------+----------------------------------------------+
+|     Bitname                        | Bit-Value  | Is set     |     Description                              |
+|                                    |            | by         |                                              |
++====================================+============+============+==============================================+
+| CF_ENABLE                          | 0x0001     | IO-Config  | Connector enabled in the IO-configuration    |
++------------------------------------+------------+------------+----------------------------------------------+
+| CF_DRIVER_AVAILABLE                | 0x0010     | CmpIoMgr   | A driver has registered to this device,      |
+|                                    |            |            | so the device will be supported by a driver. |
++------------------------------------+------------+------------+----------------------------------------------+
+| CF_CONNECTOR_FOUND                 | 0x0020     | IoDriver   | Connector found (device detected)            |
++------------------------------------+------------+------------+----------------------------------------------+
+| CF_CONNECTOR_CONFIGURED            | 0x0040     | IoDriver   | Connector configured                         |
++------------------------------------+------------+------------+----------------------------------------------+
+| CF_CONNECTOR_ACTIVE                | 0x0080     | IoDriver   | Connector active                             |
+|                                    |            |            | (bus is active)                              |
++------------------------------------+------------+------------+----------------------------------------------+
+| CF_CONNECTOR_BUS_ERROR             | 0x0100     | IoDriver   | Bus error                                    |
++------------------------------------+------------+------------+----------------------------------------------+
+| CF_CONNECTOR_ERROR                 | 0x0200     | IoDriver   | General error                                |
++------------------------------------+------------+------------+----------------------------------------------+
+| CF_CONNECTOR_DIAGNOSTIC_AVAILABLE  | 0x0400     | IoDriver   | Extended diagnostic information available    |
++------------------------------------+------------+------------+----------------------------------------------+
+
+The Connector flags must always be set out of the IO-diver with the
+functions IoMgrConfigSetDiagnosis() and IoMgrConfigResetDiagnosis() of
+the IO-manager to set and reset single diagnostic bits.
+
+If CF_CONNECTOR_DIAGNOSTIC_AVAILABLE is set, two diagnostic
+parameters out of the device description are used to transmit further
+extended information.
+
+This bitfields is monitored by CODESYS, if the target is online.
+
+If everything is OK (the bits CF_ENABLE, CF_DRIVER_AVAILABLE,
+CF_CONNECTOR_FOUND, CF_CONNECTOR_CONFIGURED, CF_CONNECTOR_ACTIVE
+are set), the following Icon is displayed at the corresponding device
+(connector): 
+
+.. image:: ./images/icon_fieldbus_running.png
+
+If something is wrong (one of the bits CF_CONNECTOR_BUS_ERROR,
+CF_CONNECTOR_ERROR or CF_CONNECTOR_DIAGNOSTIC_AVAILABLE is set or
+one of the other bits is not set), the following Icon is displayed at
+the corresponding device (connector):
+
+.. image:: ./images/icon_fieldbus_init.png
+
+After a new initialization of the fieldbus (new download, reset of
+application) the state of a fieldbus (CF_CONNECTOR_ACTIVE flag is set
+or not) depends on whether the fieldbus is already running or not. This
+means that it depends on the fieldbus, if the connector has got a green
+(fieldbus already running) or an red (fieldbus not running) icon after a
+new initialization.
+
+The table shows the icons of some field busses after a new
+initialization:
+
++----------------------------+-----------------------------------------------+------------------------------------------------------------------+
+| Fieldbus                   | Icon after new Initialization                 |     Description                                                  |
++============================+===============================================+==================================================================+
+| 3S CANopen stack           | .. image:: ./images/icon_fieldbus_init.png   | Initialization is done in the first cycles of the application.   |
++----------------------------+-----------------------------------------------+------------------------------------------------------------------+
+| 3S Ethercat stack          | .. image:: ./images/icon_fieldbus_init.png   | Initialization is done in the first cycles of the application.   |
++----------------------------+-----------------------------------------------+------------------------------------------------------------------+
+| 3S Modbus TCP              | .. image:: ./images/icon_fieldbus_init.png   | Initialization is done in the first cycles of the application.   |
++----------------------------+-----------------------------------------------+------------------------------------------------------------------+
+| 3S Modbus Serial           | .. image:: ./images/icon_fieldbus_init.png   | Initialization is done in the first cycles of the application.   |
++----------------------------+-----------------------------------------------+------------------------------------------------------------------+
+| 3S SERCOS stack            | .. image:: ./images/icon_fieldbus_init.png   | Initialization is done in the first cycles of the application.   |
++----------------------------+-----------------------------------------------+------------------------------------------------------------------+
+| Hilscher CIF Profibus      | .. image:: ./images/icon_fieldbus_running.png| Fieldbus is started at the end of IoUpdateConfiguration.         |
++----------------------------+-----------------------------------------------+------------------------------------------------------------------+
+| Hilscher CIFX Profibus     | .. image:: ./images/icon_fieldbus_running.png| Fieldbus is started at the end of IoUpdateConfiguration.         |
++----------------------------+-----------------------------------------------+------------------------------------------------------------------+
+| Hilscher CIFX EthernetIP   | .. image:: ./images/icon_fieldbus_running.png| Fieldbus is started at the end of IoUpdateConfiguration.         |
++----------------------------+-----------------------------------------------+------------------------------------------------------------------+
+| Hilscher CIFX Profinet     | .. image:: ./images/icon_fieldbus_running.png| Fieldbus is started at the end of IoUpdateConfiguration.         |
++----------------------------+-----------------------------------------------+------------------------------------------------------------------+
+
+Extended diagnostic parameter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The parameter with the attribute "diag" can be a structure, string or
+whatever. This contains the extended diagnostic information of this
+device, if the corresponding device dialog with the register card
+"Status" is opened in CODESYS. In this situation, a IoDrvReadParameter()
+/IoDrvReadParameterById() is called of the corresponding driver of the
+device.
+
+The parameter can be specified in the device description as followed:
+
+.. code-block:: C
+       
+  <Parameter ParameterId="327936" type="local:TslaveDiag">
+   <Attributes channel="diag" download="true" functional="false" offlineaccess="read" onlineaccess="read" />
+     <Default>
+         <Element name="Status1">0</Element>
+         <Element name="Status2">0</Element>
+         <Element name="Status3">0</Element>
+         <Element name="MasterAddress">0</Element>
+         <Element name="IdentNumberHigh">0</Element>
+         <Element name="IdentNumberLow">0</Element>
+         <Element name="ExtDiag en">58</Element>
+         <Element name="ExtDiag">[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]</Element>
+     </Default>
+     <Name name="local:Id327936">SlaveDiag</Name>
+	 <Description name="local:Id327936.Desc">ProfiBus DP slave diagnostic information</Description>
+  </Parameter>
+  
+
+Extended diagnostic acknowledge parameter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To acknowledge the extended diagnostic information, there is a second
+parameter with the attribute "diagAck". This is always a **bool**
+parameter to reset the CF_CONNECTOR_DIAGNOSTIC _AVAILABLE bit. This
+is executed by pressing the Diag Acknowledge button in the device
+dialog. In this situation, a IoDrvWriteParameter()
+/IoDrvWriteParameterById() is called of the corresponding driver of the
+device.
+
+After pressing this button, the diag flag
+CF_CONNECTOR_DIAGNOSTIC_AVAILABLE must be reset by the IO-driver.
+After this, the parameter with the "diag" attribute is never read by
+CODESYS, until CF_CONNECTOR_DIAGNOSTIC_AVAILABLE is set the next
+time.
+
+.. code-block:: C
+
+ <Parameter Parameter"d="327937" type="std:BOOL">
+   <Attributes channel="diagack" download="true" functional="false" offlineaccess="read" onlineaccess="readwrite" />
+   <Default>0</Default>
+   <Name name="local:Id327937">SlaveDiagAcknowledge</Name>
+   <Description name="local:Id327937.Desc">ProfiBus DP slave diagnostic acknowledge</Description>
+ </Parameter>
+
+Implementation notes
+~~~~~~~~~~~~~~~~~~~~
+
+To realize an identical behavior of all IO-drivers regarding the
+IO-diagnostic information, some implementation details and requirement
+must be known:
+
++-------------------+---------------------------------------------------------------------------------------+
+|     Requirement   |                                                                                       |
++===================+=======================================================================================+
+| R01               | The diagnostic bits in the Bit-Field must be written cyclically from the IO-driver    |
+|                   | itself! For this, the standard IO-driver interface function IoDrvGetModuleDiagnosis() | 
+|                   | contains the cyclic diagnostic transfer.                                              |
+|                   | This function is not called automatically from the runtime kernel.                    |
+|                   | Typically, this function is called implicit in the IO-driver in IoDrvStartBusCycle.   |
++-------------------+---------------------------------------------------------------------------------------+
+| R02               | IoDrvGetModuleDiagnosis() must only set the diagnostic bits cyclically and must not   |
+|                   | read any time consuming specific diagnostic information of a slave! So the runtime of |
+|                   | this function must be as short as possible, because this has an effect on the cycle   |
+|                   | time of an IEC-task!                                                                  |
+|                   | If the time is too long to set the information in one cycle, only diagnostic          |
+|                   | information of a few slaves should be read per cycle!                                 |
++-------------------+---------------------------------------------------------------------------------------+
+| R03               | If a slave is disabled in the IO-configuration, no diagnostic information may be set  |
+|                   | (CF_ENABLE is disabled in this case)                                                  |         
++-------------------+---------------------------------------------------------------------------------------+
+| R04               | If a slave is configured but not available physically (e.g. bus is disconnected),     |
+|                   | the diagnostic information must be updated always!                                    |         
++-------------------+---------------------------------------------------------------------------------------+
+| R05               | Unimportant extended diagnostic information should be acknowledged and handled by the |
+|                   | IO-driver implicitly. This depends on the type of fieldbus:                           |
+|                   | **Profibus DP:**                                                                      |
+|                   | For example, if a slave informs about the activation of the watchdog is a information,| 
+|                   | that can be implicitly acknowledged.                                                  |
++-------------------+---------------------------------------------------------------------------------------+
+| R06               | The relevant extended diagnostic information must be available, until this parameter  |
+|                   | is acknowledged by the user (or the program!) with the extended diagnostic            |
+|                   | acknowledge parameter!                                                                |
++-------------------+---------------------------------------------------------------------------------------+

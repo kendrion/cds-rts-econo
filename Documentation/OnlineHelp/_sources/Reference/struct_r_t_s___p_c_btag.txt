@@ -1,0 +1,122 @@
+.. first line of composition.rst template
+
+.. first line of struct.rst template
+
+.. _struct_r_t_s___p_c_btag:
+
+===========================
+RTS_PCBtag Struct Reference
+===========================
+
+| #include ":ref:`CmpMemPoolItf.h <_cmp_mem_pool_itf_8h>`"
+
+Data Fields
+-----------
+
+- RTS_SIZE :ref:`ulBlockSize <struct_r_t_s___p_c_btag_1aa8ad776adf60e66da130f7283ec4b2d8>`
+- :ref:`PF_MEMBLOCK_DELETEFUNCTION <group___cmp_mem_pool_itf___staticdefines_1gadc7b3d142a828c2fdf0e48a5825f2ab5>` :ref:`pfDeleteFunction <struct_r_t_s___p_c_btag_1a66309686f0ca72ef7f1f08878cd767ab>`
+- RTS_I32 :ref:`nRefCount <struct_r_t_s___p_c_btag_1abc1cd8673eac6e4fb746ed48984b5648>`
+- RTS_UI32 :ref:`options <struct_r_t_s___p_c_btag_1ac296735742e4f15248917ed2487e3ad1>`
+- RTS_HANDLE :ref:`hSem <struct_r_t_s___p_c_btag_1aa11ac362ec1d0b3475e28f45f279067d>`
+- RTS_UINTPTR :ref:`mask <struct_r_t_s___p_c_btag_1a0c82ebbf0eaaea72255544d93c56f66b>`
+- union RTS_PCBtag::@11 :ref:`lock <struct_r_t_s___p_c_btag_1a597a177f0bcacaa2e3a1552bb9a798f8>`
+- struct :ref:`RTS_PEBtag <struct_r_t_s___p_e_btag>` * :ref:`pPEB <struct_r_t_s___p_c_btag_1a362a91bac60270d9eab57161389fae22>`
+- struct :ref:`RTS_BCBtag <struct_r_t_s___b_c_btag>` * :ref:`pBCB <struct_r_t_s___p_c_btag_1a5802753c3624faab2e1a21a941f59eb3>`
+- struct :ref:`RTS_BCBtag <struct_r_t_s___b_c_btag>` * :ref:`pBlocksInUse <struct_r_t_s___p_c_btag_1a6a36d3d97b341c68817d3b80dfe34001>`
+- struct :ref:`RTS_BCBtag <struct_r_t_s___b_c_btag>` * :ref:`pTail <struct_r_t_s___p_c_btag_1a9f3e4c9201369e8bc3eb003fda031266>`
+- RTS_UI32 :ref:`alignment <struct_r_t_s___p_c_btag_1a2c7b1fea78c1bf3c7adda14215540e42>`
+
+Detailed Description
+--------------------
+
+Pool Control Block. This is the header within a MemPool to manage it. ATTENTION:
+
+- This structure members are managed by the CmpMemPool and so don't modify these entries directly!!!!!
+
+Field Documentation
+-------------------
+
+.. _struct_r_t_s___p_c_btag_1aa8ad776adf60e66da130f7283ec4b2d8:
+
+RTS_SIZE RTS_PCBtag::ulBlockSize
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Block size of each pool block
+
+.. _struct_r_t_s___p_c_btag_1a66309686f0ca72ef7f1f08878cd767ab:
+
+PF_MEMBLOCK_DELETEFUNCTION RTS_PCBtag::pfDeleteFunction
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Delete function pointer which is called optional to delete a MemPool block
+
+.. _struct_r_t_s___p_c_btag_1abc1cd8673eac6e4fb746ed48984b5648:
+
+RTS_I32 RTS_PCBtag::nRefCount
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Reference counter which is incremented with :ref:`MemPoolAddRef_LF() <group___cmp_event_mgr_dep_1gac9ab177f46b0c0730419a237b9161a3a>` and is decremented with :ref:`MemPoolReleaseRef_LF() <group___cmp_event_mgr_dep_1ga6ad6db0aa641eab484084726036ce716>` to prevent, that the chain of used blocks is not changed during iteration over all elements.
+
+.. _struct_r_t_s___p_c_btag_1ac296735742e4f15248917ed2487e3ad1:
+
+RTS_UI32 RTS_PCBtag::options
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Options of the MemPool. See the category "MemPool options" for detailed information
+
+.. _struct_r_t_s___p_c_btag_1aa11ac362ec1d0b3475e28f45f279067d:
+
+RTS_HANDLE RTS_PCBtag::hSem
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _struct_r_t_s___p_c_btag_1a0c82ebbf0eaaea72255544d93c56f66b:
+
+RTS_UINTPTR RTS_PCBtag::mask
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _struct_r_t_s___p_c_btag_1a597a177f0bcacaa2e3a1552bb9a798f8:
+
+union RTS_PCBtag::@11  RTS_PCBtag::lock
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _struct_r_t_s___p_c_btag_1a362a91bac60270d9eab57161389fae22:
+
+struct RTS_PEBtag* RTS_PCBtag::pPEB
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pointer to next extension block
+
+.. _struct_r_t_s___p_c_btag_1a5802753c3624faab2e1a21a941f59eb3:
+
+struct RTS_BCBtag* RTS_PCBtag::pBCB
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pointer to free block list
+
+.. _struct_r_t_s___p_c_btag_1a6a36d3d97b341c68817d3b80dfe34001:
+
+struct RTS_BCBtag* RTS_PCBtag::pBlocksInUse
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pointer to first block in use resp. the linked chain of used blocks!
+
+.. _struct_r_t_s___p_c_btag_1a9f3e4c9201369e8bc3eb003fda031266:
+
+struct RTS_BCBtag* RTS_PCBtag::pTail
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Pointer to tail block in chain of used blocks!
+
+.. _struct_r_t_s___p_c_btag_1a2c7b1fea78c1bf3c7adda14215540e42:
+
+RTS_UI32 RTS_PCBtag::alignment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+------------------------------------------------------------------------
+The documentation for this struct was generated from the following file:
+C:/Jenkins/workspace/3.5.14.x/BUILD_V3.5.14.x_RTS_Create_Docu/CodesysSpV3/Tools/GenerateDocumentation/Doxygen/temp/CmpMemPoolItf.h
+
+.. last line of struct.rst template
+.. last line of composition.rst template
+
+

@@ -1,0 +1,49 @@
+.. _io_drivers:
+
+I/O Drivers
+===========
+
+An I/O driver is a component that operates and supports a specific
+hardware or device. Such an I/O driver typically has to perform the
+following functions:
+
+-  Physical access to the device
+
+-  Detection and initialization of the device
+
+-  Data access to and data exchange with the device (update of IO
+   channels)
+
+-  Support of diagnostic information of the device
+
+-  Optional functions like scanning sub devices, parameter access, etc.
+
+The update of IO channels can be illustrated like this:
+
+This is a simplified picture. There can be more than one I/O driver
+instance. Each instance will update parts of the Inputs and Outputs
+data. Even with more than one task, there is only one Inputs and one
+Outputs area.
+
+The cloud symbolizes I/O driver specific data. This can be shared memory
+of a Hilscher fieldbus card, or the contents of a CANOpen or EtherCAT
+message.
+
+.. image:: ./images/io_drivers_channel_update.png
+
+.. toctree::
+   :maxdepth: 1
+
+   io_drivers_concept
+   io_drivers_interfaces
+   io_drivers_optional_interfaces
+   io_drivers_io_manager
+   io_drivers_access_io_config
+   io_drivers_in_c
+   io_drivers_in_iec
+   io_drivers_diagnostic
+   io_drivers_io_consistency
+   io_drivers_io_drv_consistency
+   io_drivers_external_can_sync
+   io_drivers_data_handling
+   

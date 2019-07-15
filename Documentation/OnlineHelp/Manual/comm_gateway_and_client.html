@@ -1,0 +1,183 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.5.7. Gateway and Client &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.5. Communication" href="communication.html" />
+    <link rel="next" title="1.5.8. Implementation Aids" href="comm_implementation_aids.html" />
+    <link rel="prev" title="1.5.6. Layer 3 Services" href="comm_layer3_services.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="comm_implementation_aids.html" title="1.5.8. Implementation Aids"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="comm_layer3_services.html" title="1.5.6. Layer 3 Services"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="communication.html" accesskey="U">1.5. Communication</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="comm_layer3_services.html"
+                        title="previous chapter">1.5.6. Layer 3 Services</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="comm_implementation_aids.html"
+                        title="next chapter">1.5.8. Implementation Aids</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/comm_gateway_and_client.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="gateway-and-client">
+<span id="comm-gateway-and-client"></span><h1>1.5.7. Gateway and Client<a class="headerlink" href="#gateway-and-client" title="Permalink to this headline">¶</a></h1>
+<p>As a minimum, a gateway consists of the standard communication stack and
+an additional gateway component. This makes the gateway into a network
+node. In principle, each node can be extended to a gateway by
+integrating this component. A runtime system can also take on the role
+of a gateway. Via a special gateway protocol this component provides
+external clients with access to nodes within the network, in which case
+communication is via the gateway instead of the client. The gateway has
+no other special role within the network. A network can therefore have
+any number of gateways, and the gateway can be positioned anywhere in
+the network. Two positions are particularly suitable in order to avoid
+unnecessary bandwidth problems:</p>
+<ul class="simple">
+<li>As top-level node: In general this is where the network with the
+highest bandwidth is located. In addition, access to all branches
+involves the same level of complexity.</li>
+<li>Near the target system: This solution is particularly suitable if the
+gateway is mainly intended for a particular subnet that may be
+connected to the rest of the network via low (available) bandwidth.</li>
+</ul>
+<p>If more clients can communicate with a target system than the number of
+channels the system can make available on Layer 4, the gateway can
+multiplex the requests for different clients on one channel. To this end
+the gateway opens a single channel for all clients and sends requests to
+the clients in turn, waits for the reply, sends the next request, etc.
+While this technique slows down communication of the individual clients
+to some extent, for sporadic requests it uses significantly less
+resources in the target system.</p>
+<p>Common clients are tools for programming (e.g. CODESYS itself),
+visualization, remote diagnostics, etc. The main feature of a client is
+that it is generally only connected to the network on a temporary basis.
+In addition, a client is always the active communication partner, i.e. a
+node will usually not establish communication with, but only respond to
+requests from a client.</p>
+<p>The communication between client and gateway is based on <strong>communication
+drivers</strong>. In contrast to communication between block drivers this
+communication is connection-oriented. In addition there is no (direct)
+limitation of the maximum packet sizes. However, since the main part of
+the communication is forwarding of Layer 7 packets, the packet size is
+effectively limited by the negotiated size of the communication buffer
+plus administrative data.</p>
+<p>Gateway requests include the following components:</p>
+<ul class="simple">
+<li>Network scan: From the scan the gateway generates a request for the
+name service and supplies all the answers of the available nodes in
+the network as response. Network scan (broadcast) is not supported by
+the CmpBlkDrvTcp.</li>
+<li>Address services: Initiation of address assignment, etc.</li>
+<li>Layer 4 services: Setup and removal of a channel, sending of packets
+via this channel. By default the content and structure of these
+packets (e.g. monitoring request) is not known to the gateway. It
+merely forwards these packets to the associated receiver without
+interpreting them.</li>
+<li>Diagnostics and administration of the gateway itself.</li>
+<li>…</li>
+</ul>
+<p>These services can be extended as required.</p>
+<p>A basic client implementation is available for clients (<em>GWClient</em>),
+that covers communication with the gateway, integration of the
+communication drivers, etc. Specific clients should use this library in
+order to avoid getting bogged down in details of the communication with
+the gateway.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="comm_implementation_aids.html" title="1.5.8. Implementation Aids"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="comm_layer3_services.html" title="1.5.6. Layer 3 Services"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="communication.html" >1.5. Communication</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

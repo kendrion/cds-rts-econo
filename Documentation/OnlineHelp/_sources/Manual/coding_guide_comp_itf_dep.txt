@@ -1,0 +1,68 @@
+.. _coding_guide_comp_itf_dep:
+
+Component interfaces and dependencies
+-------------------------------------
+
+1. | Calling another component interface function must always be called
+     with the **CAL\_** prefix
+   | (see :ref:`arch_comp_itf_architecture`).
+   | .. note:: The CAL\_ macro must not be used for calling functions
+     within the same component!**
+
+2. Optional dependent interface functions must be checked with the check
+   function **CHK\_**\ Fct the availability before calling CAL\_Fct !
+
+3. Usually all interface (\*Itf.h) and dependency files (\*Dep.h) should
+   be created from m4 compiler. This enables changes to the component
+   link process to be carried out easily.
+
+4. | **CDECL** must precede each function prototype (\*Itf.h) and also the implementation of each function, e.g.:
+   | int CDECL Test(int i); /\* prototype in \*.itf.h \*/
+   | int CDECL Test(int i)
+   | {
+   | …
+   | }
+
+5. | **CDECL\_EXT** is created automatically before each function
+     prototype of an external library function. Is used in all
+     prototypes of external library functions in order to attach huge
+     casts to these functions.
+   | Therefore this macro must also be used for every implementation,
+     thus:
+   | int CDECL CDECL\_EXT \_\_testlibfct (int i); /\* prototype in
+     \*.itf.h \*/
+   | int CDECL CDECL\_EXT \_\_testlibfct(int i) {…}
+
+6. | Only use standard ANSI-C functions and headers (no strcmpi() or
+     similar)!
+   | Don't use any operating system–specific functions in kernel
+     components!!!
+   | Always use the Sys-API or CMUtils functions for this purpose.
+
+7. Declare all local functions as static (name collisions in the case of
+   static linking)
+
+8. All interface functions of the components should:
+
+   -  usually returns **RTS\_RESULT** as a standard return value
+   -  always use **RTS\_HANDLE** as handle and \**RTS\_INVALID\_HANDLE** as invalid handle value
+   -  if RTS\_HANDLE is returned, then always include \**RTS\_RESULT \*pResult** as a parameter in the prototype. Hence the exact failure cause can be determined in case the RTS\_INVALID\_HANDLE is returned.
+
+9. To specify a task, use always one of the following m4-Macros in the
+   Dep.m4 file:
+
+   -  | TASK(\`Name', \`Priority):
+      | 'This macro is to specify a normal task. Please specify a comment for the documentation:
+      | /\*\*
+      | \* <category>Task</category>
+      | \* <description>
+      | \* Block driver communication task.
+      | \* </description>
+      | \*/
+      | TASK(\`BlkDrv'dp', \`TASKPRIO\_HIGH\_'ND')
+
+   -  | TASKPREFIX(\`Name', \`Priority):
+      | Task prefix is used, if specified task name is extended by some additional information (like a channel number, etc.).
+
+   -  | TASKPLACEHOLDER(\`Name', \`Priority):
+      | Placeholder of a task that is replace by the configured name (e.g. by the user defined name of an IEC-task).

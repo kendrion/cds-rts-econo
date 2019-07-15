@@ -1,0 +1,142 @@
+.. _ov_kernel_startup_shutdown:
+
+Startup and Shutdown
+--------------------
+
+The startup of the runtime system is executed in a strong layer based
+way in order to avoid that a component calls another component that is
+not initialized.
+
+A defined shutdown is typically not possible on embedded targets. The
+power is switched off there and the runtime system has no time to make a
+defined shutdown. But on systems with e.g. an UPS a defined shutdown is
+possible. For these cases, the runtime systems make a defined and
+orderly shutdown.
+
+Startup
+~~~~~~~
+
+The startup is done in the following main steps:
+
+1. Basic settings of the runtime system are verified.
+
+2. Components get loaded and initialized.
+
+3. Boot project gets loaded, IEC tasks get created, application(s) get(s) started.
+
+4. Communication server gets started and corresponding tasks get created.
+
+See in the following a more detailed description of the particular
+steps:
+
+1. The basic runtime system settings are checked (data types, byte order setting, etc.).
+
+2. The component manager loads all so-called *system components*. The system components are components that are always loaded and initialized before all other components are loaded. For example the logger component for logging all start up events is such a system component.
+
+3. The ComponentEntry() routine is called by every system component in order to link all components with the component manager.
+
+4. The system components will be called to export their interface functions and to import the needed interface functions.
+
+5. The component manager loads all other components (in the static linkage case, nothing must be done; in the dynamic linkage case, the components are loaded dynamically).
+
+6. The ComponentEntry() routine is called by every component in order to link all components with the component manager.
+
+7. The other components will be called to export their interface functions and to import the needed interface functions.
+
+8. Initialization:
+
+   The initialization of the system components is done with the hook CH\_INIT\_SYSTEM. 
+   In this hook, all systems components do their init code.
+
+   8.1. Right after CH\_INIT\_SYSTEM there is a second hook for the initialization of the system
+        components. It can be used to do some dependent stuff which needs a CH\_INIT\_SYSTEM before.
+
+   8.2. The initialization of all other components is done with the hook CH\_INIT. Here all local
+        variables should be initialized.
+
+   8.3. The third level of initialization is done with the hook CH\_INIT2. 
+        In this hook, you can use all interfaces to other components! You can expect here, that all other components are initialized and can be used.
+        e.g. Events should be created here.
+
+   8.4. The fourth level of initialization is done with the hook CH\_INIT3. 
+        In this hook, you can use  all interfaces to other components! You can expect here, that all other components are initialized and can be used.
+        e.g. Registration on events should be done here.
+
+   8.5. The fifth level of initialization is done with the hook CH\_INIT\_SYSTEM\_TASKS. 
+        Here all tasks can be started, that are necessary e.g. for the operation of the IEC application.
+
+   8.6. The sixth of initialization is done with the hook CH\_INIT\_TASKS. 
+        Here all other tasks can be started. Typically here the boot project is loaded and the PLC tasks are created.
+
+   8.7. The seventh level of initialization is done with the hook CH\_INIT\_COMM. 
+        Here all level 7 servers are started to open the communication to the other systems.
+
+   8.8. To inform about that the initialization has finished, the hook CH\_INIT\_FINISHED is called.
+
+After the last hook (CH\_INIT\_FINISHED), the runtime system is
+completely initialized and started.
+
+.. _operating_mode:
+
+Operating mode
+~~~~~~~~~~~~~~
+
+After the startup the runtime system goes into the operating mode. This
+mode is done with a cyclic call of the hook CH\_COMM\_CYCLE. This hook
+is called in the idle and main loop of the runtime system. In this hook
+every component can do some background jobs.
+
+In a single tasking system the hook is the only position where all jobs
+are done, like communication, PLC task execution, etc.
+
+The cycle time of the CH\_COMM\_CYCLE hook cannot be predicted. It
+belongs on the jobs that are done in all components. So try to minimize
+the jobs that are done in this hook to avoid an overloaded system!
+
+Shutdown
+~~~~~~~~
+
+An orderly shutdown of the runtime system is only possible on targets
+with an UPS or with a defined shutdown. The shutdown is done by the
+following hooks, which basically are the same as performed during
+startup but in reverse order:
+
+1. Deinitialization:
+
+  1.1. The first level of deinitialization is done in the hook
+       CH\_EXIT\_COMM. Here all level 7 servers should close their
+       communication channels and the server tasks.
+
+  1.2. The second level of deinitialization is done in the hook
+       CH\_EXIT\_TASKS. Here all active tasks should be deleted except
+       the tasks that are needed by the IEC application.
+
+  1.3. The third level of deinitialization is done in the hook
+       CH\_EXIT\_SYSTEM\_TASKS. Here all tasks must be deleted.
+
+  1.4. The fourth level of deinitialization is done in the hook CH\_EXIT3.
+       In the prepare exit hook, all components should unregister from 
+	   other components to dismiss the dependency to other components.
+
+  1.5. The fifth level of deinitialization is done in the hook CH\_ EXIT2.
+       Here all local resources can be released, if they were occupied
+       in CH\_INIT2.
+
+  1.6. The sixth level of deinitialization is done in the hook CH\_ EXIT.
+       Here all local resources can be released and the deinitialization
+       of all components can be done.
+
+  1.7. The hook CH\_EXIT\_SYSTEM2 is called to deinitialize all system 
+       components.
+
+  1.8. At least, the hook CH\_EXIT\_SYSTEM is called to deinitialize all 
+       system components.
+
+2. After the deinitialization, the components (except the system
+       components) are unloaded.
+
+3. At least the system components are unloaded.
+
+After the unloading of the system components the runtime system is
+completely down and released.
+

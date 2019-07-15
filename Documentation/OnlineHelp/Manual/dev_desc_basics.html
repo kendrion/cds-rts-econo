@@ -1,0 +1,490 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.7.1. Basics &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.7. Device Description" href="device_description.html" />
+    <link rel="next" title="1.7.2. Device" href="dev_desc_device.html" />
+    <link rel="prev" title="1.7. Device Description" href="device_description.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="dev_desc_device.html" title="1.7.2. Device"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="device_description.html" title="1.7. Device Description"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="device_description.html" accesskey="U">1.7. Device Description</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.7.1. Basics</a><ul>
+<li><a class="reference internal" href="#defining-types">1.7.1.1. Defining types</a><ul>
+<li><a class="reference internal" href="#bitfields">1.7.1.1.1. Bitfields</a></li>
+<li><a class="reference internal" href="#range-types">1.7.1.1.2. Range types</a></li>
+<li><a class="reference internal" href="#array-types">1.7.1.1.3. Array types</a></li>
+<li><a class="reference internal" href="#simple-structures">1.7.1.1.4. Simple structures</a></li>
+<li><a class="reference internal" href="#strings">1.7.1.1.5. Strings</a></li>
+<li><a class="reference internal" href="#types">1.7.1.1.6. Types</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#defining-strings-for-localization">1.7.1.2. Defining strings for localization</a></li>
+<li><a class="reference internal" href="#defining-files-and-adding-icons-and-images">1.7.1.3. Defining files and adding icons and images</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="device_description.html"
+                        title="previous chapter">1.7. Device Description</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dev_desc_device.html"
+                        title="next chapter">1.7.2. Device</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/dev_desc_basics.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="basics">
+<span id="dev-desc-basics"></span><h1>1.7.1. Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h1>
+<p>In the common part of a device description datatypes, located strings and referenced files can be specified.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;</span>
+<span class="nt">&lt;DeviceDescription</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.3s-software.com/schemas/DeviceDescription-1.0.xsd&quot;</span> <span class="na">xmlns:ts=</span><span class="s">&quot;http://www.3s-software.com/schemas/TargetSettings-0.1.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Types&gt;&lt;/Types&gt;</span>
+    <span class="nt">&lt;Strings&gt;&lt;/Strings&gt;</span>
+    <span class="nt">&lt;Files&gt;&lt;/Files&gt;</span>
+    ...
+<span class="nt">&lt;/DeviceDescription&gt;</span>
+</pre></div>
+</div>
+<p>Every single aspect is documented in the following subchapters.</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#id1">Defining types</a></li>
+<li><a class="reference internal" href="#id8">Defining strings for localization</a></li>
+<li><a class="reference internal" href="#id10">Defining files and adding icons and images</a></li>
+</ul>
+</div></blockquote>
+<div class="section" id="defining-types">
+<span id="id2"></span><h2>1.7.1.1. <span class="target" id="id1">Defining types</span><a class="headerlink" href="#defining-types" title="Permalink to this headline">¶</a></h2>
+<p>The Types section contains type definitions for bitfields, ranges,
+arrays resp. simple structures:</p>
+<div class="section" id="bitfields">
+<span id="id3"></span><h3>1.7.1.1.1. Bitfields<a class="headerlink" href="#bitfields" title="Permalink to this headline">¶</a></h3>
+<p>Example:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;Types</span> <span class="na">namespace=</span><span class="s">&quot; **localTypes** &quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;BitfieldType</span> <span class="na">basetype=</span><span class="s">&quot; **std:BYTE** &quot;</span> <span class="na">name=</span><span class="s">&quot; **TbitFieldByte** &quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Component</span> <span class="na">identifier=</span><span class="s">&quot; **Bit0** &quot;</span> <span class="na">type=</span><span class="s">&quot; **std:BOOL** &quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;Default&gt;</span>**FALSE** <span class="nt">&lt;/Default&gt;</span>
+            <span class="nt">&lt;VisibleName</span> <span class="na">name=</span><span class="s">&quot; **local:Bit0** &quot;</span><span class="nt">&gt;</span> **Bit0** <span class="nt">&lt;/VisibleName&gt;</span>
+        <span class="nt">&lt;/Component&gt;</span>
+        <span class="nt">&lt;Component</span> <span class="na">identifier=</span><span class="s">&quot; **Bit1** &quot;</span> <span class="na">type=</span><span class="s">&quot; **std:BOOL** &quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;Default&gt;</span>**FALSE** <span class="nt">&lt;/Default&gt;</span>
+            <span class="nt">&lt;VisibleName</span> <span class="na">name=</span><span class="s">&quot; **local:Bit1** &quot;</span><span class="nt">&gt;</span> **Bit1** <span class="nt">&lt;/VisibleName&gt;</span>
+        <span class="nt">&lt;/Component&gt;</span>
+    <span class="nt">&lt;/BitfieldType&gt;</span>
+<span class="nt">&lt;/Types&gt;</span>
+</pre></div>
+</div>
+<p>This example defines two bits. The base type is byte. The I/O mapping
+tab in CODESYS will show two bit addresses and 1 byte address.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;Parameter</span> <span class="na">ParameterId=</span><span class="s">&quot;33554433&quot;</span> <span class="na">type=</span><span class="s">&quot;localTypes:TbitFieldByte&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Attributes</span> <span class="na">channel=</span><span class="s">&quot;input&quot;</span> <span class="na">download=</span><span class="s">&quot;true&quot;</span> <span class="na">offlineaccess=</span><span class="s">&quot;readwrite&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Default</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:Input1_1&quot;</span><span class="nt">&gt;</span>Digital Input<span class="nt">&lt;/Name&gt;</span>
+<span class="nt">&lt;/Parameter&gt;</span>
+</pre></div>
+</div>
+<p>For defined parameters the type must be the namespace of the type
+section and name of the specified defined type.</p>
+</div>
+<div class="section" id="range-types">
+<span id="id4"></span><h3>1.7.1.1.2. Range types<a class="headerlink" href="#range-types" title="Permalink to this headline">¶</a></h3>
+<p>The range type defines a subrange of a given base type. For example
+UDINT has a normal range from 0 to 4294967296. With the range type the
+maximum values are limited.</p>
+<p>Example:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;RangeType</span> <span class="na">basetype=</span><span class="s">&quot;std:UDINT&quot;</span> <span class="na">name=</span><span class="s">&quot;Trange&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Min&gt;</span>16#0<span class="nt">&lt;/Min&gt;</span>
+    <span class="nt">&lt;Max&gt;</span>16#1FFFFFFF<span class="nt">&lt;/Max&gt;</span>
+    <span class="nt">&lt;Default&gt;</span>0<span class="nt">&lt;/Default&gt;</span>
+<span class="nt">&lt;/RangeType&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="array-types">
+<span id="id5"></span><h3>1.7.1.1.3. Array types<a class="headerlink" href="#array-types" title="Permalink to this headline">¶</a></h3>
+<p>Parameters can also be defined as arrays with &#8220;std:ARRAY[0..10] OF
+DWORD&#8221;. In the I/O configuration tab of the programming system however
+only one line will be available and for this reason only one variable
+could be mapped to the complete array. So it is a better solution to
+define the special array type. Up to three dimensions are possible and
+in the mapping tab for each element a separate line will be shown.</p>
+<p>Example:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;ArrayType</span> <span class="na">name=</span><span class="s">&quot;TestArray&quot;</span> <span class="na">basetype=</span><span class="s">&quot;std:DWORD&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;FirstDimension&gt;</span>
+        <span class="nt">&lt;LowerBorder&gt;</span>0<span class="nt">&lt;/LowerBorder&gt;</span>
+        <span class="nt">&lt;UpperBorder&gt;</span>10<span class="nt">&lt;/UpperBorder&gt;</span>
+    <span class="nt">&lt;/FirstDimension&gt;</span>
+<span class="nt">&lt;/ArrayType&gt;</span>
+<span class="nt">&lt;Parameter</span> <span class="na">ParameterId=</span><span class="s">&quot;30&quot;</span> <span class="na">type=</span><span class="s">&quot;localTypes:TestArray&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Attributes</span> <span class="na">offlineaccess=</span><span class="s">&quot;readwrite&quot;</span> <span class="na">download=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Default&gt;</span>12<span class="nt">&lt;/Default&gt;</span>
+    <span class="nt">&lt;Default&gt;</span>23<span class="nt">&lt;/Default&gt;</span>
+    <span class="nt">&lt;Default&gt;</span>34<span class="nt">&lt;/Default&gt;</span>
+    <span class="nt">&lt;Default&gt;</span>35<span class="nt">&lt;/Default&gt;</span>
+    <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:NONE&quot;</span><span class="nt">&gt;</span>Array<span class="nt">&lt;/Name&gt;</span>
+<span class="nt">&lt;/Parameter&gt;</span>
+</pre></div>
+</div>
+<p>A new parameter with the defined array type is created and also default
+values are set to the first four elements.</p>
+</div>
+<div class="section" id="simple-structures">
+<span id="id6"></span><h3>1.7.1.1.4. Simple structures<a class="headerlink" href="#simple-structures" title="Permalink to this headline">¶</a></h3>
+<p>The structure type could define structures like in IEC:</p>
+<p>Example:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">TYPE</span> <span class="nl">TFMMU</span><span class="p">:</span>
+<span class="n">STRUCT</span>
+    <span class="nl">GlobStartAdr</span><span class="p">:</span> <span class="n">DWORD</span><span class="p">;</span>
+    <span class="nl">Length</span><span class="p">:</span> <span class="n">UINT</span><span class="p">;</span>
+<span class="n">END_STRUCT</span>
+<span class="n">END_TYPE</span>
+</pre></div>
+</div>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;StructType</span> <span class="na">name=</span><span class="s">&quot;TFMMU&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Component</span> <span class="na">identifier=</span><span class="s">&quot;globstartadr&quot;</span> <span class="na">type=</span><span class="s">&quot;std:DWORD&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Default&gt;</span>8000<span class="nt">&lt;/Default&gt;</span>
+        <span class="nt">&lt;VisibleName</span> <span class="na">name=</span><span class="s">&quot;local:globstartadr&quot;</span><span class="nt">&gt;</span>Global Start Address<span class="nt">&lt;/VisibleName&gt;</span>
+    <span class="nt">&lt;/Component&gt;</span>
+        <span class="nt">&lt;Component</span> <span class="na">identifier=</span><span class="s">&quot;length&quot;</span> <span class="na">type=</span><span class="s">&quot;std:uint&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Default&gt;</span>1<span class="nt">&lt;/Default&gt;</span>
+        <span class="nt">&lt;VisibleName</span> <span class="na">name=</span><span class="s">&quot;local:length&quot;</span><span class="nt">&gt;</span>Length<span class="nt">&lt;/VisibleName&gt;</span>
+    <span class="nt">&lt;/Component&gt;</span>
+<span class="nt">&lt;/StructType&gt;</span>
+<span class="nt">&lt;Parameter</span> <span class="na">ParameterId=</span><span class="s">&quot;32&quot;</span> <span class="na">type=</span><span class="s">&quot;localTypes:TFMMU&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Attributes</span> <span class="na">offlineaccess=</span><span class="s">&quot;readwrite&quot;</span> <span class="na">download=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:NONE&quot;</span><span class="nt">&gt;</span>Structure<span class="nt">&lt;/Name&gt;</span>
+<span class="nt">&lt;/Parameter&gt;</span>
+</pre></div>
+</div>
+<p>With this example a parameter with a structure is added. In the generic
+device configuration view all sub elements will be shown in separate
+lines.</p>
+</div>
+<div class="section" id="strings">
+<h3>1.7.1.1.5. Strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
+<p>The description files offer a mechanism for localized text display. The
+texts can be created in the form of tables and referenced via an
+identifier. Each table is identified via a unique <em>namespace</em>. The
+tables are separated by different namespaces in order to prevent
+overlaps of identifiers in different tables. Texts can be stored in each
+table in all supported languages. The <em>Strings</em> section is currently the
+only table defined in the description file. Further tables (e.g. import
+of general texts) will be supported in the future.</p>
+<p>Within the description file texts are referenced via nodes of type
+<em>StringRef</em>. The node reference has the form &#8220;&lt;namespace&gt;:&lt;identifier&gt;&#8221;.
+The content of a StringRef node is used as default value if no entry is
+available in a suitable language and should therefore be written in
+English.</p>
+<p>Each <em>language</em> node contains all texts for a language. The language
+identifier has the form &lt;language code&gt;-&lt;country code&gt; (&#8220;en-us&#8221;,
+&#8220;de-au&#8221;, ...). The default language is English (&#8220;en-en&#8221;). Under this
+node there is a <em>String</em> node for each stored text. The <em>name</em> attribute
+matches the text identifier and must not contain a colon.</p>
+</div>
+<div class="section" id="types">
+<h3>1.7.1.1.6. Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h3>
+<p>The type system of the description files is based on the IEC type
+system. However, not all IEC types are currently available. A number of
+IEC types are made available as standard data types. More complex types
+such as structures (<em>StructType</em>), enumerations (<em>EnumType</em>), range
+types (<em>RangeType</em>) and bit fields (<em>BitfieldType</em>) can be defined in
+this section.</p>
+<img alt="../_images/device_description_types.png" src="../_images/device_description_types.png" />
+<p>Types are always referenced via a namespace and the type name as
+follows: &#8220;&lt;namespace&gt;:&lt;name&gt;&#8221;. All basic types are located in the &#8220;std&#8221;
+namespace. The following basic types are available:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="30%" />
+<col width="14%" />
+<col width="39%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>std:BOOL [5]_5</td>
+<td>Truth value (TRUE or FALSE)</td>
+<td>std:REAL</td>
+<td>Floating-point numbers, 32 bits</td>
+</tr>
+<tr class="row-even"><td>std:BYTE</td>
+<td>8 bits, logic</td>
+<td>std:LREAL</td>
+<td>Floating-point numbers, 64 bits</td>
+</tr>
+<tr class="row-odd"><td>std:SINT</td>
+<td>8 bits, numeric</td>
+<td>std:STRING</td>
+<td>Character string, 80 characters max.</td>
+</tr>
+<tr class="row-even"><td>std:USINT</td>
+<td>8 bits, numeric, unsigned</td>
+<td>std:BIT</td>
+<td>Single bit (for inputs/outputs).</td>
+</tr>
+<tr class="row-odd"><td>Std:WORD</td>
+<td>16 bits, logic</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>std:INT</td>
+<td>16 bits, numeric</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>std:UINT</td>
+<td>16 bits, numeric, unsigned</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>…</td>
+<td>…</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>std:ULINT</td>
+<td>64 bits, numeric, unsigned</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>The <em>Types</em> node has an attribute:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>namespace: This name defines the namespace for all types that were</dt>
+<dd>defined under this node.</dd>
+</dl>
+</li>
+</ul>
+<p>Structures represent a composition of several elements, as is common
+practice in programming languages. These elements may be based on
+standard types, or further types may have been defined. Recursion of
+structures (directly or indirect) is not permitted.</p>
+<p>The <em>StructType</em> has a <em>name</em> attribute. This name is used for
+referencing the type. Within the type any number of <em>Component</em> nodes
+can be defined, which define the individual elements of the structure.
+Each component has two attributes:</p>
+<p>Identifier: Corresponds to the variable names of the structure member in
+IEC. It is used in CODESYS for accessing this structure member.</p>
+<img alt="../_images/device_description_structure_definition.png" src="../_images/device_description_structure_definition.png" />
+<p>The nodes under a component describe this in more detail:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Default contains the DefaultValue for this structure component.</dt>
+<dd>Depending on the type of the component the content is made up as
+follows (as at any point where a ValueType is expected)</dd>
+</dl>
+</li>
+</ul>
+<ol class="arabic simple">
+<li>Simple type (int, string, bool, ...): The associated value as string.</li>
+</ol>
+<ol class="arabic simple">
+<li>Enum: The identifier of the value used.</li>
+<li>Complex (composite) type, for example a further structure:</li>
+</ol>
+<p>For each subvalue to be set an element node containing the value of the
+element (complex if required).</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>VisibleName contains the component name to be displayed at the</dt>
+<dd>interface (a more user-friendly representation of the
+identifier). For the VisibleName any characters are permitted
+(including spaces and special characters). The content can be
+localized (StringRef).</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Unit: an optional unit designation for the value used. This value can</dt>
+<dd>be localized.</dd>
+</dl>
+</li>
+<li>Description of the node (can be localized).</li>
+<li><dl class="first docutils">
+<dt>Custom enables customer-specific content to be stored that is not</dt>
+<dd>interpreted by the system (see CustomType section). A PlugIn can
+access these data during runtime. There is no transfer to the
+target system.</dd>
+</dl>
+</li>
+</ul>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[5]</td><td>Important: BOOL is internally mapped to a full byte and has the size
+8 bits. This type is unsuitable for input/output channels
+representing an individual bit. In this case the data type std:BIT
+should be used.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="defining-strings-for-localization">
+<span id="id9"></span><h2>1.7.1.2. <span class="target" id="id8">Defining strings for localization</span><a class="headerlink" href="#defining-strings-for-localization" title="Permalink to this headline">¶</a></h2>
+<p>In order to provide device specific strings in multiple languages, e.g.
+names and descriptions of parameters, the respective language entries
+can be added to the device description file:</p>
+<p>Example:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;ParameterSection&gt;</span>
+    <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:GeneralParameters&quot;</span><span class="nt">&gt;</span>General Parameters<span class="nt">&lt;/Name&gt;</span>
+    <span class="nt">&lt;Parameter</span> <span class="na">ParameterId=</span><span class="s">&quot;65792&quot;</span> <span class="na">type=</span><span class="s">&quot;std:BOOL&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Attributes</span> <span class="na">download=</span><span class="s">&quot;true&quot;</span> <span class="na">offlineaccess=</span><span class="s">&quot;read&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Default&gt;</span>FALSE<span class="nt">&lt;/Default&gt;</span>
+        <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:SlaveOptional&quot;</span><span class="nt">&gt;</span>Slave optional<span class="nt">&lt;/Name&gt;</span>
+        <span class="nt">&lt;Description</span> <span class="na">name=</span><span class="s">&quot;local:SlaveOptional&quot;</span><span class="nt">&gt;</span>Slave optional<span class="nt">&lt;/Description&gt;</span>
+    <span class="nt">&lt;/Parameter&gt;</span>
+<span class="nt">&lt;/ParameterSection&gt;</span>
+<span class="nt">&lt;Strings</span> <span class="na">namespace=</span><span class="s">&quot;local&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Language</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;String</span> <span class="na">identifier=</span><span class="s">&quot;SlaveOptional&quot;</span><span class="nt">&gt;</span>Slave optional (en)<span class="nt">&lt;/String&gt;</span>
+    <span class="nt">&lt;/Language&gt;</span>
+    <span class="nt">&lt;Language</span> <span class="na">lang=</span><span class="s">&quot;de&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;String</span> <span class="na">identifier=</span><span class="s">&quot;SlaveOptional&quot;</span><span class="nt">&gt;</span>Slave optional (de)<span class="nt">&lt;/String&gt;</span>
+    <span class="nt">&lt;/Language&gt;</span>
+<span class="nt">&lt;/Strings&gt;</span>
+</pre></div>
+</div>
+<p>In this example a parameter section &#8220;General Parameters&#8221; is created and
+one configuration parameter is added. The name attribute for the section
+name, parameter name and description is linking to a string table for
+localization. Two languages are added in preparation for getting
+translated. The name attribute &#8220;local:SlaveOptional&#8221; is composed of the
+namespace &#8220;local&#8221; and the string identifier &#8220;SlaveOptional&#8221;. So only the
+value for the string element has to be translated. The value of Name or
+Description will be the default string if the currently selected
+language in CODESYS is not found in the string table.</p>
+</div>
+<div class="section" id="defining-files-and-adding-icons-and-images">
+<span id="id11"></span><h2>1.7.1.3. <span class="target" id="id10">Defining files and adding icons and images</span><a class="headerlink" href="#defining-files-and-adding-icons-and-images" title="Permalink to this headline">¶</a></h2>
+<p>Like strings also files can be localized. This is done in a special
+&#8220;files&#8221; section.</p>
+<p>Example:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;Files</span> <span class="na">namespace=</span><span class="s">&quot;local&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Language</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;File</span> <span class="na">fileref=</span><span class="s">&quot;local&quot;</span> <span class="na">identifier=</span><span class="s">&quot;PCIcard&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;LocalFile&gt;</span>PCIcard.ico<span class="nt">&lt;/LocalFile&gt;</span>
+        <span class="nt">&lt;/File&gt;</span>
+    <span class="nt">&lt;/Language&gt;</span>
+<span class="nt">&lt;/Files&gt;</span>
+</pre></div>
+</div>
+<p>The file will be used as an icon in the device tree. This is defined in
+the DeviceInfo element.</p>
+<p>Example:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;DeviceInfo&gt;</span>
+    <span class="nt">&lt;Name</span> <span class="na">name=</span><span class="s">&quot;local:TypeName&quot;</span><span class="nt">&gt;</span>SercosIII Master<span class="nt">&lt;/Name&gt;</span>
+    <span class="nt">&lt;Description</span> <span class="na">name=</span><span class="s">&quot;local:typedescription&quot;</span><span class="nt">&gt;</span>Sercos III Master<span class="nt">&lt;/Description&gt;</span>
+    <span class="nt">&lt;Vendor</span> <span class="na">name=</span><span class="s">&quot;localStrings:_3S&quot;</span><span class="nt">&gt;</span>CODESYS GmbH<span class="nt">&lt;/Vendor&gt;</span>
+    <span class="nt">&lt;OrderNumber&gt;</span>1<span class="nt">&lt;/OrderNumber&gt;</span>
+    <span class="nt">&lt;Icon</span> <span class="na">name=</span><span class="s">&quot;local:PCIcard&quot;</span><span class="nt">&gt;</span>PCIcard.ico<span class="nt">&lt;/Icon&gt;</span>
+<span class="nt">&lt;/DeviceInfo&gt;</span>
+</pre></div>
+</div>
+<p>With the &#8220;Icon&#8221; element the icon file is linked to the device. The value
+PCIcard.ico is the default value for the case that the language cannot
+be found. The &#8220;name&#8221; attribute is a combination of the namespace and
+identifier of the file section.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="dev_desc_device.html" title="1.7.2. Device"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="device_description.html" title="1.7. Device Description"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="device_description.html" >1.7. Device Description</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

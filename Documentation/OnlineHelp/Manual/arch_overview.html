@@ -1,0 +1,184 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.2.1. Overview &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.2. Architecture" href="architecture.html" />
+    <link rel="next" title="1.2.2. Technology: ANSI-C and C++" href="arch_technology_ansi_and_c.html" />
+    <link rel="prev" title="1.2. Architecture" href="architecture.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="arch_technology_ansi_and_c.html" title="1.2.2. Technology: ANSI-C and C++"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="architecture.html" title="1.2. Architecture"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="architecture.html" accesskey="U">1.2. Architecture</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="architecture.html"
+                        title="previous chapter">1.2. Architecture</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="arch_technology_ansi_and_c.html"
+                        title="next chapter">1.2.2. Technology: ANSI-C and C++</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/arch_overview.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="overview">
+<span id="arch-overview"></span><h1>1.2.1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>In the following figure you can see an overview of the architecture of
+the runtime system.</p>
+<div class="figure">
+<img alt="../_images/architecture_overview.svg" src="../_images/architecture_overview.svg" /></div>
+<p>The base component is the <strong>component manager</strong>. This is
+the central component that must exist in every runtime system. The
+component manager loads and initializes all components and enables
+the connections between the components.</p>
+<p>The second important part consists of the so called <strong>system
+components</strong>. These components represent the hardware and operating
+system abstraction layer and hide processor and operating system
+specific stuff from all other components. Via this system interface, all
+other components can be written absolutely portable and independent of
+processor and operating system internals. Every system component has its
+specific functions, e.g. file access, access to heap memory, access to a
+serial RS232 interface, operating system tasks, etc. All system
+components are described in <a class="reference internal" href="overview_kernel.html#overview-kernel"><span class="std std-ref">Overview of the Kernel Components and Main Functions</span></a>.</p>
+<p>The third part is the <strong>communication stack</strong>. It consists of several
+components to enable the communication to clients (CODESYS, HMI, etc.)
+or to other runtime systems. For the last issue, a routing mechanism is
+additionally provided by the communication stack.</p>
+<p>At the bottom of the stack there are the so called block drivers. Each
+of them provides one single communication medium (e.g. UDP, a TCP/IP
+protocol via Ethernet). The block drivers use the system components to
+get a neutral access to the physical layer.</p>
+<p>The next layer in the communication stack is the router. It provides
+routing to each runtime system in a hierarchical network that consists
+of CODESYS Control V3 runtime systems.</p>
+<p>Above the router, there are special service components e.g. for address
+assignment in the network, identification of a runtime system or the
+level 4 server for the block communication.</p>
+<p>Each service request from a client first is received by the level 7
+server. Each service is assigned to a specific group of services and
+then is forwarded to the special server, that was registered to the
+special <a class="reference internal" href="comm_layers.html#comm-layer7"><span class="std std-ref">service group</span></a>.</p>
+<p>In the architecture overview figure shown above you can see, that the
+communication stack is an integrated part of the runtime system. The
+gateway from version 2.x of CODESYS on version V3 is a special derivate
+of the runtime system that consists only of the component-manager, some
+system components and the <a class="reference internal" href="communication.html#communication"><span class="std std-ref">communication stack</span></a> for
+detailed information)!</p>
+<p>The fourth part consists of the <strong>application management</strong> components.
+Here the execution, debugging and monitoring of the IEC application(s)
+is done. A completely new feature in CODESYS Control V3 is the
+management of several applications on ONE runtime system! This offers a
+lot of new application possibilities. The PLC task handling is separated
+up in two components: the IEC task manager and the scheduler. So a new
+scheduler algorithm can be provided only by replacing the scheduler
+component.</p>
+<p>The last but not least part consists of the <strong>core</strong> components. These
+components provide the remaining functionality of a runtime system. The
+configuration of the runtime system, the logger to log all states and
+the device component for authentication reside here. The memory
+management and the event handling (for runtime events) are two
+additional components of the core.</p>
+<p>For OEM customers there are several ways to <a class="reference internal" href="customer.html#customer"><span class="std std-ref">extend the runtime system</span></a>.</p>
+<p>You can:</p>
+<ul class="simple">
+<li>Replace existing components</li>
+<li>Write own plugins (block drivers, IO-driver)</li>
+<li>Write OEM components with external libraries, own service handling, etc.</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="arch_technology_ansi_and_c.html" title="1.2.2. Technology: ANSI-C and C++"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="architecture.html" title="1.2. Architecture"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="architecture.html" >1.2. Architecture</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

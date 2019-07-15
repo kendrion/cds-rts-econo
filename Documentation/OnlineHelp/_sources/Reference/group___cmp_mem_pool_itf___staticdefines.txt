@@ -1,0 +1,168 @@
+.. first line of composition.rst template
+
+.. first line of group.rst template
+
+.. _group___cmp_mem_pool_itf___staticdefines:
+
+==============
+Static defines
+==============
+
+ :ref:`More... <group___cmp_mem_pool_itf___staticdefines-details>`
+
+Data Structures
+---------------
+
+- struct :ref:`RTS_BCBtag <struct_r_t_s___b_c_btag>`
+
+Macros
+------
+
+- #define :ref:`MEM_POOL_FLAGS_BLOCK_NONE <group___cmp_mem_pool_itf___staticdefines_1gaf7f7045d482f83421ce1f471a8f519f5>` 0x00000000
+
+- #define :ref:`MEM_POOL_FLAGS_BLOCK_DELETE <group___cmp_mem_pool_itf___staticdefines_1gadf1631606b65a1d35984a70a9da1b095>` 0x00000001
+
+- #define :ref:`MEMPOOL_IS_NOT_EMPTY <group___cmp_mem_pool_itf___staticdefines_1ga58e8d374cf132d6c716bc02b891e5816>` (((( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pBlocksInUse) != NULL)
+
+- #define :ref:`MEMPOOL_IS_EMPTY <group___cmp_mem_pool_itf___staticdefines_1ga71a4d39d875115c339b3edcb3973ca30>` (((( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pBlocksInUse) == NULL)
+
+- #define :ref:`MEMPOOL_HAS_FREE_BLOCKS <group___cmp_mem_pool_itf___staticdefines_1gaa5b0d1782f0ed05944df80b399e55ad6>` ((( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pPEB) != NULL || (( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pBCB) != NULL)
+
+- #define :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (( :ref:`MemIterator <struct_mem_iterator>` *)pIt)->pNext
+
+- #define :ref:`__MEM_GET_ITERATOR_HEAD <group___cmp_mem_pool_itf___staticdefines_1gaf3cd9df834547116f907106357335552>` (( :ref:`MemIterator <struct_mem_iterator>` *)pIt)->pHead
+
+- #define :ref:`MEM_IS_BLOCK_DELETED <group___cmp_mem_pool_itf___staticdefines_1ga8bb71a68b44a2faacecf65714d91a31f>` (((( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` *)pBlock)->flags & :ref:`MEM_POOL_FLAGS_BLOCK_DELETE <group___cmp_mem_pool_itf___staticdefines_1gadf1631606b65a1d35984a70a9da1b095>` ) != 0)
+
+- #define :ref:`MEM_GET_FIRST <group___cmp_mem_pool_itf___staticdefines_1ga99d6003b63a5cf47c3e4a7a7ba0e50e6>` /*lint -e{506,522} */(( :ref:`__MEM_GET_ITERATOR_HEAD <group___cmp_mem_pool_itf___staticdefines_1gaf3cd9df834547116f907106357335552>` (pIt) = (( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pBlocksInUse) != NULL ? (( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) = NULL) != NULL ? 0 : 1) : (( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) = NULL) != NULL ? 1 : 0))
+
+- #define :ref:`MEM_GET_NEXT <group___cmp_mem_pool_itf___staticdefines_1gadc2f778a008df22e2fd70ea42ed93d2a>` /*lint -e{506} */(( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) == NULL) ? ( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) = :ref:`__MEM_GET_ITERATOR_HEAD <group___cmp_mem_pool_itf___staticdefines_1gaf3cd9df834547116f907106357335552>` (pIt)) : ( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) = :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt)->pBCB))
+
+- #define :ref:`MEM_GET_DATA <group___cmp_mem_pool_itf___staticdefines_1ga86da779c54ce30942409ab03db605adb>` ( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) + 1 )
+
+- #define :ref:`MEM_GET_DATA_SKIP_DELETE <group___cmp_mem_pool_itf___staticdefines_1gadae4bd345d482ea05615a691fa1f2725>` ( ((( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` *) :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt))->flags & :ref:`MEM_POOL_FLAGS_BLOCK_DELETE <group___cmp_mem_pool_itf___staticdefines_1gadf1631606b65a1d35984a70a9da1b095>` ) == 0 ? :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) + 1 : NULL )
+
+- #define :ref:`MEM_GET_NEXT_FROM_DATA <group___cmp_mem_pool_itf___staticdefines_1ga3d9d246e559bc03f45e50d8c4f4130c0>` /*lint -e{506} */((( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` *)((unsigned char *)pData - sizeof( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` )))->pBCB == NULL ? NULL : (( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` *)((unsigned char *)pData - sizeof( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` )))->pBCB + 1)
+
+Typedefs
+--------
+
+- typedef struct :ref:`RTS_BCBtag <struct_r_t_s___b_c_btag>` :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>`
+
+- typedef void(* :ref:`PF_MEMBLOCK_DELETEFUNCTION <group___cmp_mem_pool_itf___staticdefines_1gadc7b3d142a828c2fdf0e48a5825f2ab5>`)(void *pBlock, void *pParam)
+
+.. _group___cmp_mem_pool_itf___staticdefines-details:
+
+Detailed Description
+--------------------
+
+
+
+
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_mem_pool_itf___staticdefines_1gaf7f7045d482f83421ce1f471a8f519f5:
+
+#define MEM_POOL_FLAGS_BLOCK_NONE 0x00000000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Flags for a single MemPool block No flag specified
+
+.. _group___cmp_mem_pool_itf___staticdefines_1gadf1631606b65a1d35984a70a9da1b095:
+
+#define MEM_POOL_FLAGS_BLOCK_DELETE 0x00000001
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Block is marked to delete at the next possible moment, if nobody is using the MemPool!
+
+.. _group___cmp_mem_pool_itf___staticdefines_1ga58e8d374cf132d6c716bc02b891e5816:
+
+#define MEMPOOL_IS_NOT_EMPTY (((( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pBlocksInUse) != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Macros to check MemPool contents Macro to check if a MemPool is _not_ empty
+
+.. _group___cmp_mem_pool_itf___staticdefines_1ga71a4d39d875115c339b3edcb3973ca30:
+
+#define MEMPOOL_IS_EMPTY (((( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pBlocksInUse) == NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Macro to check if a MemPool is empty
+
+.. _group___cmp_mem_pool_itf___staticdefines_1gaa5b0d1782f0ed05944df80b399e55ad6:
+
+#define MEMPOOL_HAS_FREE_BLOCKS ((( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pPEB) != NULL || (( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pBCB) != NULL)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Macro to check if a MemPool has free block that can be used
+
+.. _group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf:
+
+#define __MEM_GET_ITERATOR_NEXT (( :ref:`MemIterator <struct_mem_iterator>` *)pIt)->pNext
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Macros to iterate over a MemPool
+
+.. _group___cmp_mem_pool_itf___staticdefines_1gaf3cd9df834547116f907106357335552:
+
+#define __MEM_GET_ITERATOR_HEAD (( :ref:`MemIterator <struct_mem_iterator>` *)pIt)->pHead
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_itf___staticdefines_1ga8bb71a68b44a2faacecf65714d91a31f:
+
+#define MEM_IS_BLOCK_DELETED (((( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` *)pBlock)->flags & :ref:`MEM_POOL_FLAGS_BLOCK_DELETE <group___cmp_mem_pool_itf___staticdefines_1gadf1631606b65a1d35984a70a9da1b095>` ) != 0)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_itf___staticdefines_1ga99d6003b63a5cf47c3e4a7a7ba0e50e6:
+
+#define MEM_GET_FIRST /*lint -e{506,522} */(( :ref:`__MEM_GET_ITERATOR_HEAD <group___cmp_mem_pool_itf___staticdefines_1gaf3cd9df834547116f907106357335552>` (pIt) = (( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pBlocksInUse) != NULL ? (( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) = NULL) != NULL ? 0 : 1) : (( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) = NULL) != NULL ? 1 : 0))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_itf___staticdefines_1gadc2f778a008df22e2fd70ea42ed93d2a:
+
+#define MEM_GET_NEXT /*lint -e{506} */(( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) == NULL) ? ( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) = :ref:`__MEM_GET_ITERATOR_HEAD <group___cmp_mem_pool_itf___staticdefines_1gaf3cd9df834547116f907106357335552>` (pIt)) : ( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) = :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt)->pBCB))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_itf___staticdefines_1ga86da779c54ce30942409ab03db605adb:
+
+#define MEM_GET_DATA ( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) + 1 )
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_itf___staticdefines_1gadae4bd345d482ea05615a691fa1f2725:
+
+#define MEM_GET_DATA_SKIP_DELETE ( ((( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` *) :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt))->flags & :ref:`MEM_POOL_FLAGS_BLOCK_DELETE <group___cmp_mem_pool_itf___staticdefines_1gadf1631606b65a1d35984a70a9da1b095>` ) == 0 ? :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) + 1 : NULL )
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_itf___staticdefines_1ga3d9d246e559bc03f45e50d8c4f4130c0:
+
+#define MEM_GET_NEXT_FROM_DATA /*lint -e{506} */((( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` *)((unsigned char *)pData - sizeof( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` )))->pBCB == NULL ? NULL : (( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` *)((unsigned char *)pData - sizeof( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` )))->pBCB + 1)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492:
+
+typedef struct RTS_BCBtag  RTS_BCB
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_itf___staticdefines_1gadc7b3d142a828c2fdf0e48a5825f2ab5:
+
+typedef void( * PF_MEMBLOCK_DELETEFUNCTION)(void *pBlock, void *pParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Delete function pointer definition which is called optional to delete a MemPool block. Can be specified in :ref:`MemPoolCreate() <group___cmp_event_mgr_dep_1ga8b2da6cd129a88cd4155a08d9d32195d>` .
+
+**Parameters**
+
++---------+--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pBlock | Pointer to the MemPool block                                                                                                                                      |
++---------+--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pParam | Pointer to a parameter which can be specified in :ref:`MemPoolPutBlock_LF() <group___cmp_event_mgr_dep_1gaf09962cb884ccb746dd9c8b54efbfcba>` as second parameter! |
++---------+--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

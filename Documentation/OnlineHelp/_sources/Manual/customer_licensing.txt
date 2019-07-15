@@ -1,0 +1,74 @@
+.. _customer_licensing:
+
+Licensing
+---------
+
+Some of the products from CODESYS GmbH with costs,
+which are downloaded to and used on the PLC need to be licensed for this
+PLC.
+
+Examples for licensed products are:
+
+-  CANopen Master / -Slave
+
+-  Modbus Master / -Slave
+
+-  HMI
+
+-  Softmotion
+
+-  ...
+
+There are a few possible ways to get such a license for your PLC.
+
+Derivate based licensing
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+To be able to use licensed CODESYS products, like fieldbusses and
+libraries, on your PLC, you need to have a valid license file called
+*"3S.dat"* for your PLC. This file is (by default) fixely bound to on
+target derivate. The informations that are checked are the following:
+
+-  Operating System
+
+-  CPU Type
+
+-  Vendor ID
+
+-  Target ID
+
+-  Device Type
+
+If those values are correct, the licenses which are contained in the
+license file *"3S.dat"*, can be used on this PLC.
+
+If those values are not correct, none of the licensed products can be
+used on this PLC.
+
+If the file is available, but doesn't contain the requested license, the
+corresponding product will run in demo mode. The demo period for most
+products is around 30min.
+
+If the license file is missing completely there are two ways to react on
+that:
+
+1. If the compile flag LICENSE\_THROWEXCEPTION is set for the
+   application, the PLC will switch to an exception state after loading
+   this application.
+
+1. If the compile flag LICENSE\_THROWEXCEPTION is not set for the
+   application, the product will not be licensed, an error will be
+   logged but the application will still be able to run.
+
+To set this compiler flag flag automatically, you may want to add it to
+your device description to the following section:
+
+.. code-block:: C
+
+  <DeviceDescription>
+  <Device>
+    <ExtendedSettings>
+      <ts:TargetSettings>
+        <ts:section name="codegenerator">
+          <ts:setting name="compiler-defines">
+             <ts:value>LICENSE\_THROWEXCEPTION</ts:value>

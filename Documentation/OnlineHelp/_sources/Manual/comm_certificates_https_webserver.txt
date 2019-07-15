@@ -1,0 +1,79 @@
+.. _comm_certificates_https_webserver:
+
+Handling of certificates for HTTPS support of the webserver
+-----------------------------------------------------------
+
+To support HTTPS within the integrated webserver digital certificates
+(see: http://en.wikipedia.org/wiki/Public_key_certificate) have to be
+managed.
+
+.. note::
+    The following chapters on this page are only necessary, if the certificate management and the official :ref:`https <HTTPS support for the web visualization>` feature is not available!
+
+Folder structure of the public key infrastructure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The folder structure of the certificate management has to be located in
+the working path of the PLC.
+
+-  PKI: This folder is the root of the public key infrastructure. The
+   default location is ./PKI within the PLC working directory. You may
+   change the setting "CertStoreBase" to change the base path of this
+   certificate store.
+
+-  PKI/cert: This folder contains the digital certificates dedicated to
+   a PLC. The certificates inside of this folder identify the PLC.
+
+-  PKI/private: This folder contains the private keys corresponding to
+   the certificates in the PKI/cert folder.
+
+-  PKI/crl: This folder is used to store certificate revocation lists
+   (CRL) provided by a certificate authority.
+
+-  PKI/trusted: This folder contains certificates of trusted CAs or
+   other trusted instances.
+
+There are some different encodings for private keys and certificates.
+Supported encodings are BASE64 and DER encoding. The component will
+automatically use the right file type.
+
+Transferring the certificates and private keys to the PLC
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To transfer the certificate and private keys to the PLC the file
+transfer functionality of CODESYS is used. You have to copy the
+certificate and private key to the folders described in the previous
+section.
+
+Warning: This file transfer has to be done in a secure environment. You
+may not transfer the certificates and private keys over a public network
+since these data will not be encrypted or protected with any other
+technique. Transfer these data with a direct and exclusive connection
+between the PLC and your computer. You should also take care of the
+access rights to this folder. Only a small group of people should have
+access to these data. Throughout IEC there is a potentially access to
+the certificates an private keys. This depends on your configuration.
+
+Configuration for the certificates for different use cases
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The configuration and selection of certificates for different use cases
+is done using the CODESYS config file. Refer to the reference
+documentation within the CmpTLS interface section for a description of
+the available settings.
+
+A TLS context is used to set some settings for one use case. This use
+case may be the webserver. With the context the TLS version,
+certificates and the other settings described in the reference
+documentation are set. You need different contexts for different use
+cases. To separate the different contexts a namespace prefix is used in
+front of the settings. The settings Cert and PrivateKey are mandatory
+for generating a new context. The prefix of the settings is the
+pszNamespace parameter of the function TlsCreateContext.
+
+.. code-block:: C
+
+ [CmpOpenSSL]
+ WebServer.Cert=server.cer
+ WebServer.PrivateKey=server.key
+ . . .

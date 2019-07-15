@@ -1,0 +1,42 @@
+.. _dev_device_info:
+
+_`Device info`
+~~~~~~~~~~~~~~
+
+In this section some general information and descriptions of the PLC can be specified.
+
+Example:
+
+.. code-block:: xml                                                                                                
+
+    <DeviceInfo>
+        <Name name="local:typename">CODESYS Control for Win32</Name>
+        <Description name="local:typedescription">A CODESYS V3 Soft PLC for Win32</Description>
+        <Vendor name="local:3S">CODESYS GmbH</Vendor>
+        <OrderNumber>xxx</OrderNumber>
+    </DeviceInfo>
+
++----------------+------------------------------------------------------------------------------------------------+
+|  XML-Tag       |  Description                                                                                   |
++================+================================================================================================+
+|  Name          |  Name of the device that appears in the Properties dialog for the device in CODESYS            |
++----------------+------------------------------------------------------------------------------------------------+
+|  Description   |  Description of the device; this is also displayed in the Properties dialog                    |
++----------------+------------------------------------------------------------------------------------------------+
+|  Vendor        |  Manufacturer name                                                                             |
++----------------+------------------------------------------------------------------------------------------------+
+|  OrderNumber   |  Product number under which the device can be ordered from the manufacturer                    |
++----------------+------------------------------------------------------------------------------------------------+
+
+.. note:: For complete documentation on the particular device description elements see the xsd schema provided by :ref:`device_description_schema`.
+
+These values are only used for display in the device tree.
+
+During online scanning of devices the device name and the manufacturer's
+name are displayed. The values are read online from the runtime system. In the runtime
+system the values can be set through the defines in :ref:`targetdefines.h <dev_target_defines_h>`:
+
+.. code-block:: C
+
+        #define SYSTARGET_VENDOR_NAME       "My company"
+        #define SYSTARGET_DEVICE_NAME       "My device"

@@ -1,0 +1,88 @@
+.. _customer_versions:
+
+Versions
+--------
+
+3S releases new versions of the runtime system, libraries, and
+programming system from time to time. Basically, it is possible to use
+different versions of the runtime system and programming system. For
+details therefore see the separate document
+Tutorials/CODESYSCompatibilityInformation.pdf.
+
+However, to avoid problems for end users, PLC manufacturers should
+follow these rules:
+
+-  Always release runtime system and programming system with the same
+   service pack.
+-  The list of library placeholders should match with the libraries
+   available in the runtime system.
+-  OEM manufacturers should deliver all supported libraries together
+   with the device description file
+-  All components of a runtime system must have the same version.
+
+This is obviously easy to follow when releasing a new system, but this
+rules should also be followed when updating an existing system.
+
+Some more remarks regarding these topics:
+
+It is basically possible to use a new version of the programming system
+with an older version of the runtime. We know that this situation cannot
+be avoided, as there are existing PLCs with older runtime versions in
+the field. However we recommend updating both the programming system and
+runtime system versions when releasing a new version of the system.
+
+Different versions of programming system and runtime system:
+
+If end users need to use a new version of the programming system with an
+older version of the runtime, please note the following:
+
+-  The device description defines the version of external libraries
+   supported by the device, in the library placeholder section. When
+   creating a new project, one should be sure using the correct version
+   of the device description. The OEM manufacturer should take care to
+   carefully edit the library placeholder section.
+-  The compiler version and library profile version defines the version
+   of interal libraries. In general, these libraries are independent
+   from the runtime version. For example, a newer version of the
+   standard library can be used with an older runtime system version.
+   However, if the original internal libraries versions shall be used,
+   the compiler version and library profile version has to be set to the
+   older version.
+-  When sub-devices like fieldbus master are added to a PLC device with
+   older version, the end user should take care to use the older version
+   of the sub-device.
+-  Some features introduced in newer versions of the programming system
+   may not be supported in the runtime system. Examples for these
+   features are trace manager, symbol configuration, target
+   visualization.
+-  OEM manufacturers should explicitly disable features that are not
+   supported by a device. This can be done in the device description
+
+OEM delivery:
+
+OEM manufacturers should create a package with the device description
+file, and all needed libraries. This package can be delivered to the OEM
+manufacturer's customers, and allows installation of a complete set of
+libraries with correct versions. The package designer tool (available in
+the CODESYS Store) allows OEMs to find out all needed libraries, and to
+create such a package (supported with V3.5 SP6 or newer).
+
+OEM delivery update:
+
+If a version update is requested later, OEMs can create a new package
+with a new device description with new placeholder section, and new
+libraries.
+
+A template of the current placeholder section ("Placeholder.xml") can be
+found in the folder "Placeholder" or "Configuration" of a runtime
+delivery.
+
+On update of the device description, at minimum, the version and
+placeholder section has to be updated.
+
+Runtime component versions:
+
+The runtime system does not support mixed versions of the components.
+This means, when one component is updated, then all components must be
+updated to the same version. OEM components must be recompiled with the
+updated Runtime Toolkit.

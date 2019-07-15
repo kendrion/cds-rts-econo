@@ -1,0 +1,82 @@
+.. _arch_files_on_target:
+
+Files on the Target System
+--------------------------
+
+Which files are necessary or created on your target file system, hardly
+depends on the type of runtime and the extended which you are using. At
+the absolute minimum, you will use an embedded runtime system, with a
+static configuration, no extended features and a flash file system for
+your boot projects. So you won't need any file system at all. But
+contrary to this, the following chapter will describe a full runtime
+system with all features.
+
+Boot projects
+~~~~~~~~~~~~~
+
+By default, boot projects are saved as files, named <application>.app on
+the target file system. On embedded runtime systems they can be also
+saved in flash with the runtime component SysFileFlash.
+
+If we are using a target file system, the runtime system will generate
+the following two files when a boot project is created:
+
+-  | <application>.app
+   | This file contains the application code and data.
+
+-  | <application>.crc
+   | This file contains a CRC value of <application>.app which is verified at boot time.
+
+With the setting [CmpApp]->RetainType.Applications=OnPowerfail, the
+target will save the "retain" and "retain persistent" data to the file
+system. For this to work, the target needs to be shut down correctly. On
+power fail, this can be done with a big enough condensator, which can
+buffer the target long enough to shut it down. In this case the
+following file is generated for every application on shutdown:
+
+-  | <application>.ret
+   | This file contains the complete retain data segment of the corresponding application, and is therefore as big as the retain-segment is configured in the corresponding device description.
+
+I/O manager
+~~~~~~~~~~~
+
+The I/O manager forwards all configuration-, read- and write-requests to
+the attached device drivers. Please refer to chapter 7 for a more
+detailed description.
+
+Every Parameter which is set in the I/O Configuration is saved to the
+file "IoConfig.par". Those values are then restored at the next power up
+from this file.
+
+User management
+~~~~~~~~~~~~~~~
+
+The User management of the CODESYS Runtime encapsulates the whole
+rights- and user management into the component CmpUserDB. This component
+can be implemented by the OEM customer himself to match his special
+requirements. But there is also a fully complete user database included
+in the runtime.
+
+This uUser database saves it's user and rights tables in simple CSV
+files on the target file system:
+
+-  | UserMgmtDB.csv
+   | This file contains all users and groups, which are downloaded by the CODESYS programming system.
+
+-  | UserMgmtRightsDB.csv
+   | The content of this file is downloaded from the CODESYS programming system, too. 
+   | It contains all configured user rights for the different files and devices.
+
+Visualization
+~~~~~~~~~~~~~
+
+If the target visualization is running in a different process as the
+runtime system, it needs a way to exchange the bitmap pool between the
+two processes. The bitmap pool consists of IDs, associated with image
+file names on the file system. This means, that when you are using a
+target visualization with images on your target, you will get also the
+following file, beside all the necessary image files:
+
+-  | IPCBitmapPool.cfg
+   | This file is used to share an image pool between the two processes of the target visualization and the soft PLC.
+

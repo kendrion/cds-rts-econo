@@ -1,0 +1,234 @@
+.. _dev_params_and_param_sections:
+
+_`Defining parameters and parameter sections`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See :ref:`parameters` for general information on parameters in the device
+description.
+
+Parameters and parameter sections can be defined inside a parameter set.
+
+Parameter lists in *connectors* (see :ref:`Defining connectors <dev_defining_connectors>`) are referred to as
+**HostParameterSet**, because they are loaded to the responsible host.
+See below for an example. In contrast a *CODESYS-configurable PLC device
+with local I/Os* (see :ref:`Defining types <defining_types>`) can define a **DeviceParameterSet**
+(to be defined within the <device> section). This parameter list is
+directly transferred to the device and is independent of the connectors
+used. However, in case of devices with connectors like master or slaves
+the DeviceParameterSet will be ignored by CODESYS.
+
+**Parameter sections** just serve for grouping parameters for
+organizational purposes.
+
+Example of a parameter section:
+
+.. code-block:: xml
+
+    <ParameterSection>
+        <Name name="local:GeneralParameters">General Parameters</Name>
+        <Parameter ParameterId="65792" type="std:BOOL">
+            <Attributes download="true" offlineaccess="read" />
+            <Default>FALSE</Default>
+            <Name name="local:SlaveOptional">Slave optional</Name>
+            <Description name="local:SlaveOptional">Slave optional</Description>
+        </Parameter>
+    </ParameterSection>
+
+In this example a parameter section "General Parameters" is created and
+one configuration parameter is added. The **name** attribute for the
+section name, parameter name and description is linking to a string
+table for localization (see :ref:`defining_strings_for_localization`). The value of Name or
+Description will be the default string if the currently selected
+language in CODESYS is not found in the string table.
+
+The **parameter id** is a unique number within the device description
+and is depending on the module type of the connector (values <32768 are
+maintained by 3S).
+
+In order to get parameters accessible by the "\ **intellisense**\ "
+function in the programming system, and by its **full namespace**, as
+from compiler version >= 3.5.1.0 the attribute "\ **functional**\ " can
+be used in the parameter description. It effects that the CODESYS
+compiler instead of a parameter description at every read access will
+create some external function calls supported by a runtime system
+interface. **Regard** that this functionality is only possible for
+simple datatypes. Structures and Arrays are not supported. External
+functions will be created by the compiler, which are supported by an
+interface in the runtime system.
+
+Example:
+
+.. code-block:: xml
+
+    <Parameter ParameterId="1234" type="std:REAL">
+        <Attributes channel="none" download="false" functional="true" offlineaccess="readwrite" onlineaccess="readwrite" />
+        <Default>111</Default>
+        <Name name="local:Id1234">Velocity</Name>
+        <Description name="local:Id1234.Desc">Test parameter</Description>
+    </Parameter>
+
+| The parameter can be accessed now by its namespace, e.g. if this parameter is a member of the device "Drive":
+|      Drive.Velocity := 1.23;
+
+| Only simple datatypes are possible (BOOL, BYTE, WORD, DWORD, SINT,
+  INT, DINT, LWORD, LINT, REAL, LREAL). ENUMs are possible because they
+  are handled as INT.
+| Structures and arrays are not supported.
+
+| The compiler generates instead of a parameter description at every
+  read access the following external function call:
+| Only for BOOL types
+| RTS_IEC_BOOL ParamGetBit(RTS\_IEC\_DWORD dwParameterId, DWORD
+  dwBitNr);
+| For all other simple datatypes. XXX is the IEC datatype like WORD
+| RTS\_IEC\_XXX ParamGetXXX(RTS\_IEC\_DWORD dwParameterId);
+| The ID of the parameter will be transmitted in dwParameterId.
+
+| For every write access on a parameter one of the following external
+  functions is called:
+| Only for BOOL types
+| VOID ParamSetBit(RTS\_IEC\_DWORD dwParameterId, DWORD dwBitNr, BOOL
+  bValue);
+| For all other simple datatypes separated for 4 and 8 Byte values
+| VOID ParamSet4Byte(RTS\_IEC\_DWORD dwParameterId, DWORD dwValue);
+| VOID ParamSet8Byte(RTS\_IEC\_DWORD dwParameterId, LWORD lwValue);
+
+With version 3.5 SP3 it is also possible to use the enumerations as the
+enum value instead of the integer value.
+
+Also structured parameters are possible when using parameter sections.
+
+Example if parameter is stored in a section:
+
+.. code-block:: xml
+
+    <ParameterSection>
+        <Name name="local:SectionName">Section</Name>
+        <ParameterSection>
+          <Name name="local:SubSectionName">SubSection</Name>
+        </ParameterSection>
+    </ParameterSection>
+
+Then the access will be Drive.Section.SubSection.Velocity := 1.23;
+
+Example for a **host parameter set** (sub-section below <connector>):
+
+.. code-block:: xml
+
+    <HostParameterSet>
+        <Parameter ParameterId="0" type="std:WORD">
+            <Attributes channel="none" download="true" functional="false" offlineaccess="read" onlineaccess="read" />
+            <Default>0</Default>
+            <Name name="local:Id0">NumberOfInputs</Name>
+            <Description name="local:Id0.Desc">Number of input channels</Description>
+        </Parameter>
+        …
+        <Parameter ParameterId="458759" type="std:BOOL">
+            <Attributes channel="none" download="false" functional="false" offlineaccess="read" onlineaccess="none" />
+            <Default>TRUE</Default>
+            <Name name="local:Id458759">AutoClearSupported</Name>
+            <Description name="local:Id458759.Desc">auto-clear supported by master</Description>
+        </Parameter>
+        …
+    </HostParameterSet>
+
++----------------------+-----------------------------------------------------------------------------------------+
+|     XML Tag          |     Description                                                                         |
++======================+=========================================================================================+
+| ParameterId          | Identification number of the parameter;                                                 |
+|                      | see :ref:`parameters`                                                                   |
+|                      |                                                                                         |
+|                      | For defining the NetX configuration dialog in the device editor of the programming      |
+|                      | system use IDs "1879048194" and "1879048195" as shown in the example below.             |
++----------------------+-----------------------------------------------------------------------------------------+
+| AutoClearSupported   | If TRUE                                                                                 |
++----------------------+-----------------------------------------------------------------------------------------+
+
+.. note:: For complete documentation on the particular device description elements see the xsd schema provided by :ref:`device_description_schema`.
+
+Special Parameter entries for **NetX configuration** dialog:
+
+The following entries below a <HostParameterSet> of a <Connector> enable
+the user to select the NetX chip and the communication channel on this
+chip via the "NetX Configuration" dialog for a NetX Master in the device
+editor of the programming system:
+
+Example:
+
+The following entry establishes a field named "Slot" in the configuration dialog and the selection list next to it will offer the available slots, i.e. the available NetX cards as defined by an enumeration "eSlot":
+    
+.. code-block:: xml
+
+    <Parameter ParameterId="1879048194" type="local:eSlot">
+        <Attributes channel="none" download="true" functional="false" offlineaccess="readwrite" onlineaccess="read" />
+        <Default>0</Default>
+        <Name name="local:Id1879048194">Slot</Name>
+        <Description name="local:1879048194.Desc">Slot of the NetX chip</Description>
+    </Parameter>
+
+The following entry establishes a field named "NetX Com Channel" in the configuration dialog and the selection list next to it will offer the available communication channels on the NetX card as defined by an enumeration "NetXComChannel":
+
+.. code-block:: xml
+
+    <Parameter ParameterId="1879048195" type="local:NetXComChannel">
+        <Attributes channel="none" download="true" functional="false" offlineaccess="readwrite" onlineaccess="read" />
+        <Default>0</Default>
+        <Name name="local:Id1879048195">NetX Com Channel</Name>
+        <Description name= »local :1879048195.Desc »>NetX Communcation channel</Description>
+    </Parameter>
+
+Parameters in a Device Parameter Set for defining input and output
+channels:
+
+A device parameter set (Note: only usable with a CODESYS-configurable
+PLC device with local I/Os !) can contain fix settings for input and
+output channels:
+
+Example:
+
+.. code-block:: xml
+
+    <DeviceParameterSet fixedInputAddress="%IB10" fixedOutputAddress="%QB10">
+        <Parameter ParameterId="1" type="std:BYTE">
+            <Attributes channel="output" download="true" offlineaccess="readwrite" noManualAddress="false"/>
+            <Default>0</Default>
+            <Name name="local:None">Output</Name>
+            <Description name="local:None">Output</Description>
+        </Parameter>
+        <Parameter ParameterId="2" type="std:BYTE">
+            <Attributes channel="input" download="true" offlineaccess="readwrite" noManualAddress="true"/>
+            <Default>0</Default>
+            <Name name="local:None">Input</Name>
+            <Description name="local:None">Input</Description>
+        </Parameter>
+    </DeviceParameterSet>
+
++----------------------+-----------------------------------------------------------------------------------------+
+|     XML Tag          |     Description                                                                         |
++======================+=========================================================================================+
+| fixedInputAddress    | Start address of the first input channel                                                |
++----------------------+-----------------------------------------------------------------------------------------+
+| fixedOutputAddress   | Start address of the first output channel                                               |
++----------------------+-----------------------------------------------------------------------------------------+
+
++-------------------+--------------------------------------------------------------------------------------------+
+|     XML Tag       |     Description                                                                            |
++===================+============================================================================================+
+| ParameterId       | Identification number of the parameter;                                                    |
+|                   | see :ref:`parameters`                                                                      |
++-------------------+--------------------------------------------------------------------------------------------+
+| type              | datatype of the parameter                                                                  |
++-------------------+--------------------------------------------------------------------------------------------+
+| Attribute         | Channel type of the parameter. Possible values are "output" and "input"                    |
+| channel           |                                                                                            |
++-------------------+--------------------------------------------------------------------------------------------+
+| Attribute         | Set this (optional) attribute, if no i/o configuration should be downloaded to the device  |
+| download          | (ie. The device does not support the IoManager)                                            |
++-------------------+--------------------------------------------------------------------------------------------+
+| Attribute         | Boolean value. If set, secure online mode is by default activated for the device. Secure   |
+| offlineaccess     | online mode means that the user will have to confirm most of the online commands before    |
+|                   | they become effective.                                                                     |
++-------------------+--------------------------------------------------------------------------------------------+
+| Attribute         | If this attribute is set to TRUE, no manual change of the address of the input or output   |
+| noManualAddress   | channel is possible                                                                        |
++-------------------+--------------------------------------------------------------------------------------------+

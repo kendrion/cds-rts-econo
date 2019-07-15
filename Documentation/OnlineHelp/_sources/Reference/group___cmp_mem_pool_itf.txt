@@ -1,0 +1,1162 @@
+.. first line of composition.rst template
+
+.. first line of group.rst template
+
+.. _group___cmp_mem_pool_itf:
+
+=============
+CmpMemPoolItf
+=============
+
+Interface of CmpMemPool. :ref:`More... <group___cmp_mem_pool_itf-details>`
+
+Modules
+-------
+
+- :ref:`Compiler switch <group___cmp_mem_pool_itf___compilerswitch>`
+
+- :ref:`Dynamic MemPool configuration <group___cmp_mem_pool_itf___dynamic_mem_poolconfiguration>`
+
+- :ref:`Extension block <group___cmp_mem_pool_itf___extensionblock>`
+
+- :ref:`Generic MemPool configuration <group___cmp_mem_pool_itf___generic_mem_poolconfiguration>`
+
+- :ref:`Macros <group___cmp_mem_pool_itf___macros>`
+
+- :ref:`MemPool definition <group___cmp_mem_pool_itf___mem_pooldefinition>`
+
+- :ref:`MemPool iterator <group___cmp_mem_pool_itf___mem_pooliterator>`
+
+- :ref:`MemPool options <group___cmp_mem_pool_itf___mem_pooloptions>`
+
+- :ref:`MemPool types <group___cmp_mem_pool_itf___mem_pooltypes>`
+
+- :ref:`Static MemPool configuration <group___cmp_mem_pool_itf___static_mem_poolconfiguration>`
+
+- :ref:`Static defines <group___cmp_mem_pool_itf___staticdefines>`
+
+Data Structures
+---------------
+
+- struct :ref:`ICmpMemPool_C <struct_i_cmp_mem_pool___c>`
+
+Macros
+------
+
+- #define :ref:`MEMPOOL_8BYTE_ALIGNED <group___cmp_mem_pool_itf_1ga2e9a2c61424604810fcee79422c7b66b>`
+
+- #define :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` 8
+
+- #define :ref:`MEMPOOL_INIT_VALUE <group___cmp_mem_pool_itf_1ga38167e2c4242cf6377af7f0ff7779b78>` 0xAA
+
+- #define :ref:`ITF_CmpMemPool <group___cmp_mem_pool_itf_1gaa80d1316dbc01bff4db96bd70287315b>`
+
+- #define :ref:`EXTITF_CmpMemPool <group___cmp_mem_pool_itf_1ga42831a988d35ce443bfdc84129db6298>`
+
+Typedefs
+--------
+
+- typedef :ref:`ICmpMemPool_C <struct_i_cmp_mem_pool___c>` :ref:`ICmpMemPool <group___cmp_mem_pool_itf_1ga73a0e5a30e14ae5145965196d738ef36>`
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`MemPoolCreate <group___cmp_mem_pool_itf_1ga3bfcc417db9f07554f3c7d796255094a>` (:ref:`MemPoolConfiguration <group___cmp_mem_pool_itf___generic_mem_poolconfiguration_1ga80c14cae754166ea9b8b2a9c8bff9b63>` * pConfiguration, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`MemPoolCreateDynamic <group___cmp_mem_pool_itf_1ga4cf18fee38ec28c6a44bf88bad3ece77>` (char * pszComponentName, RTS_SIZE ulNumBlocks, RTS_SIZE ulBlockSize, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`MemPoolCreateStatic <group___cmp_mem_pool_itf_1gac616bb19229e35dd70011a1c22be5dcd>` (RTS_SIZE ulBlockSize, RTS_SIZE ulMemSize, void * pMemory, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`MemPoolExtendDynamic <group___cmp_mem_pool_itf_1ga730709e16a0dcce044b3141820c859a3>` (RTS_HANDLE hMemPool, char * pszComponentName, RTS_SIZE ulNumBlocks)
+
+- RTS_RESULT :ref:`MemPoolExtendStatic <group___cmp_mem_pool_itf_1ga83615fbc259d63de6087c8a4c27642f9>` (RTS_HANDLE hMemPool, RTS_SIZE ulMemSize, void * pMemory)
+
+- RTS_RESULT :ref:`MemPoolCreateSyncObject <group___cmp_mem_pool_itf_1ga97c2637a4e3370fce26bc936d1a94235>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolDeleteSyncObject <group___cmp_mem_pool_itf_1ga5e83feecba72271bb2c380b19fd08e65>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolDelete <group___cmp_mem_pool_itf_1ga2caf1bff79294e6c1a226b57c8932b06>` (RTS_HANDLE hMemPool, char * pszComponentName)
+
+- RTS_RESULT :ref:`MemPoolCleanup <group___cmp_mem_pool_itf_1ga4d590328837318435b623deb38619c3b>` (RTS_HANDLE hMemPool, char * pszComponentName, int bReleaseSemaphore)
+
+- void * :ref:`MemPoolGetBlock <group___cmp_mem_pool_itf_1gaf7866c3bcd3fdcd14fffd93db7de5db0>` (RTS_HANDLE hMemPool, RTS_RESULT * pResult)
+
+- void * :ref:`MemPoolGetBlock2 <group___cmp_mem_pool_itf_1ga02d64406ebb343097b3698db3c92fd70>` (RTS_HANDLE hMemPool, int bDynamic, char * pszComponentName, RTS_RESULT * pResult)
+
+- :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` * :ref:`MemPoolGetPCB <group___cmp_mem_pool_itf_1ga736973dcd8e693b7ce086ee2d3eb833c>` (RTS_HANDLE hMemPool, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`MemPoolPutBlock <group___cmp_mem_pool_itf_1gad85943f33a536f0cb2443453753bd5cf>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolAddUsedBlock <group___cmp_mem_pool_itf_1ga51d677d8d5741c642d1fd391cfdf17a5>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolAppendUsedBlock <group___cmp_mem_pool_itf_1gaf0920d14ed91fdc2d75ef1734eb245a9>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolInsertUsedBlock <group___cmp_mem_pool_itf_1gafe815b0b2f830758e150154d946aef21>` (void * pPrevBlock, void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolRemoveUsedBlock <group___cmp_mem_pool_itf_1gafec6377691b72fba73aef04dfea3212f>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolAddUsedBlockToPool <group___cmp_mem_pool_itf_1gacea8c6de3e459fcedd6292bb2d57987f>` (void * pBlock, RTS_HANDLE hPool)
+
+- RTS_RESULT :ref:`MemPoolAppendUsedBlockToPool <group___cmp_mem_pool_itf_1gac0ad13055927fe23ada3622182b644f4>` (void * pBlock, RTS_HANDLE hPool)
+
+- RTS_RESULT :ref:`MemPoolRemoveUsedBlockFromPool <group___cmp_mem_pool_itf_1ga8adfd806eb44a46890ea6479f8ba6034>` (void * pBlock, RTS_HANDLE hPool)
+
+- RTS_RESULT :ref:`MemPoolLockBlock <group___cmp_mem_pool_itf_1gab3dd8ca8f534f6eeab75b7269eb933e9>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolUnlockBlock <group___cmp_mem_pool_itf_1ga7a497308890236f7330ee9614040d89f>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolReleaseBlocks <group___cmp_mem_pool_itf_1ga6977f20929ba0d05cd8cd543b9b9f0b9>` (RTS_HANDLE hMemPool, RTS_BOOL bOnlyDeletedBlocks, void * pParam)
+
+- RTS_RESULT :ref:`MemPoolLock <group___cmp_mem_pool_itf_1ga999519f4cfc0c36ab8f3b0ee8c9aaee6>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolUnlock <group___cmp_mem_pool_itf_1ga7ade2961819aa341260089f3cb633383>` (RTS_HANDLE hMemPool)
+
+- void * :ref:`MemPoolFindBlock <group___cmp_mem_pool_itf_1ga5146bd5d77e6b326d14ca78b2935b0b5>` (RTS_HANDLE hMemPool, RTS_SIZE ulOffset, RTS_SIZE ulSize, void * pToFind, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`MemPoolIsValidBlock <group___cmp_mem_pool_itf_1gaeb89f4809892cdf3882bc24b69801655>` (RTS_HANDLE hMemPool, void * pBlock)
+
+- void * :ref:`MemPoolGetFirstBlock <group___cmp_mem_pool_itf_1ga499bae494dcef421830732368e41b3fc>` (RTS_HANDLE hMemPool, RTS_RESULT * pResult)
+
+- void * :ref:`MemPoolGetNextBlock <group___cmp_mem_pool_itf_1ga8bf456fca1936f64fd7fd541d9c356c2>` (RTS_HANDLE hMemPool, void * pPrevBlock, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`MemPoolAddRef_LF <group___cmp_mem_pool_itf_1ga5b259464cfa59a29f898de35c30a841e>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolReleaseRef_LF <group___cmp_mem_pool_itf_1ga8abe07954d4fb631998b050413833ffa>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolLock_LF <group___cmp_mem_pool_itf_1gae5b30f35638173bc749f866ca7e6413b>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolUnlock_LF <group___cmp_mem_pool_itf_1ga6917f50b7a1a7363f19e6ce97d77e924>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolRemoveUsedBlock_LF <group___cmp_mem_pool_itf_1gaaebb707b38002f259c5cca7b7644e693>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolRemoveUsedBlockFromPool_LF <group___cmp_mem_pool_itf_1ga84d747fc2394a4258082aebfa5e8af16>` (void * pBlock, RTS_HANDLE hPool)
+
+- RTS_RESULT :ref:`MemPoolPutBlock_LF <group___cmp_mem_pool_itf_1ga8ac3fbc793b515e491e377a1d2dc0fcc>` (void * pBlock, void * pParam)
+
+- RTS_RESULT :ref:`MemPoolIsValidBlock_LF <group___cmp_mem_pool_itf_1ga47b11b8fd6d18bf47da9ef3719a86084>` (RTS_HANDLE hMemPool, void * pBlock)
+
+.. _group___cmp_mem_pool_itf-details:
+
+Detailed Description
+--------------------
+
+Interface of CmpMemPool.
+
+Interface of the memory pool manager to handle static and dynamic memory blocks
+
+A MemPool has the following structure:
+::
+    *				.
+    *				. -------------- Pool Control Block                -------------- Block Control Block
+    *				. |nRefCount   |  Reference Counter                |pBCB        |  Pointer to next BCB
+    *				. |Blocksize   |  data size of single block        |pPCB        |  Pointer to PCB
+    *				. |pBlocksInUse|  List of used blocks              ------------
+    *				. |pBCB        |  List of free blocks
+    *				. |...         |
+    *				. -------------
+    *				.
+    *				.                      provided
+    *				.                      Memory Area
+    *				.                      .--------------------------.
+    *				.                      | PCB                      |
+    *				.   List of free Blocks|  Blocksize               |      List of used Blocks
+    *				.                      |  pBlocksInUse            |===========.
+    *				.         .=========== |  pBCB                    |           |
+    *				.         |            |......................... |           |
+    *				.         |            | BCB                      | <=========
+    *				.         |            |                          | ---.
+    *				.         |            |......................... |    |
+    *				.         |            | DATA                     |    |
+    *				.         |            |                          |    |
+    *				.         |            |......................... |    |
+    *				.         |            | BCB                      | <--'
+    *				.         |            |                          | ---.
+    *				.         |            |......................... |    |
+    *				.         |            | DATA                     |    |
+    *				.         |            |                          |    |
+    *				.         |            |......................... |    |
+    *				.         |            |                          | <--'
+    *				.         |           ~~~                        ~~~
+    *				.         |
+    *				.         |           ~~~                        ~~~
+    *				.         '=========>  |......................... |
+    *				.                      | BCB                      | ---.
+    *				.                      |                          |    |
+    *				.                      |......................... |    |
+    *				.                      | DATA                     |    |
+    *				.                      |                          |    |
+    *				.                      |......................... | <--'
+    *				.                      | BCB                      | ---.
+    *				.                      |                          |    |
+    *				.                     ~~~                        ~~   ~~~
+    *				.
+    *				.                     ~~~                        ~~~
+    *				.                      |                          |
+    *				.                      |                          |
+    *				.                      .--------------------------.
+    *				.                      End of Memory Area
+    *				.
+    *				.
+    *
+
+**Copyright:**
+
+Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_mem_pool_itf_1ga2e9a2c61424604810fcee79422c7b66b:
+
+#define MEMPOOL_8BYTE_ALIGNED
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f:
+
+#define MEMPOOL_ALIGN_MODULO 8
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_itf_1ga38167e2c4242cf6377af7f0ff7779b78:
+
+#define MEMPOOL_INIT_VALUE 0xAA
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_itf_1gaa80d1316dbc01bff4db96bd70287315b:
+
+#define ITF_CmpMemPool
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_mem_pool_itf_1ga42831a988d35ce443bfdc84129db6298:
+
+#define EXTITF_CmpMemPool
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Typedef Documentation
+---------------------
+
+.. _group___cmp_mem_pool_itf_1ga73a0e5a30e14ae5145965196d738ef36:
+
+typedef ICmpMemPool_C ICmpMemPool
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function Documentation
+----------------------
+
+.. _group___cmp_mem_pool_itf_1ga3bfcc417db9f07554f3c7d796255094a:
+
+RTS_HANDLE MemPoolCreate (MemPoolConfiguration *pConfiguration, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create a new MemPool (dynamic or static)
+
+**Parameters**
+
++---------+----------------+--------------------------+
+| [in]    | pConfiguration | Pointer to configuration |
++---------+----------------+--------------------------+
+| [out]   | pResult        | Pointer to error code    |
++---------+----------------+--------------------------+
+
+**Returns:**
+
+Handle to the memory pool
+
+.. _group___cmp_mem_pool_itf_1ga4cf18fee38ec28c6a44bf88bad3ece77:
+
+RTS_HANDLE MemPoolCreateDynamic (char *pszComponentName, RTS_SIZE ulNumBlocks, RTS_SIZE ulBlockSize, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create a dynamic pool (consists of heap memory)
+
+**Parameters**
+
++---------+------------------+---------------------------------------+
+| [in]    | pszComponentName | Component name                        |
++---------+------------------+---------------------------------------+
+| [in]    | ulBlockSize      | Size of each memory block in the pool |
++---------+------------------+---------------------------------------+
+| [out]   | pResult          | Pointer to error code                 |
++---------+------------------+---------------------------------------+
+
+**Returns:**
+
+Handle to the memory pool
+
+.. _group___cmp_mem_pool_itf_1gac616bb19229e35dd70011a1c22be5dcd:
+
+RTS_HANDLE MemPoolCreateStatic (RTS_SIZE ulBlockSize, RTS_SIZE ulMemSize, void *pMemory, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create a memory pool from a static memory buffer.
+
+The memory buffer don't has to be aligned in a specific way. Therefore, not all of the memory in the buffer might be used. To get the appropriate additional buffer, the caller is recommended to use the macro :ref:`MEM_GET_STATIC_LEN(Num, Struct) <group___cmp_mem_pool_itf___macros_1ga9efe7e35071c5ce0e0746f2a196320e1>` to get the size of the buffer
+
+For example:
+::
+    *				 typedef struct
+    *				 {
+    *				     ...
+    *				 } myStruct_s;
+    *
+    *				 #define NUM_OF_STATIC_ELEMENTS 0x100
+    *
+    *				 RTS_UI8 s_byMyStaticPool[MEM_GET_STATIC_LEN(NUM_OF_STATIC_ELEMENTS, myStruct_s);
+    *
+
+**Parameters**
+
++---------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulBlockSize | Size of each memory block in the pool, misaligned to 1, 2, 4 or 8 bytes RANGE=[BLOCKSIZE_ALIGNED1,BLOCKSIZE_ALIGNED2,BLOCKSIZE_ALIGNED4,BLOCKSIZE_ALIGNED8]      |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | ulMemSize   | Complete size of the static memory, misaligned to 1, 2, 4 or 8 bytes RANGE=[MEMSIZE_INVALID,MEMSIZE_ALIGNED1,MEMSIZE_ALIGNED2,MEMSIZE_ALIGNED4,MEMSIZE_ALIGNED8] |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | pMemory     | Pointer to the static memory RANGE=[NULL,VALID_MEM]                                                                                                              |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult     | Pointer to error code                                                                                                                                            |
++---------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++---------------+-------------------------------------------------------------+
+| ERR_OK        | MemPool created successfully                                |
++---------------+-------------------------------------------------------------+
+| ERR_PARAMETER | pMemory was NULL                                            |
++---------------+-------------------------------------------------------------+
+| ERR_NOMEMORY  | ulMemSize was not large enough, to hold at leaset one block |
++---------------+-------------------------------------------------------------+
+
+**Returns:**
+
+Handle to the memory pool
+
+.. _group___cmp_mem_pool_itf_1ga730709e16a0dcce044b3141820c859a3:
+
+RTS_RESULT MemPoolExtendDynamic (RTS_HANDLE hMemPool, char *pszComponentName, RTS_SIZE ulNumBlocks)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Extend dynamic an existing pool
+
+**Parameters**
+
++---------+------------------+----------------------------+
+| [in]    | hMemPool         | Handle to the pool         |
++---------+------------------+----------------------------+
+| [in]    | pszComponentName | Component name             |
++---------+------------------+----------------------------+
+| [in]    | ulNumBlocks      | Number of blocks to extend |
++---------+------------------+----------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_mem_pool_itf_1ga83615fbc259d63de6087c8a4c27642f9:
+
+RTS_RESULT MemPoolExtendStatic (RTS_HANDLE hMemPool, RTS_SIZE ulMemSize, void *pMemory)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Extend an existing pool with a static array
+
+**Parameters**
+
++---------+-----------+------------------------------------+
+| [in]    | hMemPool  | Handle to the pool                 |
++---------+-----------+------------------------------------+
+| [in]    | ulMemSize | Complete size of the static memory |
++---------+-----------+------------------------------------+
+| [in]    | pMemory   | Pointer to the static memory       |
++---------+-----------+------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_mem_pool_itf_1ga97c2637a4e3370fce26bc936d1a94235:
+
+RTS_RESULT MemPoolCreateSyncObject (RTS_HANDLE hMemPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create the internal sync object for synchronizing the pool.
+
+**Parameters**
+
++---------+----------+--------------------+
+| [in]    | hMemPool | Handle to the pool |
++---------+----------+--------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_mem_pool_itf_1ga5e83feecba72271bb2c380b19fd08e65:
+
+RTS_RESULT MemPoolDeleteSyncObject (RTS_HANDLE hMemPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Delete the internal sync object for synchronizing the pool.
+
+**Parameters**
+
++---------+----------+--------------------+
+| [in]    | hMemPool | Handle to the pool |
++---------+----------+--------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_mem_pool_itf_1ga2caf1bff79294e6c1a226b57c8932b06:
+
+RTS_RESULT MemPoolDelete (RTS_HANDLE hMemPool, char *pszComponentName)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Delete an existing pool
+
+**Parameters**
+
++---------+------------------+--------------------+
+| [in]    | hMemPool         | Handle to the pool |
++---------+------------------+--------------------+
+| [in]    | pszComponentName | Component name     |
++---------+------------------+--------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_mem_pool_itf_1ga4d590328837318435b623deb38619c3b:
+
+RTS_RESULT MemPoolCleanup (RTS_HANDLE hMemPool, char *pszComponentName, int bReleaseSemaphore)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cleanup the pool (delete all allocated heap pool objects)
+
+**Parameters**
+
++---------+-------------------+----------------------------------------------+
+| [in]    | hMemPool          | Handle to the pool                           |
++---------+-------------------+----------------------------------------------+
+| [in]    | pszComponentName  | Component name                               |
++---------+-------------------+----------------------------------------------+
+| [in]    | bReleaseSemaphore | 1=Pool semaphore is released, 0=Only cleanup |
++---------+-------------------+----------------------------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_mem_pool_itf_1gaf7866c3bcd3fdcd14fffd93db7de5db0:
+
+void* MemPoolGetBlock (RTS_HANDLE hMemPool, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get one memory block out of the pool.
+
+SIL2 Implementation: If pPCB is wrong, an Exception is generated!
+
+**Parameters**
+
++---------+---------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hMemPool            | Handle to the pool RANGE=[RTS_INVALID_HANDLE,VALID_MEMPOOLHANDLE,INVALID_MEMPOOLHANDLE]                                            |
++---------+---------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| [in]    | hMemPool.NumEntries | ***PSEUDO*** Number of already allocated entries from the pool RANGE=[0..NUM_OF_STATIC_ELEMENTS-1,NUM_OF_STATIC_ELEMENTS..INT_MAX] |
++---------+---------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | pResult             | Pointer to error code                                                                                                              |
++---------+---------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| [out]   | bExceptionGenerated | ***PSEUDO*** specifies, if an exception was generated or not RANGE=[TRUE,FALSE]                                                    |
++---------+---------------------+------------------------------------------------------------------------------------------------------------------------------------+
+
+**Return values**
+
++--------------------+-----------------------------------+
+| ERR_OK             | Retrieved free block from MemPool |
++--------------------+-----------------------------------+
+| ERR_INVALID_HANDLE | No free block found               |
++--------------------+-----------------------------------+
+
+**Returns:**
+
+Pointer to the memory block
+
+.. _group___cmp_mem_pool_itf_1ga02d64406ebb343097b3698db3c92fd70:
+
+void* MemPoolGetBlock2 (RTS_HANDLE hMemPool, int bDynamic, char *pszComponentName, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get one memory block out of the pool
+
+**Parameters**
+
++---------+------------------+----------------------------------------------------------------------------------------+
+| [in]    | hMemPool         | Handle to the pool                                                                     |
++---------+------------------+----------------------------------------------------------------------------------------+
+| [in]    | bDynamic         | 1=Block is created dynamically, if the pool is empty, 0=Only use of static pool memory |
++---------+------------------+----------------------------------------------------------------------------------------+
+| [in]    | pszComponentName | Pointer to the component name for dynamic memory allocation                            |
++---------+------------------+----------------------------------------------------------------------------------------+
+| [out]   | pResult          | Pointer to error code                                                                  |
++---------+------------------+----------------------------------------------------------------------------------------+
+
+**Returns:**
+
+Pointer to the memory block
+
+.. _group___cmp_mem_pool_itf_1ga736973dcd8e693b7ce086ee2d3eb833c:
+
+RTS_PCB* MemPoolGetPCB (RTS_HANDLE hMemPool, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get one the pool control block of a specified pool
+
+**Parameters**
+
++---------+----------+-----------------------+
+| [in]    | hMemPool | Handle to the pool    |
++---------+----------+-----------------------+
+| [out]   | pResult  | Pointer to error code |
++---------+----------+-----------------------+
+
+**Returns:**
+
+Pointer to the pool control block
+
+.. _group___cmp_mem_pool_itf_1gad85943f33a536f0cb2443453753bd5cf:
+
+RTS_RESULT MemPoolPutBlock (void *pBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Put a memory block back into the pool (release). Now, the block is in the chain list of free blocks again.
+
+**Parameters**
+
++---------+--------+--------------------------------------------------------------------+
+| [in]    | pBlock | Pointer to the memory block RANGE=[NULL,VALID_BLOCK,INVALID_BLOCK] |
++---------+--------+--------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+----------------------------------------------+
+| ERR_OK        | Successfully added block to MemPool          |
++---------------+----------------------------------------------+
+| ERR_PARAMETER | Could not add block to MemPool, wrong pBlock |
++---------------+----------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1ga51d677d8d5741c642d1fd391cfdf17a5:
+
+RTS_RESULT MemPoolAddUsedBlock (void *pBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add used block at the beginning of the pool. Now, the block is in the chain list of used blocks.
+
+**Parameters**
+
++---------+--------+------------------------------------------------------+
+| [in]    | pBlock | Pointer to the memory block RANGE=[NULL,VALID_BLOCK] |
++---------+--------+------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+----------------------------------------------+
+| ERR_OK        | Successfully added block to MemPool          |
++---------------+----------------------------------------------+
+| ERR_PARAMETER | Could not add block to MemPool, wrong pBlock |
++---------------+----------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1gaf0920d14ed91fdc2d75ef1734eb245a9:
+
+RTS_RESULT MemPoolAppendUsedBlock (void *pBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add used block at the end of the pool. Now, the block is in the chain list of used blocks.
+
+**Parameters**
+
++---------+--------+------------------------------------------------------+
+| [in]    | pBlock | Pointer to the memory block RANGE=[NULL,VALID_BLOCK] |
++---------+--------+------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+----------------------------------------------+
+| ERR_OK        | Successfully added block to MemPool          |
++---------------+----------------------------------------------+
+| ERR_PARAMETER | Could not add block to MemPool, wrong pBlock |
++---------------+----------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1gafe815b0b2f830758e150154d946aef21:
+
+RTS_RESULT MemPoolInsertUsedBlock (void *pPrevBlock, void *pBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Insert used block right after the specified block or as a head element of an internal used blocks list.
+
+**Parameters**
+
++---------+------------+---------------------------------------------------------------------------------+
+| [in]    | pPrevBlock | Pointer to the predecessor block RANGE=[NULL,VALID_PREVBLOCK,INVALID_PREVBLOCK] |
++---------+------------+---------------------------------------------------------------------------------+
+| [in]    | pBlock     | Pointer to the memory block RANGE=[NULL,VALID_BLOCK]                            |
++---------+------------+---------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+----------------------------------------------------------------------------------------------------------------+
+| ERR_OK        | Successfully inserted block to MemPool                                                                         |
++---------------+----------------------------------------------------------------------------------------------------------------+
+| ERR_PARAMETER | Could not insert block to MemPool because pBlock is NULL or pPrevBlock belongs to a different pool than pBlock |
++---------------+----------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1gafec6377691b72fba73aef04dfea3212f:
+
+RTS_RESULT MemPoolRemoveUsedBlock (void *pBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Remove used block from the pool. If this function succeeds, the block could not be recognized anymore by any iterator on the pool!
+
+**Parameters**
+
++---------+--------+---------------------------------------------------------------------------------------+
+| [in]    | pBlock | Pointer to the memory block RANGE=[NULL,VALID_BLOCK,VALID_BLOCK_MID,VALID_BLOCK_LAST] |
++---------+--------+---------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+---------------------------------------------------+
+| ERR_OK        | Successfully removed block from MemPool           |
++---------------+---------------------------------------------------+
+| ERR_PARAMETER | Could not remove block from MemPool, wrong pBlock |
++---------------+---------------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1gacea8c6de3e459fcedd6292bb2d57987f:
+
+RTS_RESULT MemPoolAddUsedBlockToPool (void *pBlock, RTS_HANDLE hPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add used block the beginning of the specified pool. Now, the block is in the chain list of used blocks.
+
+**Parameters**
+
++---------+--------+-----------------------------+
+| [in]    | pBlock | Pointer to the memory block |
++---------+--------+-----------------------------+
+| [in]    | hPool  | Handle to the pool          |
++---------+--------+-----------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_mem_pool_itf_1gac0ad13055927fe23ada3622182b644f4:
+
+RTS_RESULT MemPoolAppendUsedBlockToPool (void *pBlock, RTS_HANDLE hPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add the block to the end of the used block list of hPool
+
+**Parameters**
+
++---------+--------+-----------------------------+
+| [in]    | pBlock | Pointer to the memory block |
++---------+--------+-----------------------------+
+| [in]    | hPool  | Handle to the pool          |
++---------+--------+-----------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_mem_pool_itf_1ga8adfd806eb44a46890ea6479f8ba6034:
+
+RTS_RESULT MemPoolRemoveUsedBlockFromPool (void *pBlock, RTS_HANDLE hPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Remove used block from the specified pool. Now, the block is removed from the chain list of used blocks.
+
+**Parameters**
+
++---------+--------+-----------------------------+
+| [in]    | pBlock | Pointer to the memory block |
++---------+--------+-----------------------------+
+| [in]    | hPool  | Handle to the pool          |
++---------+--------+-----------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+---------------------------------------------------+
+| ERR_OK        | Successfully removed block from MemPool           |
++---------------+---------------------------------------------------+
+| ERR_PARAMETER | Could not remove block from MemPool, wrong pBlock |
++---------------+---------------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1gab3dd8ca8f534f6eeab75b7269eb933e9:
+
+RTS_RESULT MemPoolLockBlock (void *pBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Lock the access to a pool to be threadsafe.
+
+**Parameters**
+
++---------+--------+-----------------------------+
+| [in]    | pBlock | Pointer to the memory block |
++---------+--------+-----------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_mem_pool_itf_1ga7a497308890236f7330ee9614040d89f:
+
+RTS_RESULT MemPoolUnlockBlock (void *pBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Unlock the access to a pool.
+
+**Parameters**
+
++---------+--------+-----------------------------+
+| [in]    | pBlock | Pointer to the memory block |
++---------+--------+-----------------------------+
+
+**Returns:**
+
+error code
+
+.. _group___cmp_mem_pool_itf_1ga6977f20929ba0d05cd8cd543b9b9f0b9:
+
+RTS_RESULT MemPoolReleaseBlocks (RTS_HANDLE hMemPool, RTS_BOOL bOnlyDeletedBlocks, void *pParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Function to release all blocks within a pool or only the blocks that are marked as "to delete". This behavior can be controlled with the parameter bOnlyDeletedBlocks. If a delete function was specified in :ref:`MemPoolCreate() <group___cmp_event_mgr_dep_1ga8b2da6cd129a88cd4155a08d9d32195d>` , this function is called at deleting the appropriate block and the delete function gets the pParam parameter!
+
+**Parameters**
+
++---------+--------------------+--------------------------------------------------------------------------------------------------------------------+
+| [in]    | hMemPool           | Handle to the memory pool RANGE=[VALID_MEMPOOLHANDLE,NULL]                                                         |
++---------+--------------------+--------------------------------------------------------------------------------------------------------------------+
+| [in]    | bOnlyDeletedBlocks | TRUE=Release only blocks, which are marked as to delete. FALSE=Release all blocks within a pool RANGE=[TRUE,FALSE] |
++---------+--------------------+--------------------------------------------------------------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++--------------------+-----------------------------------------------------------------------------------------+
+| ERR_OK             | Blocks in the MemPool are successfully release                                          |
++--------------------+-----------------------------------------------------------------------------------------+
+| ERR_PARAMETER      | Pool handle is invalid                                                                  |
++--------------------+-----------------------------------------------------------------------------------------+
+| ERR_PENDING        | Not all blocks could be deleted because the pool is still occupied by another iterator! |
++--------------------+-----------------------------------------------------------------------------------------+
+| ERR_NOTINITIALIZED | Release the pool could not be done before CH_INIT_SYSTEM. Not relevant for SIL2         |
++--------------------+-----------------------------------------------------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1ga999519f4cfc0c36ab8f3b0ee8c9aaee6:
+
+RTS_RESULT MemPoolLock (RTS_HANDLE hMemPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Lock the access to the complete pool. SIL2 Implementation is using INT Locks.
+
+**Parameters**
+
++---------+----------+------------------------------------------------------------+
+| [in]    | hMemPool | Handle to the memory pool RANGE=[VALID_MEMPOOLHANDLE,NULL] |
++---------+----------+------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++--------------------+------------------------------------------------------------------+
+| ERR_OK             | Pool was sucessfully locked                                      |
++--------------------+------------------------------------------------------------------+
+| ERR_PARAMETER      | Parameter is wrong                                               |
++--------------------+------------------------------------------------------------------+
+| ERR_FAILED         | Pool could not be locked, SysInt or SysSem had problems          |
++--------------------+------------------------------------------------------------------+
+| ERR_NOTIMPLEMENTED | SysInt or SysSem are not implemented                             |
++--------------------+------------------------------------------------------------------+
+| ERR_NOTINITIALIZED | Lock cannot be done before CH_INIT_SYSTEM, not relevant for SIL2 |
++--------------------+------------------------------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1ga7ade2961819aa341260089f3cb633383:
+
+RTS_RESULT MemPoolUnlock (RTS_HANDLE hMemPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Unlock the access to the complete pool. SIL2 Implementation is using INT Locks.
+
+**Parameters**
+
++---------+----------+------------------------------------------------------------+
+| [in]    | hMemPool | Handle to the memory pool RANGE=[VALID_MEMPOOLHANDLE,NULL] |
++---------+----------+------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++--------------------+--------------------------------------------------------------------+
+| ERR_OK             | Pool was sucessfully unlocked                                      |
++--------------------+--------------------------------------------------------------------+
+| ERR_PARAMETER      | Parameter is wrong                                                 |
++--------------------+--------------------------------------------------------------------+
+| ERR_FAILED         | Pool could not be unlocked, SysInt or SysSem had problems          |
++--------------------+--------------------------------------------------------------------+
+| ERR_NOTIMPLEMENTED | SysInt or SysSem are not implemented                               |
++--------------------+--------------------------------------------------------------------+
+| ERR_NOTINITIALIZED | Unlock cannot be done before CH_INIT_SYSTEM, not relevant for SIL2 |
++--------------------+--------------------------------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1ga5146bd5d77e6b326d14ca78b2935b0b5:
+
+void* MemPoolFindBlock (RTS_HANDLE hMemPool, RTS_SIZE ulOffset, RTS_SIZE ulSize, void *pToFind, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Find a block specified by a value, that is stored in the block. NOTE: Please use MemPoolLock or MemPoolAddRef_LF before calling this function, because block is returned unsynchronized against the pool!
+
+**Parameters**
+
++---------+----------+-------------------------------------------------+
+| [in]    | hMemPool | Handle to the memory pool                       |
++---------+----------+-------------------------------------------------+
+| [in]    | ulOffset | Byte offset of the value in the block to find   |
++---------+----------+-------------------------------------------------+
+| [in]    | ulSize   | Size in bytes of the value to find in the block |
++---------+----------+-------------------------------------------------+
+| [in]    | pToFind  | Pointer to the value to find in the block       |
++---------+----------+-------------------------------------------------+
+| [out]   | pResult  | Pointer to error code                           |
++---------+----------+-------------------------------------------------+
+
+**Returns:**
+
+Pointer to the memory block
+
+.. _group___cmp_mem_pool_itf_1gaeb89f4809892cdf3882bc24b69801655:
+
+RTS_RESULT MemPoolIsValidBlock (RTS_HANDLE hMemPool, void *pBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Check a pool memory block, if it is still valid and is not released. NOTE: If the check is successful, a lock is done on this pool!!! So you have to unlock this reference at the end of the usage with :ref:`MemPoolUnlock() <group___cmp_app_b_p_dep_1ga8f046fe35592f0e663228503cd604640>` !
+
+**Parameters**
+
++---------+----------+-----------------------------+
+| [in]    | hMemPool | Handle to the memory pool   |
++---------+----------+-----------------------------+
+| [in]    | pBlock   | Pointer to the memory block |
++---------+----------+-----------------------------+
+
+**Returns:**
+
+Error code
+
+.. _group___cmp_mem_pool_itf_1ga499bae494dcef421830732368e41b3fc:
+
+void* MemPoolGetFirstBlock (RTS_HANDLE hMemPool, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the first memory block out of the pool. Can be used for explicite iteration routines.
+
+**Parameters**
+
++---------+----------+---------------------------+
+| [in]    | hMemPool | Handle to the memory pool |
++---------+----------+---------------------------+
+| [out]   | pResult  | Pointer to error code     |
++---------+----------+---------------------------+
+
+**Returns:**
+
+Pointer to first memory block
+
+.. _group___cmp_mem_pool_itf_1ga8bf456fca1936f64fd7fd541d9c356c2:
+
+void* MemPoolGetNextBlock (RTS_HANDLE hMemPool, void *pPrevBlock, RTS_RESULT *pResult)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Get the next memory block out of the pool. Can be used for explicite iteration routines.
+
+**Parameters**
+
++---------+------------+----------------------------------+
+| [in]    | hMemPool   | Handle to the memory pool        |
++---------+------------+----------------------------------+
+| [in]    | pPrevBlock | Pointer to previous memory block |
++---------+------------+----------------------------------+
+| [out]   | pResult    | Pointer to error code            |
++---------+------------+----------------------------------+
+
+**Returns:**
+
+Pointer to next memory block
+
+.. _group___cmp_mem_pool_itf_1ga5b259464cfa59a29f898de35c30a841e:
+
+RTS_RESULT MemPoolAddRef_LF (RTS_HANDLE hMemPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To have a locking free iteration over a MemPool, you can use this AddRef function to occupy a MemPool! After calling this function, no element can be deleted out of the list of the MemPool!
+
+NOTES: 1. Please use the appropriate macro :ref:`MEM_GET_DATA_SKIP_DELETE() <group___cmp_mem_pool_itf___staticdefines_1gadae4bd345d482ea05615a691fa1f2725>` to get the data of all blocks, which are not marked as deleted! So you can skip this block and you should iterate to the next blocks. 2. Be aware, that a block cannot be removed from pool (via CAL_MemPoolRemoveUsedBlock_LF() after calling CAL_MemPoolAddRef_LF()! You have call CAL_MemPoolReleaseRef_LF() first and then you are able to remove the block or use CAL_MemPoolRemoveUsedBlock() alternatively!
+
+**Parameters**
+
++---------+----------+------------------------------------------------------------+
+| [in]    | hMemPool | Handle to the memory pool RANGE=[VALID_MEMPOOLHANDLE,NULL] |
++---------+----------+------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++--------------------+-----------------------------------------------------------------------------------+
+| ERR_OK             | Pool was sucessfully occupied                                                     |
++--------------------+-----------------------------------------------------------------------------------+
+| ERR_PARAMETER      | Pool handle is invalid                                                            |
++--------------------+-----------------------------------------------------------------------------------+
+| ERR_NOTINITIALIZED | Occupying the pool could not be done before CH_INIT_SYSTEM. Not relevant for SIL2 |
++--------------------+-----------------------------------------------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1ga8abe07954d4fb631998b050413833ffa:
+
+RTS_RESULT MemPoolReleaseRef_LF (RTS_HANDLE hMemPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To have a locking free iteration over a MemPool, you can use this release function to free a MemPool, which was occupied previously with :ref:`MemPoolAddRef_LF() <group___cmp_event_mgr_dep_1gac9ab177f46b0c0730419a237b9161a3a>` !
+
+**Parameters**
+
++---------+----------+------------------------------------------------------------+
+| [in]    | hMemPool | Handle to the memory pool RANGE=[VALID_MEMPOOLHANDLE,NULL] |
++---------+----------+------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++--------------------+------------------------------------------------------------------------------+
+| ERR_OK             | Pool was sucessfully freed                                                   |
++--------------------+------------------------------------------------------------------------------+
+| ERR_PARAMETER      | Pool handle is invalid                                                       |
++--------------------+------------------------------------------------------------------------------+
+| ERR_NOTINITIALIZED | Free the pool could not be done before CH_INIT_SYSTEM. Not relevant for SIL2 |
++--------------------+------------------------------------------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1gae5b30f35638173bc749f866ca7e6413b:
+
+RTS_RESULT MemPoolLock_LF (RTS_HANDLE hMemPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Lock the access to the complete pool. SIL2 Implementation is using INT Locks.
+
+NOTE:
+
+- Function can return ERR_NO_CONSISTENCY to signalize, that the refcount in the pool is >0 and so someone is still in an iteration loop after :ref:`MemPoolAddRef_LF() <group___cmp_event_mgr_dep_1gac9ab177f46b0c0730419a237b9161a3a>` !
+
+**Parameters**
+
++---------+----------+------------------------------------------------------------+
+| [in]    | hMemPool | Handle to the memory pool RANGE=[VALID_MEMPOOLHANDLE,NULL] |
++---------+----------+------------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++--------------------+----------------------------------------------------------------------------------------------------------------------+
+| ERR_OK             | Pool was sucessfully locked                                                                                          |
++--------------------+----------------------------------------------------------------------------------------------------------------------+
+| ERR_PARAMETER      | Parameter is wrong                                                                                                   |
++--------------------+----------------------------------------------------------------------------------------------------------------------+
+| ERR_FAILED         | Pool could not be locked, SysInt or SysSem had problems                                                              |
++--------------------+----------------------------------------------------------------------------------------------------------------------+
+| ERR_NOTIMPLEMENTED | SysInt or SysSem are not implemented                                                                                 |
++--------------------+----------------------------------------------------------------------------------------------------------------------+
+| ERR_NOTINITIALIZED | Lock cannot be done before CH_INIT_SYSTEM, not relevant for SIL2                                                     |
++--------------------+----------------------------------------------------------------------------------------------------------------------+
+| ERR_NO_CONSISTENCY | Lock is done, but the refcount in the pool is >0 and so someone is still in an iteration loop after MemPoolAddRef()! |
++--------------------+----------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1ga6917f50b7a1a7363f19e6ce97d77e924:
+
+RTS_RESULT MemPoolUnlock_LF (RTS_HANDLE hMemPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Unlock the access to the complete pool. SIL2 Implementation is using INT Locks.
+
+**Parameters**
+
++---------+----------+------------------------------------------------------------+
+| [in]    | hMemPool | Handle to the memory pool RANGE=[VALID_MEMPOOLHANDLE,NULL] |
++---------+----------+------------------------------------------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++--------------------+--------------------------------------------------------------------+
+| ERR_OK             | Pool was sucessfully unlocked                                      |
++--------------------+--------------------------------------------------------------------+
+| ERR_PARAMETER      | Parameter is wrong                                                 |
++--------------------+--------------------------------------------------------------------+
+| ERR_FAILED         | Pool could not be unlocked, SysInt or SysSem had problems          |
++--------------------+--------------------------------------------------------------------+
+| ERR_NOTIMPLEMENTED | SysInt or SysSem are not implemented                               |
++--------------------+--------------------------------------------------------------------+
+| ERR_NOTINITIALIZED | Unlock cannot be done before CH_INIT_SYSTEM, not relevant for SIL2 |
++--------------------+--------------------------------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1gaaebb707b38002f259c5cca7b7644e693:
+
+RTS_RESULT MemPoolRemoveUsedBlock_LF (void *pBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Remove used block from the pool. If this function succeeds, the block could not be recognized anymore by any iterator on the pool! NOTE: Please note the return codes of this function, especially ERR_PENDING!
+
+**Parameters**
+
++---------+--------+------------------------------------------------------+
+| [in]    | pBlock | Pointer to the memory block RANGE=[NULL,VALID_BLOCK] |
++---------+--------+------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_OK        | Successfully removed block from MemPool                                                                                                                                                                                                                                                                                                |
++---------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_PARAMETER | Could not remove block from MemPool, wrong pBlock                                                                                                                                                                                                                                                                                      |
++---------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_PENDING   | Could not remove block from MemPool because the pool is currently under usage by another iterator which used :ref:`MemPoolAddRef_LF() <group___cmp_event_mgr_dep_1gac9ab177f46b0c0730419a237b9161a3a>` ! But the block is still marked to delete and can be deleted later on by calling CAL_MemPoolReleaseBlocks(hPool, TRUE, pParam)! |
++---------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1ga84d747fc2394a4258082aebfa5e8af16:
+
+RTS_RESULT MemPoolRemoveUsedBlockFromPool_LF (void *pBlock, RTS_HANDLE hPool)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Remove used block from the specified pool. Now, the block is removed from the chain list of used blocks.
+
+**Parameters**
+
++---------+--------+-----------------------------+
+| [in]    | pBlock | Pointer to the memory block |
++---------+--------+-----------------------------+
+| [in]    | hPool  | Handle to the pool          |
++---------+--------+-----------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_OK        | Successfully removed block from MemPool                                                                                                                                                                                                                                                                                                |
++---------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_PARAMETER | Could not remove block from MemPool, wrong pBlock                                                                                                                                                                                                                                                                                      |
++---------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ERR_PENDING   | Could not remove block from MemPool because the pool is currently under usage by another iterator which used :ref:`MemPoolAddRef_LF() <group___cmp_event_mgr_dep_1gac9ab177f46b0c0730419a237b9161a3a>` ! But the block is still marked to delete and can be deleted later on by calling CAL_MemPoolReleaseBlocks(hPool, TRUE, pParam)! |
++---------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1ga8ac3fbc793b515e491e377a1d2dc0fcc:
+
+RTS_RESULT MemPoolPutBlock_LF (void *pBlock, void *pParam)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Put a memory block back into the pool (release). The content of the block is released with the corresponding delete function, which was specified as a parameter in the :ref:`MemPoolCreate() <group___cmp_event_mgr_dep_1ga8b2da6cd129a88cd4155a08d9d32195d>` function.
+
+**Parameters**
+
++---------+--------+----------------------------------------------------------+
+| [in]    | pBlock | Pointer to the memory block                              |
++---------+--------+----------------------------------------------------------+
+| [in]    | pParam | Optional parameter for the delete function. Can be NULL. |
++---------+--------+----------------------------------------------------------+
+
+**Returns:**
+
+error code
+
+**Return values**
+
++---------------+----------------------------------------------+
+| ERR_OK        | Successfully added block to MemPool          |
++---------------+----------------------------------------------+
+| ERR_PARAMETER | Could not add block to MemPool, wrong pBlock |
++---------------+----------------------------------------------+
+
+.. _group___cmp_mem_pool_itf_1ga47b11b8fd6d18bf47da9ef3719a86084:
+
+RTS_RESULT MemPoolIsValidBlock_LF (RTS_HANDLE hMemPool, void *pBlock)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Check a pool memory block, if it is still valid and is not released. NOTE: If the check is successful, a MemPoolAddRef done on this pool!!! So you have to release this reference at the end of the usage with :ref:`MemPoolReleaseRef_LF() <group___cmp_event_mgr_dep_1ga6ad6db0aa641eab484084726036ce716>` !
+
+**Parameters**
+
++---------+----------+-----------------------------+
+| [in]    | hMemPool | Handle to the memory pool   |
++---------+----------+-----------------------------+
+| [in]    | pBlock   | Pointer to the memory block |
++---------+----------+-----------------------------+
+
+**Returns:**
+
+Error code
+
+**Return values**
+
++---------------+---------------------------------+
+| ERR_OK        | Succeeded                       |
++---------------+---------------------------------+
+| ERR_PARAMETER | Pool or block handle is invalid |
++---------------+---------------------------------+
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

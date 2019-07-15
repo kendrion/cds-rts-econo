@@ -1,0 +1,42 @@
+.. _dev_functional:
+
+_`Functional`
+~~~~~~~~~~~~~
+
+In this section below a <device> any child objects of the device can be
+described. A child object is an object indented below the father object
+in the device tree.
+
+Example:
+
+.. code-block:: xml
+
+    <Functional> 
+        <ChildObject>
+            <ObjectGuid>8ceeba4e-ac7a-4fbd-9415-bfb2d98668ab</ObjectGuid>
+            <ObjectName>Plc Logic</ObjectName>
+        </ChildObject>
+        <Attribute name="StdCommunicationLink">True</Attribute>
+        <Attribute name="NoIoDownload">False</Attribute>
+        <Attribute name="SecureOnlineMode">False</Attribute>
+    </Functional>
+
++------------------------------------+---------------------------------------------------------------------------+
+|     XML Tag                        |     Description                                                           |
++====================================+===========================================================================+
+| ObjectGuid                         | Typeguid of the factory, that is capable of creating the object.          |
++------------------------------------+---------------------------------------------------------------------------+
+| ObjectName                         | The name of the object as it should appear in the device tree.            |
++------------------------------------+---------------------------------------------------------------------------+
+| Attribute "StdCommunicationLink"   | Boolean value. Must be set to true, if the device has a CODESYS           |
+|                                    | communication stack.                                                      |
++------------------------------------+---------------------------------------------------------------------------+
+| Attribute "NoIoDownload"           | Set this (optional) attribute, if no i/o configuration should be          |
+|                                    | downloaded to the device (ie. The device does not support the IoManager)  |
++------------------------------------+---------------------------------------------------------------------------+
+| Attribute "SecureOnlineMode"       | Boolean value. If set, secure online mode is by default activated for the |
+|                                    | device. Secure online mode means that the user will have to confirm most  |
+|                                    | of the online commands before they become effective.                      |
++------------------------------------+---------------------------------------------------------------------------+
+
+.. note:: For complete documentation on the particular device description elements see the :ref:`device_description_schema`.

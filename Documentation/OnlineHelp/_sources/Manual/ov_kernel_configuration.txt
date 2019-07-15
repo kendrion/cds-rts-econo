@@ -1,0 +1,74 @@
+.. _ov_kernel_configuration:
+
+Configuration (Settings)
+------------------------
+
+The configuration of the runtime system is done in the CmpSettings
+component. The settings component has the possibility to use different
+back ends. Actually available are the embedded backend and ini-file
+backend.
+
+INI file backend
+~~~~~~~~~~~~~~~~
+
+The INI file backend operates on one or several INI files (examples:
+CODESYSControl.cfg, Gateway.cfg). Each component has one section in the
+INI file to specify configuration settings. See also: :ref:`customer_versions`
+
+The configuration file(s) to be regarded must be specified when starting
+the runtime system.
+
+Example:
+
+.. code-block:: C
+
+ [CmpApp]
+ Bootproject.StoreOnlyOnDownload=0
+
+During runtime, the names of the boot projects are written to the
+runtime configuration file. Due to this writing process the
+configuration file eventually may get damaged. Unfortunately, a corrupt
+configuration file will preclude the runtime system from being started,
+even not for communication purposes. This undesirable situation can be
+circumvented by employing one of the following procedures:
+
+By CMPSETTINGS\_MASTER\_CONFIG the name of a master configuration file
+can be defined, which will be copied and used in case of failure of the
+standard configuration file.
+
+The standard configuration file is set to read-only. In return, it has
+to contain a link to an additional cfg-file, the names of the boot
+projects can be written to.
+
+The following steps have to be executed for specifying references to
+additional cfg-files:
+
+1. Add the following entry to the file CODESYSControl.cfg of the SP runtime:
+
+.. code-block:: C
+		 
+ [CmpSettings]
+ FileReference.0=ExtConfig0.cfg
+ FileReference.1=ExtConfig1.cfg
+ …
+
+2. Delete the complete section entitled [CmpApp] from CODESYSControl.cfg.
+
+3. Create the files referenced by the master configuration file
+       (ExtConfigx.cfg) within the same directory.
+
+4. Set CODESYSControl.cfg to read-only.
+
+5. Start the runtime system.
+
+In consequence, the master configuration file will be write-protected
+and new entries will be written to the first file referenced that has no
+write protection.
+
+Embedded Backend
+~~~~~~~~~~~~~~~~
+
+The Embedded backend has no file access. Here all settings are returned
+"hard coded" in the corresponding c-file CmpSettingsBackendEmbedded.c.
+This is typically used on small systems with no file system.
+

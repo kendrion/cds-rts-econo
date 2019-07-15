@@ -1,0 +1,101 @@
+.. _ov_kernel_exception_handling:
+
+Exception Handling
+------------------
+
+Exception handling refers to the way processor exceptions or serious
+errors in program execution are handled. When such an exception occurs,
+it is not usually possible for normal program execution to continue.
+
+The exception handling system is managed by the SysExcept component.
+This performs all the exception handling in a manner specific to the
+operating system. The task that triggered the exception, the exception
+itself and the context (IP register, base pointer and stack pointer) are
+determined here:
+
+-  Determining the triggering task
+-  Exception number (specific to the operating system)
+-  Determining the exact error location (current instruction pointer)
+-  Call stack (base and stack pointers)
+
+The name of the exception in the operating system-dependent name is then
+converted to the name or number that conforms to the runtime system.
+
+Every component can register itself for exception handling to the
+SysExcept component.
+
+Typically, the SysTask component will register itself, in order to
+obtain all the exceptions. The operating system handle for the task is
+then converted into the SysTask handle in the SysTask component. An
+exception handler can be given to every task when it is created
+(SysTaskCreate()). In the event of an exception, this is then called
+from the SysTask component. The reason for this is that it is only the
+component that set up a task that is able to handle the exception
+properly.
+
+If, for instance, a PLC task is set up, the exception handler will be
+appended by the multitasking or application component. When this handler
+is then called, the PLC would stop, etc. From the context it is then
+possible to determine the call hierarchy in the PLC program.
+
+Every task is monitored for at least the following exceptions:
+
+-  division by 0
+-  access violation (access to invalid addresses)
+-  invalid opcode
+-  error in dynamic memory allocation (malloc)
+
+When an exception occurs, the following steps will be carried out with
+the aid of the SysExcept component:
+
+1. the task or application will, according to the specification or setting, be halted, or the IEC program will first be asked about how to continue
+
+2. the call hierarchy is determined (call stack of all POUs)
+
+Structured exception handling (rts\_try / rts\_catch)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The runtime system has a build in structured exception handling. It can
+be activated by the define RTS\_STRUCTURED\_EXCEPTION\_HANDLING.
+
+The structured exception handling based on the standard C-Lib API
+functions setjmp and longjmp. With setjmp, an actual context can be
+saved. With longjmp you can jump back to this previous saved context.
+Because these functions are available on nearly every platform, this is
+a highly portable mechanism.
+
+To use this mechanism, you have to import the following interface and
+the functions in your Dep.m4 file:
+
+.. code-block:: C
+
+    USE\_ITF(\`SysExceptItf.m4')
+    SysExceptRegisterJmpBuf
+    SysExceptCatch
+    SysExceptUnregisterJmpBuf
+
+After this you can use it like the following code snippet:
+
+.. code-block:: C
+
+    rts_try /* Mandatory */
+    {
+    ... /* Code where the exception can occur */
+    }
+    rts_catch /* Mandatory */
+    {
+    RTS_UI32 exceptionCode = EXCPT_GET_CODE();
+    RegContext *pExceptionContext = EXCPT_GET_CONTEXT();
+    ... /* Exception handling code */
+    }
+    rts_finally /* Optional */
+    {
+    ...
+    }
+    rts_try_end /* Mandatory */
+
+With this mechanism, you can handle every exception exactly at the
+place, where it occurred without losing the context! This can be helpful
+for example to handle exceptions at layer 7 services and to send back an
+online error code without disturbing the communication stack and without
+losing the communication.

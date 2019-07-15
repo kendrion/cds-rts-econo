@@ -1,0 +1,171 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.8.1. Concept &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.8. I/O Drivers" href="io_drivers.html" />
+    <link rel="next" title="1.8.2. Main I/O Driver Interfaces" href="io_drivers_interfaces.html" />
+    <link rel="prev" title="1.8. I/O Drivers" href="io_drivers.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="io_drivers_interfaces.html" title="1.8.2. Main I/O Driver Interfaces"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="io_drivers.html" title="1.8. I/O Drivers"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="io_drivers.html" accesskey="U">1.8. I/O Drivers</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="io_drivers.html"
+                        title="previous chapter">1.8. I/O Drivers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="io_drivers_interfaces.html"
+                        title="next chapter">1.8.2. Main I/O Driver Interfaces</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/io_drivers_concept.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="concept">
+<span id="io-drivers-concept"></span><h1>1.8.1. Concept<a class="headerlink" href="#concept" title="Permalink to this headline">¶</a></h1>
+<p>In CODESYS V3, an I/O driver can be implemented in ANSI-C/C++ and also
+in IEC! This sounds strange, because in IEC you typically have no access
+to the hardware. But in CODESYS V3, the hardware access can be realized
+by so called System-Libraries. These libraries offer the possibility to
+access for example a PCI bus (SysPCI.library), physical memory
+(SysShm.library) or device ports (SysPort.library).</p>
+<p>An I/O driver will always be called by the runtime system in the
+appropriate moments. These moments are for example:</p>
+<ul class="simple">
+<li>At download of an application to read in I/O-configuration (see
+previous chapter)</li>
+<li>At the beginning of a task to read in input channels</li>
+<li>At the end of a task to write out output channels</li>
+<li>At sending an online service to read or write an I/O driver parameter</li>
+</ul>
+<p>To enable this, the I/O driver has to implement one mandatory interface
+(Ibase) and can implement some optional interfaces (dependent of the
+supported features). These interfaces are declared in the next chapter.
+The interface functions are typically called by the so called
+I/O-manager. This component manages all I/O-drivers independent of their
+implementation. An I/O driver in IEC will be represented by a wrapper
+implemented in C/C++ against the I/O-manager, so from this point of view
+every I/O driver looks the same.</p>
+<p>Each physical I/O device is typically supported by one <em>instance</em> of an
+I/O driver.</p>
+<p>In the case of a C/C++-driver, the driver first has to (auto) detect its
+supported cards at startup of the runtime system and has to create one
+instance for each detected device.</p>
+<p>In the case of an IEC-driver, the driver is automatically instantiated
+by CODESYS, if a device is appended in the graphical PLC-configuration.
+An auto detection of the device must be done at download time of the
+application and the physical device must be assigned to each instance of
+the driver afterwards.</p>
+<p>The instantiation and assignment of a physical device to an I/O driver
+instance is described in chapter 8.5 in detail.</p>
+<p>Architecture, calling I/O-drivers:</p>
+<img alt="../_images/io_drivers_calling.png" src="../_images/io_drivers_calling.png" />
+<p>To simplify start writing an I/O-driver, we provide a toolkit with the
+source code frames of I/O-drivers and some description files (XML). We
+provide an I/O driver frame in C and in IEC. You can find the source
+code and the description files typically under
+$\Components\IoDriver\IoDrvTemplate.</p>
+<p>In the CODESYS V3 I/O-concept, there are 4 different layers of
+functionality that the I/O-concept based on (see figure below).</p>
+<img alt="../_images/io_drivers_io_model_in_codesys.png" src="../_images/io_drivers_io_model_in_codesys.png" />
+<p>In the figure above, you can see the four layers at the left side. The
+base level is the hardware- and operating system abstraction layer. This
+layer provides a standard interface for every hardware access (e.g.
+Shared-Memory, PCI, Interrupt-Handling, etc.).</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="io_drivers_interfaces.html" title="1.8.2. Main I/O Driver Interfaces"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="io_drivers.html" title="1.8. I/O Drivers"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="io_drivers.html" >1.8. I/O Drivers</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

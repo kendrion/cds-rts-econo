@@ -1,0 +1,272 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.3.6. Scheduling &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.3. Overview of the Kernel Components and Main Functions" href="overview_kernel.html" />
+    <link rel="next" title="1.3.7. Task management" href="ov_kernel_task_mgmt.html" />
+    <link rel="prev" title="1.3.5. IEC Task Management" href="ov_kernel_iec_task_mgmt.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ov_kernel_task_mgmt.html" title="1.3.7. Task management"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_iec_task_mgmt.html" title="1.3.5. IEC Task Management"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" accesskey="U">1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.3.6. Scheduling</a><ul>
+<li><a class="reference internal" href="#single-tasking">1.3.6.1. Single tasking</a></li>
+<li><a class="reference internal" href="#timer-scheduler">1.3.6.2. Timer scheduler</a></li>
+<li><a class="reference internal" href="#multitasking">1.3.6.3. Multitasking</a></li>
+<li><a class="reference internal" href="#interface-for-implementing-external-events">1.3.6.4. Interface for implementing external events</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ov_kernel_iec_task_mgmt.html"
+                        title="previous chapter">1.3.5. IEC Task Management</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ov_kernel_task_mgmt.html"
+                        title="next chapter">1.3.7. Task management</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/ov_kernel_scheduling.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="scheduling">
+<span id="ov-kernel-scheduling"></span><h1>1.3.6. Scheduling<a class="headerlink" href="#scheduling" title="Permalink to this headline">¶</a></h1>
+<p>Scheduling in the runtime systems means to call the PLC tasks at the
+exact specified cycle times or if special events occurred. The scheduler
+here has the function to do the time control of each task and to check
+the occurrence of specified events. The scheduler is actually available
+in the following three different implementations for different targets:</p>
+<ul class="simple">
+<li>Single Tasking</li>
+<li>Timer Scheduler</li>
+<li>Multitasking</li>
+</ul>
+<div class="section" id="single-tasking">
+<h2>1.3.6.1. Single tasking<a class="headerlink" href="#single-tasking" title="Permalink to this headline">¶</a></h2>
+<p>All the tasks are called here in an endless loop in the sequence that
+corresponds to their priorities. This procedure is also called
+cooperative multitasking, as every task is carried out to the end
+without interruption. Watchdog monitoring cannot be carried out here.</p>
+<p>This implementation is typically used in very small embedded systems
+with no operating system. But the implementation has one big
+disadvantage: The communication is done here in the main loop too! So
+higher communication load here will lead to larger jitters of the IEC
+tasks. This disadvantage can be dismissed by the next two
+implementations of the scheduler.</p>
+</div>
+<div class="section" id="timer-scheduler">
+<span id="id1"></span><h2>1.3.6.2. Timer scheduler<a class="headerlink" href="#timer-scheduler" title="Permalink to this headline">¶</a></h2>
+<p>The timer scheduler implementation bases on the principle that each IEC
+task will be executed by one timer device on the target. Some embedded
+targets have several timers on board, that can be used for that.
+Typically this implementation is used on systems with no operating
+system.</p>
+<p>The runtime scheduler is used in this context only to supervise the IEC
+tasks by a software watchdog.</p>
+</div>
+<div class="section" id="multitasking">
+<h2>1.3.6.3. Multitasking<a class="headerlink" href="#multitasking" title="Permalink to this headline">¶</a></h2>
+<p>In multitasking systems, every IEC task is mapped to an operating system
+task. The SysTask component of each operating system provides priorities
+between 0..255 (see <a class="reference internal" href="ov_kernel_task_mgmt.html#ov-kernel-task-mgmt"><span class="std std-ref">Task management</span></a> for details). The priorities of the
+IEC-tasks (0=Highest..31=Lowest) are mapped into the system priority
+range of 32=Highest..63=Lowest (TASKPRIO_REALTIME_BASE..
+TASKPRIO_REALTIME_END).</p>
+<p>In multitasking systems it is typical for the real-time operating
+system&#8217;s scheduler to carry out the time-driven activation of tasks. In
+this case, however, it is not generally possible to execute cyclic tasks
+with high precision, only to react very quickly to specific events or
+interrupts. Because, however, a PLC often must handle cyclic tasks,
+dedicated time control with high resolution is needed here. In the
+system under consideration, this is implemented through a dedicated
+scheduler.</p>
+<p>Not every operating system, what is more, supports a software watchdog
+to monitor task runtimes. This is required in order, for instance, to
+detect endless loops reliably and to react to them. A PLC scheduler
+therefore usually also provides a software watchdog functionality.</p>
+<p>To provide a third level of safety, the scheduler should also,
+optionally, be able to trigger a hardware watchdog, so that failure of
+the basic software in the runtime system can also be detected.</p>
+<p>It must be possible for three activation procedures and two time-slicing
+procedures to be optionally activated for the pure scheduling:</p>
+<p>Activation:</p>
+<ol class="arabic simple">
+<li>Scheduling involving activation of all tasks at each schedule tick,
+where the activation time has elapsed. Activation is typically
+carried out here by means of OS events. After that, the
+lower-level OS scheduler activates and executes the tasks, in
+accordance with their priorities. Precise task execution depends
+on the PLC scheduler being called at accurately measured, evenly
+spaced times.</li>
+<li>As 1, except that only the highest priority task is activated. This
+can simplify the time-slicing described later, since only one
+active task has to be suspended and resumed.</li>
+<li>Certain real-time operating systems (such as RTLinux) are already
+able to call tasks cyclically with high precision. In this case,
+the PLC scheduler only needs to monitor the tasks (watchdog), not
+to execute time control.</li>
+</ol>
+<p>Time-slicing:</p>
+<p>External time-slicing: An external task extracts time slices here from
+the processing of the PLC task. No PLC tasks are therefore activated
+during the suspend phases, and all the PLC tasks that are currently
+running at the start of this phase are suspended. All the tasks are then
+regularly activated again and processed in the resume phase. This
+mechanism based on message queues (see SysMsgQ) for synchronisation.</p>
+<ul class="simple">
+<li>Internal time-slicing: The scheduler itself reserves time-slots here,
+e.g. for the rest of the system (communication). This makes it
+possible to specify a fixed period for PLC processing along with the
+time-slot for the rest of the system (e.g. 800us PLC, 200us rest).</li>
+</ul>
+<p>Note for devices with imprecise microsecond timing:</p>
+<p>The multitasking scheduler tolerates microsecond timing errors of 25 %.
+That means a cyclic task with 1 ms interval is scheduled as expected if
+the microsecond timing (performance counter) and the scheduler tick are
+synchronized with a deviation &lt; 25%. However, there are modern CPUs
+(Cortex A8-ARMs, Via X86 1.2 GHz, Atom) with e.g. CE 6 where the tick
+and the performance counters very soon show deviations of e.g. 751
+microseconds. So a 1 ms task will miss some ticks (e.g. 3 % of a 1 ms
+task are missed). For such cases, the following setting in the runtime
+system configuration file is available to schedule the IEC tasks based
+on millisecond times even if microsecond timing is implemented (if 0 or
+setting not available, microsecond timing will be maintained)</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">CmpSchedule</span><span class="p">]</span>
+<span class="n">DontUseMicrosecondTiming</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interface-for-implementing-external-events">
+<h2>1.3.6.4. Interface for implementing external events<a class="headerlink" href="#interface-for-implementing-external-events" title="Permalink to this headline">¶</a></h2>
+<p>All schedulers of CODESYS Control are now supporting a new interface to
+easily implement &#8220;external events&#8221; which can be used for &#8220;external event
+tasks&#8221;.</p>
+<p>The new functions might be used like this:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">HookFunction</span><span class="p">()</span><span class="o">:</span>
+<span class="k">case</span> <span class="nl">CH_INIT3</span><span class="p">:</span>
+<span class="p">{</span>
+    <span class="n">s_hExtEventTask</span> <span class="o">=</span> <span class="n">SchedRegisterExternalEvent</span><span class="p">(</span><span class="s">&quot;myCyclicInterrupt&quot;</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="p">...</span>
+    <span class="k">case</span> <span class="nl">CH_EXIT3</span><span class="p">:</span>
+    <span class="p">{</span>
+        <span class="n">SchedUnregisterExternalEvent</span><span class="p">(</span><span class="n">s_hExtEventTask</span><span class="p">);</span>
+        <span class="p">...</span>
+
+        <span class="n">myCyclicInterruptHandler</span><span class="p">()</span><span class="o">:</span>
+        <span class="n">SchedPostExternalEvent</span><span class="p">(</span><span class="n">s_hExtEventTask</span><span class="p">);</span>
+        <span class="p">...</span>
+</pre></div>
+</div>
+<p>The device description in turn needs the following <a class="reference internal" href="dev_desc_device_extended_settings.html#dev-extended-settings"><span class="std std-ref">settings</span></a>):</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nl">ts</span><span class="p">:</span><span class="n">section</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;taskconfiguration&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nl">ts</span><span class="p">:</span><span class="n">setting</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;supportexternal&quot;</span> <span class="n">type</span><span class="s">&quot;boolean&quot;</span> <span class="n">access</span><span class="o">=</span><span class="s">&quot;readonly&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nl">ts</span><span class="p">:</span><span class="n">value</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="nl">ts</span><span class="p">:</span><span class="n">value</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="nl">ts</span><span class="p">:</span><span class="n">setting</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nl">ts</span><span class="p">:</span><span class="n">setting</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;externalevents&quot;</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;cdata&quot;</span> <span class="n">access</span><span class="o">=</span><span class="s">&quot;hide&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="nl">ts</span><span class="p">:</span><span class="n">setting</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Debugging inside of external events is only supported for CmpSchedule.
+All other scheduler variants are ignoring breakpoints within external
+events.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ov_kernel_task_mgmt.html" title="1.3.7. Task management"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_iec_task_mgmt.html" title="1.3.5. IEC Task Management"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" >1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

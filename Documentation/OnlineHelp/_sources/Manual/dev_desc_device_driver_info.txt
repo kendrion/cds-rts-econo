@@ -1,0 +1,142 @@
+.. _dev_driver_info:
+
+_`Driver info`
+~~~~~~~~~~~~~~
+
+A device is typically operated by a driver. This is usual for an IO-device, but unusual for a PLC-device.
+In this section some general information for the driver can be specified.
+
+Example:
+
+.. code-block:: xml
+
+    <DriverInfo needsBusCycle="false" UpdateIosInStop="true" StopResetBehaviour="SetToDefault">
+        <RequiredLib libname="IoStandard" vendor="System" version="3.5.11.0" identifier="iostandardlib" />
+    </DriverInfo>
+
++-----------------------------+-----------------------------------------------------------------------------------+
+|     XML-Tag                 |     Description                                                                   |
++=============================+===================================================================================+
+| needsBusCycle               | Specifies, if the device needs a separate bus cycle. If this attribute is TRUE,   |
+|                             | the corresponding IO-driver get a cyclic call to is IoDrvStartBusCycle() interface|
+|                             | method. The context of this call can be specified by the user                     |
+|                             | (see :ref:`icmpiodrv`)                                                            |
++-----------------------------+-----------------------------------------------------------------------------------+
+| UpdateIosInStop             | If TRUE, the option "Update IO while in stop" in dialog "PLC settings" of the     |
+|                             | device editor will be activated.                                                  |
++-----------------------------+-----------------------------------------------------------------------------------+
+| StopResetBehaviour          | Defines the default selection for option "Update IO while in stop" in dialog      |
+|                             | "PLC settings" of the device editor.                                              |
++-----------------------------+-----------------------------------------------------------------------------------+
+| RequiredLib                 | Defines a library that is added when a device is added in the project.            |
+|                             | The IO standard is required by the IO configuration and must be compatible with   |
+|                             | the controller implementation.                                                    |
+|                             | An IoStandard.library for the device must therefore be specified here             |
+|                             | Instead of a fix library name a library placeholder (attribute "placeholderlib")  |
+|                             | can be specified here. This will effect that, when the device is included to the  |
+|                             | project, each the currently available corresponding customer-specific library     |
+|                             | will be included.                                                                 |
++-----------------------------+-----------------------------------------------------------------------------------+
+| defaultBusCycleTask         | Defines the default bus cycle task; example: defaultBusCycleTask="MainTask"       |
+|                             | Note: This setting overwrites a possibly available "useSlowestTask" resp. the     |
+|                             | basic default setting (=task with the shortest cycle time will be used as bus     |
+|                             | cycle task).                                                                      |
++-----------------------------+-----------------------------------------------------------------------------------+
+| useSlowestTask              | If TRUE, the task with the longest cycle time will be used as bus cycle task.     |
+|                             | Otherwise the task with the shortest cycle time or – if defined –                 |
+|                             | the "defaultBusCycleTask" (see above) will be used.                               |
++-----------------------------+-----------------------------------------------------------------------------------+
+| RequiredCyclicTask          | Specifies a cyclic task which shall automatically be added to the                 |
+|                             | Task Configuration, when the device is inserted in the device tree. The task is   |
+|                             | defined by the attributes "taskname" and "priority", see example below.           |  
+|                             |                                                                                   |
+| taskpou                     | Setting "taskpou" allows to specify a POU, which should be added to the           |
+|                             | configuration of the above defined task. Regard that this only means, that the    |
+|                             | POU name will be entered in the task configuration, not however that the POU      |
+|                             | itself will be created in the project !                                           |
+|                             |                                                                                   |
+|                             | Example:                                                                          |
+|                             |                                                                                   |
+|                             | | <RequiredCyclicTask taskname="Ethercat" priority="2" cycletime="t#6ms">         |
+|                             | |   <taskpou>Test\_Pou1</taskpou>                                                 |
+|                             | |   <taskpou>Test\_Pou2</taskpou>                                                 |
+|                             | | </RequiredCyclicTask>                                                           |
++-----------------------------+-----------------------------------------------------------------------------------+
+| RequiredExternalEventTask   | Corresponds to the above described "RequiredCyclicTask" setting; for automatically| 
+|                             | adding an external event task to the task configuration when inserting the device |
+|                             |                                                                                   |
+| taskpou                     | Example:                                                                          |
+|                             |                                                                                   |
+|                             | | <RequiredExternalEventTask taskname="EthercatEvent" priority="2">               |
+|                             | |   <taskpou>Test\_Pou3</taskpou>                                                 |
+|                             | |   <taskpou>Test\_Pou4</taskpou>                                                 |
+|                             | | </RequiredExternalEventTask>                                                    |
++-----------------------------+-----------------------------------------------------------------------------------+
+
+.. note:: For complete documentation on the particular device description elements see the xsd schema provided by :ref:`device_description_schema`.
+
+.. note:: If libraries, having the same library name and vendor name, 
+ are requested by a father object as well as by a child object (a child
+ object is an object indented below the father object in the device
+ tree), only that library version will be included which is requested by
+ the father object.
+
+Adding libraries and function blocks
+''''''''''''''''''''''''''''''''''''
+
+Example:
+
+.. code-block:: xml
+
+    <DriverInfo needsBusCycle="false">
+        <RequiredLib identifier="IoDrvSercos3" libname="IoDrvSercos3" placeholderlib="IoDrvSercos3" vendor="CODESYS GmbH" version="3.1.2.0">
+            <FBInstance basename="$(DeviceName)" fbname="Sercos3Slave">
+                <Initialize methodName="Initialize" />
+            </FBInstance>
+        </RequiredLib>
+    </DriverInfo>
+
+With the DriverInfo and RequiredLib elements it is possible to get
+libraries added to the project automatically as soon as the user adds a
+specific device in the configuration tree. The library is selected by
+libname, vendor and version and must match with the information from the
+library file.
+
+The identifier element selects the namespace as it is shown in the
+library manager of the project.
+
+With the element placeholderlib an unique name is defined. The
+placeholder itself is defined in the device description of the PLC in
+the target settings section and it will override the libname, vendor and
+version attribute. Optionally an attribute
+"loadAsSystemLibrary=true\|false" can be added: If it is "false", the
+library will be inserted as a "normal" library (black writing). If it is
+"true" (default) or missing, the library will be inserted as a "system
+library" (grey writing).
+
+With this placeholder mechanism it is possible to select a specific
+library version by only changing the PLC device description. All other
+description files (master, slaves) do not need to be changed.
+
+The FBInstance entry effects that automatically a function block will be
+created for each device. The basename $(DeviceName) will be replaced by
+the actual device name in the device tree. Also combinations like
+$(DeviceName)\_abc are possible. It the device is renamed in the device
+tree for example to "Drive1" then the function block will be named
+Drive1\_abc.
+
+With "Initialize" a special method could be declared, which will be
+called automatically when downloading the project.
+
+The declaration for the Initialize method must be exactly as follows:
+
+.. code-block:: C
+
+    METHOD Initialize : UDINT
+    VAR_INPUT
+        wModuleType : UINT;
+        dwInstance : UDINT;
+        pConnector : POINTER TO IoConfigConnector;
+    END_VAR
+
+For complete documentation see the information given by the xsd schema.

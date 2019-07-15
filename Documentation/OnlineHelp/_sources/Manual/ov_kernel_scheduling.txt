@@ -1,0 +1,168 @@
+.. _ov_kernel_scheduling:
+
+Scheduling
+----------
+
+Scheduling in the runtime systems means to call the PLC tasks at the
+exact specified cycle times or if special events occurred. The scheduler
+here has the function to do the time control of each task and to check
+the occurrence of specified events. The scheduler is actually available
+in the following three different implementations for different targets:
+
+-  Single Tasking
+
+-  Timer Scheduler
+
+-  Multitasking
+
+Single tasking
+~~~~~~~~~~~~~~
+         
+All the tasks are called here in an endless loop in the sequence that
+corresponds to their priorities. This procedure is also called
+cooperative multitasking, as every task is carried out to the end
+without interruption. Watchdog monitoring cannot be carried out here.
+
+This implementation is typically used in very small embedded systems
+with no operating system. But the implementation has one big
+disadvantage: The communication is done here in the main loop too! So
+higher communication load here will lead to larger jitters of the IEC
+tasks. This disadvantage can be dismissed by the next two
+implementations of the scheduler.
+
+.. _timer_scheduler:
+
+Timer scheduler
+~~~~~~~~~~~~~~~
+
+The timer scheduler implementation bases on the principle that each IEC
+task will be executed by one timer device on the target. Some embedded
+targets have several timers on board, that can be used for that.
+Typically this implementation is used on systems with no operating
+system.
+
+The runtime scheduler is used in this context only to supervise the IEC
+tasks by a software watchdog.
+
+Multitasking
+~~~~~~~~~~~~
+
+In multitasking systems, every IEC task is mapped to an operating system
+task. The SysTask component of each operating system provides priorities
+between 0..255 (see :ref:`ov_kernel_task_mgmt` for details). The priorities of the
+IEC-tasks (0=Highest..31=Lowest) are mapped into the system priority
+range of 32=Highest..63=Lowest (TASKPRIO\_REALTIME\_BASE..
+TASKPRIO\_REALTIME\_END).
+
+In multitasking systems it is typical for the real-time operating
+system's scheduler to carry out the time-driven activation of tasks. In
+this case, however, it is not generally possible to execute cyclic tasks
+with high precision, only to react very quickly to specific events or
+interrupts. Because, however, a PLC often must handle cyclic tasks,
+dedicated time control with high resolution is needed here. In the
+system under consideration, this is implemented through a dedicated
+scheduler.
+
+Not every operating system, what is more, supports a software watchdog
+to monitor task runtimes. This is required in order, for instance, to
+detect endless loops reliably and to react to them. A PLC scheduler
+therefore usually also provides a software watchdog functionality.
+
+To provide a third level of safety, the scheduler should also,
+optionally, be able to trigger a hardware watchdog, so that failure of
+the basic software in the runtime system can also be detected.
+
+It must be possible for three activation procedures and two time-slicing
+procedures to be optionally activated for the pure scheduling:
+
+Activation:
+
+1. Scheduling involving activation of all tasks at each schedule tick,
+   where the activation time has elapsed. Activation is typically
+   carried out here by means of OS events. After that, the
+   lower-level OS scheduler activates and executes the tasks, in
+   accordance with their priorities. Precise task execution depends
+   on the PLC scheduler being called at accurately measured, evenly
+   spaced times.
+
+2. As 1, except that only the highest priority task is activated. This
+   can simplify the time-slicing described later, since only one
+   active task has to be suspended and resumed.
+
+3. Certain real-time operating systems (such as RTLinux) are already
+   able to call tasks cyclically with high precision. In this case,
+   the PLC scheduler only needs to monitor the tasks (watchdog), not
+   to execute time control.
+
+Time-slicing:
+
+External time-slicing: An external task extracts time slices here from
+the processing of the PLC task. No PLC tasks are therefore activated
+during the suspend phases, and all the PLC tasks that are currently
+running at the start of this phase are suspended. All the tasks are then
+regularly activated again and processed in the resume phase. This
+mechanism based on message queues (see SysMsgQ) for synchronisation.
+
+-  Internal time-slicing: The scheduler itself reserves time-slots here,
+   e.g. for the rest of the system (communication). This makes it
+   possible to specify a fixed period for PLC processing along with the
+   time-slot for the rest of the system (e.g. 800us PLC, 200us rest).
+
+Note for devices with imprecise microsecond timing:
+
+The multitasking scheduler tolerates microsecond timing errors of 25 %.
+That means a cyclic task with 1 ms interval is scheduled as expected if
+the microsecond timing (performance counter) and the scheduler tick are
+synchronized with a deviation < 25%. However, there are modern CPUs
+(Cortex A8-ARMs, Via X86 1.2 GHz, Atom) with e.g. CE 6 where the tick
+and the performance counters very soon show deviations of e.g. 751
+microseconds. So a 1 ms task will miss some ticks (e.g. 3 % of a 1 ms
+task are missed). For such cases, the following setting in the runtime
+system configuration file is available to schedule the IEC tasks based
+on millisecond times even if microsecond timing is implemented (if 0 or
+setting not available, microsecond timing will be maintained)
+
+.. code-block:: C
+
+ [CmpSchedule]
+ DontUseMicrosecondTiming=1
+
+Interface for implementing external events
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All schedulers of CODESYS Control are now supporting a new interface to
+easily implement "external events" which can be used for "external event
+tasks".
+
+The new functions might be used like this:
+
+.. code-block:: C
+
+    HookFunction():
+    case CH_INIT3:
+    {
+        s_hExtEventTask = SchedRegisterExternalEvent("myCyclicInterrupt", NULL);
+        ...
+        case CH_EXIT3:
+        {
+            SchedUnregisterExternalEvent(s_hExtEventTask);
+            ...
+
+            myCyclicInterruptHandler():
+            SchedPostExternalEvent(s_hExtEventTask);
+            ...
+
+The device description in turn needs the following :ref:`settings <dev_extended_settings>`):
+
+.. code-block:: C
+
+    <ts:section name="taskconfiguration">
+        <ts:setting name="supportexternal" type"boolean" access="readonly">
+            <ts:value>0</ts:value>
+        </ts:setting>
+        <ts:setting name="externalevents" type="cdata" access="hide">
+        </ts:setting>
+
+Debugging inside of external events is only supported for CmpSchedule.
+All other scheduler variants are ignoring breakpoints within external
+events.

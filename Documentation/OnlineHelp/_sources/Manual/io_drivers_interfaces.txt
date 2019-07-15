@@ -1,0 +1,630 @@
+.. _io_drivers_interfaces:
+
+Main I/O Driver Interfaces
+--------------------------
+
+To understand how an I/O driver works internally, we need to take a look
+at the interfaces that an I/O driver has to implement.
+
+If the driver is written in C/C++ you can find the available interfaces
+in the directory components. The interface header files always begin
+with CmpIpDrv and ends (like every interface) with Itf.h:
+
+CmpIoDrv…Itf.h
+
+If you intend to write an I/O driver in IEC, you can find the interface
+in the corresponding libraries with the following structure:
+
+IioDrv... .library
+
+IBase
+~~~~~
+
+The IBase interface is the mandatory interface that every I/O driver has
+to implement! It Contains the following functions:
+
+IBase (C/C++, the Parameter pIBase is only needed for C-drivers):
+
+1. void \*QueryInterface (Ibase \*pIBase, ITFID ItfId, RTS_RESULT \*pResult)
+2. int AddRef(Ibase \*pIBase)
+3. int Release(Ibase \*pIBase)
+
+IBase (IEC):
+
+1. PointER TO BYTE QueryInterface (ITFID ItfId, PointER TO Udint
+   \*pResult)
+2. Dint AddRef()
+3. Dint Release()
+
+With the QueryInterface() function, an I/O driver can be requested for
+an interface, that the I/O driver implements. The corresponding
+interface pointer is returned by this function.
+
+| An interface is always specified and can be requested by an ID. To
+  save memory, the ID is only a 32-Bit number and no GUID. But this
+  causes to manage all interface IDs. The ID consists of the high word
+  vendor Id and the low word interface Id. So every vendor can create
+  its own interfaces.
+| A list of all available interface IDs that are used in the runtime
+  system can be found in the header file CmpItf.h or for IEC-driver in
+  the corresponding interface libraries.
+
+The AddRef() function is always called implicitly, if a QueryInterface
+call was successful to increase a reference counter of this object.
+
+The Release() can be called to release an interface pointer, that was
+provided by QueryInterface. This function decrements the reference
+counter of an object.
+
+If the reference counter is 0, the object will be deleted.
+
+.. _icmpiodrv:
+
+ICmpIoDrv
+~~~~~~~~~
+
+The most important interface, that an I/O driver can implement, is the
+IcmpIoDrv interface. It contains the following functions for different
+issues:
+
+Identification functions:
+
+.. code-block:: C
+
+    typedef struct tagIoDrvInfo
+    {
+        RTS_IEC_WORD wId; // Index of the instance
+        RTS_IEC_WORD wModuleType; // Supported module type
+        RTS_IEC_DWORD hSpecific; // Specific handle
+        RTS_IEC_string szDriverName[32]; // driver name
+        RTS_IEC_string szVendorName[32]; // vendor name
+        RTS_IEC_string szDeviceName[32]; // device name
+        RTS_IEC_string szFirmwareVersion[64]; // Firmware version
+        RTS_IEC_DWORD dwVersion; // Version of the driver
+    } IoDrvInfo;
+
+RTS_RESULT IoDrvGetInfo(IoDrvInfo \**ppIoDrv):
+
+With this function, some generic information can be requested like
+driver name (see structure above), device name that is supported by the
+driver, vendor name and firmware number (if the supported device has an
+own firmware on it like the hilscher cards).
+
+RTS_RESULT IoDrvIdentify(IoConfigConnector \*pConnector):
+
+By calling this function, the I/O driver should identify itfs device,
+like blinking some LEDs, stopping the bus, etc. It is planned to call
+this function by a menu action on the device in the plc-configuration to
+physically identify this device. This could be very useful, if there are
+several identical cards plugged in the plc and the assignment in the
+plc-configuration in CODESYS is unclear.
+
+*Configuration:* (called during application download)
+
+RTS_RESULT IoDrvUpdateConfiguration(IoConfigConnector \*pConnectorList,
+int nCount):
+
+This function is called at download of the application that contains the
+I/O-configuration. Each driver instance gets the complete list of
+connectors!
+
+The first thing that must be done in this function is to detect the
+connector that is supported by the I/O-driver. For this, the I/O driver
+can request the Io-manager for the first connector with the specified
+type Id, like:
+
+pConnector = CAL_IoMgrConfigGetFirstConnector(pConnectorList, &nCount, 0x0020);
+
+Here, the first connector with the Id 0x0020 (=CT\_PROFIBUS\_MASTER) is
+searched. See :ref:`_dev_io_conf_device_descriptions <connectors>` for detailed information.
+
+If the first connector with the matching type is found (pConnector is
+unequal 0), it must be checked:
+
+-  if it is correct supported device
+-  if the connector is not supported already by a previous instance
+
+To check, if is the correct device, typically some additional parameters
+are used to detect this like vendor name, device name or specific device
+id.
+
+To check if the connector is free and can be used and it is not occupied
+by another instance, therefore the connector entry hIoDrv must be
+checked for 0 or -1. In both cases, the I/O-connector is free and can be
+used. To occupy the connector, the driver has to write ist handle into
+the connector.
+
+So typical sequence of IoDrvUpdateConfiguration looks like in C:
+
+.. code-block:: C
+
+    IBase *pIBase;
+    IoConfigConnector *pConnector = CAL_IoMgrConfigGetFirstConnector(pConnectorList, &nCount, CT_PROFIBUS_MASTER);
+
+    while (pConnector != NULL)
+    {
+        IoDrvInfo *pInfo;
+        IoConfigParameter *pParameter;
+        char *pszVendorName = NULL;
+        char *pszDeviceName = NULL;
+
+        IoDrvGetInfo(hIoDrv, &pInfo);
+
+        pParameter = CAL_IoMgrConfigGetParameter(pConnector, 393218);
+        if (pParameter != NULL && pParameter->dwFlags & PVF_Pointer)
+            pszVendorName = (char *)pParameter->dwValue;
+
+        pParameter = CAL_IoMgrConfigGetParameter(pConnector, 393219);
+        if (pParameter != NULL && pParameter->dwFlags & PVF_Pointer)
+            pszDeviceName = (char *)pParameter->dwValue;
+
+        if  (pConnector->hIoDrv == 0 &&
+            pszVendorName != NULL && strcmp(pszVendorName, pInfo->szVendorName) == 0 &&
+            pszDeviceName != NULL && strcmp(pszDeviceName, pInfo->szDeviceName) == 0)
+        {
+            pConnector->hIoDrv = (RTS_IEC_DWORD)pIBase;
+
+In IEC you can find the appropriate sequence in the template driver. It
+looks quite the same.
+
+After detecting the right connector, the next step in the function
+IoDrvUpdateConfiguration is to configure the physical device with the
+connector parameters and optional to detect all slaves (if is a fieldbus
+master).
+
+To detect the slaves, the I/O-manager provides some interface functions
+too:
+
+.. code-block:: C
+
+    pChild = CAL_IoMgrConfigGetFirstChild(pConnectorList, &nCount, pConnectorFather);
+
+With this function, the first child of the father connector
+pConnectorFather was returned.
+
+The next child (slave) can be requested by:
+
+.. code-block:: C
+
+    pChild = CAL_IoMgrConfigGetNextChild(pChild, &nCount, pConnectorFather);
+
+.. note:: 
+ ATTENTION: The driver must register its instance at each supported connector 
+ (also PCI connectors, slaves, etc.). This must be done in the hIoDrv component of the corresponding connector, like:
+
+.. code-block:: C
+
+    pChild->hIoDrv = (RTS_IEC_DWORD)pIBase;
+
+RTS_RESULT IoDrvUpdateMapping(IoConfigTaskMap  \*pTaskMapList, int
+nCount):
+
+The driver is called with the so called task map list. A Task map
+contains the following information:
+
++--------------------------------------------+---------------------+
+| Element                                    | IEC Data type       |
++============================================+=====================+
+| Task ID                                    | DWORD               |
++--------------------------------------------+---------------------+
+| Type (Input or Output)                     | WORD                |
++--------------------------------------------+---------------------+
+| Number of connector maps                   | WORD                |
++--------------------------------------------+---------------------+
+| Pointer to connector map list              | PointER             |
++--------------------------------------------+---------------------+
+
+A connector map list contains the following information:
+
++--------------------------------------------+---------------------+
+| Element                                    | IEC Data type       |
++============================================+=====================+
+| Pointer to a connector                     | DWORD               |
++--------------------------------------------+---------------------+
+| Number of channel maps                     | WORD                |
++--------------------------------------------+---------------------+
+| Pointer to channel map list                | POINTER             |
++--------------------------------------------+---------------------+
+
+The complete I/O-mapping structure is shown in the following picture:
+
+.. image:: ./images/io_drivers_mapping_structure.png
+
+These are the missing bricks to understand the I/O-mapping.
+
+The task map contains all mapping information for each task, that means,
+all I/O-channel that are used by a task. For each task you got one entry
+for all inputs and one entry for all outputs.
+
+The task map contains a list of connectors maps, that means on which
+connectors the I/O-channels are residing.
+
+And at least, the connector map entry contains a list of channel maps,
+which includes the real mapping information, where to copy the inputs to
+which offset on the device and where to copy the outputs from the device
+to which offset in the application.
+
+In the mapping table, the I/O driver can sort or rearrange entries to
+optimize later cyclic access. E.g. several byte channels can be
+collected to one byte stream, to use one memcpy at the cyclic update.
+
+*Cyclic Calls*:
+
+RTS_RESULT IoDrvReadInputs(IoConfigConnectorMap \*pConnectorMapList,
+int nCount):
+
+This interface function is called at the beginning of a task to read in
+all referred input values of this driver. Only one call is done for each
+task.
+
+RTS_RESULT IoDrvWriteOutputs(IoConfigConnectorMap \*pConnectorMapList,
+int nCount):
+
+This interface function is called at the end of a task to write out all
+referred output values of this driver. Only one call is done for each
+task.
+
+RTS_RESULT IoDrvStartBusCycle(IoConfigConnector \*pConnector):
+
+This function is used to trigger a bus cycle (if necessary on the
+device). This can be specified in the device description as followed, if
+a bus cycle is necessary (see :ref:`driver_info`):
+
+.. code-block:: C
+
+    <DriverInfo needsBusCycle="true">
+        …
+    </DriverInfo>
+
+| In which context this function is called can be specified in the
+  IO-configuration.
+| On the device dialog in the register card "PLC settings", you can
+  specify a dedicated "bus cycle task". If no task is specified here,
+  the task with the shortest cycle time is used out of the task
+  configuration. With the attribute "useSlowestTask" you can specify in
+  your device description, that the slowest task does the bus cycle (see :ref:`driver_info`).
+| On the device (e.g. Master), there is a register card "Mapping", where
+  you can specify an optional bus cycle task. If no task is specified
+  here, the configuration of the device is used (see above) as default.
+
+RTS_RESULT IoDrvWatchdogTrigger(IoConfigConnector \*pConnector):
+
+This function is called cyclically to retrigger a watchdog on the
+device. The cycle time must be calculated in the I/O-driver.
+
+*Scanning sub devices/modules*:
+
+RTS_RESULT IoDrvScanModules(IoConfigConnector \*pConnector, IoConfigConnector \**ppConnectorList, int \*pnCount):
+
+This function is called to scan sub devices. This can be used to scan
+physically available slaves of fieldbus master, that are connected to
+one fieldbus.
+
+It is necessary to enable the scan mechanism in the device description
+file. This is done by an additional xml element in the <DriverInfo>
+section.
+
+Example:
+
+.. code-block:: C
+
+    <DriverInfo>
+        <Scan supported="true" identify="true"></Scan>
+    </DriverInfo>
+
+The scan function is enabled for the device and the command is enabled
+in the context menu if the device is selected in the device tree.
+
+The identify attribute enables the call of IoDrvIdentify to identify a
+scanned device. In most cases a LED is blinking to show the user the
+selected device. It is helpful for bus systems without DIP switches for
+address setting like sercos or ProfiNet.
+
+In the method IoDrvScanModules the connected devices have to be
+returned.
+
+With versions before V3.5 SP2 the method is called only once and
+therefore all devices must be scanned at once.
+
+| With version from V3.5 SP2 it is possible to return ERR_PENDING. In
+  that case the method IoDrvScanModules is called again and the method
+  could return just the found number of devices or 0 if the stack needs
+  additional time or calls to collect the available devices.
+| The programming and runtime system must support this and it will lower
+  the required memory for the scan function.
+
+If flag ConnectorOptions.CO_SCAN_PENDING_SUPPORTED  is set in
+pConnector^.wOptions then it is possible to use the pending
+functionality.
+
+*Descriptions of parameters*:
+
+IoConfigConnector \*pConnector
+
+It contains the connector for the device (for example master) and the
+parameters for starting the scan function.
+
+IoConfigConnector \**ppConnectorList
+
+| Inside the method this parameter has to be set to the memory
+  containing a list of connectors for all devices found. If
+  CO_SCAN_PENDING_SUPPORTED is not available the memory has to be
+  allocated dynamically and freed in FB_Exit or before the next scan
+  call.
+| If CO_SCAN_PENDING_SUPPORTED is available the method could return a
+  pointer to one instance of IoConfigConnector.
+
+.. code-block:: C
+  
+    Int *pnCount
+
+The method has to set the number of connectors (=devices + sub devices)
+stored in the ppConnectorList.
+
+Devices and sub devices could be returned in the connector list. The sub
+devices must be directly copied to the memory behind the devices then
+the scan mechanism could automatically assign the sub devices.
+
+| Memory content for IoConfigConnector:
+| Device 1
+| Sub device 1.1
+| Sub device 1.2
+| Device 2
+| Sub device 2.1
+
+Example in IEC working with all versions:
+
+.. code-block:: C
+
+   Member variables for function block:
+   m_pScanConnector: POINTER TO IoConfigConnector; // only necessary to free allocated
+                                                   // memory
+   m_diScannedSlaves: DINT;
+
+   Declaration:
+
+.. code-block:: C
+
+    METHOD IoDrvScanModules : UDINT
+    VAR_INPUT
+        pConnector : POINTER TO IoConfigConnector;
+        ppConnectorList : POINTER TO POINTER TO IoConfigConnector;
+        pnCount : POINTER TO DINT;
+    END_VAR
+    VAR
+        pSlaveConnector: POINTER TO IoConfigConnector;
+        pSlaveParameters: POINTER TO IoConfigParameter;
+        behavior: DINT;
+        dwParamCount : DWORD;
+        stComponent : STRING :='Test';
+        wSlaves: WORD;
+        wLen: WORD;
+        bFailed: BOOL;
+        dwVendorID: DWORD :=0;
+        dwDeviceId: DWORD := 0;
+        dwRevision : DWORD := 0;
+        udiResult: UINT;
+        stModuleID: STRING;
+        wConnectorCount: WORD;
+        bScanWithPending : BOOL;
+    END_VAR
+
+.. code-block:: C
+
+   Implementation:
+
+    IoDrvScanModules_Count := IoDrvScanModules_Count + 1;
+    // Counter for debugging. Shows that IoDrvScanModules is called 
+    {IF defined (variable:ConnectorOptions)}
+    bScanWithPending := pConnector^.wOptions = ConnectorOptions.CO_SCAN_PENDING_SUPPORTED;
+    // Check for version V3.5 SP2. If flag is set the return value ERR_PENDING could be used.
+    {END_IF}
+    IF m_pScanConnector <> 0 AND m_diScannedSlaves > 0 THEN
+    // free memory from the last scan
+    pSlaveConnector := m_pScanConnector;
+    FOR behavior := 1 TO m_diScannedSlaves DO
+      pSlaveParameters := pSlaveConnector^.pParameterList;
+      FOR dwParamCount := 1 TO pSlaveConnector^.dwNumOfParameters DO
+        // Free the memory for the parameters
+        IF (pSlaveParameters^.dwFlags AND 16#2) = 16#2 THEN
+           // dwValue is pointer
+           IF pSlaveParameters^.dwValue <> 0 THEN
+           SysMemFreeData(stComponent,pSlaveParameters^.dwValue);
+           END_IF
+        END_IF
+        pSlaveParameters := pSlaveParameters + SIZEOF(IoConfigParameter);
+      END_FOR
+      // Free the parameter list
+      SysMemFreeData(stComponent,pSlaveConnector^.pParameterList);
+      pSlaveConnector := pSlaveConnector + SIZEOF(IoConfigConnector);
+    END_FOR
+      // Free the connectors
+      SysMemFreeData(stComponent,m_pScanConnector);
+      m_pScanConnector := 0; // Mark memory as freed
+      m_diScannedSlaves:=0;
+      IF bScanWithPending THEN
+        // Scan return ERR_PENDING to free the allocated memory
+        // now return ERR_OK to finish the scan process
+        IoDrvScanModules := Errors.ERR_OK;
+      END_IF
+    END_IF
+    // to-do: get the number of slaves
+    wSlaves := 1;
+    // Example for one device
+    // Number of Slaves is now known -> allocate memory
+    pSlaveConnector^ := SysMemAllocData(stComponent,wSlaves*SIZEOF(IoConfigConnector),ADR(udiResult));
+    // For old version allocate the necessary memory for all device.
+    // With V3.5 SP2 it is possible to return only one device for each call of IoDrvScanModules
+    // Therefore it is not necessary to allocate memory dynamically.
+      It could be also a member variable of the function block
+    IF ppConnectorList = 0 THEN
+    // Not enough memory
+    IoDrvScanModules := Errors.ERR_FAILED;
+    RETURN;
+    END_IF
+    ppConnectorList^ := pSlaveConnector;
+    // Set the return value of the method to the IoConfigConnector
+      memory.
+    // Store the memory pointer and size for freeing the memory after
+      scan
+    m_pScanConnector := pSlaveConnector;
+    m_diScannedSlaves := wSlaves;
+    wConnectorCount := 0;
+    FOR behavior := 1 TO WORD_TO_DINT(wSlaves) DO
+      pSlaveParameters := SysMemAllocData(stComponent, 4 *
+    SIZEOF(IoConfigParameter),ADR(udiResult));
+      // At least 4 parameters have ehav returned for each connector.
+      IF pSlaveParameters <> 0 THEN
+         bFailed := FALSE;
+         // to-do: get information from device, vendor id, product, revision etc.
+         // anything that is needed to find the matching device description in the 
+         // repository
+        IF NOT bFailed THEN
+         // device information successfully read
+         pSlaveConnector^.wType := 32768; // DeviceID of device as in device
+                //Description <DeviceIdentification><Type>
+                pSlaveConnector^.dwNumOfParameters := 4; // 4 parameters minimum
+                pSlaveConnector^.pParameterList := pSlaveParameters
+                // store the parameters vendor id
+                pSlaveParameters^.dwParameterId := 1; // Vendor ID is always 1
+                pSlaveParameters^.dwValue := dwVendorID;
+                pSlaveParameters^.wLen := 32; // Bitlength
+                pSlaveParameters^.wType := TypeClass.TYPE_DWORD;
+                pSlaveParameters^.dwFlags := 16#34; // Value is a direct value
+                // next parameter device id
+                pSlaveParameters := pSlaveParameters + SIZEOF(IoConfigParameter);
+                pSlaveParameters^.dwParameterId := 2; // Product ID is always 2
+                pSlaveParameters^.dwValue := dwDeviceId;
+                pSlaveParameters^.wLen := 32; // Bitlength
+                pSlaveParameters^.wType := TypeClass.TYPE_DWORD;
+                pSlaveParameters^.dwFlags := 16#34; // Value is a direct value
+                // next parameter revision
+                pSlaveParameters := pSlaveParameters + SIZEOF(IoConfigParameter);
+                pSlaveParameters^.dwParameterId := 3; // Revision ID is always 3
+                pSlaveParameters^.dwValue := dwRevision;
+                pSlaveParameters^.wLen := 32; // Bitlength
+                pSlaveParameters^.wType := TypeClass.TYPE_DWORD;
+                pSlaveParameters^.dwFlags := 16#34; // Value is a direct value
+                // next parameter devicestring for search of corresponding device in the 
+                // repository
+                stModuleID :='0000 0001';
+                // It is the same string as the <DeviceIdentification><ID> element.
+                wLen := INT_TO_WORD(len(stModuleID))+1;
+                pSlaveParameters := pSlaveParameters + SIZEOF(IoConfigParameter);
+                pSlaveParameters^.dwValue :=
+                SysMemAllocData(stComponent,wLen,ADR(udiResult));
+                IF pSlaveParameters^.dwValue <> 0 THEN
+                   pSlaveParameters^.dwParameterId := 4; // Device ID is always 4
+                            SysMemCpy(pSlaveParameters^.dwValue,ADR(stModuleID),wLen);
+                   pSlaveParameters^.wLen := wLen * 8; // Bitlength
+                   pSlaveParameters^.wType := TypeClass.TYPE_STRING; // type string
+                   pSlaveParameters^.dwFlags := 16#32; // Pointer to data
+                END_IF
+                pSlaveConnector := pSlaveConnector + SIZEOF(IoConfigConnector);
+                wConnectorCount := wConnectorCount + 1;
+             END_IF
+         END_IF
+    END_FOR
+    pnCount^ := wConnectorCount;
+    // Set the number of devices successfully found
+    IF bScanWithPending THEN
+    // Pending is supported then just return the found number of
+      devices and set ERR_PENDING
+    // IoDrvScanModules is called again to free the allocated memory.
+    IoDrvScanModules := Errors.ERR_PENDING;
+    ELSE
+    IoDrvScanModules := Errors.ERR_OK;
+    // Pending is not available. Return all found devices. Allocated
+      memory will be freed either in the next scan call or must be
+    // freed in FB_Exit to prevent a memory loss.
+    END_IF
+
+If only V3.5SP2 and later should be supported then this could be used:
+
+Member variables for function block
+
+.. code-block:: C
+            
+    m_ScanConnector: IoConfigConnector;
+    m_aSlaveParameters: ARRAY[0..3] OF IoConfigParameter;
+    m_stDeviceId : STRING;
+
+| In the implementation there is no need to dynamically allocate or free
+  memory.
+| The IoDrvScanModules just returns always 1 found device or 0 if
+  nothing found.
+  
+.. code-block:: C
+  
+   m_ScanConnector.pParameterList := ADR(m_aSlaveParameters[0]);
+   m_aSlaveParameters[3].dwValue := ADR(stDeviceId);
+   ppConnectorList^ := ADR(m_ScanConnector);
+   pnCount^ := 1;
+
+The method has to return Errors.ERR_OK if all devices are done.
+
+Information to the parameters:
+
+Fixed parameter ids returned by IoDrvScanModules
+
++----------------+------------+-----------------------------------------------------------------------+--------------------+
+| Parameter ID   | Type       | Description                                                           | Mandatory/Optional |
++================+============+=======================================================================+====================+
+| 1              | DWORD      | Vendor ID                                                             | M                  |
++----------------+------------+-----------------------------------------------------------------------+--------------------+
+| 2              | DWORD      | Product number                                                        | M                  |
++----------------+------------+-----------------------------------------------------------------------+--------------------+
+| 3              | DWORD      | Revision                                                              | M                  |
++----------------+------------+-----------------------------------------------------------------------+--------------------+
+| 4              | STRING     | <DeviceDescription><ID>                                               | M                  |
++----------------+------------+-----------------------------------------------------------------------+--------------------+
+| 5              | DWORD      | Slot index for slot devices (0 first slot)                            | O                  |
++----------------+------------+-----------------------------------------------------------------------+--------------------+
+| 6              | STRING     | Reserved for special data types                                       | O                  |
++----------------+------------+-----------------------------------------------------------------------+--------------------+
+| 7              | BOOL       | Used for IoMgrIdentify                                                |                    |
+|                |            | True, if identify enabled.                                            | O                  |
++----------------+------------+-----------------------------------------------------------------------+--------------------+
+| 8              | WORD       | ModuleTypeCode                                                        | O                  |
+|                |            | Used for module type code of connector to find the correct connector  |                    |
+|                |            | if more than one connector is possible to add the devices             |                    |
++----------------+------------+-----------------------------------------------------------------------+--------------------+
+
+Additional parameters:
+
+It is possible to add additional parameters starting with ID 10. For
+example the station name or node id could be passed to the device scan
+dialog. Additional parameters will be shown in an extra column. If the
+parameter ID is also available in the device description then the
+parameter values will automatically copied to the devices after
+inserting the devices. The access rights of the parameter are set to
+readwrite then the column is editable.
+
+Diagnostic information:
+
+RTS_RESULT IoDrvGetModuleDiagnosis(IoConfigConnector \*pConnector):
+
+With this function, device specific diagnostic information are stored in
+the connector (diagnostic flags).
+
+ICmpIoDrvParameter
+~~~~~~~~~~~~~~~~~~
+
+This interface is used to get access to the system parameter of a
+device.
+
+RTS_RESULT IoDrvReadParameter(IoConfigConnector \*pConnector,
+IoConfigParameter \*pParameter, void \*pData, unsigned long ulBitSize,
+unsigned long ulBitOffset):
+
+With this function, the I/O-manager reads the value of a device
+parameter. This function is typically called, if an online-service with
+a parameter read request is sent to the I/O-manager.
+
+RTS_RESULT IoDrvWriteParameter(IoConfigConnector \*pConnector,
+IoConfigParameter \*pParameter, void \*pData, unsigned long ulBitSize,
+unsigned long ulBitOffset):
+
+With this function, the I/O-manager writes the value of a device
+parameter. This function is typically called, if an online-service with
+a parameter write request is sent to the I/O-manager.

@@ -1,0 +1,110 @@
+.. _portings_win_ce_specific:
+
+Windows CE Specific Information
+-------------------------------
+
+Under Windows CE, we use the timer interrupt for the tick source of the
+runtime scheduler. All PLC tasks are created as operating system threads
+and are triggered by events from the runtime scheduler. The scheduling
+of the tasks is done by the Windows CE scheduler.
+
+Win CE specific settings in the runtime system configuration file
+(\*.cfg):
+
+The **communication cycle interval** can be configured in order to
+control CPU load:
+
+.. code-block:: C
+
+ [ComponentManager]
+ WinCE.CommCycleInterval=5
+
+The sleep duration after each comm cycle will be 5ms in this case. The
+default before version 3.5 Sp4 was 1 ms which generated a relatively
+high CPU load. Therefore the default value had been changed to 10 ms
+from 3.5 Sp 4 on.
+
+Under Windows CE it is not possible to handle relative paths. So the 
+default behavior of file transfer and access under Windows CE has 
+changed as from V3.4 SP4. From this version on, by default in the
+device dialog there is no access to paths beyond the "working directory".
+
+For activating the old behavior (access to all files, e.g. also in the 
+root directory), the following setting can be added to the runtime 
+system configuration file:
+
+.. code-block:: C
+
+ [SysFile]
+ WinCE.AllowRootAccess=1
+
+An explicit folder can be defined, to which the **Target-Visualization
+files** (image files, textlists etc.) get redirected. By default, that
+is when the setting is missing, they get stored in a subfolder "visu" of
+the runtime system folder!
+
+.. code-block:: C
+
+ [SysFile]
+ WinCE.VisuFilePath=\\Hard Disk\\SpecialFolder
+
+Because CE cannot handle relative paths, the complete path of the desired 
+visu files folder must be specified in the setting!
+
+Example: Setting „WinCE.VisuFilePath=\\Hard Disk\\SpecialFolder\\SpecialVisuFolder" 
+effects that folder „SpecialVisuFolder" will be created as a subfolder 
+of „\\Hard Disk\\SpecialFolder" (in case it does not yet exist) and the 
+visualization files get stored there. The path "Hard Disk\\SpecialFolder" must already exist!
+
+If SRAM is used for retain handling with a specified address it might be
+necessary to have the following additional setting.
+
+.. code-block:: C
+
+ [SysShm]
+ WinCE.DisableMapPhysicalInVirtualAllocCopyEx=1
+
+As the Sysdriver uses the VirtualCopy function for mapping hardware
+addresses to user program the behavior here depends on the CE image.
+This setting has to be set on some devices where it is necessary to
+have the "PAGE\_PHYSICAL" flag in the call of "VirtualCopy" but not in
+the call of "VirtualAllocCopyEx". Otherwise it is possible that the
+address that the Sysdriver returns to the user program is not correct
+and retains do not work.
+
+Per default, the CE runtime system tries to change the system memory
+division to get more program memory and less storage memory. This
+behavior can be suppressed by the setting
+
+.. code-block:: C
+
+ [SysGraphic]
+ WinCE.DontChangeMemorySettings=1
+
+So other applications will get more program memory.
+
+Up to version 5, Windows CE processes have a 32 MB address space which
+may be too small for big applications. To overcome this restriction
+(only if the device has more than 32 MB physical RAM), the OEM can
+change the memory layout of the device description (example for a 32 MB
+area)
+
+.. code-block:: C
+
+ <ts:setting name="minimal-area-size" type="integer" access="visible">
+ <ts:value>0x2000000</ts:value> </ts:setting>
+ <ts:setting name="maximal-area-size" type="integer" access="visible">
+ <ts:value>0x2000000</ts:value> </ts:setting>
+
+and the runtime configuration file
+
+.. code-block:: C
+
+ [SysMem]
+ WinCE.CE5BigAreaSize=0x2000000
+
+As from V3.5 there is a new source file **SysDrv3SCECustom.cpp** for
+**customer specific adaptations**. A new project file
+SysDrv3SCECustom.vcproj for CE6 and SysDrv3SCE7Custom.vcproj for CE7 is
+available to build the dll by including the SysDrv3SCE.obj and the
+customer specific source file.

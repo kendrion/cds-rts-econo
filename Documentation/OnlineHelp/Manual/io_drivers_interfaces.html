@@ -1,0 +1,731 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.8.2. Main I/O Driver Interfaces &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.8. I/O Drivers" href="io_drivers.html" />
+    <link rel="next" title="1.8.3. Optional Interfaces" href="io_drivers_optional_interfaces.html" />
+    <link rel="prev" title="1.8.1. Concept" href="io_drivers_concept.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="io_drivers_optional_interfaces.html" title="1.8.3. Optional Interfaces"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="io_drivers_concept.html" title="1.8.1. Concept"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="io_drivers.html" accesskey="U">1.8. I/O Drivers</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.8.2. Main I/O Driver Interfaces</a><ul>
+<li><a class="reference internal" href="#ibase">1.8.2.1. IBase</a></li>
+<li><a class="reference internal" href="#icmpiodrv">1.8.2.2. ICmpIoDrv</a></li>
+<li><a class="reference internal" href="#icmpiodrvparameter">1.8.2.3. ICmpIoDrvParameter</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="io_drivers_concept.html"
+                        title="previous chapter">1.8.1. Concept</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="io_drivers_optional_interfaces.html"
+                        title="next chapter">1.8.3. Optional Interfaces</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/io_drivers_interfaces.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="main-i-o-driver-interfaces">
+<span id="io-drivers-interfaces"></span><h1>1.8.2. Main I/O Driver Interfaces<a class="headerlink" href="#main-i-o-driver-interfaces" title="Permalink to this headline">¶</a></h1>
+<p>To understand how an I/O driver works internally, we need to take a look
+at the interfaces that an I/O driver has to implement.</p>
+<p>If the driver is written in C/C++ you can find the available interfaces
+in the directory components. The interface header files always begin
+with CmpIpDrv and ends (like every interface) with Itf.h:</p>
+<p>CmpIoDrv…Itf.h</p>
+<p>If you intend to write an I/O driver in IEC, you can find the interface
+in the corresponding libraries with the following structure:</p>
+<p>IioDrv... .library</p>
+<div class="section" id="ibase">
+<h2>1.8.2.1. IBase<a class="headerlink" href="#ibase" title="Permalink to this headline">¶</a></h2>
+<p>The IBase interface is the mandatory interface that every I/O driver has
+to implement! It Contains the following functions:</p>
+<p>IBase (C/C++, the Parameter pIBase is only needed for C-drivers):</p>
+<ol class="arabic simple">
+<li>void *QueryInterface (Ibase *pIBase, ITFID ItfId, RTS_RESULT *pResult)</li>
+<li>int AddRef(Ibase *pIBase)</li>
+<li>int Release(Ibase *pIBase)</li>
+</ol>
+<p>IBase (IEC):</p>
+<ol class="arabic simple">
+<li>PointER TO BYTE QueryInterface (ITFID ItfId, PointER TO Udint
+*pResult)</li>
+<li>Dint AddRef()</li>
+<li>Dint Release()</li>
+</ol>
+<p>With the QueryInterface() function, an I/O driver can be requested for
+an interface, that the I/O driver implements. The corresponding
+interface pointer is returned by this function.</p>
+<div class="line-block">
+<div class="line">An interface is always specified and can be requested by an ID. To
+save memory, the ID is only a 32-Bit number and no GUID. But this
+causes to manage all interface IDs. The ID consists of the high word
+vendor Id and the low word interface Id. So every vendor can create
+its own interfaces.</div>
+<div class="line">A list of all available interface IDs that are used in the runtime
+system can be found in the header file CmpItf.h or for IEC-driver in
+the corresponding interface libraries.</div>
+</div>
+<p>The AddRef() function is always called implicitly, if a QueryInterface
+call was successful to increase a reference counter of this object.</p>
+<p>The Release() can be called to release an interface pointer, that was
+provided by QueryInterface. This function decrements the reference
+counter of an object.</p>
+<p>If the reference counter is 0, the object will be deleted.</p>
+</div>
+<div class="section" id="icmpiodrv">
+<span id="id1"></span><h2>1.8.2.2. ICmpIoDrv<a class="headerlink" href="#icmpiodrv" title="Permalink to this headline">¶</a></h2>
+<p>The most important interface, that an I/O driver can implement, is the
+IcmpIoDrv interface. It contains the following functions for different
+issues:</p>
+<p>Identification functions:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">tagIoDrvInfo</span>
+<span class="p">{</span>
+    <span class="n">RTS_IEC_WORD</span> <span class="n">wId</span><span class="p">;</span> <span class="c1">// Index of the instance</span>
+    <span class="n">RTS_IEC_WORD</span> <span class="n">wModuleType</span><span class="p">;</span> <span class="c1">// Supported module type</span>
+    <span class="n">RTS_IEC_DWORD</span> <span class="n">hSpecific</span><span class="p">;</span> <span class="c1">// Specific handle</span>
+    <span class="n">RTS_IEC_string</span> <span class="n">szDriverName</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span> <span class="c1">// driver name</span>
+    <span class="n">RTS_IEC_string</span> <span class="n">szVendorName</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span> <span class="c1">// vendor name</span>
+    <span class="n">RTS_IEC_string</span> <span class="n">szDeviceName</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span> <span class="c1">// device name</span>
+    <span class="n">RTS_IEC_string</span> <span class="n">szFirmwareVersion</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span> <span class="c1">// Firmware version</span>
+    <span class="n">RTS_IEC_DWORD</span> <span class="n">dwVersion</span><span class="p">;</span> <span class="c1">// Version of the driver</span>
+<span class="p">}</span> <span class="n">IoDrvInfo</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>RTS_RESULT IoDrvGetInfo(IoDrvInfo **ppIoDrv):</p>
+<p>With this function, some generic information can be requested like
+driver name (see structure above), device name that is supported by the
+driver, vendor name and firmware number (if the supported device has an
+own firmware on it like the hilscher cards).</p>
+<p>RTS_RESULT IoDrvIdentify(IoConfigConnector *pConnector):</p>
+<p>By calling this function, the I/O driver should identify itfs device,
+like blinking some LEDs, stopping the bus, etc. It is planned to call
+this function by a menu action on the device in the plc-configuration to
+physically identify this device. This could be very useful, if there are
+several identical cards plugged in the plc and the assignment in the
+plc-configuration in CODESYS is unclear.</p>
+<p><em>Configuration:</em> (called during application download)</p>
+<p>RTS_RESULT IoDrvUpdateConfiguration(IoConfigConnector *pConnectorList,
+int nCount):</p>
+<p>This function is called at download of the application that contains the
+I/O-configuration. Each driver instance gets the complete list of
+connectors!</p>
+<p>The first thing that must be done in this function is to detect the
+connector that is supported by the I/O-driver. For this, the I/O driver
+can request the Io-manager for the first connector with the specified
+type Id, like:</p>
+<p>pConnector = CAL_IoMgrConfigGetFirstConnector(pConnectorList, &amp;nCount, 0x0020);</p>
+<p>Here, the first connector with the Id 0x0020 (=CT_PROFIBUS_MASTER) is
+searched. See <a class="reference internal" href="dev_io_conf_device_descriptions.html#connectors"><span class="std std-ref">_dev_io_conf_device_descriptions</span></a> for detailed information.</p>
+<p>If the first connector with the matching type is found (pConnector is
+unequal 0), it must be checked:</p>
+<ul class="simple">
+<li>if it is correct supported device</li>
+<li>if the connector is not supported already by a previous instance</li>
+</ul>
+<p>To check, if is the correct device, typically some additional parameters
+are used to detect this like vendor name, device name or specific device
+id.</p>
+<p>To check if the connector is free and can be used and it is not occupied
+by another instance, therefore the connector entry hIoDrv must be
+checked for 0 or -1. In both cases, the I/O-connector is free and can be
+used. To occupy the connector, the driver has to write ist handle into
+the connector.</p>
+<p>So typical sequence of IoDrvUpdateConfiguration looks like in C:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">IBase</span> <span class="o">*</span><span class="n">pIBase</span><span class="p">;</span>
+<span class="n">IoConfigConnector</span> <span class="o">*</span><span class="n">pConnector</span> <span class="o">=</span> <span class="n">CAL_IoMgrConfigGetFirstConnector</span><span class="p">(</span><span class="n">pConnectorList</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">nCount</span><span class="p">,</span> <span class="n">CT_PROFIBUS_MASTER</span><span class="p">);</span>
+
+<span class="k">while</span> <span class="p">(</span><span class="n">pConnector</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">IoDrvInfo</span> <span class="o">*</span><span class="n">pInfo</span><span class="p">;</span>
+    <span class="n">IoConfigParameter</span> <span class="o">*</span><span class="n">pParameter</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">pszVendorName</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">pszDeviceName</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">IoDrvGetInfo</span><span class="p">(</span><span class="n">hIoDrv</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pInfo</span><span class="p">);</span>
+
+    <span class="n">pParameter</span> <span class="o">=</span> <span class="n">CAL_IoMgrConfigGetParameter</span><span class="p">(</span><span class="n">pConnector</span><span class="p">,</span> <span class="mi">393218</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pParameter</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="o">&amp;&amp;</span> <span class="n">pParameter</span><span class="o">-&gt;</span><span class="n">dwFlags</span> <span class="o">&amp;</span> <span class="n">PVF_Pointer</span><span class="p">)</span>
+        <span class="n">pszVendorName</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">pParameter</span><span class="o">-&gt;</span><span class="n">dwValue</span><span class="p">;</span>
+
+    <span class="n">pParameter</span> <span class="o">=</span> <span class="n">CAL_IoMgrConfigGetParameter</span><span class="p">(</span><span class="n">pConnector</span><span class="p">,</span> <span class="mi">393219</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pParameter</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="o">&amp;&amp;</span> <span class="n">pParameter</span><span class="o">-&gt;</span><span class="n">dwFlags</span> <span class="o">&amp;</span> <span class="n">PVF_Pointer</span><span class="p">)</span>
+        <span class="n">pszDeviceName</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">pParameter</span><span class="o">-&gt;</span><span class="n">dwValue</span><span class="p">;</span>
+
+    <span class="k">if</span>  <span class="p">(</span><span class="n">pConnector</span><span class="o">-&gt;</span><span class="n">hIoDrv</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span>
+        <span class="n">pszVendorName</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="o">&amp;&amp;</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">pszVendorName</span><span class="p">,</span> <span class="n">pInfo</span><span class="o">-&gt;</span><span class="n">szVendorName</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span>
+        <span class="n">pszDeviceName</span> <span class="o">!=</span> <span class="nb">NULL</span> <span class="o">&amp;&amp;</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">pszDeviceName</span><span class="p">,</span> <span class="n">pInfo</span><span class="o">-&gt;</span><span class="n">szDeviceName</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">pConnector</span><span class="o">-&gt;</span><span class="n">hIoDrv</span> <span class="o">=</span> <span class="p">(</span><span class="n">RTS_IEC_DWORD</span><span class="p">)</span><span class="n">pIBase</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In IEC you can find the appropriate sequence in the template driver. It
+looks quite the same.</p>
+<p>After detecting the right connector, the next step in the function
+IoDrvUpdateConfiguration is to configure the physical device with the
+connector parameters and optional to detect all slaves (if is a fieldbus
+master).</p>
+<p>To detect the slaves, the I/O-manager provides some interface functions
+too:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">pChild</span> <span class="o">=</span> <span class="n">CAL_IoMgrConfigGetFirstChild</span><span class="p">(</span><span class="n">pConnectorList</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">nCount</span><span class="p">,</span> <span class="n">pConnectorFather</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>With this function, the first child of the father connector
+pConnectorFather was returned.</p>
+<p>The next child (slave) can be requested by:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">pChild</span> <span class="o">=</span> <span class="n">CAL_IoMgrConfigGetNextChild</span><span class="p">(</span><span class="n">pChild</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">nCount</span><span class="p">,</span> <span class="n">pConnectorFather</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">ATTENTION: The driver must register its instance at each supported connector
+(also PCI connectors, slaves, etc.). This must be done in the hIoDrv component of the corresponding connector, like:</p>
+</div>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">pChild</span><span class="o">-&gt;</span><span class="n">hIoDrv</span> <span class="o">=</span> <span class="p">(</span><span class="n">RTS_IEC_DWORD</span><span class="p">)</span><span class="n">pIBase</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>RTS_RESULT IoDrvUpdateMapping(IoConfigTaskMap  *pTaskMapList, int
+nCount):</p>
+<p>The driver is called with the so called task map list. A Task map
+contains the following information:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="68%" />
+<col width="32%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Element</th>
+<th class="head">IEC Data type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Task ID</td>
+<td>DWORD</td>
+</tr>
+<tr class="row-odd"><td>Type (Input or Output)</td>
+<td>WORD</td>
+</tr>
+<tr class="row-even"><td>Number of connector maps</td>
+<td>WORD</td>
+</tr>
+<tr class="row-odd"><td>Pointer to connector map list</td>
+<td>PointER</td>
+</tr>
+</tbody>
+</table>
+<p>A connector map list contains the following information:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="68%" />
+<col width="32%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Element</th>
+<th class="head">IEC Data type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Pointer to a connector</td>
+<td>DWORD</td>
+</tr>
+<tr class="row-odd"><td>Number of channel maps</td>
+<td>WORD</td>
+</tr>
+<tr class="row-even"><td>Pointer to channel map list</td>
+<td>POINTER</td>
+</tr>
+</tbody>
+</table>
+<p>The complete I/O-mapping structure is shown in the following picture:</p>
+<img alt="../_images/io_drivers_mapping_structure.png" src="../_images/io_drivers_mapping_structure.png" />
+<p>These are the missing bricks to understand the I/O-mapping.</p>
+<p>The task map contains all mapping information for each task, that means,
+all I/O-channel that are used by a task. For each task you got one entry
+for all inputs and one entry for all outputs.</p>
+<p>The task map contains a list of connectors maps, that means on which
+connectors the I/O-channels are residing.</p>
+<p>And at least, the connector map entry contains a list of channel maps,
+which includes the real mapping information, where to copy the inputs to
+which offset on the device and where to copy the outputs from the device
+to which offset in the application.</p>
+<p>In the mapping table, the I/O driver can sort or rearrange entries to
+optimize later cyclic access. E.g. several byte channels can be
+collected to one byte stream, to use one memcpy at the cyclic update.</p>
+<p><em>Cyclic Calls</em>:</p>
+<p>RTS_RESULT IoDrvReadInputs(IoConfigConnectorMap *pConnectorMapList,
+int nCount):</p>
+<p>This interface function is called at the beginning of a task to read in
+all referred input values of this driver. Only one call is done for each
+task.</p>
+<p>RTS_RESULT IoDrvWriteOutputs(IoConfigConnectorMap *pConnectorMapList,
+int nCount):</p>
+<p>This interface function is called at the end of a task to write out all
+referred output values of this driver. Only one call is done for each
+task.</p>
+<p>RTS_RESULT IoDrvStartBusCycle(IoConfigConnector *pConnector):</p>
+<p>This function is used to trigger a bus cycle (if necessary on the
+device). This can be specified in the device description as followed, if
+a bus cycle is necessary (see <span class="xref std std-ref">driver_info</span>):</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>&lt;DriverInfo needsBusCycle=&quot;true&quot;&gt;
+    …
+&lt;/DriverInfo&gt;
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">In which context this function is called can be specified in the
+IO-configuration.</div>
+<div class="line">On the device dialog in the register card &#8220;PLC settings&#8221;, you can
+specify a dedicated &#8220;bus cycle task&#8221;. If no task is specified here,
+the task with the shortest cycle time is used out of the task
+configuration. With the attribute &#8220;useSlowestTask&#8221; you can specify in
+your device description, that the slowest task does the bus cycle (see <span class="xref std std-ref">driver_info</span>).</div>
+<div class="line">On the device (e.g. Master), there is a register card &#8220;Mapping&#8221;, where
+you can specify an optional bus cycle task. If no task is specified
+here, the configuration of the device is used (see above) as default.</div>
+</div>
+<p>RTS_RESULT IoDrvWatchdogTrigger(IoConfigConnector *pConnector):</p>
+<p>This function is called cyclically to retrigger a watchdog on the
+device. The cycle time must be calculated in the I/O-driver.</p>
+<p><em>Scanning sub devices/modules</em>:</p>
+<p>RTS_RESULT IoDrvScanModules(IoConfigConnector *pConnector, IoConfigConnector **ppConnectorList, int *pnCount):</p>
+<p>This function is called to scan sub devices. This can be used to scan
+physically available slaves of fieldbus master, that are connected to
+one fieldbus.</p>
+<p>It is necessary to enable the scan mechanism in the device description
+file. This is done by an additional xml element in the &lt;DriverInfo&gt;
+section.</p>
+<p>Example:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">DriverInfo</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">Scan</span> <span class="n">supported</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="n">identify</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="o">&gt;&lt;/</span><span class="n">Scan</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">DriverInfo</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The scan function is enabled for the device and the command is enabled
+in the context menu if the device is selected in the device tree.</p>
+<p>The identify attribute enables the call of IoDrvIdentify to identify a
+scanned device. In most cases a LED is blinking to show the user the
+selected device. It is helpful for bus systems without DIP switches for
+address setting like sercos or ProfiNet.</p>
+<p>In the method IoDrvScanModules the connected devices have to be
+returned.</p>
+<p>With versions before V3.5 SP2 the method is called only once and
+therefore all devices must be scanned at once.</p>
+<div class="line-block">
+<div class="line">With version from V3.5 SP2 it is possible to return ERR_PENDING. In
+that case the method IoDrvScanModules is called again and the method
+could return just the found number of devices or 0 if the stack needs
+additional time or calls to collect the available devices.</div>
+<div class="line">The programming and runtime system must support this and it will lower
+the required memory for the scan function.</div>
+</div>
+<p>If flag ConnectorOptions.CO_SCAN_PENDING_SUPPORTED &nbsp;is set in
+pConnector^.wOptions then it is possible to use the pending
+functionality.</p>
+<p><em>Descriptions of parameters</em>:</p>
+<p>IoConfigConnector *pConnector</p>
+<p>It contains the connector for the device (for example master) and the
+parameters for starting the scan function.</p>
+<p>IoConfigConnector **ppConnectorList</p>
+<div class="line-block">
+<div class="line">Inside the method this parameter has to be set to the memory
+containing a list of connectors for all devices found. If
+CO_SCAN_PENDING_SUPPORTED is not available the memory has to be
+allocated dynamically and freed in FB_Exit or before the next scan
+call.</div>
+<div class="line">If CO_SCAN_PENDING_SUPPORTED is available the method could return a
+pointer to one instance of IoConfigConnector.</div>
+</div>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">Int</span> <span class="o">*</span><span class="n">pnCount</span>
+</pre></div>
+</div>
+<p>The method has to set the number of connectors (=devices + sub devices)
+stored in the ppConnectorList.</p>
+<p>Devices and sub devices could be returned in the connector list. The sub
+devices must be directly copied to the memory behind the devices then
+the scan mechanism could automatically assign the sub devices.</p>
+<div class="line-block">
+<div class="line">Memory content for IoConfigConnector:</div>
+<div class="line">Device 1</div>
+<div class="line">Sub device 1.1</div>
+<div class="line">Sub device 1.2</div>
+<div class="line">Device 2</div>
+<div class="line">Sub device 2.1</div>
+</div>
+<p>Example in IEC working with all versions:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">Member</span> <span class="n">variables</span> <span class="k">for</span> <span class="n">function</span> <span class="nl">block</span><span class="p">:</span>
+<span class="nl">m_pScanConnector</span><span class="p">:</span> <span class="n">POINTER</span> <span class="n">TO</span> <span class="n">IoConfigConnector</span><span class="p">;</span> <span class="c1">// only necessary to free allocated</span>
+                                                <span class="c1">// memory</span>
+<span class="nl">m_diScannedSlaves</span><span class="p">:</span> <span class="n">DINT</span><span class="p">;</span>
+
+<span class="nl">Declaration</span><span class="p">:</span>
+</pre></div>
+</div>
+<div class="highlight-C"><div class="highlight"><pre><span></span>METHOD IoDrvScanModules : UDINT
+VAR_INPUT
+    pConnector : POINTER TO IoConfigConnector;
+    ppConnectorList : POINTER TO POINTER TO IoConfigConnector;
+    pnCount : POINTER TO DINT;
+END_VAR
+VAR
+    pSlaveConnector: POINTER TO IoConfigConnector;
+    pSlaveParameters: POINTER TO IoConfigParameter;
+    behavior: DINT;
+    dwParamCount : DWORD;
+    stComponent : STRING :=&#39;Test&#39;;
+    wSlaves: WORD;
+    wLen: WORD;
+    bFailed: BOOL;
+    dwVendorID: DWORD :=0;
+    dwDeviceId: DWORD := 0;
+    dwRevision : DWORD := 0;
+    udiResult: UINT;
+    stModuleID: STRING;
+    wConnectorCount: WORD;
+    bScanWithPending : BOOL;
+END_VAR
+</pre></div>
+</div>
+<div class="highlight-C"><div class="highlight"><pre><span></span>Implementation:
+
+ IoDrvScanModules_Count := IoDrvScanModules_Count + 1;
+ // Counter for debugging. Shows that IoDrvScanModules is called
+ {IF defined (variable:ConnectorOptions)}
+ bScanWithPending := pConnector^.wOptions = ConnectorOptions.CO_SCAN_PENDING_SUPPORTED;
+ // Check for version V3.5 SP2. If flag is set the return value ERR_PENDING could be used.
+ {END_IF}
+ IF m_pScanConnector &lt;&gt; 0 AND m_diScannedSlaves &gt; 0 THEN
+ // free memory from the last scan
+ pSlaveConnector := m_pScanConnector;
+ FOR behavior := 1 TO m_diScannedSlaves DO
+   pSlaveParameters := pSlaveConnector^.pParameterList;
+   FOR dwParamCount := 1 TO pSlaveConnector^.dwNumOfParameters DO
+     // Free the memory for the parameters
+     IF (pSlaveParameters^.dwFlags AND 16#2) = 16#2 THEN
+        // dwValue is pointer
+        IF pSlaveParameters^.dwValue &lt;&gt; 0 THEN
+        SysMemFreeData(stComponent,pSlaveParameters^.dwValue);
+        END_IF
+     END_IF
+     pSlaveParameters := pSlaveParameters + SIZEOF(IoConfigParameter);
+   END_FOR
+   // Free the parameter list
+   SysMemFreeData(stComponent,pSlaveConnector^.pParameterList);
+   pSlaveConnector := pSlaveConnector + SIZEOF(IoConfigConnector);
+ END_FOR
+   // Free the connectors
+   SysMemFreeData(stComponent,m_pScanConnector);
+   m_pScanConnector := 0; // Mark memory as freed
+   m_diScannedSlaves:=0;
+   IF bScanWithPending THEN
+     // Scan return ERR_PENDING to free the allocated memory
+     // now return ERR_OK to finish the scan process
+     IoDrvScanModules := Errors.ERR_OK;
+   END_IF
+ END_IF
+ // to-do: get the number of slaves
+ wSlaves := 1;
+ // Example for one device
+ // Number of Slaves is now known -&gt; allocate memory
+ pSlaveConnector^ := SysMemAllocData(stComponent,wSlaves*SIZEOF(IoConfigConnector),ADR(udiResult));
+ // For old version allocate the necessary memory for all device.
+ // With V3.5 SP2 it is possible to return only one device for each call of IoDrvScanModules
+ // Therefore it is not necessary to allocate memory dynamically.
+   It could be also a member variable of the function block
+ IF ppConnectorList = 0 THEN
+ // Not enough memory
+ IoDrvScanModules := Errors.ERR_FAILED;
+ RETURN;
+ END_IF
+ ppConnectorList^ := pSlaveConnector;
+ // Set the return value of the method to the IoConfigConnector
+   memory.
+ // Store the memory pointer and size for freeing the memory after
+   scan
+ m_pScanConnector := pSlaveConnector;
+ m_diScannedSlaves := wSlaves;
+ wConnectorCount := 0;
+ FOR behavior := 1 TO WORD_TO_DINT(wSlaves) DO
+   pSlaveParameters := SysMemAllocData(stComponent, 4 *
+ SIZEOF(IoConfigParameter),ADR(udiResult));
+   // At least 4 parameters have ehav returned for each connector.
+   IF pSlaveParameters &lt;&gt; 0 THEN
+      bFailed := FALSE;
+      // to-do: get information from device, vendor id, product, revision etc.
+      // anything that is needed to find the matching device description in the
+      // repository
+     IF NOT bFailed THEN
+      // device information successfully read
+      pSlaveConnector^.wType := 32768; // DeviceID of device as in device
+             //Description &lt;DeviceIdentification&gt;&lt;Type&gt;
+             pSlaveConnector^.dwNumOfParameters := 4; // 4 parameters minimum
+             pSlaveConnector^.pParameterList := pSlaveParameters
+             // store the parameters vendor id
+             pSlaveParameters^.dwParameterId := 1; // Vendor ID is always 1
+             pSlaveParameters^.dwValue := dwVendorID;
+             pSlaveParameters^.wLen := 32; // Bitlength
+             pSlaveParameters^.wType := TypeClass.TYPE_DWORD;
+             pSlaveParameters^.dwFlags := 16#34; // Value is a direct value
+             // next parameter device id
+             pSlaveParameters := pSlaveParameters + SIZEOF(IoConfigParameter);
+             pSlaveParameters^.dwParameterId := 2; // Product ID is always 2
+             pSlaveParameters^.dwValue := dwDeviceId;
+             pSlaveParameters^.wLen := 32; // Bitlength
+             pSlaveParameters^.wType := TypeClass.TYPE_DWORD;
+             pSlaveParameters^.dwFlags := 16#34; // Value is a direct value
+             // next parameter revision
+             pSlaveParameters := pSlaveParameters + SIZEOF(IoConfigParameter);
+             pSlaveParameters^.dwParameterId := 3; // Revision ID is always 3
+             pSlaveParameters^.dwValue := dwRevision;
+             pSlaveParameters^.wLen := 32; // Bitlength
+             pSlaveParameters^.wType := TypeClass.TYPE_DWORD;
+             pSlaveParameters^.dwFlags := 16#34; // Value is a direct value
+             // next parameter devicestring for search of corresponding device in the
+             // repository
+             stModuleID :=&#39;0000 0001&#39;;
+             // It is the same string as the &lt;DeviceIdentification&gt;&lt;ID&gt; element.
+             wLen := INT_TO_WORD(len(stModuleID))+1;
+             pSlaveParameters := pSlaveParameters + SIZEOF(IoConfigParameter);
+             pSlaveParameters^.dwValue :=
+             SysMemAllocData(stComponent,wLen,ADR(udiResult));
+             IF pSlaveParameters^.dwValue &lt;&gt; 0 THEN
+                pSlaveParameters^.dwParameterId := 4; // Device ID is always 4
+                         SysMemCpy(pSlaveParameters^.dwValue,ADR(stModuleID),wLen);
+                pSlaveParameters^.wLen := wLen * 8; // Bitlength
+                pSlaveParameters^.wType := TypeClass.TYPE_STRING; // type string
+                pSlaveParameters^.dwFlags := 16#32; // Pointer to data
+             END_IF
+             pSlaveConnector := pSlaveConnector + SIZEOF(IoConfigConnector);
+             wConnectorCount := wConnectorCount + 1;
+          END_IF
+      END_IF
+ END_FOR
+ pnCount^ := wConnectorCount;
+ // Set the number of devices successfully found
+ IF bScanWithPending THEN
+ // Pending is supported then just return the found number of
+   devices and set ERR_PENDING
+ // IoDrvScanModules is called again to free the allocated memory.
+ IoDrvScanModules := Errors.ERR_PENDING;
+ ELSE
+ IoDrvScanModules := Errors.ERR_OK;
+ // Pending is not available. Return all found devices. Allocated
+   memory will be freed either in the next scan call or must be
+ // freed in FB_Exit to prevent a memory loss.
+ END_IF
+</pre></div>
+</div>
+<p>If only V3.5SP2 and later should be supported then this could be used:</p>
+<p>Member variables for function block</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="nl">m_ScanConnector</span><span class="p">:</span> <span class="n">IoConfigConnector</span><span class="p">;</span>
+<span class="nl">m_aSlaveParameters</span><span class="p">:</span> <span class="n">ARRAY</span><span class="p">[</span><span class="mf">0..3</span><span class="p">]</span> <span class="n">OF</span> <span class="n">IoConfigParameter</span><span class="p">;</span>
+<span class="nl">m_stDeviceId</span> <span class="p">:</span> <span class="n">STRING</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">In the implementation there is no need to dynamically allocate or free
+memory.</div>
+<div class="line">The IoDrvScanModules just returns always 1 found device or 0 if
+nothing found.</div>
+</div>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">m_ScanConnector</span><span class="p">.</span><span class="nl">pParameterList</span> <span class="p">:</span><span class="o">=</span> <span class="n">ADR</span><span class="p">(</span><span class="n">m_aSlaveParameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="n">m_aSlaveParameters</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nl">dwValue</span> <span class="p">:</span><span class="o">=</span> <span class="n">ADR</span><span class="p">(</span><span class="n">stDeviceId</span><span class="p">);</span>
+<span class="n">ppConnectorList</span><span class="o">^</span> <span class="o">:=</span> <span class="n">ADR</span><span class="p">(</span><span class="n">m_ScanConnector</span><span class="p">);</span>
+<span class="n">pnCount</span><span class="o">^</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The method has to return Errors.ERR_OK if all devices are done.</p>
+<p>Information to the parameters:</p>
+<p>Fixed parameter ids returned by IoDrvScanModules</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="10%" />
+<col width="60%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter ID</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+<th class="head">Mandatory/Optional</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>DWORD</td>
+<td>Vendor ID</td>
+<td>M</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>DWORD</td>
+<td>Product number</td>
+<td>M</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>DWORD</td>
+<td>Revision</td>
+<td>M</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>STRING</td>
+<td>&lt;DeviceDescription&gt;&lt;ID&gt;</td>
+<td>M</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>DWORD</td>
+<td>Slot index for slot devices (0 first slot)</td>
+<td>O</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>STRING</td>
+<td>Reserved for special data types</td>
+<td>O</td>
+</tr>
+<tr class="row-even"><td>7</td>
+<td>BOOL</td>
+<td>Used for IoMgrIdentify
+True, if identify enabled.</td>
+<td>O</td>
+</tr>
+<tr class="row-odd"><td>8</td>
+<td>WORD</td>
+<td>ModuleTypeCode
+Used for module type code of connector to find the correct connector
+if more than one connector is possible to add the devices</td>
+<td>O</td>
+</tr>
+</tbody>
+</table>
+<p>Additional parameters:</p>
+<p>It is possible to add additional parameters starting with ID 10. For
+example the station name or node id could be passed to the device scan
+dialog. Additional parameters will be shown in an extra column. If the
+parameter ID is also available in the device description then the
+parameter values will automatically copied to the devices after
+inserting the devices. The access rights of the parameter are set to
+readwrite then the column is editable.</p>
+<p>Diagnostic information:</p>
+<p>RTS_RESULT IoDrvGetModuleDiagnosis(IoConfigConnector *pConnector):</p>
+<p>With this function, device specific diagnostic information are stored in
+the connector (diagnostic flags).</p>
+</div>
+<div class="section" id="icmpiodrvparameter">
+<h2>1.8.2.3. ICmpIoDrvParameter<a class="headerlink" href="#icmpiodrvparameter" title="Permalink to this headline">¶</a></h2>
+<p>This interface is used to get access to the system parameter of a
+device.</p>
+<p>RTS_RESULT IoDrvReadParameter(IoConfigConnector *pConnector,
+IoConfigParameter *pParameter, void *pData, unsigned long ulBitSize,
+unsigned long ulBitOffset):</p>
+<p>With this function, the I/O-manager reads the value of a device
+parameter. This function is typically called, if an online-service with
+a parameter read request is sent to the I/O-manager.</p>
+<p>RTS_RESULT IoDrvWriteParameter(IoConfigConnector *pConnector,
+IoConfigParameter *pParameter, void *pData, unsigned long ulBitSize,
+unsigned long ulBitOffset):</p>
+<p>With this function, the I/O-manager writes the value of a device
+parameter. This function is typically called, if an online-service with
+a parameter write request is sent to the I/O-manager.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="io_drivers_optional_interfaces.html" title="1.8.3. Optional Interfaces"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="io_drivers_concept.html" title="1.8.1. Concept"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="io_drivers.html" >1.8. I/O Drivers</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,188 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.3.15. Device User Management &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.3. Overview of the Kernel Components and Main Functions" href="overview_kernel.html" />
+    <link rel="next" title="1.3.16. Core dumps (CmpCoreDump)" href="ov_kernel_core_dumps.html" />
+    <link rel="prev" title="1.3.14. License Management" href="ov_kernel_license_mgmt.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ov_kernel_core_dumps.html" title="1.3.16. Core dumps (CmpCoreDump)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_license_mgmt.html" title="1.3.14. License Management"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" accesskey="U">1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ov_kernel_license_mgmt.html"
+                        title="previous chapter">1.3.14. License Management</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ov_kernel_core_dumps.html"
+                        title="next chapter">1.3.16. Core dumps (CmpCoreDump)</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/ov_kernel_online_user_mgmt.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="device-user-management">
+<span id="ov-kernel-online-user-mgmt"></span><h1>1.3.15. Device User Management<a class="headerlink" href="#device-user-management" title="Permalink to this headline">¶</a></h1>
+<p>In the runtime system, you can use a simple or a usergroup based user management. With this User Management all
+access to the runtime system can be resticted and protected.</p>
+<p>The so called device user management stores and manages two different kind of elements:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">In the users and groups area you can create users, define a password and assign the user to a user group</p>
+<p>For details see the Online Help of CODESYS in the chapter:
+| Editors &gt; Device Editors &gt; Generic Device Editor &gt; Users and Groups</p>
+</li>
+<li><p class="first">The second kind of elements stores all objects of the runtime system, on which access rights should be managed.</p>
+<p>Here you can assign to each group and to each object the appropriate access rights
+For details see the Online Help of CODESYS in the chapter:
+| Editors &gt; Device Editors &gt; Generic Device Editor &gt; Access Rights</p>
+</li>
+</ol>
+</div></blockquote>
+<p>To enable the editors to configure both parts on the runtime system you have to enable the corresponding device
+editor page in your <a class="reference internal" href="dev_desc_device.html#dev-desc-device"><span class="std std-ref">device description</span></a>:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">DeviceDescription</span>
+    <span class="n">xmlns</span><span class="o">=</span><span class="s">&quot;http://www.3s-software.com/schemas/DeviceDescription-1.0.xsd&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">Device</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">Connector</span> <span class="n">moduleType</span><span class="o">=</span><span class="s">&quot;256&quot;</span> <span class="n">interface</span><span class="o">=</span><span class="s">&quot;Common.PCI&quot;</span> <span class="n">role</span><span class="o">=</span><span class="s">&quot;parent&quot;</span> <span class="n">explicit</span><span class="o">=</span><span class="s">&quot;false&quot;</span><span class="o">&gt;</span>
+           <span class="o">&lt;</span><span class="n">Appearance</span><span class="o">&gt;</span>
+               <span class="o">&lt;</span><span class="n">ShowEditor</span><span class="o">&gt;</span><span class="n">UserManagementPage</span><span class="o">&lt;/</span><span class="n">ShowEditor</span><span class="o">&gt;</span>
+           <span class="o">&lt;/</span><span class="n">Appearance</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">Connector</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">Device</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">DeviceDescription</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Additionally you have to integrate the following components in your
+runtime system:</p>
+<ol class="arabic">
+<li><p class="first"><strong>CmpUserMgr</strong>:</p>
+<blockquote>
+<div><p>See <a class="reference internal" href="../Reference/group___cmp_user_mgr_itf.html#group-cmp-user-mgr-itf"><span class="std std-ref">CmpUserMgr</span></a></p>
+<p>Here we manage the generic part of the user management</p>
+</div></blockquote>
+</li>
+<li><p class="first">The database is splitted into 2 parts:</p>
+<ul>
+<li><p class="first"><strong>CmpUserDB</strong>:</p>
+<blockquote>
+<div><p>See <a class="reference internal" href="../Reference/group___cmp_user_d_b_itf.html#group-cmp-user-d-b-itf"><span class="std std-ref">CmpUserDB</span></a></p>
+<p>Worked on a simple file. Here we store all users and groups and their relation to each other:</p>
+<p>.UserMgmtDB.csv</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>CmpUserDBObjects</strong>:</p>
+<blockquote>
+<div><p>See <a class="reference internal" href="../Reference/group___cmp_user_d_b_objects_itf.html#group-cmp-user-d-b-objects-itf"><span class="std std-ref">CmpUserDBObjects</span></a></p>
+<p>Worked on a simple file. Here we store all objects and the groups with the corresponding access rights:</p>
+<p>.UserMgmtRightsDB</p>
+</div></blockquote>
+</li>
+</ul>
+<p>For more embedded controllers, there is an alternate component wich implements both interfaces above. It can be used as atemplate to specify users, groups and
+rights during compile time. See CmpUserEmbedded as a template! You have to adapt this to your specific implementation.</p>
+</li>
+<li><p class="first"><strong>CmpCryptMD5</strong>:</p>
+<blockquote>
+<div><p>Is needed by the components above.</p>
+</div></blockquote>
+</li>
+</ol>
+<p>After this work has been done, the online user management is prepared to be configured and to used.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ov_kernel_core_dumps.html" title="1.3.16. Core dumps (CmpCoreDump)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_license_mgmt.html" title="1.3.14. License Management"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" >1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

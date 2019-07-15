@@ -1,0 +1,124 @@
+.. first line of composition.rst template
+
+.. first line of group.rst template
+
+.. _group___cmp_secure_channel_itf:
+
+===================
+CmpSecureChannelItf
+===================
+
+Interface of CmpSecureChannel. :ref:`More... <group___cmp_secure_channel_itf-details>`
+
+Modules
+-------
+
+- :ref:`SecuritySettings <group___cmp_secure_channel_itf___security_settings>`
+
+- :ref:`Settings <group___cmp_secure_channel_itf___settings>`
+
+Data Structures
+---------------
+
+- struct :ref:`HEADER_TAG_CRYPT <struct_h_e_a_d_e_r___t_a_g___c_r_y_p_t>`
+
+Macros
+------
+
+- #define :ref:`CMPSECCHANNEL_VALUE_ONLINECOMMMODE_LIST <group___cmp_secure_channel_itf_1gae6227630c66012ceb9996f029c5a7569>` {\
+{(RTS_I32) :ref:`OnlineCommMode_ONLY_PLAIN <group___cmp_secure_channel_itf_1ggafaa93b005c2baeb03e520fe359d890faad9cceee37591a78051d57e9b18f0ae13>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPSECCHANNEL_VALUE_ONLINECOMMMODE_ONLY_PLAIN <group___cmp_secure_channel_itf___security_settings_1gab99628771576d2eb8f0ec74d71fcc583>` , "Only encrypted communication allowed"},\
+{(RTS_I32) :ref:`OnlineCommMode_PLAIN_AND_ENCRYPTED <group___cmp_secure_channel_itf_1ggafaa93b005c2baeb03e520fe359d890faabda0c2d3bd25a01ce3c269de4dd7b7f5>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPSECCHANNEL_VALUE_ONLINECOMMMODE_PLAIN_AND_ENCRYPTED <group___cmp_secure_channel_itf___security_settings_1ga7b6a98d15474ee59cd3762abc7456efe>` , "Encrypted and unencrypted communication supported. Can be decided by the online user"},\
+{(RTS_I32) :ref:`OnlineCommMode_ONLY_ENCRYPTED <group___cmp_secure_channel_itf_1ggafaa93b005c2baeb03e520fe359d890faa5d6e4f01d0bb4838ea5f74730d1e75f6>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPSECCHANNEL_VALUE_ONLINECOMMMODE_ONLY_ENCRYPTED <group___cmp_secure_channel_itf___security_settings_1gaed81c4dfc3d37ca0942c59ead2f1bcd0>` , "Only unencrypted communication supported"}\
+}
+
+- #define :ref:`CMPSECCHANNEL_KEY_STRING_CREATE_SELFSIGNED_CERT <group___cmp_secure_channel_itf_1ga636952f64a66d7f7c54014b4e3151154>` :ref:`SECURITY_KEY_STRING_CREATE_SELFSIGNED_CERT <group___cmp_security_manager_itf___security_settings_1ga9330fc7a6be540dc887bf7a8dbf012a0>`
+
+- #define :ref:`CMPSECCHANNEL_KEY_STRING_CREATE_SELFSIGNED_CERT_DESC <group___cmp_secure_channel_itf_1ga8b4418e854974437f3d82c9a5549c98d>` :ref:`SECURITY_KEY_STRING_CREATE_SELFSIGNED_CERT_DESC <group___cmp_security_manager_itf___security_settings_1gad148eb2a46b97cb4d10d392d69c48da0>`
+
+- #define :ref:`CMPSECCHANNEL_VALUE_CREATE_SELFSIGNED_CERT_DEFAULT <group___cmp_secure_channel_itf_1ga2e8bf32e1a9ca9b3a71b0559c98c3c2e>` :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_YES <group___cmp_security_manager_itf___security_settings_1ga6165135e114cdddf74e347d97ef33084>`
+
+- #define :ref:`CMPSECCHANNEL_VALUE_CREATE_SELFSIGNED_CERT_LIST <group___cmp_secure_channel_itf_1gac7fb5cadf08a0b75257dd54d87430764>` :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_LIST <group___cmp_security_manager_itf_1ga35939aaaf3fa5936143cdba336a6296a>`
+
+Enumerations
+------------
+
+- enum :ref:`CMPSECURECHANNEL_ONLINECOMMMODE_IDS <group___cmp_secure_channel_itf_1gafaa93b005c2baeb03e520fe359d890fa>` { :ref:`OnlineCommMode_ONLY_PLAIN <group___cmp_secure_channel_itf_1ggafaa93b005c2baeb03e520fe359d890faad9cceee37591a78051d57e9b18f0ae13>`, :ref:`OnlineCommMode_PLAIN_AND_ENCRYPTED <group___cmp_secure_channel_itf_1ggafaa93b005c2baeb03e520fe359d890faabda0c2d3bd25a01ce3c269de4dd7b7f5>`, :ref:`OnlineCommMode_ONLY_ENCRYPTED <group___cmp_secure_channel_itf_1ggafaa93b005c2baeb03e520fe359d890faa5d6e4f01d0bb4838ea5f74730d1e75f6>` }
+
+.. _group___cmp_secure_channel_itf-details:
+
+Detailed Description
+--------------------
+
+Interface of CmpSecureChannel.
+
+Interface for a secure channel implementation to provide a secure (TLS based) channel on top of a communication channel. In the communication stack of the CODESYS runtime system the implementation of this interface can be optionally called between CmpChannelServer and CmpSrv.
+
+SECURITY-NOTE: The security manager must be linked statically to the runtime system core to prevent, that it cannot be removed or replaced by a malware!
+
+**Copyright:**
+
+Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_secure_channel_itf_1gae6227630c66012ceb9996f029c5a7569:
+
+#define CMPSECCHANNEL_VALUE_ONLINECOMMMODE_LIST
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Value:**
+
+.. parsed-literal::
+
+    {\\
+    {(RTS_I32) :ref:`OnlineCommMode_ONLY_PLAIN <group___cmp_secure_channel_itf_1ggafaa93b005c2baeb03e520fe359d890faad9cceee37591a78051d57e9b18f0ae13>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPSECCHANNEL_VALUE_ONLINECOMMMODE_ONLY_PLAIN <group___cmp_secure_channel_itf___security_settings_1gab99628771576d2eb8f0ec74d71fcc583>` , "Only encrypted communication allowed"},\\
+    {(RTS_I32) :ref:`OnlineCommMode_PLAIN_AND_ENCRYPTED <group___cmp_secure_channel_itf_1ggafaa93b005c2baeb03e520fe359d890faabda0c2d3bd25a01ce3c269de4dd7b7f5>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPSECCHANNEL_VALUE_ONLINECOMMMODE_PLAIN_AND_ENCRYPTED <group___cmp_secure_channel_itf___security_settings_1ga7b6a98d15474ee59cd3762abc7456efe>` , "Encrypted and unencrypted communication supported. Can be decided by the online user"},\\
+    {(RTS_I32) :ref:`OnlineCommMode_ONLY_ENCRYPTED <group___cmp_secure_channel_itf_1ggafaa93b005c2baeb03e520fe359d890faa5d6e4f01d0bb4838ea5f74730d1e75f6>` , :ref:`CMPSECMAN_SFLAGS_NONE <group___cmp_security_manager_itf___security_selectable_flags_1gac9107231eaf39c3dac3113befeae5ca0>` , :ref:`CMPSECCHANNEL_VALUE_ONLINECOMMMODE_ONLY_ENCRYPTED <group___cmp_secure_channel_itf___security_settings_1gaed81c4dfc3d37ca0942c59ead2f1bcd0>` , "Only unencrypted communication supported"}\\
+    }
+
+.. _group___cmp_secure_channel_itf_1ga636952f64a66d7f7c54014b4e3151154:
+
+#define CMPSECCHANNEL_KEY_STRING_CREATE_SELFSIGNED_CERT :ref:`SECURITY_KEY_STRING_CREATE_SELFSIGNED_CERT <group___cmp_security_manager_itf___security_settings_1ga9330fc7a6be540dc887bf7a8dbf012a0>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Security setting to specify, if a selfsigned cert should be created by default if not available
+
+.. _group___cmp_secure_channel_itf_1ga8b4418e854974437f3d82c9a5549c98d:
+
+#define CMPSECCHANNEL_KEY_STRING_CREATE_SELFSIGNED_CERT_DESC :ref:`SECURITY_KEY_STRING_CREATE_SELFSIGNED_CERT_DESC <group___cmp_security_manager_itf___security_settings_1gad148eb2a46b97cb4d10d392d69c48da0>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_secure_channel_itf_1ga2e8bf32e1a9ca9b3a71b0559c98c3c2e:
+
+#define CMPSECCHANNEL_VALUE_CREATE_SELFSIGNED_CERT_DEFAULT :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_YES <group___cmp_security_manager_itf___security_settings_1ga6165135e114cdddf74e347d97ef33084>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _group___cmp_secure_channel_itf_1gac7fb5cadf08a0b75257dd54d87430764:
+
+#define CMPSECCHANNEL_VALUE_CREATE_SELFSIGNED_CERT_LIST :ref:`SECURITY_VALUE_CREATE_SELFSIGNED_CERT_LIST <group___cmp_security_manager_itf_1ga35939aaaf3fa5936143cdba336a6296a>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Enumeration Type Documentation
+------------------------------
+
+.. _group___cmp_secure_channel_itf_1gafaa93b005c2baeb03e520fe359d890fa:
+
+enum CMPSECURECHANNEL_ONLINECOMMMODE_IDS
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Security level for the programming system communication 
+
+**Enumerator:**
+
++------------------------------------+
+| OnlineCommMode_ONLY_PLAIN          |
++------------------------------------+
+| OnlineCommMode_PLAIN_AND_ENCRYPTED |
++------------------------------------+
+| OnlineCommMode_ONLY_ENCRYPTED      |
++------------------------------------+
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

@@ -1,0 +1,20 @@
+.. _dev_io_conf_save_restore:
+
+Save and Restore Changed IO Configuration Parameters
+----------------------------------------------------
+
+With the following setting for the CmpIoMgr component in the
+configuration file of the runtime, you can activate to store all changed
+parameter values in the file "IoConfig."ar":
+
+.. code-block:: ini
+
+  [CmpIoMgr]
+  StoreChangedParameters=1
+
+This file is written always if a parameter has been changed online or
+via IoMgrWriteParameter().
+
+All changed parameters are restored at the next bootup, right after the
+bootproject with the IO-Configuration is loaded.
+

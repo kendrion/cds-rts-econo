@@ -1,0 +1,169 @@
+.. _arch_embedded_runtime:
+
+Embedded runtime
+----------------
+
+In general the whole runtime is very scalable. By disabling features,
+you can scale it down to very small systems running on drives, mobile
+machine controllers, etc. So generally spoken, there is no difference
+between an "embedded" or "full" runtime. But as the requirements for
+those small systems are a bit different, there are a few components that
+have an alternative implementation, which fits better for embedded
+systems.
+
+Those components usually have the Postfix "Embedded". The following
+table describes the most central and most important special components
+and their specialties.
+
++----------------------+----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Standard Component   | Embedded alternative       | Description                                                                                                                                                                                                                    |
++======================+============================+================================================================================================================================================================================================================================+
+| CmpApp               | CmpAppEmbedded             | Supports only one application, but therefore has an option to run from flash optionally. Note, that the download format is different.                                                                                          |
++----------------------+----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| CmpAppBP             | CmpAppBPEmbedded           | Supports only basic breakpoints and some rudimentary conditional breakpoints. Execution Points, Flow Control and complex conditional breakpoints are not supported.                                                            |
++----------------------+----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| CmpEventMgr          | CmpEventMgrEmbedded        | Supports no IEC interface and has a datamanagement, that is optimized for memory consumption. The handling is optimal if there are only a small number of listeners.                                                           |
++----------------------+----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| CmpChannelMgr        | CmpChannelMgrEmbedded      | Those two components have to be selected in combination always. They support only one channel and are occupying less space in RAM and FLASH.                                                                                   |
++----------------------+----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| CmpChannelServer     | CmpChannelServerEmbedded   |                                                                                                                                                                                                                                |
++----------------------+----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| CmpSettings          | CmpSettingsEmbedded        | Supports no settings file (ini file format), but therefore a static list of settings in memory. Those settings can be written and read and if the OEM customer likes to store them on a persistent media, this is possible.    |
++----------------------+----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| CmpRouter            | CmpRouterEmbedded          | Supports only one main-net (= one block driver) and no routing between networks.                                                                                                                                               |
++----------------------+----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| CmpSchedule          | CmpScheduleEmbedded        | Executes all IEC tasks in one super loop in the background. No preemption is supported.                                                                                                                                        |
++----------------------+----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| CmpSchedule          | CmpScheduleTimer           | Similar to CmpScheduleEmbedded, but executes cyclic IEC tasks in the context of system timers. Those system timers may be based on hardware timers directly (beware of interrupt locks!) or on an embedded operating system.   |
++----------------------+----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| CmpIoMgr             | CmpIoMgrEmbedded           | Supports the same main features as the IoMgr, but is optimized to run on systems w/o tasks and w/o semaphores.                                                                                                                 |
++----------------------+----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| SysFile              | SysFileFlash               | A very simple file implementation which works on memory mapped files in flash. It uses SysFlash to write data to flash, but the flash has to be memory mapped.                                                                 |
++----------------------+----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Compact download format
+~~~~~~~~~~~~~~~~~~~~~~~
+
+If an embedded runtime is using CmpAppEmbedded, instead of CmpApp, it
+also uses a different download format implicitly. This format is called
+"compact download".
+
+The following settings in device description shall be used:
+compact\_download, constants-in-own-segment, code-segment-header-size.
+
+Instead of using a flexible but complex tagged format, the compact
+download consists of one binary file, which can be directly downloaded
+to flash, and even be executed from there. The binary file starts with a
+header, which contains the most important information directly and
+points to more advanced sections within the binary.
+
++------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| Segment                                                                                                          | Description                                                                                                     |
++==================================================================================================================+=================================================================================================================+
+| CodeHeader:                                                                                                      | Header of the stream:                                                                                           |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulHeaderTag;                                                                                           | HeaderTag=0x1234ABCD                                                                                            |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulHeaderVersion;                                                                                       | HeaderVersion=0x00000001                                                                                        |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulHeaderSize;                                                                                          | HeaderSize=104                                                                                                  |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulTotalSize;                                                                                           | Total size of header including all segments                                                                     |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulDeviceType;                                                                                          | Device type of the selected device                                                                              |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulDeviceId;                                                                                            | DeviceID of the selected device                                                                                 |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulDeviceVersion;                                                                                       | Device version of the selected device                                                                           |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulFlags;                                                                                               | Download Flags                                                                                                  |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulCompilerVersion;                                                                                     | Compiler version of used CODESYS version                                                                        |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulCodeAreaSize;                                                                                        | Code area size                                                                                                  |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI16 usCodeAreaIndex;                                                                                       | Code area index                                                                                                 |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI16 usCodeAreaFlags;                                                                                       | Code area flags                                                                                                 |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulOffsetCode;                                                                                          | Offset in bytes, where the code segment begins                                                                  |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulSizeCode;                                                                                            | Size in bytes of the code segment                                                                               |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulOffsetApplicationInfo                                                                                | Offset in bytes, where the application info segment begins                                                      |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulSizeApplicationInfo;                                                                                 | Size in bytes of the application info segment                                                                   |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulOffsetAreaTable                                                                                      | Offset in bytes, where the area table segment begins                                                            |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulSizeAreaTable;                                                                                       | Size in bytes of the area table segment                                                                         |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulOffsetFunctionTable;                                                                                 | | Offset in bytes, where the function table segment begins, Here the link function are specified:               |
+|                                                                                                                  | | - CodeInit                                                                                                    |
+| RTS\_UI32 ulSizeFunctionTable;                                                                                   | | - GlobalInit                                                                                                  |
+|                                                                                                                  | | - GlobalExit                                                                                                  |
+| RTS\_UI32 ulOffsetExternalFunctionTable;                                                                         | | - Reloc                                                                                                       |
+|                                                                                                                  | | - DownloadCode                                                                                                |
+| RTS\_UI32 ulSizeExternalFunctionTable;                                                                           | | - TargetInfo                                                                                                  |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 lOffsetRegisterIecFunctionTable;                                                                       | Size in bytes of the function table segment                                                                     |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulSizeRegisterIecFunctionTable;                                                                        | Offset in bytes, where the external function table segment begins to link c functions against iec code          |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulOffsetSourceCode;                                                                                    | Size in bytes of the external function table segment                                                            |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulSizeSourceCode;                                                                                      | Offset in bytes, where the iec function table segment begins to link iec functions against the runtime system   |
+|                                                                                                                  |                                                                                                                 |
+| RTS\_UI32 ulCrc;                                                                                                 | Size in bytes of the external function table segment                                                            |
+|                                                                                                                  |                                                                                                                 |
+|                                                                                                                  | Offset in bytes, where the optional sourcecode segment begins                                                   |
+|                                                                                                                  |                                                                                                                 |
+|                                                                                                                  | Size in bytes of the optional sourcecode segment                                                                |
+|                                                                                                                  |                                                                                                                 |
+|                                                                                                                  | RC32 of the complete download stream including the header with ulCRC written to 0!                              |
++------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| Code segment                                                                                                     | Code POUs                                                                                                       |
++------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| ApplicationInfo segment:                                                                                         | Application info                                                                                                |
+|                                                                                                                  |                                                                                                                 |
+| All names are transmitted 4 byte aligned:                                                                        |                                                                                                                 |
+|                                                                                                                  |                                                                                                                 |
+| | Project name (ASCII string)                                                                                    |                                                                                                                 |
+| | Author (ASCII string)                                                                                          |                                                                                                                 |
+| | Version (ASCII string)                                                                                         |                                                                                                                 |
+| | Description (ASCII string)                                                                                     |                                                                                                                 |
+| | Profile (ASCII string)                                                                                         |                                                                                                                 |
+| | Date of last change (DATE\_AND\_TIME)                                                                          |                                                                                                                 |
++------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| Area segment:                                                                                                    | Table of all used areas                                                                                         |
+|                                                                                                                  |                                                                                                                 |
+| List of AREA\_INFO                                                                                               |                                                                                                                 |
++------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| Function table:                                                                                                  | Function table to link to runtime                                                                               |
+|                                                                                                                  |                                                                                                                 |
+| 1. pfCodeInit                                                                                                    |                                                                                                                 |
+|                                                                                                                  |                                                                                                                 |
+| 2. pfGlobalInit                                                                                                  |                                                                                                                 |
+|                                                                                                                  |                                                                                                                 |
+| 3. pfGlobalExit                                                                                                  |                                                                                                                 |
+|                                                                                                                  |                                                                                                                 |
+| 4. pfReloc                                                                                                       |                                                                                                                 |
+|                                                                                                                  |                                                                                                                 |
+| 5. pfDownloadCode                                                                                                |                                                                                                                 |
+|                                                                                                                  |                                                                                                                 |
+| 6. pfTargetInfo                                                                                                  |                                                                                                                 |
++------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| External Function table:                                                                                         | Table of external references                                                                                    |
+|                                                                                                                  |                                                                                                                 |
+| List of EXT\_REF\_INFO (4 Byte aligned for the next entry!)                                                      |                                                                                                                 |
++------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| IEC Function table:                                                                                              | Table of IEC functions that can be called from C                                                                |
+|                                                                                                                  |                                                                                                                 |
+| List of FUNCTION\_INFO with following name of the IEC function at the end (4 Byte aligned for the next entry!)   |                                                                                                                 |
++------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| Source code segment:                                                                                             | Optional source code segment for the source code of the used project                                            |
+|                                                                                                                  |                                                                                                                 |
+| Actually not used                                                                                                |                                                                                                                 |
++------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| CRC                                                                                                              | CRC over the complete download stream                                                                           |
++------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+

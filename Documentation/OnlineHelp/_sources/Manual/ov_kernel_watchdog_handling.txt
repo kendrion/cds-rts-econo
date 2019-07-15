@@ -1,0 +1,66 @@
+.. _ov_kernel_watchdog_handling:
+
+Watchdog Handling
+-----------------
+
+All IEC-tasks of an application can be supervised by the runtime system
+to avoid cycle time overruns. The watchdog function can be enabled and
+configured in the task configuration of the PLC application. The task
+will be terminated with error status ("Exception"), when the currently
+set watchdog "Time" gets exceeded, whereby the currently set
+"Sensitivity" is included. Two cases are possible:
+
+1. Contiguous time overruns; the following is true:
+
+       +---------------+------------------------+
+       | Sensitivity   | Exception in cycle …   |
+       +===============+========================+
+       | 0,1           | 1                      |
+       +---------------+------------------------+
+       | 2             | 2                      |
+       +---------------+------------------------+
+       | …             | …                      |
+       +---------------+------------------------+
+       | n             | N                      |
+       +---------------+------------------------+
+
+2. Single time overrun: Exception if the cycle time for the current
+   cycle is greater than (Time \* Sensitivity). Example:
+   Time=t#10ms, Sensitivity=5 -> Exception as soon as the task
+   (once) runs longer than 50ms. This serves to detect endless loops
+   in the first cycle.
+
+If the watchdog expires, the outputs are reset to its default values, if
+in the device dialog of the PLC application the entry "IO update while
+in stop" and "set outputs to default values" is specified.
+
+By use of the library function in CmpIecTask.library a watchdog may be
+suspended for particular PLC cycles; this may be helpful for cycles
+requiring an extra amount of time due to initialization processes.
+
+Having declared an appropriate variable of type RTS\_IEC\_HANDLE to
+handle the task
+
+.. code-block:: C
+
+    hIecTask : RTS_IEC_HANDLE;
+
+deactivating and subsequent reactivating of the watchdog can be realized
+with help of the interface functions:
+
+.. code-block:: C
+
+    hIecTask := IecTaskGetCurrent(0);
+    IecTaskDisableWatchdog(hIecTask);
+    ... // Code that is protected against watchdog
+    IecTaskEnableWatchdog(hIecTask);
+
+Monitoring
+~~~~~~~~~~
+
+The monitoring of the IEC variables is always done task-inconsistently.
+This is done because here no influence of the IEC tasks on the runtime
+can be guaranteed.
+
+But in the future there will be an option to read IEC variables
+task-consistently.

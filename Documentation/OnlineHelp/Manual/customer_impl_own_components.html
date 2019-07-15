@@ -1,0 +1,377 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.10.3. Implementing own components &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.10. Customer Adaptations and Expansions" href="customer.html" />
+    <link rel="next" title="1.10.4. Implementation Notes" href="customer_impl_notes.html" />
+    <link rel="prev" title="1.10.2. Configuration" href="customer_configuration.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="customer_impl_notes.html" title="1.10.4. Implementation Notes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="customer_configuration.html" title="1.10.2. Configuration"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="customer.html" accesskey="U">1.10. Customer Adaptations and Expansions</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.10.3. Implementing own components</a><ul>
+<li><a class="reference internal" href="#global-include-files">1.10.3.1. Global include files</a></li>
+<li><a class="reference internal" href="#include-files-of-the-components">1.10.3.2. Include files of the components</a><ul>
+<li><a class="reference internal" href="#interface-file">1.10.3.2.1. Interface file</a></li>
+<li><a class="reference internal" href="#dependency-file">1.10.3.2.2. Dependency file</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#generation-of-include-files">1.10.3.3. Generation of include files</a></li>
+<li><a class="reference internal" href="#source-code-file">1.10.3.4. Source code file</a><ul>
+<li><a class="reference internal" href="#general-interface">1.10.3.4.1. General interface</a></li>
+<li><a class="reference internal" href="#component-specific-implementation">1.10.3.4.2. Component specific implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="customer_configuration.html"
+                        title="previous chapter">1.10.2. Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="customer_impl_notes.html"
+                        title="next chapter">1.10.4. Implementation Notes</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/customer_impl_own_components.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="implementing-own-components">
+<span id="customer-impl-own-components"></span><h1>1.10.3. Implementing own components<a class="headerlink" href="#implementing-own-components" title="Permalink to this headline">¶</a></h1>
+<p>The architecture of runtime system V3 is based on components, i.e. each
+related functional area is represented with an independent component.
+The runtime system can be expanded with further components at any time.</p>
+<p>The CmpTemplate component can be used as a template for a new component.
+It contains all required files and the whole generic part.</p>
+<div class="section" id="global-include-files">
+<h2>1.10.3.1. Global include files<a class="headerlink" href="#global-include-files" title="Permalink to this headline">¶</a></h2>
+<p>Each runtime system component requires global information that is
+contained in general header files:</p>
+<p>CmpItf.h Definitions of the component manager functions required for
+exchanging function pointers:</p>
+<p>CmpStd.h Definitions and global &#8220;#include&#8221; instructions. Operating
+system-specific header files are also defined here.</p>
+<p>All components link this file as the first header.</p>
+<p>CmpErrors.h Standardised definition of error return values for the API
+functions</p>
+<p>These files are located in the root directory (&#8220;\&#8221;) of the runtime
+system.</p>
+</div>
+<div class="section" id="include-files-of-the-components">
+<h2>1.10.3.2. Include files of the components<a class="headerlink" href="#include-files-of-the-components" title="Permalink to this headline">¶</a></h2>
+<p>Each component must define at least two header files. The interface file
+contains the interface for the component the dependency file contains
+the dependencies of the component.</p>
+<p>These two header files are generically generated from the associated
+description files via the M4 mechanism. Any changes must always be
+implemented in the description files (m4 files). Manual modification of
+the header files is not provided for and not advisable.</p>
+<div class="section" id="interface-file">
+<h3>1.10.3.2.1. Interface file<a class="headerlink" href="#interface-file" title="Permalink to this headline">¶</a></h3>
+<p>The interface file CmpXXXItf.h is generated from file CmpXXXItf.m4. It
+contains the interface for the component. The interface files of the
+core components are stored in directory /Components. Customer-specific
+interface files should be stored in the component directory under
+/Customer Components/&lt;Customer&gt;/&lt;Component&gt;.</p>
+<p>The file contains</p>
+<ul class="simple">
+<li>Defines and structures defined by the component.</li>
+<li>Definition of the interface functions and the required macros (USE_, EXT_, ...)</li>
+</ul>
+<p>The interface file is not only included by the respective component, but
+also by all other components requiring access to the functions of this
+interface.</p>
+</div>
+<div class="section" id="dependency-file">
+<h3>1.10.3.2.2. Dependency file<a class="headerlink" href="#dependency-file" title="Permalink to this headline">¶</a></h3>
+<p>The dependency file CmpXXXDep.h is generated from file CmpXXXDep.m4.
+This file contains all dependencies for the component. The dependency
+file of the core components is stored in the component directory
+/Components/CmpXXX. Customer-specific dependency files are also stored
+in the component directory.</p>
+<p>The file contains:</p>
+<ul class="simple">
+<li>Required include statements</li>
+<li>EXPORT_STMT: Summary of all EXP_ defines, i.e. all functions
+exported by the component.</li>
+<li>IMPORT_STMT: Summary of all required GET_ defines, i.e. importing
+of functions required by the component.</li>
+<li>USE_STMT: Summary of all required USE_ defines, i.e. definition of
+the function pointers of the functions required by the component.</li>
+</ul>
+<p>The dependency file is only included by the respective component, not by
+other components.</p>
+</div>
+</div>
+<div class="section" id="generation-of-include-files">
+<h2>1.10.3.3. Generation of include files<a class="headerlink" href="#generation-of-include-files" title="Permalink to this headline">¶</a></h2>
+<p>Functions cannot be called directly, because the runtime system is
+linked in different ways with the same sources and can be compiled for C
+or C++. This is why different macros are used.</p>
+<p>Since it would be impossible to create header files with the required
+macros by hand, we use the GNU M4 macro pre-processor, which generates
+comprehensive header files from simple description files.</p>
+<p>For each component the developer creates an interface file and a
+dependency description file. Both files are available as input files for
+the GNU M4 macro pre-processor. In a prebuild step from each file an
+include file is generated, which is integrated in the respective C
+files. As an alternative to a prebuild step simple batch files can be
+used for the compile process. These batch files are included in the
+toolkit sources and can be used as templates for own files.</p>
+<p>Since the files are analyzed by a mac pre-processor, all content that
+cannot be interpreted is taken over unchang–d – e.g. comments,
+definitions of constants, structs, etc.</p>
+<p>The parameters for the macro calls should always be enclosed in
+quotation marks, i.e. &#8220;<strong>`</strong>&#8221; an&#8217; &#8220;<strong>&#8216;</strong>&#8221;.</p>
+<p>Comments for functions or for the component follow a certain scheme so
+that they can be interpreted by the configuration tool:</p>
+<p>A function comment directly precedes the function definition. As usual
+in Java, it starts with the &#8220;/**&#8221; character and ends with &#8220;*/&#8221;. The
+configuration tool ignores new comment lines starting with a single
+&#8220;*&#8221;. The comment itself is created in XML, using the following tags:</p>
+<ul class="simple">
+<li>&lt;description&gt;: Contains a description of the component/function.</li>
+<li>&lt;author&gt;: optional</li>
+<li>&lt;copyright&gt;: a copyright note</li>
+<li>&lt;version&gt;: Version number</li>
+</ul>
+<p>The following tags are defined specially for functions:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>&lt;param name=&#8221;paramName&#8221; type={&#8220;IN&#8221;|&#8221;OUT&#8221;|&#8221;INOUT&#8221;}&gt;: a parameter</dt>
+<dd>description</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&lt;returns&gt;: Description of the return value, for most components a</dt>
+<dd>list of possible error values.</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="source-code-file">
+<h2>1.10.3.4. Source code file<a class="headerlink" href="#source-code-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="general-interface">
+<h3>1.10.3.4.1. General interface<a class="headerlink" href="#general-interface" title="Permalink to this headline">¶</a></h3>
+<p>Each component contains the following functions: ComponentEntry(),
+ExportFunctions(), ImportFunctions(), and HookFunction(). The following
+examples are again taken from the CmpTemplate component.</p>
+<ul>
+<li><p class="first">ComponentEntry() is the central entry function for each component. It
+is called by the component manager when the system starts up (see
+also <a class="reference internal" href="arch_overview.html#arch-overview"><span class="std std-ref">Overview</span></a>. The function is furnished with a structure for
+exchanging function pointers between the component manager and
+the component. The component receive access functions from the
+component manager and returns pointers for the 3 functions
+ExportFunctions(), ImportFunctions(), and HookFunction().</p>
+<p>The function should be implemented as follows:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">DLL_DECL</span> <span class="kt">int</span> <span class="n">CDECL</span> <span class="nf">ComponentEntry</span><span class="p">(</span><span class="n">INIT_STRUCT</span> <span class="o">*</span><span class="n">pInitStruct</span><span class="p">)</span>
+<span class="cm">/* Used to exchange function pointers between component manager and components.</span>
+<span class="cm">Called at startup for each component.</span>
+<span class="cm">pInitStruct: IN Pointer to structure with:</span>
+<span class="cm">pfExportFunctions OUT Pointer to function that exports component functions</span>
+<span class="cm">pfImportFunctions OUT Pointer to function that imports functions from other components</span>
+<span class="cm">pfGetVersion OUT Pointer to function to get component version</span>
+<span class="cm">pfRegisterAPI IN Pointer to component manager function to register a api function</span>
+<span class="cm">pfGetAPI IN Pointer to component manager function to get a api function</span>
+<span class="cm">pfCallHook IN Pointer to component manager function to call a hook function</span>
+<span class="cm">Return ERR_OK if library could be initialized, else error code</span>
+<span class="cm">*/</span>
+<span class="p">{</span>
+ <span class="n">pInitStruct</span><span class="o">-&gt;</span><span class="n">CmpId</span> <span class="o">=</span> <span class="n">COMPONENT_ID</span><span class="p">;</span>
+ <span class="n">pInitStruct</span><span class="o">-&gt;</span><span class="n">pfExportFunctions</span> <span class="o">=</span> <span class="n">ExportFunctions</span><span class="p">;</span>
+  <span class="n">pInitStruct</span><span class="o">-&gt;</span><span class="n">pfImportFunctions</span> <span class="o">=</span> <span class="n">ImportFunctions</span><span class="p">;</span>
+  <span class="n">pInitStruct</span><span class="o">-&gt;</span><span class="n">pfGetVersion</span> <span class="o">=</span> <span class="n">CmpGetVersion</span><span class="p">;</span>
+  <span class="n">pInitStruct</span><span class="o">-&gt;</span><span class="n">pfHookFunction</span> <span class="o">=</span> <span class="n">HookFunction</span><span class="p">;</span>
+  <span class="n">pInitStruct</span><span class="o">-&gt;</span><span class="n">pfCreateInstance</span> <span class="o">=</span> <span class="n">CreateInstance</span><span class="p">;</span>
+  <span class="n">pInitStruct</span><span class="o">-&gt;</span><span class="n">pfDeleteInstance</span> <span class="o">=</span> <span class="n">DeleteInstance</span><span class="p">;</span>
+  <span class="n">s_pfRegisterAPI</span> <span class="o">=</span> <span class="n">pInitStruct</span><span class="o">-&gt;</span><span class="n">pfCMRegisterAPI</span><span class="p">;</span>
+  <span class="n">s_pfGetAPI</span> <span class="o">=</span> <span class="n">pInitStruct</span><span class="o">-&gt;</span><span class="n">pfCMGetAPI</span><span class="p">;</span>
+  <span class="n">s_pfCallHook</span> <span class="o">=</span> <span class="n">pInitStruct</span><span class="o">-&gt;</span><span class="n">pfCMCallHook</span><span class="p">;</span>
+  <span class="n">s_pfCreateInstance</span> <span class="o">=</span> <span class="n">pInitStruct</span><span class="o">-&gt;</span><span class="n">pfCMCreateInstance</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">ERR_OK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">ExportFunctions() is also called when the system starts up. It uses
+the EXP_xxx macros for notifying the component manager of
+exported functions. Using the EXPORT_STMT macro from the
+interface file the function can be implemented as follows:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">int</span> <span class="n">CDECL</span> <span class="nf">ExportFunctions</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="cm">/* Export function pointers as api */</span>
+<span class="p">{</span>
+ <span class="cm">/* Macro to export functions */</span>
+ <span class="n">EXPORT_STMT</span><span class="p">;</span>
+ <span class="k">return</span> <span class="n">ERR_OK</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">ImportFunctions() is also called when the system starts up. It uses
+the GET_xxx macros for obtaining required function pointers from
+the component manager.</p>
+</li>
+</ul>
+<p>Using the IMPORT_STMT macro from the interface file the function can be
+implemented as follows:</p>
+<blockquote>
+<div><div class="highlight-C"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">int</span> <span class="n">CDECL</span> <span class="nf">ImportFunctions</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="cm">/* Get function pointers of other components */</span>
+<span class="p">{</span>
+ <span class="cm">/* Macro to import functions */</span>
+ <span class="n">IMPORT_STMT</span><span class="p">;</span>
+ <span class="k">return</span> <span class="n">ERR_OK</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul>
+<li><p class="first">The component manager calls the HookFunction() when a hook occurs.
+The function enables suitable responses to hooks, e.g. calling of
+an imported function with the CAL_xxx macro:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>    <span class="cm">/* Example for a Hook function */</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">CDECL</span> <span class="nf">HookFunction</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">ulHook</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">ulParam1</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">ulParam2</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="k">switch</span> <span class="p">(</span><span class="n">ulHook</span><span class="p">)</span>
+      <span class="p">{</span>
+         <span class="k">case</span> <span class="nl">CH_INIT_SYSTEM</span><span class="p">:</span>
+               <span class="k">break</span><span class="p">;</span>
+             <span class="k">case</span> <span class="nl">CH_INIT</span><span class="p">:</span>
+               <span class="k">break</span><span class="p">;</span>
+             <span class="k">case</span> <span class="nl">CH_INIT_DONE</span><span class="p">:</span>
+               <span class="k">break</span><span class="p">;</span>
+             <span class="cm">/* Cyclic */</span>
+             <span class="k">case</span> <span class="nl">CH_COMM_CYCLE</span><span class="p">:</span>
+               <span class="k">break</span><span class="p">;</span>
+             <span class="k">case</span> <span class="nl">CH_EXIT_COMM</span><span class="p">:</span>
+               <span class="k">break</span><span class="p">;</span>
+             <span class="k">case</span> <span class="nl">CH_EXIT_TASKS</span><span class="p">:</span>
+               <span class="k">break</span><span class="p">;</span>
+             <span class="k">case</span> <span class="nl">CH_PRE_EXIT</span><span class="p">:</span>
+               <span class="k">break</span><span class="p">;</span>
+             <span class="k">case</span> <span class="nl">CH_EXIT</span><span class="p">:</span>
+               <span class="k">break</span><span class="p">;</span>
+             <span class="k">case</span> <span class="nl">CH_EXIT_SYSTEM</span><span class="p">:</span>
+               <span class="k">break</span><span class="p">;</span>
+             <span class="k">default</span><span class="o">:</span>
+               <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span><span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="component-specific-implementation">
+<h3>1.10.3.4.2. Component specific implementation<a class="headerlink" href="#component-specific-implementation" title="Permalink to this headline">¶</a></h3>
+<p>In addition to the general interface, which is largely identical for all
+components, each component also has a component-specific implementation.
+This is where functions must be implemented that are exported based on
+the interface description. In addition, purely internal functions can be
+implemented. While the general interface deals with pure component
+management, the actual functionality of the component is implemented
+here.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="customer_impl_notes.html" title="1.10.4. Implementation Notes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="customer_configuration.html" title="1.10.2. Configuration"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="customer.html" >1.10. Customer Adaptations and Expansions</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

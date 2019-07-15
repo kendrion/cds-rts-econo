@@ -1,0 +1,221 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.2.9. Files on the Target System &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.2. Architecture" href="architecture.html" />
+    <link rel="next" title="1.2.10. Embedded runtime" href="arch_embedded_runtime.html" />
+    <link rel="prev" title="1.2.8. Source Tree of the Runtime System" href="arch_source_tree.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="arch_embedded_runtime.html" title="1.2.10. Embedded runtime"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="arch_source_tree.html" title="1.2.8. Source Tree of the Runtime System"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="architecture.html" accesskey="U">1.2. Architecture</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.2.9. Files on the Target System</a><ul>
+<li><a class="reference internal" href="#boot-projects">1.2.9.1. Boot projects</a></li>
+<li><a class="reference internal" href="#i-o-manager">1.2.9.2. I/O manager</a></li>
+<li><a class="reference internal" href="#user-management">1.2.9.3. User management</a></li>
+<li><a class="reference internal" href="#visualization">1.2.9.4. Visualization</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="arch_source_tree.html"
+                        title="previous chapter">1.2.8. Source Tree of the Runtime System</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="arch_embedded_runtime.html"
+                        title="next chapter">1.2.10. Embedded runtime</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/arch_files_on_target.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="files-on-the-target-system">
+<span id="arch-files-on-target"></span><h1>1.2.9. Files on the Target System<a class="headerlink" href="#files-on-the-target-system" title="Permalink to this headline">¶</a></h1>
+<p>Which files are necessary or created on your target file system, hardly
+depends on the type of runtime and the extended which you are using. At
+the absolute minimum, you will use an embedded runtime system, with a
+static configuration, no extended features and a flash file system for
+your boot projects. So you won&#8217;t need any file system at all. But
+contrary to this, the following chapter will describe a full runtime
+system with all features.</p>
+<div class="section" id="boot-projects">
+<h2>1.2.9.1. Boot projects<a class="headerlink" href="#boot-projects" title="Permalink to this headline">¶</a></h2>
+<p>By default, boot projects are saved as files, named &lt;application&gt;.app on
+the target file system. On embedded runtime systems they can be also
+saved in flash with the runtime component SysFileFlash.</p>
+<p>If we are using a target file system, the runtime system will generate
+the following two files when a boot project is created:</p>
+<ul>
+<li><div class="first line-block">
+<div class="line">&lt;application&gt;.app</div>
+<div class="line">This file contains the application code and data.</div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line">&lt;application&gt;.crc</div>
+<div class="line">This file contains a CRC value of &lt;application&gt;.app which is verified at boot time.</div>
+</div>
+</li>
+</ul>
+<p>With the setting [CmpApp]-&gt;RetainType.Applications=OnPowerfail, the
+target will save the &#8220;retain&#8221; and &#8220;retain persistent&#8221; data to the file
+system. For this to work, the target needs to be shut down correctly. On
+power fail, this can be done with a big enough condensator, which can
+buffer the target long enough to shut it down. In this case the
+following file is generated for every application on shutdown:</p>
+<ul>
+<li><div class="first line-block">
+<div class="line">&lt;application&gt;.ret</div>
+<div class="line">This file contains the complete retain data segment of the corresponding application, and is therefore as big as the retain-segment is configured in the corresponding device description.</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="i-o-manager">
+<h2>1.2.9.2. I/O manager<a class="headerlink" href="#i-o-manager" title="Permalink to this headline">¶</a></h2>
+<p>The I/O manager forwards all configuration-, read- and write-requests to
+the attached device drivers. Please refer to chapter 7 for a more
+detailed description.</p>
+<p>Every Parameter which is set in the I/O Configuration is saved to the
+file &#8220;IoConfig.par&#8221;. Those values are then restored at the next power up
+from this file.</p>
+</div>
+<div class="section" id="user-management">
+<h2>1.2.9.3. User management<a class="headerlink" href="#user-management" title="Permalink to this headline">¶</a></h2>
+<p>The User management of the CODESYS Runtime encapsulates the whole
+rights- and user management into the component CmpUserDB. This component
+can be implemented by the OEM customer himself to match his special
+requirements. But there is also a fully complete user database included
+in the runtime.</p>
+<p>This uUser database saves it&#8217;s user and rights tables in simple CSV
+files on the target file system:</p>
+<ul>
+<li><div class="first line-block">
+<div class="line">UserMgmtDB.csv</div>
+<div class="line">This file contains all users and groups, which are downloaded by the CODESYS programming system.</div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line">UserMgmtRightsDB.csv</div>
+<div class="line">The content of this file is downloaded from the CODESYS programming system, too.</div>
+<div class="line">It contains all configured user rights for the different files and devices.</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="visualization">
+<h2>1.2.9.4. Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h2>
+<p>If the target visualization is running in a different process as the
+runtime system, it needs a way to exchange the bitmap pool between the
+two processes. The bitmap pool consists of IDs, associated with image
+file names on the file system. This means, that when you are using a
+target visualization with images on your target, you will get also the
+following file, beside all the necessary image files:</p>
+<ul>
+<li><div class="first line-block">
+<div class="line">IPCBitmapPool.cfg</div>
+<div class="line">This file is used to share an image pool between the two processes of the target visualization and the soft PLC.</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="arch_embedded_runtime.html" title="1.2.10. Embedded runtime"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="arch_source_tree.html" title="1.2.8. Source Tree of the Runtime System"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="architecture.html" >1.2. Architecture</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,166 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.3.17. Trace Manager (CmpTraceMgr) &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.3. Overview of the Kernel Components and Main Functions" href="overview_kernel.html" />
+    <link rel="next" title="1.4. Portings" href="portings.html" />
+    <link rel="prev" title="1.3.16. Core dumps (CmpCoreDump)" href="ov_kernel_core_dumps.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="portings.html" title="1.4. Portings"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_core_dumps.html" title="1.3.16. Core dumps (CmpCoreDump)"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" accesskey="U">1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ov_kernel_core_dumps.html"
+                        title="previous chapter">1.3.16. Core dumps (CmpCoreDump)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="portings.html"
+                        title="next chapter">1.4. Portings</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/ov_kernel_trace_manager.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="trace-manager-cmptracemgr">
+<span id="ov-kernel-trace-manager"></span><h1>1.3.17. Trace Manager (CmpTraceMgr)<a class="headerlink" href="#trace-manager-cmptracemgr" title="Permalink to this headline">¶</a></h1>
+<p>The trace functionality is provided with the &#8216;TraceEditor&#8217; in CODESYS.
+It allows to capture the progression of the values of variables on the
+PLC over a certain time, similar to a digital sampling oscilloscope.
+Additionally a trigger can be set to control the data capturing with
+input (trigger) signals. The values of trace variables are steadily
+written to a CODESYS buffer of a specified size and then can be observed
+in form of a two-dimensional graph plotted as a function of time.</p>
+<img alt="../_images/trace_example.png" src="../_images/trace_example.png" />
+<p>The configuration of a trace can be found in the CODESYS Online Help.</p>
+<p>The Trace Manager &#8216;CmpTraceMgr&#8217; is a component of the runtime system
+CODESYS Control V3. This component handles all kind of traces
+respectively trace configurations.</p>
+<p>The Trace Manager has enhanced functionality. It is possible:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>to configure and trace parameters of the control system (like the</dt>
+<dd>temperature curve of the CPU or the battery)</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>to read out device traces (like the trace of the electric current of</dt>
+<dd>a drive)</dd>
+</dl>
+</li>
+<li>to trace system variables of other runtime system components.</li>
+</ul>
+<p>A trace configuration is called a &#8220;<em>Trace Packet</em>&#8221;. And a single
+variable inside a Trace Packet is called a &#8220;<em>Trace Record</em>&#8221; (which
+is stored in data set that consists of a value and the corresponding
+timestamp of the shot).</p>
+<p>As a Trace Record you can select an IEC variable, a system variable or
+I/O config variable. For example, the dynamical values like current
+values of a drive can be stored in a record.</p>
+<p>Every component (Runtime or IEC) can define a Trace Packet resp. a Trace
+Configuration. The in CODESYS integrated Trace Editor uses the same
+component to store an manage the User Traces.</p>
+<p>The trace editor in the CODESYS programming system can display all
+registered Trace Packets.</p>
+<p>The trace configuration and the values can be stored in a file. This
+feature is called persistent trace. So after a reboot of the controller,
+the persistent trace configuration will automatically be loaded and
+restarted.</p>
+<p>Further information on the Trace Manager can be found in the Tutorial
+&#8220;CODESYSControlV3_TraceManager_Manual.pdf&#8221;.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="portings.html" title="1.4. Portings"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_core_dumps.html" title="1.3.16. Core dumps (CmpCoreDump)"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" >1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

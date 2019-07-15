@@ -1,0 +1,71 @@
+.. _io_drivers_access_io_config:
+
+Access to the I/O Configuration
+-------------------------------
+
+The I/O-Configuration is downloaded to the runtime system as an
+initialized IEC data structure list.
+
+Typically the I/O driver is called from the I/O-manager if a new
+I/O-configuration is downloaded. But during the
+IoDrvUpdateConfiguration() call, the I/O driver must search e.g. for a
+special connector or special parameter of a connector. Therefore the
+I/O-manager provides the following functions to get access to the
+I/O-configuration:
+
+.. code-block:: C
+
+ IoConfigConnector* IoMgrConfigGetFirstConnector(IoConfigConnector *pConnectorList, int *pnCount, unsigned short wType):
+
+Get the first connector in the connector list.
+
+.. code-block:: C
+
+ IoConfigConnector* IoMgrConfigGetNextConnector(IoConfigConnector *pConnectorList, int *pnCount, unsigned short wType):
+
+Get the next connector of the connector list.
+
+.. code-block:: C
+
+ IoConfigConnector\* IoMgrConfigGetFirstChild(IoConfigConnector *pConnectorList, int \*pnCount, IoConfigConnector \*pFather):
+
+Get the first child of a specified connector.
+
+.. code-block:: C
+
+ IoConfigConnector* IoMgrConfigGetNextChild(IoConfigConnector *pConnectorList, int *pnCount, IoConfigConnector *pFather):
+
+Get the next child of a specified connector.
+
+The following functions provide access to parameters of specified
+connectors:
+
+.. code-block:: C
+
+ IoConfigParameter* IoMgrConfigGetParameter(IoConfigConnector *pConnector, unsigned long dwParameterId):
+
+Get the parameter specified by the parameter Id.
+
+.. code-block:: C
+
+ Unsigned long IoMgrConfigGetParameterValueDword(IoConfigParameter *pParameter, RTS_RESULT *pResult):
+
+Get a DWORD parameter specified by Id.
+
+.. code-block:: C
+
+ Unsigned short IoMgrConfigGetParameterValueWord(IoConfigParameter *pParameter, RTS_RESULT *pResult):
+
+Get a WORD parameter specified by Id.
+
+.. code-block:: C
+
+ Unsigned char IoMgrConfigGetParameterValueByte(IoConfigParameter *pParameter, RTS_RESULT *pResult):
+
+Get a BYTE parameter specified by Id.
+
+.. code-block:: C
+
+ Void * IoMgrConfigGetParameterValuePointer(IoConfigParameter *pParameter, RTS_RESULT *pResult):
+
+Get a PointER parameter specified by ID.

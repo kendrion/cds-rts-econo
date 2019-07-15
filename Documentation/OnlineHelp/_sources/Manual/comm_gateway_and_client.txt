@@ -1,0 +1,76 @@
+.. _comm_gateway_and_client:
+
+Gateway and Client
+------------------
+
+As a minimum, a gateway consists of the standard communication stack and
+an additional gateway component. This makes the gateway into a network
+node. In principle, each node can be extended to a gateway by
+integrating this component. A runtime system can also take on the role
+of a gateway. Via a special gateway protocol this component provides
+external clients with access to nodes within the network, in which case
+communication is via the gateway instead of the client. The gateway has
+no other special role within the network. A network can therefore have
+any number of gateways, and the gateway can be positioned anywhere in
+the network. Two positions are particularly suitable in order to avoid
+unnecessary bandwidth problems:
+
+- As top-level node: In general this is where the network with the 
+  highest bandwidth is located. In addition, access to all branches 
+  involves the same level of complexity.
+
+- Near the target system: This solution is particularly suitable if the 
+  gateway is mainly intended for a particular subnet that may be 
+  connected to the rest of the network via low (available) bandwidth.
+
+If more clients can communicate with a target system than the number of
+channels the system can make available on Layer 4, the gateway can
+multiplex the requests for different clients on one channel. To this end
+the gateway opens a single channel for all clients and sends requests to
+the clients in turn, waits for the reply, sends the next request, etc.
+While this technique slows down communication of the individual clients
+to some extent, for sporadic requests it uses significantly less
+resources in the target system.
+
+Common clients are tools for programming (e.g. CODESYS itself),
+visualization, remote diagnostics, etc. The main feature of a client is
+that it is generally only connected to the network on a temporary basis.
+In addition, a client is always the active communication partner, i.e. a
+node will usually not establish communication with, but only respond to
+requests from a client.
+
+The communication between client and gateway is based on **communication
+drivers**. In contrast to communication between block drivers this
+communication is connection-oriented. In addition there is no (direct)
+limitation of the maximum packet sizes. However, since the main part of
+the communication is forwarding of Layer 7 packets, the packet size is
+effectively limited by the negotiated size of the communication buffer
+plus administrative data.
+
+Gateway requests include the following components:
+
+-  Network scan: From the scan the gateway generates a request for the 
+   name service and supplies all the answers of the available nodes in
+   the network as response. Network scan (broadcast) is not supported by
+   the CmpBlkDrvTcp.
+
+-  Address services: Initiation of address assignment, etc.
+
+-  Layer 4 services: Setup and removal of a channel, sending of packets
+   via this channel. By default the content and structure of these
+   packets (e.g. monitoring request) is not known to the gateway. It
+   merely forwards these packets to the associated receiver without
+   interpreting them.
+
+-  Diagnostics and administration of the gateway itself.
+
+-  …
+
+These services can be extended as required.
+
+A basic client implementation is available for clients (*GWClient*),
+that covers communication with the gateway, integration of the
+communication drivers, etc. Specific clients should use this library in
+order to avoid getting bogged down in details of the communication with
+the gateway.
+

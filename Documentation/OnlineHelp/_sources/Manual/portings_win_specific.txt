@@ -1,0 +1,153 @@
+.. _portings_win_specific:
+
+Windows Specific Information
+----------------------------
+
+The windows runtime runs on NT..XP systems. There are the following
+derivates:
+
+-  CODESYS Control Win V3: soft real time behavior
+
+-  CODESYS Control RTE V3: hard real time behavior
+
+-  CODESYS Simulation: runtime system for the simulation feature of 
+   CODESYS (soft real time behavior)
+
+-  CODESYS HMI: runtime system without I/O handling, for the purpose 
+   of running visualization applications on external devices
+
+Also the Gateway consists of runtime system components:
+
+-  CODESYS Gateway V3: runtime system with gateway server functionality
+
+Windows runtime services
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following windows runtime systems run as a windows service. They
+have all a command interface with the following calling options:
+
++-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
+| -i:                           | Service gets installed                                                                                                                   |
++===============================+==========================================================================================================================================+
+| -l:                           | Specification of the Windows user account (add the username), under which the service should be started (only together with option –i)   |
++-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
+| -p:                           | Password of the Windows user (only together with –i)                                                                                     |
++-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
+| -u:                           | Service gets de-installed                                                                                                                |
++-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
+| -s: [<CODESYSControl.cfg>]:   | Service gets started. A cfg-file can be specified optional.                                                                              |
++-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
+| -e:                           | Service gets terminated                                                                                                                  |
++-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
+| -d:                           | Service gets started as application in the console mode (running in a DOS box)                                                           |
++-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
+| -r:                           | Debugging of the service without console window                                                                                          |
++-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
+| --startmode=auto:             | Service gets started automatically by Windows                                                                                            |
++-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
+| --startmode=demand:           | Service can be started manually under Windows                                                                                            |
++-------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
+
+CODESYS Control Win V3 (soft real time)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Windows soft real time runtime system (product name: CODESYS Control Win
+V3) based on a Windows service that is running with REALTIME process
+priority in user mode. All hardware access routines are handled by a
+kernel driver called SysDrv3S.sys. This driver must be installed for
+each (PCI) card that is plugged into the PC and wants to be used by the
+runtime system.
+
+CODESYS Gateway Service V3
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After a CODESYS standard installation, at system start the Gateway
+Server will be started automatically as a service. In addition and also
+automatically a separate application (GatewaySysTray) will be started,
+providing the gateway symbol in the system tray and – to be opened via
+this symbol – the gateway menu.
+
+| The gateway symbol indicates whether the gateway service is 
+| stopped: 
+ 
+.. image:: ./images/icon_gateway_stopped.png 
+
+or running:
+
+.. image:: ./images/icon_gateway_running.png
+
+The gateway menu contains commands for explicit starting and stopping
+the gateway service as well as command „Exit Gateway Control" for
+terminating the GatewaySysTray application (not however the gateway
+service !). The GatewaySysTray application also might be started via the
+Programs menu.
+
+The start mode for the gateway can be set in the Windows service manager
+or via a call option (see above: call options).
+
+**Note:** The Windows firewall should be deactivated for the gateway
+systray application. The Windows firewall should be deactivated for the
+gateway systray application.
+
+CODESYS Service Control V3
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+As authorization for starting/stopping services is strictly limited by
+Windows Vista, from CODESYS Version V3.2 SP1 Patch 2 onwards the
+services of CODESYS Control Win V3 and CODESYS Gateway Service V3 will
+be controlled by CODESYS Service Control V3.
+
+Brand labeling
+^^^^^^^^^^^^^^
+
+The default names of the services controlled by CODESYS Service Control
+V3 may be modified by editing the following resources:
+
+ServiceControl.exe:
+
+ID 3: vendor name (used for shared memory name!)
+
+ID 4: name of the CODESYS Control service
+
+ID 5: name of the Gateway service
+
+GatewaySysTray.exe:
+
+ID 8: vendor name (used for shared memory name!)
+
+ID 9: name of the Gateway service
+
+CODESYSControlSysTray.exe:
+
+ID 8: vendor name (used for shared memory name!)
+
+ID 9: name of the CODESYSControl service
+
+
+CODESYS Control RTE V3 (hard realtime)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Windows hard real time runtime system (product name: CODESYS Control RTE
+V3) operating with an own scheduler that runs windows as an idle task.
+All other real time tasks are executed before Windows. A special
+time-slicing mechanism distributes the process consumption in a fix
+quota between the plc tasks and the windows operating system. This quota
+can be for example 70% plc and 30% windows.
+
+CODESYS integrated runtime systems
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+CODESYS simulation
+^^^^^^^^^^^^^^^^^^
+
+Windows soft real time runtime system integrated in CODESYS, used for
+the simulation feature.
+
+CODESYS HMI
+^^^^^^^^^^^
+
+Windows soft real time runtime system (product name: CODESYS HMI) which
+corresponds to the CODESYS Control Win V3 runtime system, however with
+deactivated I/O-handling functions. Serves to run a visualization
+application on a corresponding device (standard device: CODESYS HMI for
+Win32).

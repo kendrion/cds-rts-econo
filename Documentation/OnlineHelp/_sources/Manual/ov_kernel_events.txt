@@ -1,0 +1,57 @@
+.. _ov_kernel_events:
+
+Events
+------
+
+All type of events are handled in the runtime system by the event
+manager component CmpEventMgr. We separate here two different kind of
+event users:
+
+-  Provider: Component, that provides an event
+
+-  Consumer: Component, that uses an event
+
+The CmpEventMgr has routines for providers to create and delete and
+event.
+
+For the consumer, there are routines to open and close events and to
+register callbacks to an event. Callbacks can be functions or methods of
+objects (this works with C, C++ and IEC consumers).
+
+One event is always structured as followed:
+
+.. code-block:: C
+
+    typedef struct
+    {
+     EVENTID EventId;
+     CMPID CmpIdProvider;
+     unsigned short usParamId;
+     unsigned short usVersion;
+     void *pParameter;
+     void *pUserParameter;
+    } EventParam;
+
+The event Id consists of the high word with the event class and the low
+word with the event Id. The event class can be one of the following:
+
+.. code-block:: C
+
+    #define EVTCLASS_INFO 0x00010000
+    #define EVTCLASS_WARNING 0x00020000
+    #define EVTCLASS_ERROR 0x00040000
+    #define EVTCLASS_EXCEPTION 0x00080000
+    #define EVTCLASS_VENDOR_SPEC 0x10000000
+
+The event Id is unique for each component, but not unique in the runtime
+system! Only the combination of the event Id and the component Id makes
+an event unique!
+
+The second parameter of an event is the component Id of the provider.
+
+The parameter Id and the version specify the parameter that is provided
+by the pointer pParam. Every provider has to specify a structure with a
+specific parameter Id that is sent in pParameter.
+
+The last parameter can be a parameter that is specified by the consumer
+at register a callback. This parameter is sent back with the event.

@@ -1,0 +1,115 @@
+.. _comm_standard_block_drivers:
+
+Standard block drivers and their network addresses
+--------------------------------------------------
+
+Overview
+~~~~~~~~
+
+This chapter uses an example to describe the formation of the network
+address for network adapters based on different block drivers. For
+formation of the node address from this network address please refer to
+chapter 5.4.4 Address structure.
+
+UDP block driver
+~~~~~~~~~~~~~~~~
+
+The UDP block driver does not define physical network connections as
+network connections, but uses each available IP address of a system as a
+(virtual) network connection. For each such network connection the block
+driver uses four predefined UDP ports. In the standard configuration
+they are ports 1740, 1741, 1742 and 1743. The block driver uses
+precisely one of these ports for sending and receiving data. It either
+uses the port specified by the configuration or the first free port if
+no port is configured. The remaining ports are available for further
+runtime system instances on the same device. The block driver sends
+broadcasts always to all four ports in the network.
+
+The block driver operates on local network segments that have a common
+IP network address. The network address is formed from the relevant bits
+of the IP address (i.e. without the network mask) and the port index.
+
+The diagram illustrates the address formation for the following
+configuration:
+
+-  IP address **172.17.69.104** (= **AC.11.45.68** hexadecimal)
+
+-  IP network mask **255.255.248.0** i.e. only the last 11 bits of the
+       IP address are relevant
+
+-  Port **1741**, corresponds to port index **1** (1740 = 0)
+
+-  Since 2 bits are required for the port index, this configuration uses
+       13 bits, i.e. the top 3 bits of the first byte remain unused.
+       They can be used by the router for encoding the subnet ID, for
+       example.
+
+.. image:: ./images/comm_udp_address_example.png
+
+The following source code snippet generates this address from the IP
+configuration. Unfortunately several special cases have to be covered
+that make the code a little difficult to read. The function expects the
+relevant part of the IP address in dwLocalAddr, appends the 2-bit port
+index to wPortIdxOffset, and finally converts the required bytes to a
+byte array in pnaResult.
+
+.. code-block:: C
+
+ Static void CreateNetworkAddress(NETWORKADDRESS *pnaResult, 
+ RTS_UI32 dwLocalAddr, int iPortIdx, RTS_UI16 wPortIdxOffset)
+ /* dwLocalAddr = dwIpAddress & ~dwNetworkMask
+  * wPortIdxOffset = <number of non-networkmask bits in the ip-address>
+  */
+ {
+  int I;
+  RTS_UI16 wLocalAddrLen
+  /* wLocalAddrLen = Total number of bytes required for this
+      network
+   * address. PortIdxOffset equals the number of bits required for
+      the
+   * ipaddress, then adding 2 bits for the port index and finally
+   * calculate the number of bytes, rounding up ("+7")
+   wLocalAddrLen = (wPortIdxOffset + 2 + 7) / 8;
+ /* Caveat:
+  * We are shifting the portidx to the left in order to set the
+  * matching bits within the dwLocalAddr. If 31 or even all 32 bits
+  * of the ipaddress are used for the local address we need some
+  * extra treatment, which is done after the for loop below. So
+  * everything should work fine.
+  * But if the portidx offset is 32 then (at least on x86 with VC6
+  * compiler) the left shift is executed as a shift (I % 32)
+  * effectively doing nothing, where zero should result.
+  * In short: Expected (x << 32) == 0, but what we get is
+  * (x << 32) == x.
+  * Therefore we exclude that case in the next statement.
+  */
+    if(wPortIdxOffset < 32)
+    dwLocalAddr = dwLocalAddr | (iPortIdx << wPortIdxOffset);
+    pnaResult->nLength = wLocalAddrLen;
+    for(i=wLocalAddrLen-1; i>=0; i--)
+    {
+    pnaResult->address[i] = (RTS_UI8)(dwLocalAddr & 0xFF);
+    dwLocalAddr = dwLocalAddr >> 8;
+    }
+    if(wPortIdxOffset > 30)
+    {
+    pnaResult->address[0] = iPortIdx >> (32 – wPortIdxOffset);
+    }
+  }
+
+Serial block driver
+~~~~~~~~~~~~~~~~~~~
+
+The serial block driver is called CmpBlkDrvSimpleCom. The driver sends
+the following characters for synchronization of each data block:
+
+-  Block start delimiter: "#<"
+-  Block start delimiter: "#>"
+-  Within a block each "#" is expanded to "#_"
+
+Each block carries a 16 bit crc over the original data, stored in Intel
+byte order. Thus a block looks like this:
+
+<start delimiter>[<data><crc_highbyte><crc_lowbyte>]<end delimiter>
+
+Data within [ ] is escaped to the above rule.

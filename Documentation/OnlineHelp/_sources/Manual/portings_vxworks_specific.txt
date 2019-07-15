@@ -1,0 +1,252 @@
+.. _portings_vxworks_specific:
+
+VxWorks Specific Information
+----------------------------
+
+Under VxWorks, we can use different timers as the tick source of the
+runtime scheduler:
+
+-  Auxiliary Clock (if available)
+-  System Clock
+-  High priority task
+
+If users experience problems with „SysTimeGetUs" and „SysTimeGetNs",
+they can use their own implementations through the following settings in
+CODESYSControl.cfg:
+
+.. code-block:: C
+
+    [SysTime]
+    VxWorks.CustomSysTimeGetUs=MySysTimeGetUs
+    VxWorks.CustomSysTimeGetNs=MySysTimeGetNs
+
+The functions "MySysTimeGetUs" and "MySysTimeGetNs" represent functions
+the user needs to implement in Firmware.
+
+All PLC tasks are created as operating system threads and are triggered
+by events from the runtime scheduler. The scheduling of the tasks is
+done by the VxWorks scheduler.
+
+Multicore CPUs under VxWorks 6.6 and newer are generally supported.
+However, currently the runtime has to be bound exclusively to one core.
+Load balancing of PLC tasks is not supported.
+
+Distributed clocks
+~~~~~~~~~~~~~~~~~~
+
+Distributed Clocks are used by some field busses (like EtherCAT) to
+synchronize the cycle start times for all participants on the bus. For
+this feature, we need some special support from the operating system,
+because we need to modify the cycle times of the tasks with a fine
+granularity of a few microseconds.
+
+VxWorks doesn't support this, because such a feature would need some
+kind of one-shot timer and a non-cyclic scheduler. Because VxWorks
+doesn't support both, there is an own timeout scheduler implemented in
+the CODESYS Runtime. To simulate a one-shot timer, this timeout
+scheduler uses the cyclic timers, which are provided by VxWorks.
+
+These are:
+
+-  | **The System Timer:**
+       | This timer is used by VxWorks for its own cyclic scheduler.
+         Other tasks (from VxWorks or the User) may run into trouble
+         when using this timer for distributed clocks. Because they may
+         assume that they have a timer with a fixed period.
+
+-  | **The Auxiliary Timer:**
+       | This timer is an additional timer, which is provided by VxWorks
+         on some boards. It's based on a completely independent timer
+         source and therefore doesn't interfere with other subsystems,
+         when using it in one-shot mode.
+
+The Distributed Clocks feature can be enabled with the following setting
+in the runtime configuration file:
+
+.. code-block:: C
+
+ [SysTimer]
+ VxWorks.TimerMode=OneShot
+
+.. note:: 
+  If using this option, the clock which is assigned to the CODESYS runtime by 
+  setting **VxWorks.TimerSource** will no longer tick periodically. This might 
+  have influence on other applications running on the same platform.
+
+Timer sources
+^^^^^^^^^^^^^
+
+When using distributed clocks, the selection of the timer source for the
+runtime is even more critical than usually.
+
+Using the system timer as a timing-source is in most cases very accurate
+because the system timer can be programmed very accurate on most
+systems. But if other programs are running on the same machine, this may
+lead to an undefined behavior, because the system tick will occur
+randomly for the second application.
+
+Auxiliary timers need to be able to be programmed linearly with any
+cycle time. For example on an x86, this is true for an Auxiliary APIC
+timer but not for an Auxiliary RTC timer, because the RTC can only be
+programmed with frequencies exponentially to the base of two.
+
+If such an Auxiliary Timer is available, it might be the better choice,
+because we don't need to modify the system tick and we don't disturb
+other simultaneously running applications.
+
+Performance & Accuracy
+^^^^^^^^^^^^^^^^^^^^^^
+
+Because we need to reprogram the timer on every tick, the overall system
+performance will obviously decrease slightly. Also the number of
+interrupts in our system will be higher, because the number of timer
+interrupts increases. Beside our standard 1ms interrupts of the Runtime
+Scheduler, we get additional interrupts for the new high-precision IEC
+tasks.
+
+To overcome this problem a little bit, it is recommendable to increase
+the tick period of the Runtime Scheduler as much as possible. Because
+all periodic IEC tasks are now scheduled over the high-precision timer,
+this will only have effects on tasks which are triggered by event
+variables. So increasing this to 10ms or even 100ms might be possible on
+most systems. This can be done with the following setting in the Runtime
+Configuration:
+
+.. code-block:: C
+
+ [CmpSchedule]
+ SchedulerInterval=100000
+
+When using one-shot timers, the tasks are still scheduled by the VxWorks
+Scheduler, but are triggered from different „high-level schedulers":
+
+-  **Cyclic Tasks:** Triggered by the high-precision timeout scheduler.
+
+-  **Event Tasks:** Triggered by the Runtime Scheduler. The Variable is 
+   checked in the Interval given in the configuration file.
+
+-  **Freewheeling:** Those tasks are running all the time, and are
+   interrupting themselves after every cycle for a small amount of 
+   time to give control to the communication subsystem. The tasks 
+   are woken up by the high-precision timeout scheduler.
+
+-  **External Event Tasks:** Triggered by an external Event. This can be
+   generated in every context and therefore depends on the context 
+   where the event is generated.
+
+Jitter
+^^^^^^
+
+Accuracy for all periodic tasks is obviously much higher now, but we
+might notice some jitter when the timeouts of two tasks are overlapping.
+In any case the task with the highest priority will be served first, but
+this can lead to situations where a low-priority task is started and
+slightly after this a high-priority task gets ready.
+
+Without the Distributed Clocks, the execution of the tasks was
+synchronized by the periodic system tick. Therefore all tasks where
+executed serialized, one after another. This means, that the task cycle
+time was optimal and shorter before. Now low-priority tasks can be
+interrupted by higher priority tasks, and therefore we will notice a
+higher jitter in those low-priority tasks than before.
+
+Static Memory Areas
+^^^^^^^^^^^^^^^^^^^
+
+In VxWorks, all memory areas from the application are by default
+allocated dynamically on the heap. If this is not intended for some
+reasons, it is possible to specify one or more static memory areas in
+the runtime configuration file.
+
+The user is able to move any area to a fix address (Code, data, input,
+output, retain,...), but it is especially useful to define his own
+areas.
+
+For this purpose, we have the reserved upper 4 bits of the area flags
+which can be used by the user to move some data to his own special
+areas. He can do this by specifying the following attribute:
+
+.. code-block:: C
+
+    {attribute 'location' := '16#8000'}
+
+The 16#8000 is the area flag and should be the same as it is specified
+in the configuration file. E.g.:
+
+.. code-block:: C
+
+   [SysMem]
+   VxWorks.Area.0.Flags=0x8000
+   VxWorks.Area.0.Address=0x60540010
+   VxWorks.Area.0.Size=0x10000
+
+Note, that the areas are always parsed from top down, and that the first
+area that matches the requested area flags is used. Therefore, you
+should not define the first area with the flags 0xFEFF or similar, but
+0x0EFF instead.
+
+Global object pools
+~~~~~~~~~~~~~~~~~~~
+
+| If you have two or more instances of the CODESYS Runtime, running on
+  the same PLC, you might want to share Events and SharedMemories.
+  Especially this is necessary if you want to use our CmpBlkDrvShm to do
+  real communication and routing on a CODESYS level between the
+  Instances. But even if you are running only one instance of CODESYS,
+  but want to communicate with some of your own external firmware
+  components, which are not running inside of our CODESYS Runtime, you
+  might have the need to share some memory or send events between each
+  other.
+| For these scenarios, CODESYS on VxWorks provides a global object pool
+  for:
+
+-  events
+-  semaphores
+-  shared memories
+
+| To share the global symbol table across application image boundaries,
+  the runtime emits a new symbol at first startup, called
+  „g\_PlcObjTab". This symbol is created only on the first instantiation
+  of the runtime. All memory within this table does not belong the
+  process image. It is allocated dynamically on the heap.
+| Between different instances of the CODESYS runtime, those objects are
+  shared automatically, based on their name. To use the objects
+  independently from the CODESYS runtime, you can read the data from the
+  table manually in your part of the firmware. The shared object table
+  has the following structure:
+
+.. code-block:: C
+  
+ #define OBJTAB_VERSION 0x00000001
+ typedef enum objTabType_e {
+ e_shm,
+ e_sem,
+ e_evt
+ } objTabType_t;
+ typedef struct shmEntry_s {
+ unsigned long ulAddress;
+ unsigned long ulSize;
+ } shmEntry_t;
+ typedef struct semEntry_s {
+ SEM_ID hSem;
+ } semEntry_t;
+ typedef struct evtEntry_s {
+ SEM_ID hEvt;
+ } evtEntry_t;
+ /* base type, which „contains" the above */
+ typedef struct objEntry_s {
+ objTabType_t tType;
+ char *pszName;
+ union {
+ shmEntry_t tShmEntry;
+ semEntry_t tSemEntry;
+ evtEntry_t tEvtEntry;
+ } u;
+ } objEntry_t;
+ typedef struct objTab_s {
+ unsigned long ulVersion;
+ SEM_ID hSem;
+ objEntry_t *ptEntries;
+ unsigned long ulSize;
+ unsigned long ulRefCnt;
+ } objTab_t;

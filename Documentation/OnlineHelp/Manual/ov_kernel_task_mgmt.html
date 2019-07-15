@@ -1,0 +1,234 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.3.7. Task management &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.3. Overview of the Kernel Components and Main Functions" href="overview_kernel.html" />
+    <link rel="next" title="1.3.8. Configuration (Settings)" href="ov_kernel_configuration.html" />
+    <link rel="prev" title="1.3.6. Scheduling" href="ov_kernel_scheduling.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ov_kernel_configuration.html" title="1.3.8. Configuration (Settings)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_scheduling.html" title="1.3.6. Scheduling"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" accesskey="U">1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ov_kernel_scheduling.html"
+                        title="previous chapter">1.3.6. Scheduling</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ov_kernel_configuration.html"
+                        title="next chapter">1.3.8. Configuration (Settings)</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/ov_kernel_task_mgmt.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="task-management">
+<span id="ov-kernel-task-mgmt"></span><h1>1.3.7. Task management<a class="headerlink" href="#task-management" title="Permalink to this headline">¶</a></h1>
+<p>Each task in the runtime system has a specified logical priority. This
+priority is separated into the following 8 task segments, each with 31
+priorities to categorize tasks:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="58%" />
+<col width="30%" />
+<col width="12%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Usage</th>
+<th class="head">Defines</th>
+<th class="head">Priority</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Task segment 1
+For system tasks like scheduler</td>
+<td>TASKPRIO_SYSTEM_BASE</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>TASKPRIO_SYSTEM_END</td>
+<td>31</td>
+</tr>
+<tr class="row-even"><td>Task segment 2
+For real time tasks like IEC-tasks</td>
+<td>TASKPRIO_REALTIME_BASE</td>
+<td>32</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>TASKPRIO_REALTIME_END</td>
+<td>63</td>
+</tr>
+<tr class="row-even"><td><p class="first">Task segment 3</p>
+<p class="last">High priority tasks like high prior communication tasks</p>
+</td>
+<td>TASKPRIO_HIGH_BASE</td>
+<td>64</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>TASKPRIO_HIGH_END</td>
+<td>95</td>
+</tr>
+<tr class="row-even"><td><p class="first">Task segment 4</p>
+<p class="last">Above normal tasks</p>
+</td>
+<td>TASKPRIO_ABOVENORMAL_BASE</td>
+<td>96</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>TASKPRIO_ABOVENORMAL_END</td>
+<td>127</td>
+</tr>
+<tr class="row-even"><td><p class="first">Task segment 5</p>
+<p class="last">Normal priority tasks like standard communication task</p>
+</td>
+<td>TASKPRIO_NORMAL_BASE</td>
+<td>128</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>TASKPRIO_NORMAL_END</td>
+<td>159</td>
+</tr>
+<tr class="row-even"><td><p class="first">Task segment 6</p>
+<p class="last">Below normal tasks</p>
+</td>
+<td>TASKPRIO_BELOWNORMAL_BASE</td>
+<td>160</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>TASKPRIO_BELOWNORMAL_END</td>
+<td>191</td>
+</tr>
+<tr class="row-even"><td><p class="first">Task segment 7</p>
+<p class="last">Low task priorities.</p>
+</td>
+<td>TASKPRIO_LOW_BASE</td>
+<td>192</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>TASKPRIO_LOW_END</td>
+<td>223</td>
+</tr>
+<tr class="row-even"><td><p class="first">Task segment 8</p>
+<p class="last">Lowest task priorities for background tasks.</p>
+</td>
+<td>TASKPRIO_LOWEST_BASE</td>
+<td>224</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><p class="first">TASKPRIO_LOWEST_END</p>
+<p>TASKPRIO_IDLE</p>
+<p class="last">TASKPRIO_MIN</p>
+</td>
+<td>255</td>
+</tr>
+</tbody>
+</table>
+<p>So each task priority should be assigned to one of these 8 task segments.</p>
+<div class="line-block">
+<div class="line">A task can be specified with a special m4-Macro in its component
+Dep.m4 file. These macros are described in 11. If you specify your
+task with this macro, the list of used tasks in your system can be
+generated by the RTS-Configurator. Additionally this entry will
+exported in the Reference-Documentation by the RTS-Configurator too!.</div>
+<div class="line">So if you would like to know, which tasks with which priority are used
+in the runtime system, please look in the corresponding
+Reference-Documentation, in the Dep.m4 files for the macros or in the
+Dep.h files for the categories &#8220;Task&#8221;, &#8220;Task prefix&#8221; or &#8220;Task
+placeholder&#8221;.</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ov_kernel_configuration.html" title="1.3.8. Configuration (Settings)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_scheduling.html" title="1.3.6. Scheduling"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" >1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

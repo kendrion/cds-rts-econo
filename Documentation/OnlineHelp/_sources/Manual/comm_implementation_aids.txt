@@ -1,0 +1,168 @@
+.. _comm_implementation_aids:
+
+Implementation Aids
+-------------------
+
+Implementation of own block driver
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         
+Block drivers are structured symmetrically, i.e. usually there is no
+distinction between a client or a server. If associated system
+components for abstraction of operating system and hardware details are
+used, an implementation that can be used on all platforms is generally
+sufficient.
+
+An overview of the implementation of a block driver is provided below.
+For an actual implementation the comments provided in the Itf files must
+be taken into account, particularly with regard to data consistency and
+buffer administration.
+
+Interface
+~~~~~~~~~
+
+A block driver is an ordinary component within the CODESYS runtime
+system. It has no dedicated component manager interface. Instead it
+registers each network interface it manages (e.g. each Ethernet card)
+with the router component using the *RouterRegisterDevice* function. The
+associated function prototype is shown below (from *CrouterItf.h*):
+
+.. code-block:: C
+
+    RTS\_RESULT CDECL
+    RouterRegisterNetworkInterface(NETWORKINTERFACEINFO
+    *pInterfaceInfo, RTS_HANDLE * phSubnet);
+    typedef struct
+    {
+     PFBDSEND pfBDSend;
+        /* pointer to the blockdrivers send method */
+     RTS_HANDLE hInterface;
+        /* Interfacehandle within the block driver. This handle is
+           passed to all calls to the block driver */
+     int nMaxBlockSize;
+        /* The maximum size of a block that may be sent over this
+           device. */
+     int nNetworkAddressBitSize;
+        /* Number of bits occupied by an address of this driver */
+           int bServiceChannel;
+        /* If TRUE, this device provides a service channel. */
+     NETWORKADDRESS addrDevice;
+        /* address of the device within its subnet (CAN-Node ID, etc.)
+        */
+     char szName[MAX_INTERFACE_NAME];
+        /* human readable name of the device. Must be unique. */
+        /* Could be something like "eth0" or "Ethernetcard #1" */
+    } NETWORKINTERFACEINFO;
+
+    typedef RTS_RESULT( *PFBDSEND) (RTS_HANDLE hInterface,
+    NETWORKADDRESS addrReceiver, PROTOCOL_DATA_UNIT pduData);
+
+- *pfBDSend* is a function that is called by the router in order to
+  forward a block (*pduData*) to the next relevant node
+  (*addrReceiver*).
+
+- *hInterface* identifies the relevant network interface in the block
+  driver, if the driver manages several interfaces simultaneously.
+  The Id is assigned by the block driver and is transferred
+  whenever *pfBDSend* is called.
+
+- *nMaxBlockSize* is the maximum size of a block that can be sent via
+  this interface.
+
+- *nNetworkAddressBitSize* is the number of bits required for a network
+  address on this interface.
+
+- *addrDevice* is the local address of the network interface.
+
+- *szName* is the name of the interface as displayed to the system
+  user. This name is also used to configure the main network and
+  the subnets.
+
+- *phSubnet* is assigned by the router and identifies the interface in
+  the router. When the block driver receives a block and forwards
+  it to the router it must also forward this Id (see below).
+
+When the block driver receives a correct block on one of its network
+interfaces, it notifies the router via the *RouterHandleData* function.
+The function prototype is (again from *CrouterItf.h*):
+
+.. code-block:: C
+
+ RTS_RESULT CDECL RouterHandleData(RTS_HANDLE hSubnet,
+ NETWORKADDRESS sender, PROTOCOL_DATA_UNIT pduData, int
+ bIsBroadcast);
+
+- *hSubnet* must be the Id assigned by the router on interface
+  registration.
+- *sender* is the network address of the sender.
+- *pduData* contains the received block
+- *bIsBroadcast* should set to 1, if the received block was sent to a
+  broadcast address.
+
+.. _addressing:  
+  
+Addressing
+~~~~~~~~~~
+         
+The block driver has as many bits available for network addresses as it
+specified on registration with the router. A network address in which
+all bits are set to 1 is reserved as a broadcast address. The same
+applies to a network address of length 0. Blocks for these addresses
+therefore have to be distributed to all subnet devices.
+
+*An example:* Addressing in the UDP block driver
+
+An IP address consists of four components <a>.<b>.<c>.<d>. In a Class C
+network the first three components are identical for all devices.
+Therefore only the last byte (d) is used for the network address, i.e. 8
+bits are sufficient. Blocks for 0xFF are sent to address <a>.<b>.<c>.FF
+(local broadcast within the network).
+
+General implementation procedure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A simple block driver simply responds to associated system hooks and
+polls its network interfaces at regular intervals. Faster response times
+can be achieved if the block driver responds directly to events in its
+network hardware. This aspect is not covered in this documentation. As
+reference implementation we recommend BlkDrvUdp (supplied with the
+runtime system).
+
+Once addressing has been specified (see :ref:`comm_implementation_aids <addressing>`), a send function must be
+implemented based on the *PFBDSEND* function prototype. It should return
+the following values:
+
+- **ERR_OK** if the block could be sent or at least copied to an
+  internal buffer
+
+- **ERR_NOBUFFER** if the block could not be sent immediately and no
+  internal buffer is available for intermediate data storage.
+  During the next cycle the router will try sending the block again.
+
+- **ERR_FAILED** if an error, such as an invalid address, for example,
+  permanently prevents a block being sent. In this case the router
+  will discard the block.
+
+The block driver should initialize its network interfaces in the
+*CH_Init* hook and register them with the router.
+
+In the *CH_CommCycle* hook the block driver should continue resending
+blocks that were not sent completely and check whether a new block was
+received. If a block was received it must be forwarded to the router via
+the *RouterHandleData* function.
+
+Synchronisation
+~~~~~~~~~~~~~~~
+
+In principle the send function of the block driver can be called from
+different threads. It is therefore important to ensure adequate and
+correct synchronization.
+
+Critical code components should be secured through suitable semaphore or
+similar mechanisms. It is particularly important to ensure that a call
+of RouterHandleData can initiate another send operation. Deadlocks must
+be avoided. Before a RouterHandleData call all semaphores should
+therefore be enabled if possible.
+
+In single-tasking systems the semaphore mechanisms of the system
+libraries have been route-optimized and are therefore irrelevant for
+performance considerations.

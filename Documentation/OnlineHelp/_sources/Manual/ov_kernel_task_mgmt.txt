@@ -1,0 +1,75 @@
+.. _ov_kernel_task_mgmt:
+
+Task management
+---------------
+
+Each task in the runtime system has a specified logical priority. This
+priority is separated into the following 8 task segments, each with 31
+priorities to categorize tasks:
+
++-----------------------------------------------------------+-------------------------------+------------+
+| Usage                                                     | Defines                       | Priority   |
++===========================================================+===============================+============+
+| Task segment 1                                            | TASKPRIO\_SYSTEM\_BASE        | 0          |
+| For system tasks like scheduler                           |                               |            |
++-----------------------------------------------------------+-------------------------------+------------+
+|                                                           | TASKPRIO\_SYSTEM\_END         | 31         |
++-----------------------------------------------------------+-------------------------------+------------+
+| Task segment 2                                            | TASKPRIO\_REALTIME\_BASE      | 32         |
+| For real time tasks like IEC-tasks                        |                               |            |
++-----------------------------------------------------------+-------------------------------+------------+
+|                                                           | TASKPRIO\_REALTIME\_END       | 63         |
++-----------------------------------------------------------+-------------------------------+------------+
+| Task segment 3                                            | TASKPRIO\_HIGH\_BASE          | 64         |
+|                                                           |                               |            |
+| High priority tasks like high prior communication tasks   |                               |            |
++-----------------------------------------------------------+-------------------------------+------------+
+|                                                           | TASKPRIO\_HIGH\_END           | 95         |
++-----------------------------------------------------------+-------------------------------+------------+
+| Task segment 4                                            | TASKPRIO\_ABOVENORMAL\_BASE   | 96         |
+|                                                           |                               |            |
+| Above normal tasks                                        |                               |            |
++-----------------------------------------------------------+-------------------------------+------------+
+|                                                           | TASKPRIO\_ABOVENORMAL\_END    | 127        |
++-----------------------------------------------------------+-------------------------------+------------+
+| Task segment 5                                            | TASKPRIO\_NORMAL\_BASE        | 128        |
+|                                                           |                               |            |
+| Normal priority tasks like standard communication task    |                               |            |
++-----------------------------------------------------------+-------------------------------+------------+
+|                                                           | TASKPRIO\_NORMAL\_END         | 159        |
++-----------------------------------------------------------+-------------------------------+------------+
+| Task segment 6                                            | TASKPRIO\_BELOWNORMAL\_BASE   | 160        |
+|                                                           |                               |            |
+| Below normal tasks                                        |                               |            |
++-----------------------------------------------------------+-------------------------------+------------+
+|                                                           | TASKPRIO\_BELOWNORMAL\_END    | 191        |
++-----------------------------------------------------------+-------------------------------+------------+
+| Task segment 7                                            | TASKPRIO\_LOW\_BASE           | 192        |
+|                                                           |                               |            |
+| Low task priorities.                                      |                               |            |
++-----------------------------------------------------------+-------------------------------+------------+
+|                                                           | TASKPRIO\_LOW\_END            | 223        |
++-----------------------------------------------------------+-------------------------------+------------+
+| Task segment 8                                            | TASKPRIO\_LOWEST\_BASE        | 224        |
+|                                                           |                               |            |
+| Lowest task priorities for background tasks.              |                               |            |
++-----------------------------------------------------------+-------------------------------+------------+
+|                                                           | TASKPRIO\_LOWEST\_END         | 255        |
+|                                                           |                               |            |
+|                                                           | TASKPRIO\_IDLE                |            |
+|                                                           |                               |            |
+|                                                           | TASKPRIO\_MIN                 |            |
++-----------------------------------------------------------+-------------------------------+------------+
+
+So each task priority should be assigned to one of these 8 task segments.
+
+| A task can be specified with a special m4-Macro in its component
+  Dep.m4 file. These macros are described in 11. If you specify your
+  task with this macro, the list of used tasks in your system can be
+  generated by the RTS-Configurator. Additionally this entry will
+  exported in the Reference-Documentation by the RTS-Configurator too!.
+| So if you would like to know, which tasks with which priority are used
+  in the runtime system, please look in the corresponding
+  Reference-Documentation, in the Dep.m4 files for the macros or in the
+  Dep.h files for the categories "Task", "Task prefix" or "Task
+  placeholder".

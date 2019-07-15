@@ -1,0 +1,361 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.10.5. Libraries &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.10. Customer Adaptations and Expansions" href="customer.html" />
+    <link rel="next" title="1.10.6. Licensing" href="customer_licensing.html" />
+    <link rel="prev" title="1.10.4. Implementation Notes" href="customer_impl_notes.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="customer_licensing.html" title="1.10.6. Licensing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="customer_impl_notes.html" title="1.10.4. Implementation Notes"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="customer.html" accesskey="U">1.10. Customer Adaptations and Expansions</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.10.5. Libraries</a><ul>
+<li><a class="reference internal" href="#declaration-in-the-runtime-system">1.10.5.1. Declaration in the runtime system</a></li>
+<li><a class="reference internal" href="#codesys-m4-export-feature">1.10.5.2. CODESYS m4 export feature</a></li>
+<li><a class="reference internal" href="#version-check-of-libraries-against-the-runtime-system">1.10.5.3. Version check of libraries against the runtime system</a></li>
+<li><a class="reference internal" href="#signature-check-of-libraries-against-the-runtime-system">1.10.5.4. Signature check of libraries against the runtime system</a></li>
+<li><a class="reference internal" href="#adaptations-to-specific-operating-systems-or-processors">1.10.5.5. Adaptations to Specific Operating Systems or Processors</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="customer_impl_notes.html"
+                        title="previous chapter">1.10.4. Implementation Notes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="customer_licensing.html"
+                        title="next chapter">1.10.6. Licensing</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/customer_libraries.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="libraries">
+<span id="customer-libraries"></span><h1>1.10.5. Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">¶</a></h1>
+<p>Libraries being implemented in ANSI-C within the runtime system are
+called external libraries. However CODESYS V3 will not differentiate any
+longer between internal and external libraries. Instead each object can
+be declared as internal or external within the object properties page.</p>
+<p>For an external library object, you have to enable the checkbox
+&#8220;External implementation&#8221; in the object properties page an here in the
+Build tab:</p>
+<img alt="../_images/dlg_prop_build.png" src="../_images/dlg_prop_build.png" />
+<p>In case of an external object, this function will be added to a list of
+external references which are downloaded and resolved by the runtime.</p>
+<p>One external library entry consists of the lower case name of the
+function (without namespace), the CRC of the interface function and the
+library version of the containing library.</p>
+<p>Therefore functions implemented within the runtime system must have a
+unique name! Thereby each function or each module of a library may be
+implemented individually within the runtime system.</p>
+<p>The name within the library typically equals the name within the runtime
+system:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">FUNCTION</span> <span class="o">**</span><span class="n">ExtFunction</span><span class="o">**</span> <span class="o">:</span> <span class="n">BOOL</span>
+<span class="n">VAR_INPUT</span>
+  <span class="nl">dwIn</span> <span class="p">:</span> <span class="n">DWORD</span><span class="p">;</span>
+<span class="n">END_VAR</span>
+<span class="n">VAR</span>
+<span class="n">END_VAR</span>
+</pre></div>
+</div>
+<p>The name of an external library function is resolved in lower case in
+the runtime system! So the name requested in the runtime is:
+&#8220;<strong>extfunction</strong>&#8220;</p>
+<p>This external name is configurable. For example, the name of an external
+function might clash with an IEC identifier. In this case the external
+function may be decorated with the attribute „external_name&#8221;:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>{attribute &#39;external_name&#39; := &#39; **name_on_rts** &#39;}
+FUNCTION ExtFunction : BOOL
+VAR_INPUT
+  dwIn : DWORD;
+END_VAR
+VAR
+END_VAR
+</pre></div>
+</div>
+<p>In this case the function will not be identified with the function
+„extfunction&#8221; of the runtime system, but with the function name
+„name_on_rts&#8221;.</p>
+<p>As there is only one implementation of a function or module within the
+runtime system, only the library version with exactly this
+implementation may be used in the project! This is typically realized by
+the placeholder concept of a library. Therefore an
+external library is typically deposited in the device description.</p>
+<p>How an externa library function is declared in the runtime system, this
+is declare in the following chapter.</p>
+<p>The attribute &#8216;c-calling-convention&#8217; can be used for the external
+function to generate the function calls to that function with the
+calling convention used by the C-Compiler of the runtime system. This
+attribute is not available for all targets and C-Compilers.</p>
+<div class="section" id="declaration-in-the-runtime-system">
+<h2>1.10.5.1. Declaration in the runtime system<a class="headerlink" href="#declaration-in-the-runtime-system" title="Permalink to this headline">¶</a></h2>
+<p>An external library function is declared in the runtime system interface
+m4-File the following way:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>DEF\_API(\`void&#39;,\`CDECL&#39;,\`extfunction&#39;,\`(extfunction\_struct \*p)&#39;,1,
+0xFFADC096,0x03040500)
+</pre></div>
+</div>
+<p>This m4-interface macro contains the following segments:</p>
+<p>`extfunction&#8217;: External function name</p>
+<p>`(extfunction_struct&nbsp;*p)&#8217;: External function parameter. All
+parameters (input and result) are collected together in one interface
+structure! This is a principle in CODESYS V3!</p>
+<p>1: Interface function is used as an external library function</p>
+<p>0xFFADC096: CRC/Signature of the interface function (datatypes of the
+parameter, return value, parameter names and name of function)</p>
+<p>0x03040500: Version of the containing library. Here: V3.4.5.0</p>
+<p>Example:</p>
+<p>Declaration in IEC:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="c1">// Generated comment for MyExternalFunction</span>
+<span class="c1">// RETURN: Returns the runtime system error code (see CmpErrors.library)</span>
+<span class="n">FUNCTION</span> <span class="nl">MyExternalFunction</span> <span class="p">:</span> <span class="n">DINT</span>
+<span class="n">VAR_INPUT</span>
+ <span class="c1">// Dummy parameter</span>
+ <span class="nl">p1</span> <span class="p">:</span> <span class="n">DINT</span><span class="p">;</span>
+<span class="n">END_VAR</span>
+<span class="n">VAR</span>
+<span class="n">END_VAR</span>
+</pre></div>
+</div>
+<p>Declaration in the Itf.m4 File:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * Generated comment for MyExternalFunction</span>
+<span class="cm"> * RETURN: Returns the runtime system error code (see CmpErrors.library)</span>
+<span class="cm"> */</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">tagmyexternalfunction_struct</span>
+<span class="p">{</span>
+  <span class="n">RTS_IEC_DINT</span> <span class="n">p1</span><span class="p">;</span> <span class="cm">/* VAR_INPUT */</span>
+                         <span class="cm">/* Dummy parameter */</span>
+  <span class="n">RTS_IEC_DINT</span> <span class="n">MyExternalFunction</span><span class="p">;</span> <span class="cm">/* VAR_OUTPUT */</span>
+<span class="p">}</span> <span class="n">myexternalfunction_struct</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>DEF_API(`void&#8217;,`CDECL&#8217;,`myexternalfunction&#8217;,`(myexternalfunction_struct
+*p)&#8217;, 1,0x184DFC0B,0x01000000)</p>
+<p>Because this is a very time consuming and error prone job, CODESYS
+provides an automatical m4 export feature which is declared in the
+following chapter.</p>
+</div>
+<div class="section" id="codesys-m4-export-feature">
+<h2>1.10.5.2. CODESYS m4 export feature<a class="headerlink" href="#codesys-m4-export-feature" title="Permalink to this headline">¶</a></h2>
+<p>CODESYS V3 provides the possibility to automatically export all
+externally implemented functions or methods of a library to a file for
+the runtime system, so that incompatibilities between the library and
+the implementation in the runtime system are almost precluded.</p>
+<p>In the created interface file (called Itf.m4 file) all externally
+implemented functions and methods are represented by their names (as
+defined in CODESYS or specified by the attribute „external_name&#8221;),
+their interfaces, the version of the library and the checksum of the
+interface.</p>
+<p>Via m4 compiler this file has to be translated into an ANSI-C interface
+Header file. Furthermore CODESYS provides the possibility that a
+C-Source frame for the implementation is generated.</p>
+<p>Within the runtime system the interface header file (&lt;LibraryName&gt;Itf.h)
+and the source file (&lt;LibraryName&gt;.c) may then be used as base for
+implementing a component containing the implementation of the external
+functions or modules. Afterwards this component can be included into the
+runtime system.</p>
+<p>There are few attributes to control the m4 export of an external POU:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Attribute</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>{attribute &#8216;hide&#8217;}</td>
+<td>Hide the POU from visisble in the library and in the m4 file</td>
+</tr>
+<tr class="row-odd"><td>{attribute &#8216;external_name&#8217; := &#8216;SysFileClose&#8217;}</td>
+<td>External name of a POU can be configured. Name is always resolved lower case!</td>
+</tr>
+<tr class="row-even"><td>{attribute &#8216;m4export&#8217;}</td>
+<td>Force the m4 export (e.g. for constanst in GVLs that should be exported as C defines)</td>
+</tr>
+<tr class="row-odd"><td>{attribute &#8216;m4export_hide&#8217;}</td>
+<td>Hide from m4 export (no m4 export)</td>
+</tr>
+<tr class="row-even"><td>{attribute &#8216;m4export_nosignature&#8217;}</td>
+<td>Don&#8217;t export the signature/CRC (is 0 in this case)</td>
+</tr>
+<tr class="row-odd"><td>{attribute &#8216;m4export_32bit_nosignature&#8217;}</td>
+<td>Don&#8217;t export a signature on 32-Bit targets to be backward compatible</td>
+</tr>
+<tr class="row-even"><td>{attribute &#8216;m4export_64bit_nosignature&#8217;}</td>
+<td>Don&#8217;t export a signature on 64-Bit targets to be backward compatible</td>
+</tr>
+<tr class="row-odd"><td>{attribute &#8216;m4export_enum-as-C&#8217;}</td>
+<td>Export an IEC enum as a C enum. This is only supported for typed IEC enums declared as DINT!</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="version-check-of-libraries-against-the-runtime-system">
+<h2>1.10.5.3. Version check of libraries against the runtime system<a class="headerlink" href="#version-check-of-libraries-against-the-runtime-system" title="Permalink to this headline">¶</a></h2>
+<p>Each library function and each library method of a module being
+implemented in the runtime system will be checked on version
+compatibility by the runtime system. Each function and each method of a
+module will thereby inherit the version of its library.</p>
+<p>If the first two digits of this version number (of length 4 digits) do
+not correspond, the download will be denied and a related error message
+will be created in CoDeSys. Therefore the version of the (external)
+library and of its implementation within the runtime system have to
+match within the first two digits.</p>
+</div>
+<div class="section" id="signature-check-of-libraries-against-the-runtime-system">
+<h2>1.10.5.4. Signature check of libraries against the runtime system<a class="headerlink" href="#signature-check-of-libraries-against-the-runtime-system" title="Permalink to this headline">¶</a></h2>
+<p>Each library function and each library method of a module being
+implemented in the runtime system has a defined interface. As only the
+name of the function or method will be checked by the runtime system,
+fatal errors culminating in system crashes may occur, if these
+interfaces do not agree with each other.</p>
+<p>This is the reason why a checksum for each function or method is
+transferred via the interface to the runtime system. By this CRC the
+runtime system may check the particular implementation.</p>
+<p>The checksum of the interface of a function or method contains the data
+type of the return value as well as name and data type of the
+parameters.</p>
+<p>As the check sum may only be calculated within CODESYS, CODESYS provides
+the possibility to automatically export all externally implemented
+functions or methods of a library to a file for the runtime system. You
+will find this described in detail in chapter 10.5.2.</p>
+<p>You can disable the signature check with a 0 in the m4-interface
+declaration:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>DEF_API(`void&#39;,`CDECL&#39;,`myexternalfunction&#39;,`(myexternalfunction_struct *p)&#39;, **0**,0x184DFC0B,0x01000000)
+</pre></div>
+</div>
+<p>Placeholder Libraries:</p>
+<p>Within the device description of a PLC an external library must be
+defined as placeholder. When this placeholder gets included into a
+project or a library, the real version will be adopted from the device
+description. Therefore, only the specific version of a library being
+defined by the device description will be employed.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">All libraries containing external implementations have to be
+included as placeholders, so that the library will always fit to the implementation within the runtime system!</p>
+</div>
+</div>
+<div class="section" id="adaptations-to-specific-operating-systems-or-processors">
+<h2>1.10.5.5. Adaptations to Specific Operating Systems or Processors<a class="headerlink" href="#adaptations-to-specific-operating-systems-or-processors" title="Permalink to this headline">¶</a></h2>
+<p>The adaptation to operating systems that are not supported by 3S, the
+adaptation can be done by your own. For this, we provide source code for
+all System-Components as a template (under the directory
+$\Platforms\SysTemplates).</p>
+<p>Because each system-component can be implemented and tested separately,
+the runtime system should run with no error after complete porting.</p>
+<p>The most important component is <strong>SysTime</strong>. The following two functions
+must be implemented first:</p>
+<ol class="arabic simple">
+<li>SysTimeGetMs: With this function, all timeouts are calculated</li>
+<li>SysTimeGetUs: With this function, the scheduler gets its time base to execute the IEC tasks.</li>
+</ol>
+<p>Both functions must provide monotonic rising ticks in a millisecond
+(SysTimeGetMs) and a microsecond (SysTimeGetUs) resolution.</p>
+<p>The second important component is the <strong>SysMem</strong> component. With the
+component, access to all memory (except static memory) is managed</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="customer_licensing.html" title="1.10.6. Licensing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="customer_impl_notes.html" title="1.10.4. Implementation Notes"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="customer.html" >1.10. Customer Adaptations and Expansions</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

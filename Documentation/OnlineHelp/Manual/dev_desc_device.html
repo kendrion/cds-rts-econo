@@ -1,0 +1,187 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.7.2. Device &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.7. Device Description" href="device_description.html" />
+    <link rel="next" title="1.7.2.1. Attributes" href="dev_desc_device_attributes.html" />
+    <link rel="prev" title="1.7.1. Basics" href="dev_desc_basics.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="dev_desc_device_attributes.html" title="1.7.2.1. Attributes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dev_desc_basics.html" title="1.7.1. Basics"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="device_description.html" accesskey="U">1.7. Device Description</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dev_desc_basics.html"
+                        title="previous chapter">1.7.1. Basics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dev_desc_device_attributes.html"
+                        title="next chapter">1.7.2.1. Attributes</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/dev_desc_device.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="device">
+<span id="dev-desc-device"></span><h1>1.7.2. Device<a class="headerlink" href="#device" title="Permalink to this headline">¶</a></h1>
+<p>A PLC (or device or target) is described in a device description. Such a device description typically contains the following entries:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Identification of the PLC (Vendor name, target ID, target type, version, etc.)</li>
+<li>Type of the processor (which CODESYS codegenerator is used)</li>
+<li>Limit and default values for memory areas of the IEC program (e.g. retain, code, data)</li>
+<li>Features switched on/off in CODESYS</li>
+<li>Library profile (list of implemented external libraries in the runtime system)</li>
+<li>What types and numbers of IEC-tasks are possible on the controller</li>
+<li>IO-configuration or specification of connectors to plugin fieldbus cards/IO-devices</li>
+<li>...</li>
+</ul>
+</div></blockquote>
+<p>Here is an example of a typical device description for a PLC with the most important sections:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;</span>
+<span class="nt">&lt;DeviceDescription</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.3s-software.com/schemas/DeviceDescription-1.0.xsd&quot;</span> <span class="na">xmlns:ts=</span><span class="s">&quot;http://www.3s-software.com/schemas/TargetSettings-0.1.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Types&gt;&lt;/Types&gt;</span>
+    <span class="nt">&lt;Strings&gt;&lt;/Strings&gt;</span>
+    <span class="nt">&lt;Files&gt;&lt;/Files&gt;</span>
+    <span class="nt">&lt;Device&gt;</span>
+        <span class="nt">&lt;DeviceIdentification&gt;&lt;/DeviceIdentification&gt;</span>
+        <span class="nt">&lt;DeviceInfo&gt;&lt;/DeviceInfo&gt;</span>
+        <span class="nt">&lt;DriverInfo&gt;&lt;/DriverInfo&gt;</span>
+        <span class="nt">&lt;DeviceParameterSet&gt;&lt;/DeviceParameterSet&gt;</span>
+        <span class="nt">&lt;Functional&gt;&lt;/Functional&gt;</span>
+        <span class="nt">&lt;CompatibleVersions&gt;&lt;/CompatibleVersions&gt;</span>
+        <span class="nt">&lt;ExtendedSettings&gt;</span>
+            <span class="nt">&lt;ts:TargetSettings&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;runtime_identification&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;onlinemanager&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;runtime_features&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;taskconfiguration&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;library-management&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;recipemanagement&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;symbolconfiguration&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;memory-layout&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;codegenerator&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;visualization&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;alarmmanager&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;trace&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;trendrecording&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;networkvariables&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;ts:section</span> <span class="na">name=</span><span class="s">&quot;dataserver&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;/ts:TargetSettings&gt;</span>
+        <span class="nt">&lt;/ExtendedSettings&gt;</span>
+        <span class="nt">&lt;Connector&gt;&lt;/Connector&gt;</span>
+    <span class="nt">&lt;/Device&gt;</span>
+<span class="nt">&lt;/DeviceDescription&gt;</span>
+</pre></div>
+</div>
+<p>The following chapters describes all of these sections in detail:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev_desc_device_attributes.html">1.7.2.1. Attributes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_desc_device_device_identification.html">1.7.2.2. Device identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_desc_device_device_info.html">1.7.2.3. Device info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_desc_device_driver_info.html">1.7.2.4. Driver info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_desc_device_functional.html">1.7.2.5. Functional</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_desc_device_compatible_versions.html">1.7.2.6. Compatible Versions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_desc_device_extended_settings.html">1.7.2.7. Extended settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_desc_device_defining_connectors.html">1.7.2.8. Defining connectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_desc_device_params_and_param_sections.html">1.7.2.9. Defining parameters and parameter sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_desc_device_custom_tags.html">1.7.2.10. Custom tags</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="dev_desc_device_attributes.html" title="1.7.2.1. Attributes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dev_desc_basics.html" title="1.7.1. Basics"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="device_description.html" >1.7. Device Description</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

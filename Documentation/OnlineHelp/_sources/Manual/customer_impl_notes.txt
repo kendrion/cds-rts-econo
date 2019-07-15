@@ -1,0 +1,239 @@
+.. _customer_impl_notes:
+
+Implementation Notes
+--------------------
+      
+Error returning
+~~~~~~~~~~~~~~~
+         
+Each function either returns an error code or a handle.
+
+An error code is of type RTS\_RESULT (int). The error codes are defined
+in CmpErrors.h. If no error occurred ERR\_OK = 0 is returned.
+
+In the event of an error the handle of type RTS\_HANDLE is
+RTS\_INVALID\_HANDLE (=-1). If this is the case, an error code is
+returned via a pointer.
+
+Since the pointer test for error code NULL is required at many points,
+the error code can be allocated with the following macro. This macro
+contains an automatic test for NOT NULL.
+
+.. code-block:: C
+
+ RTS_RESULT* pResult;
+ RTS_SETRESULT(pResult, ERR_OK);
+
+Memory
+~~~~~~
+
+The runtime system should not require dynamic memory management. Even
+so, an "unlimited" number of tasks should be possible.
+
+The following procedure is used to achieve this:
+
+A component intended for managing a variable number of structures (e.g.
+tasks, applications, communication connections) uses a static memory for
+a fixed number of units. The component creates a MemoryPool using the
+CmpMemPool component. The MemoryPool contains a defined number of blocks
+with a certain size. Once all blocks are assigned, each memory pool can
+be extended dynamically.
+
+The whole memory management is handled via the interface of the
+CmpMemPool component.
+
+Allocation of IDs
+~~~~~~~~~~~~~~~~~
+
+Vendor ID
+^^^^^^^^^
+
+The Vendor ID is allocated by 3S for each manufacturer. It uniquely
+identifies the manufacturer. In the customer-specific component the
+following define must be set.
+
+.. code-block:: C
+    
+ #define CMP_VENDORID <VendorID> /*16 bit*/
+
+.. note:: All necessary defines can be found in CmpItf.h
+
+Component ID
+^^^^^^^^^^^^
+
+Each component requires a unique, 32 bits long component ID. This ID is
+generated from the Vendor ID and a component-specific ID. The high word
+of the component ID corresponds to the Vendor ID, the low word to the
+component-specific ID.
+
+If a manufacturer re-implements a core component, only the high word
+changes (i.e. the Vendor ID), but not the low word.
+
+If a completely new component is implemented, the manufacturer must
+allocate a new component-specific ID. The range between 0x2000 and
+0xFFFF is available for this purpose.
+
+.. code-block:: C
+
+ #define CMP_Template <ID> /*16 bit*/
+
+The range between 0x2000 and 0x3FFF is available for this purpose.
+
+.. code-block:: C
+
+ /* OEM specific components */
+ #define CMPID_CmpStartOEM 0x00002000
+ #define CMPID_CmpEndOEM 0x00003FFF
+
+The component ID uniquely identifies the manufacturer who implemented
+the component and indicates whether or not it is a core component.
+
+Interface ID
+^^^^^^^^^^^^
+
+The interface ID uniquely identifies an interface in the runtime system.
+Each core component in the runtime system implements at least one
+interface. Manufacturers can replace any core component with their own,
+as long as it implements the same interface.
+
+Please note, different components may implement the same interface.
+Examples of these components are different IO and block drivers.
+
+If a completely new component is implemented, the manufacturer must
+allocate a new interface ID. The range between 0x2000 and 0x3FFF is
+available for this purpose.
+
+.. code-block:: C
+
+ /* OEM specific start id */
+ #define ITFID_ICmpStartOEM 0x00002000
+ #define ITFID_ICmpEndOEM 0x00003FFF
+
+Class ID
+^^^^^^^^
+
+The class ID uniquely identifies the different classes in the C++
+runtime system.
+
+If a completely new component is implemented, the manufacturer must
+allocate a new class ID. The range between 0x2000 and 0x3FFF is
+available for this purpose.
+
+.. code-block:: C
+
+ /* OEM specific start id */
+ #define CLASSID\_CCmpStartOEM 0x00002000
+ #define CLASSID\_CCmpEndOEM 0x00003FFF
+
+Importing of functions
+~~~~~~~~~~~~~~~~~~~~~~
+
+Functions for other components must first be imported before they can be
+used. All functions are imported via the GET\_xxx macro in the
+ImportFunctions() function. The component first has to be notified of
+the functions via the USE\_xxx macro. The IMPORT\_STMT macro from the
+dependency file consolidates all GET\_xxx macros of the component. The
+USE\_STMT macro from the dependency file consolidates all USE\_xxx
+macros of the component.
+
+The complete import generically handled via the general component
+interface. When new components are developed, only functions to be
+imported have to be included in the dependency description file (m4).
+The m4 mechanism will then correctly generate the import statement and
+function calls.
+
+Calling of imported functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Within a component imported functions are called with the CAL-xxx macro.
+Since functions of optional components do not necessarily have to exist
+in the runtime system, before an imported function is called its
+existence should be verified. The CHK\_xxx macro is used for this
+purpose. A call looks as follows:
+
+.. code-block:: C
+
+ . . .
+ If (CHK\_xxxFunc)
+ {
+   Result = CAL\_xxxFunc();
+ }
+ . . .
+
+Exporting of functions
+~~~~~~~~~~~~~~~~~~~~~~
+
+The component manager is notified of exported functions via the EXP\_xxx
+macro in function ExportFunctions(). The EXPORT\_STMT macro from the
+dependency file consolidates all EXP\_xxx macros of the component.
+
+Just like the import, the export of functions is handled by the general
+component interface. The statements are generated by the m4 mechanism.
+The functions to be exported must be specified in the interface
+description file.
+
+Linkage with the runtime system
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The newly created component can be used in the runtime system provided
+it implements the general interface, has its own IDs, and all required
+header files have been generated. Two steps are required for this:
+
+1. The component must be linked.
+
+    The way in which the runtime system is linked is specified during
+    configuration of the runtime system (Chapter 3.1). Three options are
+    available: static, dynamic, or mixed.
+
+-  If the runtime system was linked **statically**, the new component
+   must be included in the workspace or the makefile, and the whole
+   runtime system must be recompiled.
+
+-  In addition, an entry for this component must be added to the
+   MainLoadComponent function when linking statically
+
+-  If the runtime system was linked **dynamically**, the new component
+   must be available as a reloadable module.
+
+-  If the runtime system was linked in **mixed** mode, the component can
+   either be linked statically to the runtime system, or it can be
+   available as a reloadable module.
+
+2. The component manager must be notified of the component.
+
+    As soon as the component was linked or is available as a module, the
+    component manager must be notified of the new component. This can be
+    done in different ways (see :ref:`ov_kernel_startup_shutdown <operating_mode>`):
+
+-  If the component is statically linked with the runtime system, it is
+   useful to include the new component in the static list of components.
+
+-  If the new component is not to be included in the static list, it
+   must be listed in the dynamic list.
+
+Order of the INIT Hooks
+~~~~~~~~~~~~~~~~~~~~~~~
+         
+Chapter :ref:`ov_kernel_startup_shutdown` already explained the default actions which are executed
+in the INIT Hooks of the core runtime components. Beside this, there are
+some general rules for every hook, which need to be taken into account
+when writing your own components.
+
++---------------------+------------------------------------+------------------------------------+------------------------------------+------------------------------------+
+|                     | | System                           | | Standard                         | | Ressourcen anlegen               | | Ressourcen öffnen                |
+|                     | | Komponenten aufrufen             | | Komponenten aufrufen             | | (Events, Semaphoren, …)          | | (Service Handler, Events, …)     |
++=====================+====================================+====================================+====================================+====================================+
+| CH\_INIT\_SYSTEM    | .. image:: ./images/attention.png | .. image:: ./images/attention.png | .. image:: ./images/attention.png | .. image:: ./images/attention.png |
++---------------------+------------------------------------+------------------------------------+------------------------------------+------------------------------------+
+| CH\_INIT\_SYSTEM2   | .. image:: ./images/attention.png | .. image:: ./images/attention.png | .. image:: ./images/attention.png | .. image:: ./images/attention.png |
++---------------------+------------------------------------+------------------------------------+------------------------------------+------------------------------------+
+| CH\_INIT            | .. image:: ./images/green_hook.png| .. image:: ./images/attention.png | .. image:: ./images/attention.png | .. image:: ./images/attention.png |
++---------------------+------------------------------------+------------------------------------+------------------------------------+------------------------------------+
+| CH\_INIT2           | .. image:: ./images/green_hook.png| .. image:: ./images/green_hook.png| .. image:: ./images/green_hook.png| .. image:: ./images/attention.png |
++---------------------+------------------------------------+------------------------------------+------------------------------------+------------------------------------+
+| CH\_INIT3           | .. image:: ./images/green_hook.png| .. image:: ./images/green_hook.png| .. image:: ./images/green_hook.png| .. image:: ./images/green_hook.png|
++---------------------+------------------------------------+------------------------------------+------------------------------------+------------------------------------+
+| CH\_INIT\_TASKS     | .. image:: ./images/green_hook.png| .. image:: ./images/green_hook.png| .. image:: ./images/green_hook.png| .. image:: ./images/green_hook.png|
++---------------------+------------------------------------+------------------------------------+------------------------------------+------------------------------------+
+| CH\_INIT\_COMM      | .. image:: ./images/green_hook.png| .. image:: ./images/green_hook.png| .. image:: ./images/green_hook.png| .. image:: ./images/green_hook.png|
++---------------------+------------------------------------+------------------------------------+------------------------------------+------------------------------------+

@@ -1,0 +1,301 @@
+.. _ov_kernel_hw_os_abstraction:
+
+Hardware and Operating System Abstraction Layer (Sys-Components)
+----------------------------------------------------------------
+
+The hardware and operating system abstraction layer is covered by the so
+called system interface components. Each system component is designed
+for a special assignment and a logical operation system object.
+
+The description of all available system interfaces declared in detail in
+the system reference guide of the runtime system ("Reference" in runtime
+online help).
+
+Time access (SysTime)
+~~~~~~~~~~~~~~~~~~~~~
+
+In this component, you can have access to ticks with different
+resolutions (millisecond, microsecond and nanosecond) for e.g. time
+measurements and access to some functions of the real time clock (RTC).
+
+Serial interface (SysCom)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This component provides access to a serial device (RS232). You can open
+and close a device, specify settings to the device and read and write
+data to this device.
+
+Exception handling (SysExcept)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The first level exception handling is done in this component. This
+component realizes on different platforms and operating system a defined
+exception handling.
+
+If the exception is caught, the register set of the processor will be
+investigated (and the task, if available) and will be forwarded to the
+task or timer component to investigate the source component of the
+exception.
+
+With the processor context a call-stack can be investigated by higher
+level exception handling components.
+
+.. _file_access:
+
+File access (SysFile)
+~~~~~~~~~~~~~~~~~~~~~
+
+This component provides routines for file access. You can open or close
+a file, read from or write into a file, delete or rename a file, set and
+get the actual file pointer in a file and so on.
+
+One thing is quite important:
+
+At the routines where a file name is specified as a parameter, there are
+two different implementations. E.g. to open a file can be done in with
+two different interface functions:
+
+.. code-block:: C
+
+    SysFileOpen(char *pszFile, ACCESS_MODE am, RTS_RESULT *pResult)
+    SysFileOpen **_** (char *pszFile, ACCESS_MODE am, RTS_RESULT
+    *pResult)
+
+The only difference between the SysFileOpen and the SysFileOpen\_ is the
+handling of the file names. If a path (absolute or relative) is
+specified in the file name, the path is used unchanged.
+
+If no path is specified in the file name, the two functions work
+different:
+
+In SysFileOpen, a default path is added to the file name by the runtime
+system. For the SysFile component, paths can be specified for each
+ending of the file name.
+
+In SysFileOpen\_, no default path is added and the actual working
+directory is used.
+
+This difference in path handling is identical for all SysFileX and
+SysFileX\_ routines.
+
+File access using flash (SysFileFlash)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As an alternative to SysFile (see :ref:`file_access`), this component provides
+routines for file access. You can open or close a file, read from or
+write into a file, delete or rename a file, set and get the actual file
+pointer in a file and so on.
+
+As a difference, this component does not use the file system of an
+operating system, but uses the SysFlash component.
+
+A basic file system is implemented. It is based on a static table of
+files, with fixed file names and maximum file sizes.
+
+The file table has to be defined in sysdefines.h in variable FILE\_MAP.
+An example is provided in the header file of the component.
+
+Flash access (SysFlash)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+This component provides routines for flash access. The usage of this
+component is optional. It provides functions to write a data buffer to
+flash, read from flash, and get the address and size of the flash. It
+contains also a function that is called when a flash based file is
+closed.
+
+The flash can be used as
+
+-  a basis for the SysFileFlash component, and
+
+-  for optional execution of the user code in flash. This can be used to
+       reduce the RAM memory requirements.
+
+   1. .. rubric:: Directory handling (SysDir)
+         :name: directory-handling-sysdir
+
+The directory component provides access to a file system. Directories
+can be scanned, created, deleted or renamed.
+
+Memory access
+~~~~~~~~~~~~~
+
+The handling of memory is provided by the SysMem component.
+
+Heap and static memory (SysMem)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To access the heap memory (dynamic memory allocation), there are
+different routines to allocate and free code and data memory. Code
+memory can be used to execute code in this memory.
+
+To access static memory for the PLC application, there is a function
+called SysMemAllocArea(). Here a static memory for the code and data
+area for the PLC application can be specified.
+
+Physical memory access and shared memories (SysShm)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To get access to physical memory (e.g. dual port RAM of a card), the
+SysShm provides routines to map the physical memory into the memory of
+the runtime system.
+
+Dynamic loading module (SysModule)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The dynamical load of components can be used on targets with an
+operating system. This functionality is provided by the operating system
+and can be used via the SysModule component.
+
+The components must be available in a dynamical loadable format (e.g.
+under Windows a Dll, under VxWorks an o-file).
+
+Ethernet sockets (SysSocket)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The access to the TCP-stack, the SysSocket can be used. The socket
+interface provides TCP, UDP and RAW sockets.
+
+The SysSocket component provides additionally more higher level
+interfaces, to set up a TCP or UDP client and server.
+
+Debug console outputs (SysOut)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To print messages at the console (if available), you can use the SysOut
+component. This component is used for example by the logger, to print
+all log entries at the standard console output.
+
+Message queues (SysMsgQ)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+MessageQueues are a special higher level object to use for inter thread
+and task communication. The message queues are thread-safe and are used
+in the runtime system for example for the time slicing implementation of
+the Scheduler.
+
+Interrupt handling
+~~~~~~~~~~~~~~~~~~
+
+Interrupt handling is a very low level and platform dependent component.
+This component provides routines to open an interrupt and to register an
+interrupt handler to this interrupt. All interrupt can be enabled or
+disabled with this component too.
+
+PCI bus access (SysPCI)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+This component provides access to the PCI bus. The PCI configuration can
+be read and written for example to auto detect cards that are plugged in
+the PCI bus.
+
+Device port access (SysPort)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Accessing devices is typically done via so called ports. The SysPort
+component provides access to devices via these ports. Port values can be
+read and written.
+
+Timer handling (SysTimer)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Timer devices can be used for processes with a strong time constraint.
+The SysTimer component provides access to timer devices on the target.
+Timers are typically used in the runtime system for the cyclic call of
+the runtime scheduler or to execute IEC tasks with the specified cycle
+times.
+
+Target information (SysTarget)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The SysTarget component provides access to the target information like
+vendor and device name, target Id and version or the node name for the
+communication. The node name is detected in some implementations from
+the node name of the operating system that was assigned to the target.
+
+Task handling
+~~~~~~~~~~~~~
+
+These components are only available on operating systems with tasks or
+threads
+
+Synchronization and semaphores (SysSem)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To synchronize access to common data between several tasks or threads,
+the SysSem component can be used to handle synchronization objects,
+called semaphores.
+
+Operating system events (SysEvent)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To activate tasks or threads, the operating systems provides events to
+activate a task from another task.
+
+Task handling (SysTask)
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The SysTask component provides routines to create and delete tasks, to
+suspend (set into sleep) and resume (wake up) tasks and so on.
+
+Optional system components for target visualization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are optional system components that are needed by the CODESYS
+target visualization. These components can be added to the runtime
+system, if a graphical interface on the target is available.
+
+Window handling (SysWindow)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The SysWindow component provides access to the window handling of the
+graphical environment. The target visualization typically runs in a
+window.
+
+Basic graphic routines (SysGraphic)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The target visualization uses some basic graphic operations to display
+all visualization objects. These basic operations are provided by the
+SysGraphic component.
+
+With earlier versions, the size of JPEG images in the Windows and
+Windows CE target visualization was limited to 1024\*768\*3 bytes
+(approx. 2.3 MB). As from V3.5.1.0 the limit can be configured by an
+entry in the PLC configuration file CODESYScontrol.cfg:
+
+.. code-block:: C
+
+ [SysGraphic]
+ Win32.MaxJpegByteArraySize=5000000
+
+Note however: The limit should not be chosen too big in order not to
+waste memory and because the CE CreateDIBSection function may fail with
+10 MB pictures.
+
+Process handling
+~~~~~~~~~~~~~~~~
+
+On operating systems with the possibility to use processes, there are
+some components to use these processes. This components are typically
+used in the runtime system to spawn an own process of the target
+visualization to separate the runtime system from the part that displays
+the graphic information of the target visualization.
+
+Processes (SysProcess)
+^^^^^^^^^^^^^^^^^^^^^^
+
+The SysProcess component provides access to create and delete processes.
+
+Process synchronization (SysSemProcess)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To synchronize access to common data objects from several processes, the
+SysSemProcess component provides access to process semaphores.
+
+Direct Ethernet controller access (SysEthernet)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This component provides direct access to an Ethernet controller. This is
+typically used by the EtherCAT drivers to get direct access to an
+Ethernet controller.

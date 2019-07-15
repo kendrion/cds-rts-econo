@@ -1,0 +1,12 @@
+.. _io_drivers_io_drv_consistency:
+
+Consistency in the IO Driver
+----------------------------
+
+The IO-consistency is realized by the IO-manager only. But to realize
+this consistency with a maximum performance, the following conditions
+must be fulfilled with support by the IO-driver:
+
+1. Placeholder of IoStandard.library V3.1.3.2 must be integrated in the target description
+2. IoDriver must set the DRVPROP\_CONSISTENCY property flag for the Io-Manager (with the interface function IoMgrSetDriverProperties())
+3. SysCpuTestAndSet / SysCpuTestAndReset must be used for each bit input and output access in the IoDriver!

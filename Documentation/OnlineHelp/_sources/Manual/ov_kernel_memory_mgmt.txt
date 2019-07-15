@@ -1,0 +1,26 @@
+.. _ov_kernel_memory_mgmt:
+
+Memory Management
+-----------------
+
+In embedded system, the usage of the memory must reach the following
+requirements:
+
+-  Usage of dynamic memory only at start up
+
+-  Avoid memory fragmentation with usage of alloc and free
+
+-  Static memory should be preferred
+
+These requirements are covered by the CmpMemPool component. This
+component allows to use a static array that can be split up into a
+chained list of memory objects with the same size and this is called a
+memory pool. One memory block from the pool can then be used and free-ed
+with the CmpMemPool component. The unused blocks are incorporated in the
+memory pool to use it for the next object.
+
+If all block of the pool are used, there is the possibility to allocate
+new block from the heap memory. If you release such memory block from
+the heap, the memory is not physically release! The block is
+incorporated in the memory pool to use it for the next object.
+

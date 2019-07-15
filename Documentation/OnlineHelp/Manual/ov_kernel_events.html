@@ -1,0 +1,164 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.3.12. Events &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.3. Overview of the Kernel Components and Main Functions" href="overview_kernel.html" />
+    <link rel="next" title="1.3.13. Exception Handling" href="ov_kernel_exception_handling.html" />
+    <link rel="prev" title="1.3.11. Memory Management" href="ov_kernel_memory_mgmt.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ov_kernel_exception_handling.html" title="1.3.13. Exception Handling"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_memory_mgmt.html" title="1.3.11. Memory Management"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" accesskey="U">1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ov_kernel_memory_mgmt.html"
+                        title="previous chapter">1.3.11. Memory Management</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ov_kernel_exception_handling.html"
+                        title="next chapter">1.3.13. Exception Handling</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/ov_kernel_events.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="events">
+<span id="ov-kernel-events"></span><h1>1.3.12. Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h1>
+<p>All type of events are handled in the runtime system by the event
+manager component CmpEventMgr. We separate here two different kind of
+event users:</p>
+<ul class="simple">
+<li>Provider: Component, that provides an event</li>
+<li>Consumer: Component, that uses an event</li>
+</ul>
+<p>The CmpEventMgr has routines for providers to create and delete and
+event.</p>
+<p>For the consumer, there are routines to open and close events and to
+register callbacks to an event. Callbacks can be functions or methods of
+objects (this works with C, C++ and IEC consumers).</p>
+<p>One event is always structured as followed:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span>
+<span class="p">{</span>
+ <span class="n">EVENTID</span> <span class="n">EventId</span><span class="p">;</span>
+ <span class="n">CMPID</span> <span class="n">CmpIdProvider</span><span class="p">;</span>
+ <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">usParamId</span><span class="p">;</span>
+ <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">usVersion</span><span class="p">;</span>
+ <span class="kt">void</span> <span class="o">*</span><span class="n">pParameter</span><span class="p">;</span>
+ <span class="kt">void</span> <span class="o">*</span><span class="n">pUserParameter</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EventParam</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The event Id consists of the high word with the event class and the low
+word with the event Id. The event class can be one of the following:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define EVTCLASS_INFO 0x00010000</span>
+<span class="cp">#define EVTCLASS_WARNING 0x00020000</span>
+<span class="cp">#define EVTCLASS_ERROR 0x00040000</span>
+<span class="cp">#define EVTCLASS_EXCEPTION 0x00080000</span>
+<span class="cp">#define EVTCLASS_VENDOR_SPEC 0x10000000</span>
+</pre></div>
+</div>
+<p>The event Id is unique for each component, but not unique in the runtime
+system! Only the combination of the event Id and the component Id makes
+an event unique!</p>
+<p>The second parameter of an event is the component Id of the provider.</p>
+<p>The parameter Id and the version specify the parameter that is provided
+by the pointer pParam. Every provider has to specify a structure with a
+specific parameter Id that is sent in pParameter.</p>
+<p>The last parameter can be a parameter that is specified by the consumer
+at register a callback. This parameter is sent back with the event.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ov_kernel_exception_handling.html" title="1.3.13. Exception Handling"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_memory_mgmt.html" title="1.3.11. Memory Management"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" >1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

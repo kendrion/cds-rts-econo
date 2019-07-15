@@ -1,0 +1,44 @@
+.. _coding_guide_special_macros:
+
+Use of special macros
+---------------------
+
+1. Avoid asserts in real error conditions. Asserts should only catch
+   error conditions which the developer doesn't await and which
+   cannot occur under normal operation. Those errors are typically
+   caused by corrupted memory or false locking. If you need an
+   assert, the RTS\_ASSERT macro should be used. This macro can be
+   defined in the file sysdefines.h
+
+2. Prefix HUGEPTR macro of all pointer variables or use for copying
+   operations, which address a memory area above 64 kB, e.g.:
+ 
+   .. code-block:: C
+ 
+    unsigned char HUGEPTR *pbyBuffer; /* or */
+    memcpy((unsigned char HUGEPTR *)pbyDest, (unsigned char HUGEPTR *)pbySrc, Len);
+
+3. Declare USEIMPORT_STMT instead of USEEXTERN_STMT in Sys___OS modules
+ 
+| Result value via pointer:
+| RTS\_ should be used, if a function has a pointer to return the result. So this pointer can be NULL and this is recognized by this macro.
+
+.. code-block:: C
+
+ RTS_HANDLE MyFunction(RTS_RESULT pResult)
+ { /* pResult can be NULL! */
+      RTS_RESULT Result = OtherFunction();
+      RTS_SETRESULT(pResult, Result);
+      return handle;
+ }
+
+| Merging result values:
+| If you would like to merge an error result of several function calls, you can do this with RTS\_GETRESULT.
+
+.. code-block:: C
+  
+ RTS_RESULT Result = FunctionCall1();
+ Result = RTS_GETRESULT( FunctionCall2(), Result );
+
+So both functions are called, but if one of them returns an error, this
+will be transported to the result at the end.

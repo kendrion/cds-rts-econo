@@ -1,0 +1,97 @@
+## Note!
+## Those generic rules shall never have fix dependencies.
+## If necessary, they have to be stated seperately in Makeconfig
+
+moc_%.app.cpp : %.h
+	$(QT_INSTALL_PATH)/bin/moc $(QT_DEFINES) $(QT_INCLUDES) $< -o $@
+
+%.app.o : %.cpp
+	$(CXX) $(QT_DEFINES) $(QT_INCLUDES) $(CFLAGS) $(CFLAGS_STATIC) -o $@ -c $<
+
+%.o : %.cpp
+	$(CXX) $(QT_DEFINES) $(QT_INCLUDES) $(CFLAGS) $(CFLAGS_STATIC) -o $@ -c $<
+
+%.so.o : %.c
+	$(CC) $(CFLAGS) $(CFLAGS_DYNAMIC) -o $@ -c $<
+
+%.so.o : %.S
+	$(CC) $(CFLAGS) $(CFLAGS_DYNAMIC) -o $@ -c $<
+
+%.a.o : %.c
+	$(CC) $(CFLAGS) $(CFLAGS_STATIC) -o $@ -c $<
+
+%.a.o : %.cpp
+	$(CC) $(CXXFLAGS) $(CFLAGS_STATIC) -o $@ -c $<
+
+%.a.o : %.S
+	$(CC) $(CFLAGS) $(CFLAGS_STATIC) -o $@ -c $<
+
+%.a:
+	$(AR) cr $@ $^
+
+%.a:
+	$(AS) -o $@ $^
+
+%.cmp.o:
+	$(LD) -r -o $@ $^
+## for building a x86 binary locally on an x64 host:
+#	$(LD) -r -melf_i386 -o $@ $^
+
+lib%.so:
+	$(CC) $(LDFLAGS) -shared -fPIC -lc -Wl,-soname,lib$@ -o $@ $^
+
+
+## Special flags for shared target visu are necessary,
+## as the Qt specific stuff is seperated in an own lib then
+libSysGraphic.so:
+	$(CC) $(LDFLAGS) $(LD_VISU_LIB) -shared -fPIC -lc -Wl,-soname,$@ -o $@ $^
+
+libSysWindow.so:
+	$(CC) $(LDFLAGS) $(LD_VISU_LIB) -shared -fPIC -lc -Wl,-soname,$@ -o $@ $^
+
+libSysNativeControl.so:
+	$(CC) $(LDFLAGS) $(LD_VISU_LIB) -shared -fPIC -lc -Wl,-soname,$@ -o $@ $^
+
+libSysNativeCommonControl.so:
+	$(CC) $(LDFLAGS) $(LD_VISU_LIB) -shared -fPIC -lc -Wl,-soname,$@ -o $@ $^
+
+libSysWindowFileDialog.so:
+	$(CC) $(LDFLAGS) $(LD_VISU_LIB) -shared -fPIC -lc -Wl,-soname,$@ -o $@ $^
+
+## To enforce, that the libvisuqt.so is build ahead of the so's above,
+## but to avoid, that the linker tries to build them in ;), we define it as
+## an additional dependency of the Sys*Linux.so.o files. As those are only
+## built out of one file
+../Sys/SysGraphicLinux.so.o: ../Sys/SysGraphicLinux.c $(VISU_LIB)
+../Sys/SysWindowLinux.so.o: ../Sys/SysWindowLinux.c $(VISU_LIB)
+../../../Components/SysNativeControl/SysNativeControl.so.o: ../../../Components/SysNativeControl/SysNativeControl.c $(VISU_LIB)
+../../../Components/SysNativeControl/SysNativeCommonControl.so.o: ../../../Components/SysNativeControl/SysNativeCommonControl.c $(VISU_LIB)
+../../../Components/SysWindowFileDialog/SysWindowFileDialog.so.o: ../../../Components/SysWindowFileDialog/SysWindowFileDialog.c $(VISU_LIB)
+
+$(VISU_LIB): ../visu/SysMainVisu.app.o  ../visu/windowwidget.app.o ../visu/moc_SysMainVisu.app.o ../visu/moc_windowwidget.app.o
+	$(CC) $(LDFLAGS) $(QT_LIBS) -shared -fPIC -lc -Wl,-soname,$@ -o $@ $^
+
+codesyscontrol.a: ../MainLinux.a.o $(COMPONENTS_STATIC)
+	$(AR) cr $@ $^
+
+codesyscontrol: ../main.a.o ../MainLinux.a.o $(COMPONENTS_STATIC)
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+## trace
+##
+${TRACEFILE}: TRACECMD=strace -e trace=open,openat,execve -ff -o "$(TRACEFILE)"
+${TRACEFILE}: TRACEFILTERLIST=^\/tmp ^\/dev \bComponents \bPlatforms \bContrib ^\/proc
+${TRACEFILE}:
+	rm -f inputfiles.txt.*;
+	$(TRACECMD) $(MAKE) $(MAKECMDGOALS) TRACE=0
+	find . -name "inputfiles.txt.*" -not -name $$(grep -l 'execve.*make' inputfiles.txt.*) -exec cat {} \; | sed -n '/execve/ d; /---/ d; /+++/ d; /ENOENT/ d;s,.*open[^(]*([^"]*"\([^"]*\)".*,\1,g; p' |  sort -u | xargs -n 1 readlink -f | sort -u |  sed -n '$(foreach var,$(TRACEFILTERLIST), /$(var)/ d;) p'  > $@;
+
+inputfiles.checked.txt: ${TRACEFILE} ${INPUTFILES_ASSESSED}
+	@# -i: use {} as placeholder
+	@# -a: read from file
+	@# -n1: one by one
+	@# then start subshell to be able to check result from grep
+	@# and echo to target
+	xargs -i -a ${TRACEFILE} -n 1 sh -c "grep {} ${INPUTFILES_ASSESSED}>/dev/null && echo {}: Check OK || echo {}: Check FAILED: ERROR MISSING" > $@
+	if [ ! -z "$$(grep 'FAILED' $@)"  ]; then false; else true; fi
+

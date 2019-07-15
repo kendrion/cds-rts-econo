@@ -1,0 +1,343 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.8.8. Diagnostic Information &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.8. I/O Drivers" href="io_drivers.html" />
+    <link rel="next" title="1.8.9. IO Consistency" href="io_drivers_io_consistency.html" />
+    <link rel="prev" title="1.8.7. Drivers in IEC" href="io_drivers_in_iec.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="io_drivers_io_consistency.html" title="1.8.9. IO Consistency"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="io_drivers_in_iec.html" title="1.8.7. Drivers in IEC"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="io_drivers.html" accesskey="U">1.8. I/O Drivers</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.8.8. Diagnostic Information</a><ul>
+<li><a class="reference internal" href="#general-diagnostic-information-bit-field">1.8.8.1. General diagnostic information bit-field</a></li>
+<li><a class="reference internal" href="#extended-diagnostic-parameter">1.8.8.2. Extended diagnostic parameter</a></li>
+<li><a class="reference internal" href="#extended-diagnostic-acknowledge-parameter">1.8.8.3. Extended diagnostic acknowledge parameter</a></li>
+<li><a class="reference internal" href="#implementation-notes">1.8.8.4. Implementation notes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="io_drivers_in_iec.html"
+                        title="previous chapter">1.8.7. Drivers in IEC</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="io_drivers_io_consistency.html"
+                        title="next chapter">1.8.9. IO Consistency</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/io_drivers_diagnostic.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="diagnostic-information">
+<span id="io-drivers-diagnostic"></span><h1>1.8.8. Diagnostic Information<a class="headerlink" href="#diagnostic-information" title="Permalink to this headline">¶</a></h1>
+<p>The diagnostic information consists of two different parts:</p>
+<ol class="arabic simple">
+<li>Bit-Field in every connector for the <strong>general</strong> diagnostic
+information</li>
+</ol>
+<ol class="arabic simple">
+<li>Extended diagnostic information of a device with <strong>detailed</strong>
+information</li>
+</ol>
+<p>The Bit-Field can be used e.g. for the online-diagnostic information in
+the device tree to see, if one device has an error or has some
+information for the user.</p>
+<p>The extended diagnostic information can be used to display some device
+specific information about an error or a special detected state.</p>
+<p>These parameters are explained now in detail.</p>
+<div class="section" id="general-diagnostic-information-bit-field">
+<h2>1.8.8.1. General diagnostic information bit-field<a class="headerlink" href="#general-diagnostic-information-bit-field" title="Permalink to this headline">¶</a></h2>
+<p>The actual state of a device can be published in a bit-field, that is a
+generic part of each connector. This is a bit-field (32-Bit) with the
+following meaning:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="11%" />
+<col width="11%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Bitname</th>
+<th class="head">Bit-Value</th>
+<th class="head">Is set
+by</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>CF_ENABLE</td>
+<td>0x0001</td>
+<td>IO-Config</td>
+<td>Connector enabled in the IO-configuration</td>
+</tr>
+<tr class="row-odd"><td>CF_DRIVER_AVAILABLE</td>
+<td>0x0010</td>
+<td>CmpIoMgr</td>
+<td>A driver has registered to this device,
+so the device will be supported by a driver.</td>
+</tr>
+<tr class="row-even"><td>CF_CONNECTOR_FOUND</td>
+<td>0x0020</td>
+<td>IoDriver</td>
+<td>Connector found (device detected)</td>
+</tr>
+<tr class="row-odd"><td>CF_CONNECTOR_CONFIGURED</td>
+<td>0x0040</td>
+<td>IoDriver</td>
+<td>Connector configured</td>
+</tr>
+<tr class="row-even"><td>CF_CONNECTOR_ACTIVE</td>
+<td>0x0080</td>
+<td>IoDriver</td>
+<td>Connector active
+(bus is active)</td>
+</tr>
+<tr class="row-odd"><td>CF_CONNECTOR_BUS_ERROR</td>
+<td>0x0100</td>
+<td>IoDriver</td>
+<td>Bus error</td>
+</tr>
+<tr class="row-even"><td>CF_CONNECTOR_ERROR</td>
+<td>0x0200</td>
+<td>IoDriver</td>
+<td>General error</td>
+</tr>
+<tr class="row-odd"><td>CF_CONNECTOR_DIAGNOSTIC_AVAILABLE</td>
+<td>0x0400</td>
+<td>IoDriver</td>
+<td>Extended diagnostic information available</td>
+</tr>
+</tbody>
+</table>
+<p>The Connector flags must always be set out of the IO-diver with the
+functions IoMgrConfigSetDiagnosis() and IoMgrConfigResetDiagnosis() of
+the IO-manager to set and reset single diagnostic bits.</p>
+<p>If CF_CONNECTOR_DIAGNOSTIC_AVAILABLE is set, two diagnostic
+parameters out of the device description are used to transmit further
+extended information.</p>
+<p>This bitfields is monitored by CODESYS, if the target is online.</p>
+<p>If everything is OK (the bits CF_ENABLE, CF_DRIVER_AVAILABLE,
+CF_CONNECTOR_FOUND, CF_CONNECTOR_CONFIGURED, CF_CONNECTOR_ACTIVE
+are set), the following Icon is displayed at the corresponding device
+(connector):</p>
+<img alt="../_images/icon_fieldbus_running.png" src="../_images/icon_fieldbus_running.png" />
+<p>If something is wrong (one of the bits CF_CONNECTOR_BUS_ERROR,
+CF_CONNECTOR_ERROR or CF_CONNECTOR_DIAGNOSTIC_AVAILABLE is set or
+one of the other bits is not set), the following Icon is displayed at
+the corresponding device (connector):</p>
+<img alt="../_images/icon_fieldbus_init.png" src="../_images/icon_fieldbus_init.png" />
+<p>After a new initialization of the fieldbus (new download, reset of
+application) the state of a fieldbus (CF_CONNECTOR_ACTIVE flag is set
+or not) depends on whether the fieldbus is already running or not. This
+means that it depends on the fieldbus, if the connector has got a green
+(fieldbus already running) or an red (fieldbus not running) icon after a
+new initialization.</p>
+<p>The table shows the icons of some field busses after a new
+initialization:</p>
+</div>
+<div class="section" id="extended-diagnostic-parameter">
+<h2>1.8.8.2. Extended diagnostic parameter<a class="headerlink" href="#extended-diagnostic-parameter" title="Permalink to this headline">¶</a></h2>
+<p>The parameter with the attribute &#8220;diag&#8221; can be a structure, string or
+whatever. This contains the extended diagnostic information of this
+device, if the corresponding device dialog with the register card
+&#8220;Status&#8221; is opened in CODESYS. In this situation, a IoDrvReadParameter()
+/IoDrvReadParameterById() is called of the corresponding driver of the
+device.</p>
+<p>The parameter can be specified in the device description as followed:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Parameter</span> <span class="n">ParameterId</span><span class="o">=</span><span class="s">&quot;327936&quot;</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;local:TslaveDiag&quot;</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="n">Attributes</span> <span class="n">channel</span><span class="o">=</span><span class="s">&quot;diag&quot;</span> <span class="n">download</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="n">functional</span><span class="o">=</span><span class="s">&quot;false&quot;</span> <span class="n">offlineaccess</span><span class="o">=</span><span class="s">&quot;read&quot;</span> <span class="n">onlineaccess</span><span class="o">=</span><span class="s">&quot;read&quot;</span> <span class="o">/&gt;</span>
+   <span class="o">&lt;</span><span class="n">Default</span><span class="o">&gt;</span>
+       <span class="o">&lt;</span><span class="n">Element</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Status1&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">Element</span><span class="o">&gt;</span>
+       <span class="o">&lt;</span><span class="n">Element</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Status2&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">Element</span><span class="o">&gt;</span>
+       <span class="o">&lt;</span><span class="n">Element</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Status3&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">Element</span><span class="o">&gt;</span>
+       <span class="o">&lt;</span><span class="n">Element</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;MasterAddress&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">Element</span><span class="o">&gt;</span>
+       <span class="o">&lt;</span><span class="n">Element</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;IdentNumberHigh&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">Element</span><span class="o">&gt;</span>
+       <span class="o">&lt;</span><span class="n">Element</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;IdentNumberLow&quot;</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">Element</span><span class="o">&gt;</span>
+       <span class="o">&lt;</span><span class="n">Element</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;ExtDiag en&quot;</span><span class="o">&gt;</span><span class="mi">58</span><span class="o">&lt;/</span><span class="n">Element</span><span class="o">&gt;</span>
+       <span class="o">&lt;</span><span class="n">Element</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;ExtDiag&quot;</span><span class="o">&gt;</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">Element</span><span class="o">&gt;</span>
+   <span class="o">&lt;/</span><span class="n">Default</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">Name</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;local:Id327936&quot;</span><span class="o">&gt;</span><span class="n">SlaveDiag</span><span class="o">&lt;/</span><span class="n">Name</span><span class="o">&gt;</span>
+       <span class="o">&lt;</span><span class="n">Description</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;local:Id327936.Desc&quot;</span><span class="o">&gt;</span><span class="n">ProfiBus</span> <span class="n">DP</span> <span class="n">slave</span> <span class="n">diagnostic</span> <span class="n">information</span><span class="o">&lt;/</span><span class="n">Description</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">Parameter</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extended-diagnostic-acknowledge-parameter">
+<h2>1.8.8.3. Extended diagnostic acknowledge parameter<a class="headerlink" href="#extended-diagnostic-acknowledge-parameter" title="Permalink to this headline">¶</a></h2>
+<p>To acknowledge the extended diagnostic information, there is a second
+parameter with the attribute &#8220;diagAck&#8221;. This is always a <strong>bool</strong>
+parameter to reset the CF_CONNECTOR_DIAGNOSTIC _AVAILABLE bit. This
+is executed by pressing the Diag Acknowledge button in the device
+dialog. In this situation, a IoDrvWriteParameter()
+/IoDrvWriteParameterById() is called of the corresponding driver of the
+device.</p>
+<p>After pressing this button, the diag flag
+CF_CONNECTOR_DIAGNOSTIC_AVAILABLE must be reset by the IO-driver.
+After this, the parameter with the &#8220;diag&#8221; attribute is never read by
+CODESYS, until CF_CONNECTOR_DIAGNOSTIC_AVAILABLE is set the next
+time.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Parameter</span> <span class="n">Parameter</span><span class="s">&quot;d=&quot;</span><span class="mi">327937</span><span class="s">&quot; type=&quot;</span><span class="nl">std</span><span class="p">:</span><span class="n">BOOL</span><span class="s">&quot;&gt;</span>
+  <span class="o">&lt;</span><span class="n">Attributes</span> <span class="n">channel</span><span class="o">=</span><span class="s">&quot;diagack&quot;</span> <span class="n">download</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="n">functional</span><span class="o">=</span><span class="s">&quot;false&quot;</span> <span class="n">offlineaccess</span><span class="o">=</span><span class="s">&quot;read&quot;</span> <span class="n">onlineaccess</span><span class="o">=</span><span class="s">&quot;readwrite&quot;</span> <span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="n">Default</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">Default</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">Name</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;local:Id327937&quot;</span><span class="o">&gt;</span><span class="n">SlaveDiagAcknowledge</span><span class="o">&lt;/</span><span class="n">Name</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">Description</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;local:Id327937.Desc&quot;</span><span class="o">&gt;</span><span class="n">ProfiBus</span> <span class="n">DP</span> <span class="n">slave</span> <span class="n">diagnostic</span> <span class="n">acknowledge</span><span class="o">&lt;/</span><span class="n">Description</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">Parameter</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="implementation-notes">
+<h2>1.8.8.4. Implementation notes<a class="headerlink" href="#implementation-notes" title="Permalink to this headline">¶</a></h2>
+<p>To realize an identical behavior of all IO-drivers regarding the
+IO-diagnostic information, some implementation details and requirement
+must be known:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Requirement</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>R01</td>
+<td>The diagnostic bits in the Bit-Field must be written cyclically from the IO-driver
+itself! For this, the standard IO-driver interface function IoDrvGetModuleDiagnosis()
+contains the cyclic diagnostic transfer.
+This function is not called automatically from the runtime kernel.
+Typically, this function is called implicit in the IO-driver in IoDrvStartBusCycle.</td>
+</tr>
+<tr class="row-odd"><td>R02</td>
+<td>IoDrvGetModuleDiagnosis() must only set the diagnostic bits cyclically and must not
+read any time consuming specific diagnostic information of a slave! So the runtime of
+this function must be as short as possible, because this has an effect on the cycle
+time of an IEC-task!
+If the time is too long to set the information in one cycle, only diagnostic
+information of a few slaves should be read per cycle!</td>
+</tr>
+<tr class="row-even"><td>R03</td>
+<td>If a slave is disabled in the IO-configuration, no diagnostic information may be set
+(CF_ENABLE is disabled in this case)</td>
+</tr>
+<tr class="row-odd"><td>R04</td>
+<td>If a slave is configured but not available physically (e.g. bus is disconnected),
+the diagnostic information must be updated always!</td>
+</tr>
+<tr class="row-even"><td>R05</td>
+<td>Unimportant extended diagnostic information should be acknowledged and handled by the
+IO-driver implicitly. This depends on the type of fieldbus:
+<strong>Profibus DP:</strong>
+For example, if a slave informs about the activation of the watchdog is a information,
+that can be implicitly acknowledged.</td>
+</tr>
+<tr class="row-odd"><td>R06</td>
+<td>The relevant extended diagnostic information must be available, until this parameter
+is acknowledged by the user (or the program!) with the extended diagnostic
+acknowledge parameter!</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="io_drivers_io_consistency.html" title="1.8.9. IO Consistency"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="io_drivers_in_iec.html" title="1.8.7. Drivers in IEC"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="io_drivers.html" >1.8. I/O Drivers</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,579 @@
+.. _customer_configuration:
+
+Configuration
+-------------
+
+The runtime system is configured at compile time via pre-processor
+defines. The following adjustments can be made via the defines:
+
+-  Link type of the runtime system (static, dynamic, mixed or C++)
+
+-  Choice of components
+
+-  Static configuration of components
+
+The required defines can be set in the workspace itself or in the file
+"sysdefines.h".
+
+Link type of the runtime system
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The runtime system can be linked in several ways. The runtime system can
+be configured in static or dynamic mode. Static configuration is
+implemented at compile time and cannot be modified afterwards. In
+contrast to static configuration, dynamic configuration is implemented
+at runtime and can be modified at each restart.
+
+Because the M4 mechanism is used for creating the header files and
+macros are used for calling functions, no code changes are required for
+switching between different types.
+
+1. Static:
+   If the "STATIC\_LINK" define is set, all components are linked
+   statically and the result is an executable file. It is then no longer
+   possible to load components such as certain IO drivers. All
+   components to be used must be available at compile time. If a
+   component is changed the whole runtime system has to be rebuilt.
+   This link type is particularly useful for embedded systems that offer
+   no option for reloading modules dynamically.
+
+2. „Mixed":
+   If the "MIXED\_LINK" define is set, core components are statically
+   linked to an executable file, while further modules can be
+   dynamically reloaded as required. Which files are linked statically
+   is specified in the make file or in the workspace.
+   In this way it is possible to make a basic system available while
+   dynamically loading certain optional components such as IO drivers.
+
+3. C++:
+   If the "CPLUSPLUS" define is set, the result is a runtime system in
+   C++.
+
+4. Dynamic:
+   Without one of the defines mentioned above, the runtime system is
+   linked dynamically. The executable file only contains the component
+   manager. All components are dynamically reloaded.
+   
+   The result is a system with maximum flexibility. Only components that
+   are actually required have to be loaded. If a component changes only
+   an individual module has to be replaced, not the whole runtime
+   system.
+
+Choice of components
+~~~~~~~~~~~~~~~~~~~~
+
+The choice of components may differ from system to system and can be
+adapted individually. This is a significant advantage of strict
+separation of modules in individual components.
+
+Once components have been selected the component manager must be
+notified. In mixed and statically linked runtime systems a preselection
+is made in the make file or in the workspace, although an explicit list
+of components to be loaded still has to be transferred to the components
+manager. In this context it is important that all statically linked
+components are included in the load list of the component manager.
+
+The load list of the component manager consists of three different
+lists. Each component only has to be listed in one of the three lists in
+order to be loaded.
+
+List of system components:
+
+The component manager defines certain components as system components
+required for its own tasks. These components have to be included in each
+runtime system.
+
+-  CmpMgr
+
+-  SysMem
+
+-  SysOut
+
+-  SysFile
+
+-  SysSem
+
+-  SysTime
+
+-  CmpLog
+
+-  CmpSettings
+
+-  CmpMemPool
+
+-  CmpChecksum
+
+In the interest of uniform logging the component manager itself is also
+treated as a component.
+
+Static list:
+
+For mixed and statically linked runtime systems it is useful to specify
+a static list of components. This list should include all components
+that were statically linked. The static list is transferred to the
+CMInit function, which is called from the main routine as standard.
+
+An example:
+
+.. code-block:: C
+
+  StaticComponent s_ComponentList[] = {
+   {"CmpApp", CmpApp__Entry},
+   {"CmpBlkDrvUdp", CmpBlkDrvUdp__Entry}, . . . 
+   {"SysTime", SysTime__Entry}, {"", NULL}
+  };
+  int main(int __argc, char *__argv[])
+  {
+   . . .
+   CMInit(s_szComponentFile, s_ComponentList);
+   . . .
+
+Dynamic list:
+
+Lastly, the list of components to be loaded later can be read via the
+settings component. This is particularly useful for modules to be
+dynamically reloaded.
+
+Example: configuration file (CFG-file):
+
+.. code-block:: C
+
+    [ComponentManager]
+    Component.1=SysTask
+    Component.2=SysSem
+    Component.3=SysEvent
+    Component.4=SysCom
+    Component.5=SysSocket
+    Component.6=SysOut
+    . . .
+
+Static configuration of components
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Each component can have specific pre-processor defines for different
+component parameters (e.g. buffer sizes). The defines are assigned a
+default value in the interface header file.
+
+.. code-block:: C
+
+    #ifndef APPL_NUM_OF_STATIC_APPLS
+    #define APPL_NUM_OF_STATIC_APPLS 8
+    #endif
+
+Defines can be changed at compile time by assigning a new value in file
+sysdefines.h.
+
+    #define APPL\_NUM\_OF\_STATIC\_APPLS 4
+
+A description of the defines for a particular component can be found in
+the interface header file of the component.
+
+Dynamic configuration (CmpSettings)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Depending on the system the setting component may use a different
+backend for reading the setting from a medium. The following backends
+are currently available:
+
+-  Configuration via an INI file
+
+-  Configuration via the registry
+
+-  Static configuration with compiled values (mainly for embedded applications)
+
+-  In addition to static configuration there is the option to read in a
+   dynamic configuration via the setting component. This can be
+   modified with each restart.
+
+Users always have the option of implementing their own backend for
+supporting an additional medium.
+
+Since the INI file is the most frequently used backend, the following
+examples are based on the INI notation.
+
+The whole configuration is subdivided into blocks. Each block is
+allocated to a component. The block contains the settings for the
+component. The following notation is used throughout:
+
+.. code-block:: C
+
+    [Component]
+    <Key>=<Value
+
+A list of runtime system settings is shown below, arranged by
+components. All settings and their description can also be found in the
+interface header file of a component.
+
+-  Component Manager
+
+   .. code-block:: C
+   
+    [ComponentManager]
+    Component.1=SysTask
+    Component.2=SysSem
+    . . .
+
+List of components to be load:
+
+-  Router
+
+   .. code-block:: C
+   
+    [CmpRouter]
+    NumRouters=1            //Number of routers
+    0.MainNet=ether 0       //Main net, where the first router is inserted
+    0.Subnet.0.Interface=COM<1> //First subnet of first router; here "Com1"
+
+-  Block Driver UDP
+
+   .. code-block:: C
+   
+    [CmpBlkDrvUdp]
+    itf.0.ipaddress=192.168.100.27  //fix IP address of network interface
+    itf.0.name=main                 //Interface name
+    itf.0.networkmask=255.255.255.0 //Interface subnet mask
+    itf.0.portindex=1 				//Fix port for CODESYS  addresses 0-3 (1740-1743)
+    itf.1.ipaddress=192.168.0.1 	//Example of second interface
+    itf.1.name=vxwin
+    itf.1.networkmask=255.255.255.0
+
+-  Block Driver Seriell
+
+   .. code-block:: C
+
+    [CmpBlkDrvSimpleCom]
+    Baudrate=57600              //Baudrate of serial interface
+    ComPort=1                   //Port number of interface
+    HalfDuplexAutoNegotiate=1   //RS485 half duplex mode
+    EnableRtsToggleHandshake=1  //Currently only used to set the RTS_CONTROL_TOGGLE handshake on 
+	                            //MS Windows based systems. This is needed for some externals 
+								//RS232/RS485 adapters to switch the data direction on the (half-duplex) line.v
+    EnableAutoAddressing 		//Enable the auto addressing feature
+
+-  Application
+
+   .. code-block:: C
+   
+    [CmpApp]
+    CreateBootprojectOnDownload=0 	    //Creation of a bootproject at download
+    StoreBootprojectOnlyOnDownload=0	//Creation of a bootproject only at download
+    PersistentForce=0 				    //Persistent Forcing
+    Application.1=Application 		    //Name of first boot application
+    Application.2=BootApp2 			    //Name of second boot application
+    RetainType.Applications=OnPowerfail //Retain type: None, OnPowerfail, InSRAM
+
+-  Scheduler
+
+   .. code-block:: C
+   
+    [CmpSchedule]
+    EnableLogger=1                      //Activation of a logger for the scheduler
+    MaxProcessorLoad=80                 //Maximum load of CPU
+    Timeslicing.Mode=Internal           //Timeslicing Mode: 
+                                        //NONE: no timeslicing (default) behavior: internal timeslicing
+                                        //EXTERNAL: external timeslicing
+    Timelicing.PlcSlicePercent=80 		//time slice of PLC in percents
+    Timelicing.PlcSliceUs=4000 			//time slice of PLC in Us
+    Timelicing.StartOnProcessorLoad=1   //Timeslicing depending on maximum processor load
+    SchedulerPriority=5                 //Priority of scheduler
+    SchedulerInterval=1000 				//Interval of schedulers in Us
+
+-  Logger
+
+   .. code-block:: C
+   
+    [CmpLog]
+    Logger.0.Name=StdLogger           //Name of first Logger
+    Logger.0.Enable=1                 //activation of logger
+    Logger.0.MaxEntries=1000          //Maximum number of log entries in internal queue
+    Logger.0.MaxFileSize=5000         //Maximum file size
+    Logger.0.MaxFiles=3               //Number of log files
+    Logger.0.Backend.0.ClassId=0x010B //ClassId of first backend
+    Logger.0.Backend.1.ClassId=0x0104 //ClassId of second backend
+                                      //Ids read from CmpItf.h
+    Logger.1.Name=CommLog             //Name of second logger
+    Logger.1.Enable=1                 //etc.
+
+-  Retain
+
+   .. code-block:: C
+
+    [CmpRetain]
+    Retain.SRAM.Address=0x10000000 //Physical start address SRAM
+    Retain.SRAM.Size //Größe SRAM
+
+In addition to general settings, the components of the system adaptation
+interface may also have system-dependent settings. These settings are
+identified by separate abbreviations in the key
+
+ .. code-block:: C
+ 
+     [component]
+     <shortcut of the customization>.<Key>=<Value>
+
+-  Files
+
+ .. code-block:: C
+ 
+     [SysFile]
+     FilePath.1=./Boot, *.app, *.ap_   //files with extension app or ap_ are stored in //folder ./Boot
+     FilePath.2=./var, *.ret, *.frc    //files (*.ret, *.frc) are stored in ./var
+
+-  Timer
+
+ .. code-block:: C
+ 
+     [SysTimer]
+     VxWorks.TimerSource=Auxiliary //Timersource of scheduler
+                                   //Auxiliary: Auxiliary-Clock
+                                   //System: System-Clock
+                                   //default: high prior task
+
+-  Interrupt
+
+ .. code-block:: C
+ 
+     [SysInt]
+     WinCE.UseIRQSysIntrMapping=1  //Mapping of an IRQ on a system IRQ
+
+-  Shared Memory
+
+  .. code-block:: C
+  
+      [SysShm]
+      WinCE.MapPhysical=1          //setting flag MapPhysical
+      WinCE.DividePhysicalAddressBy=256 //calculation of physical address
+
+Typical configurations of the CODESYS Control WinV3 runtime system
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are the following typical configurations of the CODESYS Control
+Win V3 runtime system:
+
+-  Single tasking systems (embedded)
+
+-  Timer based systems.
+
+-  Multi tasking systems (full)
+
+Embedded Runtime System
+~~~~~~~~~~~~~~~~~~~~~~~
+
+An "embedded runtime" we call a system that typically has only one main
+loop for the execution of all tasks in the runtime system
+(communication, IEC tasks, etc.). For this kind of runtime system, a
+minimal system is sufficient.
+
+For this type of runtime system, the configuration can be the following:
+
+.. code-block:: C
+
+ ComponentManager]
+ Component.1=CmpIecTask
+ Component.2=CmpMgr
+ Component.3=CmpEventMgr
+ Component.4=SysMem
+ Component.5=CmpSettings
+ Component.6=CmpChannelServer
+ Component.7=SysExcept
+ Component.8=CmpMemPool
+ Component.9=CmpChecksum
+ Component.10=CmpAddrSrvc
+ Component.11=SysFile
+ Component.12=SysTime
+ Component.13=CmpMonitor
+ Component.14=CmpBinTagUtil
+ Component.15=SysShm
+ Component.16=CmpLog
+ Component.17=SysSocket
+ Component.18=CmpChannelMgr
+ Component.19=CmpRouter
+ Component.20=CmpSrv
+ Component.21=SysCpuHandling
+ Component.22=CmpRetain
+ Component.23=CmpCommunicationLib
+ Component.24=CmpScheduleEmbedded
+ Component.25=CmpBlkDrvUdp
+ Component.26=CmpApp
+
+Timer runtime system
+^^^^^^^^^^^^^^^^^^^^
+
+The timer runtime uses processor timers to operate separate cyclic
+tasks. This is typically used on small embedded controllers with several
+timers. The behavior is much better than the embedded runtime, because
+for example, the communication has no influence on some higher priority
+tasks (IEC tasks), because the communication is done in the main
+(background) loop and the higher priority tasks are executed in the
+timer interrupts.
+
+For this type of runtime system, the configuration can be the following:
+
+.. code-block:: C
+
+ [ComponentManager]
+ Component.1=CmpIecTask
+ Component.2=SysEvent
+ Component.3=CmpMgr
+ Component.4=CmpEventMgr
+ Component.5=SysMem
+ Component.6=CmpSettings
+ Component.7=CmpChannelServer
+ Component.8=CmpScheduleTimer
+ Component.9=SysExcept
+ Component.10=SysTimer
+ Component.11=CmpMemPool
+ Component.12=CmpChecksum
+ Component.13=CmpAddrSrvc
+ Component.14=SysFile
+ Component.15=SysTime
+ Component.16=CmpMonitor
+ Component.17=CmpBinTagUtil
+ Component.18=SysShm
+ Component.19=CmpLog
+ Component.20=SysSocket
+ Component.21=CmpChannelMgr
+ Component.22=CmpRouter
+ Component.23=CmpSrv
+ Component.24=SysCpuHandling
+ Component.25=CmpRetain
+ Component.26=CmpCommunicationLib
+ Component.27=CmpBlkDrvUdp
+ Component.28=CmpApp
+
+Full runtime system
+^^^^^^^^^^^^^^^^^^^
+
+As a full runtime we specified a system that is based on a preemptive
+multitasking operating system. Here the various operations can be
+executed by tasks with different priorities. So a very fine adjustable
+system behavior can be reached. A full runtime contains typically all of
+the available features of a CODESYS runtime.
+
+For this type of runtime system, the configuration can be the following:
+
+.. code-block:: C
+
+ [ComponentManager]
+ Component.1=CmpIecTask
+ Component.2=SysEvent
+ Component.3=CmpMgr
+ Component.4=CmpEventMgr
+ Component.5=SysMem
+ Component.6=CmpSettings
+ Component.7=CmpChannelServer
+ Component.8=SysExcept
+ Component.9=CmpMemPool
+ Component.10=CmpChecksum
+ Component.11=CmpAddrSrvc
+ Component.12=SysFile
+ Component.13=CmpSchedule
+ Component.14=SysTime
+ Component.15=CmpMonitor
+ Component.16=CmpBinTagUtil
+ Component.17=SysShm
+ Component.18=CmpLog
+ Component.19=SysSocket
+ Component.20=CmpChannelMgr
+ Component.21=SysTask
+ Component.22=CmpRouter
+ Component.23=CmpSrv
+ Component.24=SysCpuHandling
+ Component.25=CmpRetain
+ Component.26=CmpCommunicationLib
+ Component.27=CmpBlkDrvUdp
+ Component.28=CmpApp
+
+Gateway runtime system
+^^^^^^^^^^^^^^^^^^^^^^
+
+For this type of implicit runtime system, the configuration can be the
+following:
+
+.. code-block:: C
+
+ [ComponentManager]
+ Component.1=SysTime
+ Component.2=SysTask
+ Component.3=SysEvent
+ Component.4=SysSem
+ Component.5=SysCom
+ Component.6=SysSocket
+ Component.7=SysExcept
+ Component.8=SysShm
+ Component.9=SysSemProcess
+ Component.10=SysCpuHandling
+ Component.11=SysInt
+ Component.12=CmpRouter
+ Component.13=CmpChannelMgr 
+ Component.14=CmpChannelClient
+ Component.15=CmpBlkDrvUdp
+ Component.16=CmpAddrSrvc
+ Component.17=CmpGateway
+ Component.18=CmpGwCommDrvTcp
+ Component.19=CmpNameServiceClient
+ Component.20=CmpCommunicationLib
+ Component.21=CmpBlkDrvShm
+ [CmpRouter]
+ EnableParallelRouting=1
+ 0.MainNet=ether x
+ 0.NumSubNets=1
+ 0.SubNet.0.Interface=BlkDrvShm
+ [CmpGwCommDrvTcp]
+ ListenPort=1217
+
+Visualization runtime systems (target visualization CODESYS HMI)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For the Target-Visualization and the special target visualization
+CODESYS HMI the position and size parameters of the window as well as
+the update rate of the Target-Visualization can be configured in the
+runtime system ini-file in section CmpTargetVisu.
+
+Example:
+
+.. code-block:: C
+
+ [CmpTargetVisu]
+ Application.Updaterate_ms=200
+ Application.WindowPositionX=50
+ Application.WindowPositionY=50
+ Application.WindowSizeWidth=200
+ Application.WindowSizeHeight=200
+ Application.WindowType=0
+ App2.WindowPositionX=300
+ App2.WindowPositionY=300
+ App2.WindowSizeWidth=200
+ App2.WindowSizeHeight=200
+ App2.WindowType=1
+
+Create your own configuration with the RtsConfigurator
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For your system, you may want to define a specific set of components,
+including standard components and own components such as IO drivers (see
+below).
+
+As there are a lot of dependencies between the components, it may not be
+easy to find a valid combination of components. To solve this problem,
+you can use the tool "RtsConfigurator". This windows tool checks the
+dependencies between the components according the m4 files. It helps you
+to select the components you need.
+
+If you have a valid configuration, it can create the following output
+files for you:
+
+-  A list of used components
+
+-  A list of used C-Files
+
+-  A template for a makefile
+
+-  A \*.cfg file for the component manager
+
+-  A \*.h file with definitions needed for you main\*.c file
+       (COMPO\_INIT\_DECL and COMPO\_INIT\_LIST)
+
+-  A reference documentation for the selected components
+
+Please check the RTSconfigurator.chm file for further details.

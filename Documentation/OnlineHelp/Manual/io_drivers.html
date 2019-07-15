@@ -1,0 +1,156 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.8. I/O Drivers &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1. CODESYS Control V3 - Manual" href="index.html" />
+    <link rel="next" title="1.8.1. Concept" href="io_drivers_concept.html" />
+    <link rel="prev" title="1.7.3.5. Save and Restore Changed IO Configuration Parameters" href="dev_io_conf_save_restore.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="io_drivers_concept.html" title="1.8.1. Concept"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dev_io_conf_save_restore.html" title="1.7.3.5. Save and Restore Changed IO Configuration Parameters"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">1. CODESYS Control V3 - Manual</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dev_io_conf_save_restore.html"
+                        title="previous chapter">1.7.3.5. Save and Restore Changed IO Configuration Parameters</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="io_drivers_concept.html"
+                        title="next chapter">1.8.1. Concept</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/io_drivers.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="i-o-drivers">
+<span id="io-drivers"></span><h1>1.8. I/O Drivers<a class="headerlink" href="#i-o-drivers" title="Permalink to this headline">¶</a></h1>
+<p>An I/O driver is a component that operates and supports a specific
+hardware or device. Such an I/O driver typically has to perform the
+following functions:</p>
+<ul class="simple">
+<li>Physical access to the device</li>
+<li>Detection and initialization of the device</li>
+<li>Data access to and data exchange with the device (update of IO
+channels)</li>
+<li>Support of diagnostic information of the device</li>
+<li>Optional functions like scanning sub devices, parameter access, etc.</li>
+</ul>
+<p>The update of IO channels can be illustrated like this:</p>
+<p>This is a simplified picture. There can be more than one I/O driver
+instance. Each instance will update parts of the Inputs and Outputs
+data. Even with more than one task, there is only one Inputs and one
+Outputs area.</p>
+<p>The cloud symbolizes I/O driver specific data. This can be shared memory
+of a Hilscher fieldbus card, or the contents of a CANOpen or EtherCAT
+message.</p>
+<img alt="../_images/io_drivers_channel_update.png" src="../_images/io_drivers_channel_update.png" />
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="io_drivers_concept.html">1.8.1. Concept</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io_drivers_interfaces.html">1.8.2. Main I/O Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io_drivers_optional_interfaces.html">1.8.3. Optional Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io_drivers_io_manager.html">1.8.4. I/O Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io_drivers_access_io_config.html">1.8.5. Access to the I/O Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io_drivers_in_c.html">1.8.6. I/O Drivers in C/C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io_drivers_in_iec.html">1.8.7. Drivers in IEC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io_drivers_diagnostic.html">1.8.8. Diagnostic Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io_drivers_io_consistency.html">1.8.9. IO Consistency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io_drivers_io_drv_consistency.html">1.8.10. Consistency in the IO Driver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io_drivers_external_can_sync.html">1.8.11. External CAN Sync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io_drivers_data_handling.html">1.8.12. Byte order specific data handling in IO driver</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="io_drivers_concept.html" title="1.8.1. Concept"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dev_io_conf_save_restore.html" title="1.7.3.5. Save and Restore Changed IO Configuration Parameters"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,162 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.11.8. Use of special macros &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.11. Coding Guidelines" href="coding_guidelines.html" />
+    <link rel="next" title="1.11.9. 64-Bit Porting rules" href="coding_guide_64bit_porting.html" />
+    <link rel="prev" title="1.11.7. Alignment" href="coding_guide_alignment.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="coding_guide_64bit_porting.html" title="1.11.9. 64-Bit Porting rules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="coding_guide_alignment.html" title="1.11.7. Alignment"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="coding_guidelines.html" accesskey="U">1.11. Coding Guidelines</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="coding_guide_alignment.html"
+                        title="previous chapter">1.11.7. Alignment</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="coding_guide_64bit_porting.html"
+                        title="next chapter">1.11.9. 64-Bit Porting rules</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/coding_guide_special_macros.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="use-of-special-macros">
+<span id="coding-guide-special-macros"></span><h1>1.11.8. Use of special macros<a class="headerlink" href="#use-of-special-macros" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic">
+<li><p class="first">Avoid asserts in real error conditions. Asserts should only catch
+error conditions which the developer doesn&#8217;t await and which
+cannot occur under normal operation. Those errors are typically
+caused by corrupted memory or false locking. If you need an
+assert, the RTS_ASSERT macro should be used. This macro can be
+defined in the file sysdefines.h</p>
+</li>
+<li><p class="first">Prefix HUGEPTR macro of all pointer variables or use for copying
+operations, which address a memory area above 64 kB, e.g.:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">HUGEPTR</span> <span class="o">*</span><span class="n">pbyBuffer</span><span class="p">;</span> <span class="cm">/* or */</span>
+<span class="n">memcpy</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">HUGEPTR</span> <span class="o">*</span><span class="p">)</span><span class="n">pbyDest</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">HUGEPTR</span> <span class="o">*</span><span class="p">)</span><span class="n">pbySrc</span><span class="p">,</span> <span class="n">Len</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Declare USEIMPORT_STMT instead of USEEXTERN_STMT in Sys___OS modules</p>
+</li>
+</ol>
+<div class="line-block">
+<div class="line">Result value via pointer:</div>
+<div class="line">RTS_ should be used, if a function has a pointer to return the result. So this pointer can be NULL and this is recognized by this macro.</div>
+</div>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">RTS_HANDLE</span> <span class="nf">MyFunction</span><span class="p">(</span><span class="n">RTS_RESULT</span> <span class="n">pResult</span><span class="p">)</span>
+<span class="p">{</span> <span class="cm">/* pResult can be NULL! */</span>
+     <span class="n">RTS_RESULT</span> <span class="n">Result</span> <span class="o">=</span> <span class="n">OtherFunction</span><span class="p">();</span>
+     <span class="n">RTS_SETRESULT</span><span class="p">(</span><span class="n">pResult</span><span class="p">,</span> <span class="n">Result</span><span class="p">);</span>
+     <span class="k">return</span> <span class="n">handle</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Merging result values:</div>
+<div class="line">If you would like to merge an error result of several function calls, you can do this with RTS_GETRESULT.</div>
+</div>
+<div class="highlight-C"><div class="highlight"><pre><span></span>RTS_RESULT Result = FunctionCall1();
+Result = RTS_GETRESULT( FunctionCall2(), Result );
+</pre></div>
+</div>
+<p>So both functions are called, but if one of them returns an error, this
+will be transported to the result at the end.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="coding_guide_64bit_porting.html" title="1.11.9. 64-Bit Porting rules"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="coding_guide_alignment.html" title="1.11.7. Alignment"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="coding_guidelines.html" >1.11. Coding Guidelines</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

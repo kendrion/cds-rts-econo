@@ -1,0 +1,182 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.7.3. I/O Configuration &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.7. Device Description" href="device_description.html" />
+    <link rel="next" title="1.7.3.1. Graphical Configuration" href="dev_io_conf_graphical_configuration.html" />
+    <link rel="prev" title="1.7.2.10. Custom tags" href="dev_desc_device_custom_tags.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="dev_io_conf_graphical_configuration.html" title="1.7.3.1. Graphical Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dev_desc_device_custom_tags.html" title="1.7.2.10. Custom tags"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="device_description.html" accesskey="U">1.7. Device Description</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dev_desc_device_custom_tags.html"
+                        title="previous chapter">1.7.2.10. Custom tags</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dev_io_conf_graphical_configuration.html"
+                        title="next chapter">1.7.3.1. Graphical Configuration</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/dev_io_configuration.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="i-o-configuration">
+<span id="dev-io-configuration"></span><h1>1.7.3. I/O Configuration<a class="headerlink" href="#i-o-configuration" title="Permalink to this headline">¶</a></h1>
+<p>As I/O configuration it is called the complete set of mechanisms, to
+support all hardware-devices and I/O <a class="footnote-reference" href="#id2" id="id1">[2]</a> systems that are connected to
+a controller (the runtime system). This includes the description of the
+hardware hierarchy, description and parameterization of each device and
+the support of each device with a driver (I/O-driver).</p>
+<p>One of the main aims of the I/O-configuration in CODESYS V3 is internal
+standardization of the different device types, so that different field
+bus nodes, internal I/Os, extension modules, drives, etc. are basically
+treated in the same way. This means that each device is described with
+the identical description structure. So a driver can interpret
+principally every device description.</p>
+<p>The second main issue is that the I/O-configuration is created as an IEC
+data-structure and is downloaded to the runtime system with the IEC
+application that includes the I/O-configuration.</p>
+<p>If you want to access the I/O-configuration from another IEC
+application, this application must be a child application of the
+application with the I/O-configuration.</p>
+<p>In the following chapters, all themes to access devices and IOs are
+described in detail.</p>
+<ul>
+<li><div class="first line-block">
+<div class="line">Version (string): Indicates the version of a device description.</div>
+<div class="line">Here too the string enables a variable format for importing
+alternative description formats. For all types &gt;= 0x1000 the format
+is specified as follows:</div>
+<div class="line-block">
+<div class="line">n.n.n.n</div>
+</div>
+<div class="line">with &#8220;n&#8221; representing any decimal number, e.g. &#8220;1.0.17.3&#8221;.</div>
+<div class="line">Within a device description it is possible to describe further
+modules that are only used in the context of this device
+description. In principle they are described and used in the same
+way as a device, although they can only be used as a child of the
+main device or another module defined in the main device. Modules
+are identified through the device identification together with an
+additional module Id.</div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line">Module Id (string): Identifies a module within a device
+description.</div>
+<div class="line">The format is not free.</div>
+</div>
+</li>
+</ul>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev_io_conf_graphical_configuration.html">1.7.3.1. Graphical Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_io_conf_devices.html">1.7.3.2. Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_io_conf_device_descriptions.html">1.7.3.3. Device Descriptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_io_conf_device_administration.html">1.7.3.4. Device administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_io_conf_save_restore.html">1.7.3.5. Save and Restore Changed IO Configuration Parameters</a></li>
+</ul>
+</div>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[2]</a></td><td>I/O: Input- and Output-Signals (Digital- or Analog), e.g. Sensor Data</td></tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="dev_io_conf_graphical_configuration.html" title="1.7.3.1. Graphical Configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dev_desc_device_custom_tags.html" title="1.7.2.10. Custom tags"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="device_description.html" >1.7. Device Description</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

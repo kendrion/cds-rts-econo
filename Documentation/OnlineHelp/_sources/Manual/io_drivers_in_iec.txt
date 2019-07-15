@@ -1,0 +1,32 @@
+.. _io_drivers_in_iec:
+
+Drivers in IEC
+--------------
+
+The instance of an I/O driver written in IEC is created by CODESYS. This
+instance is created at the moment, a device is added in the graphical
+configuration, that has a reference to this IEC driver in the device
+description. In the device description typically the library and the
+function block with the driver is specified.
+
+The initialization and detection of the devices is typically done in the
+FB\_Init method of the driver FB or a specific init function, that can
+be specified in the device description too (3S drivers uses mostly the
+Initialize() method).
+
+For the autodetection, a special static FB can be used in the driver FB,
+so the detection of all card must be done only once for all driver
+instance, e.g.:
+
+.. code-block:: C
+
+    VAR_STAT
+      s_HilscherCardMgr : HilscherCardMgr;
+    END_VAR
+
+HilscherCardMgr is here a special FB, that detects all cards in its
+FB_Init method.
+
+The implementation of the interfaces and the access to the
+I/O-configuration are equivalent for the driver in IEC as it was
+described in the chapters before for the C/C++-drivers.

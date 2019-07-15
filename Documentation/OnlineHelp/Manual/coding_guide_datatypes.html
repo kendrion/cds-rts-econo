@@ -1,0 +1,311 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.11.3. Data types &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.11. Coding Guidelines" href="coding_guidelines.html" />
+    <link rel="next" title="1.11.4. Component interfaces and dependencies" href="coding_guide_comp_itf_dep.html" />
+    <link rel="prev" title="1.11.2. Naming conventions and identifier" href="coding_guide_naming_conventions.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="coding_guide_comp_itf_dep.html" title="1.11.4. Component interfaces and dependencies"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="coding_guide_naming_conventions.html" title="1.11.2. Naming conventions and identifier"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="coding_guidelines.html" accesskey="U">1.11. Coding Guidelines</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="coding_guide_naming_conventions.html"
+                        title="previous chapter">1.11.2. Naming conventions and identifier</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="coding_guide_comp_itf_dep.html"
+                        title="next chapter">1.11.4. Component interfaces and dependencies</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/coding_guide_datatypes.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="data-types">
+<span id="coding-guide-datatypes"></span><h1>1.11.3. Data types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h1>
+<p>The runtime system defines its own typesystem based on the portable
+&#8220;ANSI stdint&#8221; types. The types are defined in CmpStd.h and starts always
+with RTS_, e.g. <strong>RTS_UI32</strong>.</p>
+<p>Rules:</p>
+<ul>
+<li><p class="first">Use always the predefined RTS_ datatypes in all interfaces!</p>
+</li>
+<li><p class="first">Additionally you must use it in all implementations, where a fix size
+is needed (e.g. L7 service in communication)!</p>
+</li>
+<li><p class="first">For all other internal implementations it is recommended, to use this
+datatypes too. The only exception for using native datatypes is when
+calling native OS- or Firmware functions.</p>
+</li>
+<li><div class="first line-block">
+<div class="line">For IEC libraries there are the corresponding IEC type definitions
+in CmpStd.h:</div>
+<div class="line">e.g. <strong>RTS_IEC_BOOL</strong> for an IEC bool value. The types are
+exported automatically of the m4-Export Tool in CODESYS out of a
+library. Use the Systems Hungarian notation! That means the
+datatype of an identifier is described in as a prefix in the name.</div>
+<div class="line">For example:</div>
+<div class="line">RTS_UI32 <strong>ui32</strong>NumOfTasks;</div>
+<div class="line">All prefixes are described in the tables below.</div>
+</div>
+</li>
+<li><p class="first">static variables with <strong>s_</strong> as prefix, e.g. static char s_cTag;</p>
+</li>
+<li><div class="first line-block">
+<div class="line">static arrays with <strong>a</strong> as prefix, e.g. static RTS_UI8
+s­_<strong>a</strong>ui8Buffer[100];</div>
+<div class="line"><strong>Note:</strong> Static arrays have the prefix a to avoid confusing a
+variable with a pointer p!</div>
+</div>
+</li>
+<li><p class="first">Pointers starts with <strong>p</strong> as prefix, e.g. RTS_UI8
+*<strong>p</strong>ui8Buffer;</p>
+</li>
+<li><p class="first">Function pointers starts with <strong>pf</strong> as prefix, e.g. INT_HANDLER
+*<strong>pf</strong>Handler;</p>
+</li>
+</ul>
+<p>RTS datatypes:</p>
+<p>The standard RTS_ datatypes contains the real size Bits, e.g. RTS_I8
+(8 Bits). So the corresponding size is identical on every platform!</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="14%" />
+<col width="22%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Datatype</th>
+<th class="head">Prefix</th>
+<th class="head">Size in Bits</th>
+<th class="head">Usage</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>RTS_I8</td>
+<td>i8</td>
+<td>8</td>
+<td>Signed values</td>
+</tr>
+<tr class="row-odd"><td>RTS_UI8</td>
+<td>ui8</td>
+<td>8</td>
+<td>Unsigned values</td>
+</tr>
+<tr class="row-even"><td>RTS_I16</td>
+<td>i16</td>
+<td>16</td>
+<td>Signed values</td>
+</tr>
+<tr class="row-odd"><td>RTS_UI16</td>
+<td>ui16</td>
+<td>16</td>
+<td>Unsigned values</td>
+</tr>
+<tr class="row-even"><td>RTS_I32</td>
+<td>i32</td>
+<td>32</td>
+<td>Signed values</td>
+</tr>
+<tr class="row-odd"><td>RTS_UI32</td>
+<td>ui32</td>
+<td>32</td>
+<td>Unsigned values</td>
+</tr>
+<tr class="row-even"><td>RTS_I64</td>
+<td>i64</td>
+<td>64</td>
+<td>Signed values</td>
+</tr>
+<tr class="row-odd"><td>RTS_UI64</td>
+<td>ui64</td>
+<td>64</td>
+<td>Unsigned values</td>
+</tr>
+<tr class="row-even"><td>RTS_REAL32</td>
+<td>r32</td>
+<td>32</td>
+<td>Floating point values</td>
+</tr>
+<tr class="row-odd"><td>RTS_REAL64</td>
+<td>r64</td>
+<td>64</td>
+<td>Floating point values</td>
+</tr>
+<tr class="row-even"><td>RTS_WCHAR</td>
+<td>wsz</td>
+<td>16</td>
+<td>16Bit Unicode character</td>
+</tr>
+<tr class="row-odd"><td>RTS_STRING</td>
+<td>sz</td>
+<td>8</td>
+<td>C-String terminated by zero</td>
+</tr>
+</tbody>
+</table>
+<p>There are some special datatypes which usage is explained here:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="7%" />
+<col width="42%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Datatype</th>
+<th class="head">Prefix</th>
+<th class="head">Size in Bits</th>
+<th class="head">Usage</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>RTS_HANDLE</td>
+<td>h</td>
+<td>Size to hold always a pointer</td>
+<td>For every handle in the runtime system</td>
+</tr>
+<tr class="row-odd"><td>RTS_RESULT</td>
+<td>r</td>
+<td>32</td>
+<td>For error codes</td>
+</tr>
+<tr class="row-even"><td>RTS_UINTPTR</td>
+<td>uiptr</td>
+<td>Size to hold always the address of a pointer</td>
+<td>For pointer arithmetic hold in an unsigned integral type</td>
+</tr>
+<tr class="row-odd"><td>RTS_INTPTR</td>
+<td>iptr</td>
+<td>Size to hold always the address of a pointer</td>
+<td>For pointer arithmetic hold in a signed integral type</td>
+</tr>
+<tr class="row-even"><td>RTS_PTRDIFF</td>
+<td>ptrdiff</td>
+<td>Size to hold always a pointer difference for a buffer offset</td>
+<td>Signed&nbsp;integral&nbsp;type&nbsp;that&nbsp;can&nbsp;hold an&nbsp;array&nbsp;index</td>
+</tr>
+<tr class="row-odd"><td>RTS_SIZE</td>
+<td>si</td>
+<td>Size to hold always a buffer offset</td>
+<td>Unsigned&nbsp;integral&nbsp;type&nbsp;that&nbsp;can&nbsp;hold&nbsp;a&nbsp;buffer&nbsp;offset</td>
+</tr>
+<tr class="row-even"><td>RTS_TIME</td>
+<td>t</td>
+<td>dependant on the platform
+(e.g. 32Bit on 32Bit platforms, 64Bit on 64Bit platforms)</td>
+<td>Time to hold a UTC value</td>
+</tr>
+<tr class="row-odd"><td>RTS_INT</td>
+<td>i</td>
+<td>Variant size, typical the platform specific int size</td>
+<td>Data type has no constant size, so be careful, in sharing
+such data types with IEC!</td>
+</tr>
+<tr class="row-even"><td>RTS_BOOL</td>
+<td>b</td>
+<td>Variant size, typical the platform specific int size</td>
+<td>Boolean&nbsp;value&nbsp;(TRUE&nbsp;or&nbsp;FALSE)
+Data type has no constant size, so be careful, in sharing
+with IEC!</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="coding_guide_comp_itf_dep.html" title="1.11.4. Component interfaces and dependencies"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="coding_guide_naming_conventions.html" title="1.11.2. Naming conventions and identifier"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="coding_guidelines.html" >1.11. Coding Guidelines</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

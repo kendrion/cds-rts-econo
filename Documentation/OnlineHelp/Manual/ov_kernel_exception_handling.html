@@ -1,0 +1,214 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.3.13. Exception Handling &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.3. Overview of the Kernel Components and Main Functions" href="overview_kernel.html" />
+    <link rel="next" title="1.3.14. License Management" href="ov_kernel_license_mgmt.html" />
+    <link rel="prev" title="1.3.12. Events" href="ov_kernel_events.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ov_kernel_license_mgmt.html" title="1.3.14. License Management"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_events.html" title="1.3.12. Events"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" accesskey="U">1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.3.13. Exception Handling</a><ul>
+<li><a class="reference internal" href="#structured-exception-handling-rts-try-rts-catch">1.3.13.1. Structured exception handling (rts_try / rts_catch)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ov_kernel_events.html"
+                        title="previous chapter">1.3.12. Events</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ov_kernel_license_mgmt.html"
+                        title="next chapter">1.3.14. License Management</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/ov_kernel_exception_handling.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="exception-handling">
+<span id="ov-kernel-exception-handling"></span><h1>1.3.13. Exception Handling<a class="headerlink" href="#exception-handling" title="Permalink to this headline">¶</a></h1>
+<p>Exception handling refers to the way processor exceptions or serious
+errors in program execution are handled. When such an exception occurs,
+it is not usually possible for normal program execution to continue.</p>
+<p>The exception handling system is managed by the SysExcept component.
+This performs all the exception handling in a manner specific to the
+operating system. The task that triggered the exception, the exception
+itself and the context (IP register, base pointer and stack pointer) are
+determined here:</p>
+<ul class="simple">
+<li>Determining the triggering task</li>
+<li>Exception number (specific to the operating system)</li>
+<li>Determining the exact error location (current instruction pointer)</li>
+<li>Call stack (base and stack pointers)</li>
+</ul>
+<p>The name of the exception in the operating system-dependent name is then
+converted to the name or number that conforms to the runtime system.</p>
+<p>Every component can register itself for exception handling to the
+SysExcept component.</p>
+<p>Typically, the SysTask component will register itself, in order to
+obtain all the exceptions. The operating system handle for the task is
+then converted into the SysTask handle in the SysTask component. An
+exception handler can be given to every task when it is created
+(SysTaskCreate()). In the event of an exception, this is then called
+from the SysTask component. The reason for this is that it is only the
+component that set up a task that is able to handle the exception
+properly.</p>
+<p>If, for instance, a PLC task is set up, the exception handler will be
+appended by the multitasking or application component. When this handler
+is then called, the PLC would stop, etc. From the context it is then
+possible to determine the call hierarchy in the PLC program.</p>
+<p>Every task is monitored for at least the following exceptions:</p>
+<ul class="simple">
+<li>division by 0</li>
+<li>access violation (access to invalid addresses)</li>
+<li>invalid opcode</li>
+<li>error in dynamic memory allocation (malloc)</li>
+</ul>
+<p>When an exception occurs, the following steps will be carried out with
+the aid of the SysExcept component:</p>
+<ol class="arabic simple">
+<li>the task or application will, according to the specification or setting, be halted, or the IEC program will first be asked about how to continue</li>
+<li>the call hierarchy is determined (call stack of all POUs)</li>
+</ol>
+<div class="section" id="structured-exception-handling-rts-try-rts-catch">
+<h2>1.3.13.1. Structured exception handling (rts_try / rts_catch)<a class="headerlink" href="#structured-exception-handling-rts-try-rts-catch" title="Permalink to this headline">¶</a></h2>
+<p>The runtime system has a build in structured exception handling. It can
+be activated by the define RTS_STRUCTURED_EXCEPTION_HANDLING.</p>
+<p>The structured exception handling based on the standard C-Lib API
+functions setjmp and longjmp. With setjmp, an actual context can be
+saved. With longjmp you can jump back to this previous saved context.
+Because these functions are available on nearly every platform, this is
+a highly portable mechanism.</p>
+<p>To use this mechanism, you have to import the following interface and
+the functions in your Dep.m4 file:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>USE\_ITF(\`SysExceptItf.m4&#39;)
+SysExceptRegisterJmpBuf
+SysExceptCatch
+SysExceptUnregisterJmpBuf
+</pre></div>
+</div>
+<p>After this you can use it like the following code snippet:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>rts_try /* Mandatory */
+{
+... /* Code where the exception can occur */
+}
+rts_catch /* Mandatory */
+{
+RTS_UI32 exceptionCode = EXCPT_GET_CODE();
+RegContext *pExceptionContext = EXCPT_GET_CONTEXT();
+... /* Exception handling code */
+}
+rts_finally /* Optional */
+{
+...
+}
+rts_try_end /* Mandatory */
+</pre></div>
+</div>
+<p>With this mechanism, you can handle every exception exactly at the
+place, where it occurred without losing the context! This can be helpful
+for example to handle exceptions at layer 7 services and to send back an
+online error code without disturbing the communication stack and without
+losing the communication.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ov_kernel_license_mgmt.html" title="1.3.14. License Management"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_events.html" title="1.3.12. Events"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" >1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

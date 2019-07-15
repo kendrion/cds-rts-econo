@@ -1,0 +1,265 @@
+.. _customer_impl_own_components:
+
+Implementing own components
+---------------------------
+
+The architecture of runtime system V3 is based on components, i.e. each
+related functional area is represented with an independent component.
+The runtime system can be expanded with further components at any time.
+
+The CmpTemplate component can be used as a template for a new component.
+It contains all required files and the whole generic part.
+
+Global include files
+~~~~~~~~~~~~~~~~~~~~
+
+Each runtime system component requires global information that is
+contained in general header files:
+
+CmpItf.h Definitions of the component manager functions required for
+exchanging function pointers:
+
+CmpStd.h Definitions and global "#include" instructions. Operating
+system-specific header files are also defined here.
+
+All components link this file as the first header.
+
+CmpErrors.h Standardised definition of error return values for the API
+functions
+
+These files are located in the root directory ("\\") of the runtime
+system.
+
+Include files of the components
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Each component must define at least two header files. The interface file
+contains the interface for the component the dependency file contains
+the dependencies of the component.
+
+These two header files are generically generated from the associated
+description files via the M4 mechanism. Any changes must always be
+implemented in the description files (m4 files). Manual modification of
+the header files is not provided for and not advisable.
+
+Interface file
+^^^^^^^^^^^^^^
+
+The interface file CmpXXXItf.h is generated from file CmpXXXItf.m4. It
+contains the interface for the component. The interface files of the
+core components are stored in directory /Components. Customer-specific
+interface files should be stored in the component directory under
+/Customer Components/<Customer>/<Component>.
+
+The file contains
+
+-  Defines and structures defined by the component.
+
+-  Definition of the interface functions and the required macros (USE\_, EXT\_, ...)
+
+The interface file is not only included by the respective component, but
+also by all other components requiring access to the functions of this
+interface.
+
+Dependency file
+^^^^^^^^^^^^^^^
+
+The dependency file CmpXXXDep.h is generated from file CmpXXXDep.m4.
+This file contains all dependencies for the component. The dependency
+file of the core components is stored in the component directory
+/Components/CmpXXX. Customer-specific dependency files are also stored
+in the component directory.
+
+The file contains:
+
+-  Required include statements
+
+-  EXPORT\_STMT: Summary of all EXP\_ defines, i.e. all functions 
+   exported by the component.
+
+-  IMPORT\_STMT: Summary of all required GET\_ defines, i.e. importing 
+   of functions required by the component.
+
+-  USE\_STMT: Summary of all required USE\_ defines, i.e. definition of
+   the function pointers of the functions required by the component.
+
+The dependency file is only included by the respective component, not by
+other components.
+
+Generation of include files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Functions cannot be called directly, because the runtime system is
+linked in different ways with the same sources and can be compiled for C
+or C++. This is why different macros are used.
+
+Since it would be impossible to create header files with the required
+macros by hand, we use the GNU M4 macro pre-processor, which generates
+comprehensive header files from simple description files.
+
+For each component the developer creates an interface file and a
+dependency description file. Both files are available as input files for
+the GNU M4 macro pre-processor. In a prebuild step from each file an
+include file is generated, which is integrated in the respective C
+files. As an alternative to a prebuild step simple batch files can be
+used for the compile process. These batch files are included in the
+toolkit sources and can be used as templates for own files.
+
+Since the files are analyzed by a mac pre-processor, all content that
+cannot be interpreted is taken over unchang–d – e.g. comments,
+definitions of constants, structs, etc.
+
+The parameters for the macro calls should always be enclosed in
+quotation marks, i.e. "\ **\`**\ " an' "\ **'**\ ".
+
+Comments for functions or for the component follow a certain scheme so
+that they can be interpreted by the configuration tool:
+
+A function comment directly precedes the function definition. As usual
+in Java, it starts with the "/\*\*" character and ends with "\*/". The
+configuration tool ignores new comment lines starting with a single
+"\*". The comment itself is created in XML, using the following tags:
+
+-  <description>: Contains a description of the component/function.
+
+-  <author>: optional
+
+-  <copyright>: a copyright note
+
+-  <version>: Version number
+
+The following tags are defined specially for functions:
+
+-  <param name="paramName" type={"IN"\|"OUT"\|"INOUT"}>: a parameter
+       description
+
+-  <returns>: Description of the return value, for most components a
+       list of possible error values.
+
+Source code file
+~~~~~~~~~~~~~~~~
+
+General interface
+^^^^^^^^^^^^^^^^^
+
+Each component contains the following functions: ComponentEntry(),
+ExportFunctions(), ImportFunctions(), and HookFunction(). The following
+examples are again taken from the CmpTemplate component.
+
+-  ComponentEntry() is the central entry function for each component. It
+   is called by the component manager when the system starts up (see
+   also :ref:`arch_overview`. The function is furnished with a structure for
+   exchanging function pointers between the component manager and
+   the component. The component receive access functions from the
+   component manager and returns pointers for the 3 functions
+   ExportFunctions(), ImportFunctions(), and HookFunction().
+
+   The function should be implemented as follows:
+	
+   .. code-block:: C
+
+     DLL_DECL int CDECL ComponentEntry(INIT_STRUCT *pInitStruct)
+     /* Used to exchange function pointers between component manager and components.
+     Called at startup for each component.
+     pInitStruct: IN Pointer to structure with:
+     pfExportFunctions OUT Pointer to function that exports component functions
+     pfImportFunctions OUT Pointer to function that imports functions from other components
+     pfGetVersion OUT Pointer to function to get component version
+     pfRegisterAPI IN Pointer to component manager function to register a api function
+     pfGetAPI IN Pointer to component manager function to get a api function
+     pfCallHook IN Pointer to component manager function to call a hook function
+     Return ERR_OK if library could be initialized, else error code
+     */
+     {
+      pInitStruct->CmpId = COMPONENT_ID;
+      pInitStruct->pfExportFunctions = ExportFunctions;
+       pInitStruct->pfImportFunctions = ImportFunctions;
+       pInitStruct->pfGetVersion = CmpGetVersion;
+       pInitStruct->pfHookFunction = HookFunction;
+       pInitStruct->pfCreateInstance = CreateInstance;
+       pInitStruct->pfDeleteInstance = DeleteInstance;
+       s_pfRegisterAPI = pInitStruct->pfCMRegisterAPI;
+       s_pfGetAPI = pInitStruct->pfCMGetAPI;
+       s_pfCallHook = pInitStruct->pfCMCallHook;
+       s_pfCreateInstance = pInitStruct->pfCMCreateInstance;
+       return ERR_OK;
+     }
+
+-  ExportFunctions() is also called when the system starts up. It uses
+   the EXP\_xxx macros for notifying the component manager of
+   exported functions. Using the EXPORT\_STMT macro from the
+   interface file the function can be implemented as follows:
+	   
+   .. code-block:: C
+   
+    static int CDECL ExportFunctions(void)
+    /* Export function pointers as api */
+    {
+     /* Macro to export functions */
+     EXPORT_STMT;
+     return ERR_OK;
+     }
+
+-  ImportFunctions() is also called when the system starts up. It uses
+   the GET\_xxx macros for obtaining required function pointers from
+   the component manager.
+
+Using the IMPORT\_STMT macro from the interface file the function can be
+implemented as follows:
+
+   .. code-block:: C
+   
+    static int CDECL ImportFunctions(void)
+    /* Get function pointers of other components */
+    {
+     /* Macro to import functions */
+     IMPORT_STMT;
+     return ERR_OK;
+    }
+
+-  The component manager calls the HookFunction() when a hook occurs.
+   The function enables suitable responses to hooks, e.g. calling of
+   an imported function with the CAL\_xxx macro:
+
+   .. code-block:: C
+   
+	/* Example for a Hook function */
+    static int CDECL HookFunction(unsigned long ulHook, unsigned long ulParam1, unsigned long ulParam2) 
+    {
+	 switch (ulHook) 
+	  {
+	     case CH_INIT_SYSTEM: 
+		   break; 
+		 case CH_INIT: 
+		   break; 
+		 case CH_INIT_DONE: 
+		   break; 
+		 /* Cyclic */ 
+		 case CH_COMM_CYCLE: 
+		   break; 
+		 case CH_EXIT_COMM: 
+		   break;
+		 case CH_EXIT_TASKS: 
+		   break; 
+		 case CH_PRE_EXIT: 
+		   break; 
+		 case CH_EXIT: 
+		   break; 
+		 case CH_EXIT_SYSTEM: 
+		   break; 
+		 default: 
+		   break; 
+	  }return 0; 
+	}
+  
+
+Component specific implementation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In addition to the general interface, which is largely identical for all
+components, each component also has a component-specific implementation.
+This is where functions must be implemented that are exported based on
+the interface description. In addition, purely internal functions can be
+implemented. While the general interface deals with pure component
+management, the actual functionality of the component is implemented
+here.

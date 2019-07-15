@@ -1,0 +1,25 @@
+.. _coding_guide_startup_sequence:
+
+Startup sequence
+----------------
+
+-  | CH\_INIT:
+   | Init your own component local stuff
+
+-  | CH\_INIT2:
+   | You can call other component interface functions
+   | An event provider must create here the event object!
+
+-  | CH\_INIT3:
+   | Further init stuff
+   | An event consumer can open here the existing event and register its
+     callback routine
+
+-  | CH\_INIT\_TASKS:
+   | At this hook you must be aware of multitasking calls!
+
+-  | CH\_INIT\_COMM:
+   | Here the communication server are started and open the runtime
+     system the the world around
+
+The same in the opposite direction for the shutdown sequence.

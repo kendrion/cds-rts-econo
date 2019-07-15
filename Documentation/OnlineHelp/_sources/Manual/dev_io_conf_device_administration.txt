@@ -1,0 +1,76 @@
+.. _dev_io_conf_device_administration:
+
+Device administration
+---------------------
+
+The descriptions of all devices to be used in CODESYS V3 must be
+installed with CODESYS. The description files are stored in an internal
+"database" referred to as *Device Repository*. The repository can handle
+different versions of a device description at the same time. To this end
+it is necessary to use versioning for description files, i.e. a version
+number is incremented internally if the description changes.
+Installation of a modified description file with the same version number
+will overwrite an existing version.
+
+The repository expects the device description in the form of an XML
+file. These are described in the following chapter. Import filters are
+made available for alternative description files (e.g.
+fieldbus-specific: EDS, GSD, ...). The description files are converted
+to the standard description (as far as possible and meaningful). For
+specialized editors (e.g. a Profibus configurator) the original file is
+generally also stored in the repository so that it can be accessed. Both
+files are copied into the repository, i.e. changes in the original file
+have no effect until it is reimport–d – here too it is important to
+increment the version number.
+
+To access a device description it must be referenced uniquely. A
+combination of three values is used for this purpose:
+
+| Type (16 bit unsigned): Device type
+| The possible types are defined by 3S. The type also determines the
+  format of the next two values. A list of defined types can be found in
+  the Appendix.
+| Ids from 0x8000 can be used for manufacturer-specific modules that use
+  internal or non-standardized busses.
+
+Examples:
+
+    0x20: Profibus master
+
+    0x21: Profibus slave (imported from GSD file)
+
+    0x1000: CODESYS-programmable device (described as XML file).
+
+-  | Id (string): Uniquely identifies the device description within a
+     type.
+   | Device descriptions with different types can use the same Id. The
+     definition of the Id as a string offers a certain degree of
+     flexibility regarding the format required for importing alternative
+     description files. For all types >= 0x1000 the format is defined as
+     follows:
+   | ####<space>####
+   | with "#" representing exactly one hexadecimal digit. The first four
+     digits form a manufacturer Id that is allocated by 3S. It is the
+     same Id that is also used in the runtime system, for example. The
+     second group of four digits can be assigned freely by the
+     manufacturer (it should be different for each device).
+   | Example: manufacturer ID is 0x1f3, internal device Id is 0x23, in
+     which case the device Id would be "01F3 0023"
+
+-  | Version (string): Indicates the version of a device description.
+   | Here too the string enables a variable format for importing
+     alternative description formats. For all types >= 0x1000 the format
+     is specified as follows:
+   | n.n.n.n
+   | with "n" representing any decimal number, e.g. "1.0.17.3".
+   | Within a device description it is possible to describe further
+     modules that are only used in the context of this device
+     description. In principle they are described and used in the same
+     way as a device, although they can only be used as a child of the
+     main device or another module defined in the main device. Modules
+     are identified through the device identification together with an
+     additional module Id.
+
+-  | Module Id (string): Identifies a module within a device
+     description.
+   | The format is not free.

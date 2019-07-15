@@ -1,0 +1,186 @@
+.. first line of composition.rst template
+
+.. first line of file.rst template
+
+.. __cmp_mem_pool_itf_8h:
+
+==============================
+CmpMemPoolItf.h File Reference
+==============================
+
+Data Structures
+---------------
+
+- struct :ref:`RTS_BCBtag <struct_r_t_s___b_c_btag>`
+
+- struct :ref:`RTS_PEBtag <struct_r_t_s___p_e_btag>`
+
+- struct :ref:`RTS_PCBtag <struct_r_t_s___p_c_btag>`
+
+- struct :ref:`MemIterator <struct_mem_iterator>`
+
+- struct :ref:`MemPoolConfigurationStatic_ <struct_mem_pool_configuration_static__>`
+
+- struct :ref:`MemPoolConfigurationDynamic_ <struct_mem_pool_configuration_dynamic__>`
+
+- struct :ref:`MemPoolConfiguration_ <struct_mem_pool_configuration__>`
+
+- struct :ref:`ICmpMemPool_C <struct_i_cmp_mem_pool___c>`
+
+Macros
+------
+
+- #define :ref:`MEMPOOL_8BYTE_ALIGNED <group___cmp_mem_pool_itf_1ga2e9a2c61424604810fcee79422c7b66b>`
+
+- #define :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` 8
+
+- #define :ref:`MEMPOOL_INIT_VALUE <group___cmp_mem_pool_itf_1ga38167e2c4242cf6377af7f0ff7779b78>` 0xAA
+
+- #define :ref:`MEM_GET_STATIC_LEN <group___cmp_mem_pool_itf___macros_1ga9efe7e35071c5ce0e0746f2a196320e1>` (sizeof( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` ) + 2 * :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` + (Num) * ALIGN_SIZE(sizeof(Struct), :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` ) + (Num) * sizeof( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` ))
+
+- #define :ref:`MEM_GET_STATIC_LEN_ <group___cmp_mem_pool_itf___macros_1ga6b1896ab349f829f058addddf1b3e960>` (sizeof( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` ) + 2 * :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` + (Num) * ALIGN_SIZE(Size, :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` ) + (Num) * sizeof( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` ))
+
+- #define :ref:`MEM_POOL_FLAGS_BLOCK_NONE <group___cmp_mem_pool_itf___staticdefines_1gaf7f7045d482f83421ce1f471a8f519f5>` 0x00000000
+
+- #define :ref:`MEM_POOL_FLAGS_BLOCK_DELETE <group___cmp_mem_pool_itf___staticdefines_1gadf1631606b65a1d35984a70a9da1b095>` 0x00000001
+
+- #define :ref:`MEM_POOL_OPTION_STATIC <group___cmp_mem_pool_itf___mem_pooloptions_1ga8772edac7966dabfd391b55869dd8d96>` 0x00000001
+
+- #define :ref:`MEM_POOL_OPTION_DYNAMIC <group___cmp_mem_pool_itf___mem_pooloptions_1ga0e00260fb65d84cd48d4d1bba3679752>` 0x00000002
+
+- #define :ref:`MEM_POOL_OPTION_NOSYNC <group___cmp_mem_pool_itf___mem_pooloptions_1ga775b69300325a96008faa042a7a983ea>` 0x00000010
+
+- #define :ref:`MEM_POOL_OPTION_UNALIGNED <group___cmp_mem_pool_itf___mem_pooloptions_1ga6147f44200c98c1c505fc83334ec7de1>` 0x00000100
+
+- #define :ref:`MEMPOOL_IS_NOT_EMPTY <group___cmp_mem_pool_itf___staticdefines_1ga58e8d374cf132d6c716bc02b891e5816>` (((( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pBlocksInUse) != NULL)
+
+- #define :ref:`MEMPOOL_IS_EMPTY <group___cmp_mem_pool_itf___staticdefines_1ga71a4d39d875115c339b3edcb3973ca30>` (((( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pBlocksInUse) == NULL)
+
+- #define :ref:`MEMPOOL_HAS_FREE_BLOCKS <group___cmp_mem_pool_itf___staticdefines_1gaa5b0d1782f0ed05944df80b399e55ad6>` ((( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pPEB) != NULL || (( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pBCB) != NULL)
+
+- #define :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (( :ref:`MemIterator <struct_mem_iterator>` *)pIt)->pNext
+
+- #define :ref:`__MEM_GET_ITERATOR_HEAD <group___cmp_mem_pool_itf___staticdefines_1gaf3cd9df834547116f907106357335552>` (( :ref:`MemIterator <struct_mem_iterator>` *)pIt)->pHead
+
+- #define :ref:`MEM_IS_BLOCK_DELETED <group___cmp_mem_pool_itf___staticdefines_1ga8bb71a68b44a2faacecf65714d91a31f>` (((( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` *)pBlock)->flags & :ref:`MEM_POOL_FLAGS_BLOCK_DELETE <group___cmp_mem_pool_itf___staticdefines_1gadf1631606b65a1d35984a70a9da1b095>` ) != 0)
+
+- #define :ref:`MEM_GET_FIRST <group___cmp_mem_pool_itf___staticdefines_1ga99d6003b63a5cf47c3e4a7a7ba0e50e6>` /*lint -e{506,522} */(( :ref:`__MEM_GET_ITERATOR_HEAD <group___cmp_mem_pool_itf___staticdefines_1gaf3cd9df834547116f907106357335552>` (pIt) = (( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` *)pPool)->pBlocksInUse) != NULL ? (( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) = NULL) != NULL ? 0 : 1) : (( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) = NULL) != NULL ? 1 : 0))
+
+- #define :ref:`MEM_GET_NEXT <group___cmp_mem_pool_itf___staticdefines_1gadc2f778a008df22e2fd70ea42ed93d2a>` /*lint -e{506} */(( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) == NULL) ? ( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) = :ref:`__MEM_GET_ITERATOR_HEAD <group___cmp_mem_pool_itf___staticdefines_1gaf3cd9df834547116f907106357335552>` (pIt)) : ( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) = :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt)->pBCB))
+
+- #define :ref:`MEM_GET_DATA <group___cmp_mem_pool_itf___staticdefines_1ga86da779c54ce30942409ab03db605adb>` ( :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) + 1 )
+
+- #define :ref:`MEM_GET_DATA_SKIP_DELETE <group___cmp_mem_pool_itf___staticdefines_1gadae4bd345d482ea05615a691fa1f2725>` ( ((( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` *) :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt))->flags & :ref:`MEM_POOL_FLAGS_BLOCK_DELETE <group___cmp_mem_pool_itf___staticdefines_1gadf1631606b65a1d35984a70a9da1b095>` ) == 0 ? :ref:`__MEM_GET_ITERATOR_NEXT <group___cmp_mem_pool_itf___staticdefines_1gace926e2ed5d6bb91cadb65de8ca984bf>` (pIt) + 1 : NULL )
+
+- #define :ref:`MEM_GET_NEXT_FROM_DATA <group___cmp_mem_pool_itf___staticdefines_1ga3d9d246e559bc03f45e50d8c4f4130c0>` /*lint -e{506} */((( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` *)((unsigned char *)pData - sizeof( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` )))->pBCB == NULL ? NULL : (( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` *)((unsigned char *)pData - sizeof( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` )))->pBCB + 1)
+
+- #define :ref:`ITF_CmpMemPool <group___cmp_mem_pool_itf_1gaa80d1316dbc01bff4db96bd70287315b>`
+
+- #define :ref:`EXTITF_CmpMemPool <group___cmp_mem_pool_itf_1ga42831a988d35ce443bfdc84129db6298>`
+
+Typedefs
+--------
+
+- typedef struct :ref:`RTS_BCBtag <struct_r_t_s___b_c_btag>` :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>`
+
+- typedef struct :ref:`RTS_PEBtag <struct_r_t_s___p_e_btag>` :ref:`RTS_PEB <group___cmp_mem_pool_itf___extensionblock_1ga62d0adbf9dbf47c5115438fdeb38ebed>`
+
+- typedef void(* :ref:`PF_MEMBLOCK_DELETEFUNCTION <group___cmp_mem_pool_itf___staticdefines_1gadc7b3d142a828c2fdf0e48a5825f2ab5>`)(void *pBlock, void *pParam)
+
+- typedef struct :ref:`RTS_PCBtag <struct_r_t_s___p_c_btag>` :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>`
+
+- typedef struct :ref:`MemPoolConfigurationStatic_ <struct_mem_pool_configuration_static__>` :ref:`MemPoolConfigurationStatic <group___cmp_mem_pool_itf___static_mem_poolconfiguration_1ga1a87f691d529896471613ef2d77ce084>`
+
+- typedef struct :ref:`MemPoolConfigurationDynamic_ <struct_mem_pool_configuration_dynamic__>` :ref:`MemPoolConfigurationDynamic <group___cmp_mem_pool_itf___dynamic_mem_poolconfiguration_1gae1f69bf667b9a8e4ca4c035b4f801c0c>`
+
+- typedef struct :ref:`MemPoolConfiguration_ <struct_mem_pool_configuration__>` :ref:`MemPoolConfiguration <group___cmp_mem_pool_itf___generic_mem_poolconfiguration_1ga80c14cae754166ea9b8b2a9c8bff9b63>`
+
+- typedef :ref:`ICmpMemPool_C <struct_i_cmp_mem_pool___c>` :ref:`ICmpMemPool <group___cmp_mem_pool_itf_1ga73a0e5a30e14ae5145965196d738ef36>`
+
+Functions
+---------
+
+- RTS_HANDLE :ref:`MemPoolCreate <group___cmp_mem_pool_itf_1ga3bfcc417db9f07554f3c7d796255094a>` (:ref:`MemPoolConfiguration <group___cmp_mem_pool_itf___generic_mem_poolconfiguration_1ga80c14cae754166ea9b8b2a9c8bff9b63>` * pConfiguration, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`MemPoolCreateDynamic <group___cmp_mem_pool_itf_1ga4cf18fee38ec28c6a44bf88bad3ece77>` (char * pszComponentName, RTS_SIZE ulNumBlocks, RTS_SIZE ulBlockSize, RTS_RESULT * pResult)
+
+- RTS_HANDLE :ref:`MemPoolCreateStatic <group___cmp_mem_pool_itf_1gac616bb19229e35dd70011a1c22be5dcd>` (RTS_SIZE ulBlockSize, RTS_SIZE ulMemSize, void * pMemory, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`MemPoolExtendDynamic <group___cmp_mem_pool_itf_1ga730709e16a0dcce044b3141820c859a3>` (RTS_HANDLE hMemPool, char * pszComponentName, RTS_SIZE ulNumBlocks)
+
+- RTS_RESULT :ref:`MemPoolExtendStatic <group___cmp_mem_pool_itf_1ga83615fbc259d63de6087c8a4c27642f9>` (RTS_HANDLE hMemPool, RTS_SIZE ulMemSize, void * pMemory)
+
+- RTS_RESULT :ref:`MemPoolCreateSyncObject <group___cmp_mem_pool_itf_1ga97c2637a4e3370fce26bc936d1a94235>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolDeleteSyncObject <group___cmp_mem_pool_itf_1ga5e83feecba72271bb2c380b19fd08e65>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolDelete <group___cmp_mem_pool_itf_1ga2caf1bff79294e6c1a226b57c8932b06>` (RTS_HANDLE hMemPool, char * pszComponentName)
+
+- RTS_RESULT :ref:`MemPoolCleanup <group___cmp_mem_pool_itf_1ga4d590328837318435b623deb38619c3b>` (RTS_HANDLE hMemPool, char * pszComponentName, int bReleaseSemaphore)
+
+- void * :ref:`MemPoolGetBlock <group___cmp_mem_pool_itf_1gaf7866c3bcd3fdcd14fffd93db7de5db0>` (RTS_HANDLE hMemPool, RTS_RESULT * pResult)
+
+- void * :ref:`MemPoolGetBlock2 <group___cmp_mem_pool_itf_1ga02d64406ebb343097b3698db3c92fd70>` (RTS_HANDLE hMemPool, int bDynamic, char * pszComponentName, RTS_RESULT * pResult)
+
+- :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` * :ref:`MemPoolGetPCB <group___cmp_mem_pool_itf_1ga736973dcd8e693b7ce086ee2d3eb833c>` (RTS_HANDLE hMemPool, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`MemPoolPutBlock <group___cmp_mem_pool_itf_1gad85943f33a536f0cb2443453753bd5cf>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolAddUsedBlock <group___cmp_mem_pool_itf_1ga51d677d8d5741c642d1fd391cfdf17a5>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolAppendUsedBlock <group___cmp_mem_pool_itf_1gaf0920d14ed91fdc2d75ef1734eb245a9>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolInsertUsedBlock <group___cmp_mem_pool_itf_1gafe815b0b2f830758e150154d946aef21>` (void * pPrevBlock, void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolRemoveUsedBlock <group___cmp_mem_pool_itf_1gafec6377691b72fba73aef04dfea3212f>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolAddUsedBlockToPool <group___cmp_mem_pool_itf_1gacea8c6de3e459fcedd6292bb2d57987f>` (void * pBlock, RTS_HANDLE hPool)
+
+- RTS_RESULT :ref:`MemPoolAppendUsedBlockToPool <group___cmp_mem_pool_itf_1gac0ad13055927fe23ada3622182b644f4>` (void * pBlock, RTS_HANDLE hPool)
+
+- RTS_RESULT :ref:`MemPoolRemoveUsedBlockFromPool <group___cmp_mem_pool_itf_1ga8adfd806eb44a46890ea6479f8ba6034>` (void * pBlock, RTS_HANDLE hPool)
+
+- RTS_RESULT :ref:`MemPoolLockBlock <group___cmp_mem_pool_itf_1gab3dd8ca8f534f6eeab75b7269eb933e9>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolUnlockBlock <group___cmp_mem_pool_itf_1ga7a497308890236f7330ee9614040d89f>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolReleaseBlocks <group___cmp_mem_pool_itf_1ga6977f20929ba0d05cd8cd543b9b9f0b9>` (RTS_HANDLE hMemPool, RTS_BOOL bOnlyDeletedBlocks, void * pParam)
+
+- RTS_RESULT :ref:`MemPoolLock <group___cmp_mem_pool_itf_1ga999519f4cfc0c36ab8f3b0ee8c9aaee6>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolUnlock <group___cmp_mem_pool_itf_1ga7ade2961819aa341260089f3cb633383>` (RTS_HANDLE hMemPool)
+
+- void * :ref:`MemPoolFindBlock <group___cmp_mem_pool_itf_1ga5146bd5d77e6b326d14ca78b2935b0b5>` (RTS_HANDLE hMemPool, RTS_SIZE ulOffset, RTS_SIZE ulSize, void * pToFind, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`MemPoolIsValidBlock <group___cmp_mem_pool_itf_1gaeb89f4809892cdf3882bc24b69801655>` (RTS_HANDLE hMemPool, void * pBlock)
+
+- void * :ref:`MemPoolGetFirstBlock <group___cmp_mem_pool_itf_1ga499bae494dcef421830732368e41b3fc>` (RTS_HANDLE hMemPool, RTS_RESULT * pResult)
+
+- void * :ref:`MemPoolGetNextBlock <group___cmp_mem_pool_itf_1ga8bf456fca1936f64fd7fd541d9c356c2>` (RTS_HANDLE hMemPool, void * pPrevBlock, RTS_RESULT * pResult)
+
+- RTS_RESULT :ref:`MemPoolAddRef_LF <group___cmp_mem_pool_itf_1ga5b259464cfa59a29f898de35c30a841e>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolReleaseRef_LF <group___cmp_mem_pool_itf_1ga8abe07954d4fb631998b050413833ffa>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolLock_LF <group___cmp_mem_pool_itf_1gae5b30f35638173bc749f866ca7e6413b>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolUnlock_LF <group___cmp_mem_pool_itf_1ga6917f50b7a1a7363f19e6ce97d77e924>` (RTS_HANDLE hMemPool)
+
+- RTS_RESULT :ref:`MemPoolRemoveUsedBlock_LF <group___cmp_mem_pool_itf_1gaaebb707b38002f259c5cca7b7644e693>` (void * pBlock)
+
+- RTS_RESULT :ref:`MemPoolRemoveUsedBlockFromPool_LF <group___cmp_mem_pool_itf_1ga84d747fc2394a4258082aebfa5e8af16>` (void * pBlock, RTS_HANDLE hPool)
+
+- RTS_RESULT :ref:`MemPoolPutBlock_LF <group___cmp_mem_pool_itf_1ga8ac3fbc793b515e491e377a1d2dc0fcc>` (void * pBlock, void * pParam)
+
+- RTS_RESULT :ref:`MemPoolIsValidBlock_LF <group___cmp_mem_pool_itf_1ga47b11b8fd6d18bf47da9ef3719a86084>` (RTS_HANDLE hMemPool, void * pBlock)
+
+Detailed Description
+--------------------
+
+Definition in file C:/Jenkins/workspace/3.5.14.x/BUILD_V3.5.14.x_RTS_Create_Docu/CodesysSpV3/Tools/GenerateDocumentation/Doxygen/temp/CmpMemPoolItf.h
+
+ 
+.. last line of file.rst template
+.. last line of composition.rst template
+
+

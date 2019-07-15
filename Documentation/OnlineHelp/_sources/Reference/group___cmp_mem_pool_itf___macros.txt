@@ -1,0 +1,48 @@
+.. first line of composition.rst template
+
+.. first line of group.rst template
+
+.. _group___cmp_mem_pool_itf___macros:
+
+======
+Macros
+======
+
+ :ref:`More... <group___cmp_mem_pool_itf___macros-details>`
+
+Macros
+------
+
+- #define :ref:`MEM_GET_STATIC_LEN <group___cmp_mem_pool_itf___macros_1ga9efe7e35071c5ce0e0746f2a196320e1>` (sizeof( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` ) + 2 * :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` + (Num) * ALIGN_SIZE(sizeof(Struct), :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` ) + (Num) * sizeof( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` ))
+
+- #define :ref:`MEM_GET_STATIC_LEN_ <group___cmp_mem_pool_itf___macros_1ga6b1896ab349f829f058addddf1b3e960>` (sizeof( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` ) + 2 * :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` + (Num) * ALIGN_SIZE(Size, :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` ) + (Num) * sizeof( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` ))
+
+.. _group___cmp_mem_pool_itf___macros-details:
+
+Detailed Description
+--------------------
+
+
+
+
+
+Macro Definition Documentation
+------------------------------
+.. _group___cmp_mem_pool_itf___macros_1ga9efe7e35071c5ce0e0746f2a196320e1:
+
+#define MEM_GET_STATIC_LEN (sizeof( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` ) + 2 * :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` + (Num) * ALIGN_SIZE(sizeof(Struct), :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` ) + (Num) * sizeof( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` ))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Macros to handle static size of a MemPool Can be use to calculate the brutto size of a static MemPool by specifying the structure of one element. Usage: #define NUM_OF_STATIC_ELEMENTS 10 typedef struct { ... } StructNameOfOneElement; static RTS_UI8 s_StaticMemPool[ :ref:`MEM_GET_STATIC_LEN(NUM_OF_STATIC_ELEMENTS, StructNameOfOneElement) <group___cmp_mem_pool_itf___macros_1ga9efe7e35071c5ce0e0746f2a196320e1>` ];
+
+.. _group___cmp_mem_pool_itf___macros_1ga6b1896ab349f829f058addddf1b3e960:
+
+#define MEM_GET_STATIC_LEN_ (sizeof( :ref:`RTS_PCB <group___cmp_mem_pool_itf___mem_pooldefinition_1ga76df38ce6d864c2169b39e23de750e6d>` ) + 2 * :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` + (Num) * ALIGN_SIZE(Size, :ref:`MEMPOOL_ALIGN_MODULO <group___cmp_mem_pool_itf_1ga38f24b87e62cca8acbe7ba35ef3a2d7f>` ) + (Num) * sizeof( :ref:`RTS_BCB <group___cmp_mem_pool_itf___staticdefines_1ga21d2fc3558f05b1ed3e29c386f9a5492>` ))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Can be use to calculate the brutto size of a static MemPool by specifying the size of one element. Usage: #define NUM_OF_STATIC_ELEMENTS 10 typedef struct { ... } StructNameOfOneElement; static RTS_UI8 s_StaticMemPool[MEM_GET_STATIC_LEN_(NUM_OF_STATIC_ELEMENTS, sizeof(StructNameOfOneElement))];
+
+.. last line of group.rst template
+.. last line of composition.rst template
+
+

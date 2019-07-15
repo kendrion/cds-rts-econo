@@ -1,0 +1,307 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.3.5. IEC Task Management &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.3. Overview of the Kernel Components and Main Functions" href="overview_kernel.html" />
+    <link rel="next" title="1.3.6. Scheduling" href="ov_kernel_scheduling.html" />
+    <link rel="prev" title="1.3.4. Watchdog Handling" href="ov_kernel_watchdog_handling.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ov_kernel_scheduling.html" title="1.3.6. Scheduling"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_watchdog_handling.html" title="1.3.4. Watchdog Handling"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" accesskey="U">1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.3.5. IEC Task Management</a><ul>
+<li><a class="reference internal" href="#data-format-of-the-task-description">1.3.5.1. Data Format of the task description</a></li>
+<li><a class="reference internal" href="#creating-iec-tasks">1.3.5.2. Creating IEC tasks</a></li>
+<li><a class="reference internal" href="#creating-an-external-event-task">1.3.5.3. Creating an external event task</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ov_kernel_watchdog_handling.html"
+                        title="previous chapter">1.3.4. Watchdog Handling</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ov_kernel_scheduling.html"
+                        title="next chapter">1.3.6. Scheduling</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/ov_kernel_iec_task_mgmt.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="iec-task-management">
+<span id="ov-kernel-iec-task-mgmt"></span><h1>1.3.5. IEC Task Management<a class="headerlink" href="#iec-task-management" title="Permalink to this headline">¶</a></h1>
+<p>The IEC task management is done in the component CmpIecTask.</p>
+<p>Four different types of tasks are possible:</p>
+<ol class="arabic simple">
+<li>Cyclic tasks:
+These tasks are executed in a specified interval.</li>
+<li>Event tasks:
+These tasks are executed once every time, if a specified IEC
+BOOL variable changed its value from FALSE to TRUE.</li>
+<li>Freewheeling tasks:
+These tasks are executed without a specified cycle in a loop. To
+enable running tasks with a lower priority, the freewheeling task
+frees the processor in a specified way:</li>
+</ol>
+<ul>
+<li><p class="first">Default: 20% of its execution time, the task will sleep at the end of
+a cycle</p>
+</li>
+<li><p class="first">If a processor load maximum is specified in the scheduler, this is
+the load value for the freewheeling tasks too, e.g.</p>
+<div class="line-block">
+<div class="line">processor load maximum = 60%</div>
+<div class="line">execution time of the freewheeling task = 10ms</div>
+<div class="line">-&gt; Sleep time = (100% - processor load maximum) * 10ms = 40% * 10ms = <strong>4ms</strong></div>
+</div>
+</li>
+<li><p class="first">Fix sleep time:</p>
+<div class="line-block">
+<div class="line">A fix sleep time can be specified for the freewheeling task.</div>
+<div class="line">This value can be specified additionally in the scheduler with the following setting:</div>
+<div class="line">[CmpSchedule]</div>
+<div class="line">Task.Freewheeling.Cycletime=10</div>
+<div class="line">In this example, every freewheeling task sleeps at the end of its cycle 10ms.</div>
+</div>
+</li>
+</ul>
+<ol class="arabic simple" start="4">
+<li>External Event tasks:
+An external event task is executed every time, an external (runtime event, hardware event) occurred. The event is specified by name in the
+device description of the device. This event can be specified in the
+task configuration in CODESYS, if external event task is selected.</li>
+</ol>
+<p>The list of all IEC-tasks in an application is generated by CODESYS in
+the form of initialized IEC data structures. At download, this list is
+created during initialization and is transmitted to the CmpIecTask
+component after initialization. The tasks are reported then to the
+scheduler and are created specifically, in accordance with their type,
+as operating system tasks.</p>
+<p>The format of the task description is explained in more detail below.</p>
+<div class="section" id="data-format-of-the-task-description">
+<h2>1.3.5.1. Data Format of the task description<a class="headerlink" href="#data-format-of-the-task-description" title="Permalink to this headline">¶</a></h2>
+<p>The download message contains information about an application&#8217;s tasks
+in the form of initialized IEC data structures.</p>
+<p>The IEC data structures are initialized with the other variables after
+the download.</p>
+<p>The data structures are defined as follows:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>#define Cyclic 0x0000
+#define Event 0x0001
+#define External 0x0002
+#define Freewheeling 0x0003
+typedef struct
+{
+  char stName[51];
+  short nPriority;
+  short KindOfTask;
+  char bMicroseconds;
+  unsigned int dwInterval;
+  unsigned int dwEventFunctionPointer;
+  char stExternalEvent[51];
+  unsigned int dwTaskEntryFunctionPointer;
+  int tLastCycleTime;
+  int tAverageCycleTime;
+  int tMaxCycleTime;
+  int tMinCycleTime;
+  int tJitterMax;
+  int tJitterLast;
+}Task\_Info;
+
+typedef struct
+{
+  short nTasks;
+  char stApplicationName[51];
+  Task_Info* ptaskinfo;
+}sys_setup_tasks_struct;
+</pre></div>
+</div>
+<p>The sys_setup_tasks_struct structure contains the entire task
+configuration of an application.</p>
+</div>
+<div class="section" id="creating-iec-tasks">
+<h2>1.3.5.2. Creating IEC tasks<a class="headerlink" href="#creating-iec-tasks" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CDECL</span> <span class="n">__sys__setup__tasks</span><span class="p">(</span><span class="n">sys_setup_tasks_struct</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This function is called after a download or after the boot project has
+been loaded. A pointer to a variable in the sys_setup_tasks_struct
+structure is passed. This function saves a pointer to each task and adds
+this task to the scheduler component.</p>
+</div>
+<div class="section" id="creating-an-external-event-task">
+<h2>1.3.5.3. Creating an external event task<a class="headerlink" href="#creating-an-external-event-task" title="Permalink to this headline">¶</a></h2>
+<p>As an external event we describe an event in the runtime system, on
+which a task can be activated. This event is typically generated out of
+a runtime system component, but could also be generated out of the
+IEC-Code. An external event is always identified by its name, so the
+name of the event must be known.</p>
+<p>To realize an external event task, the following issues must be implemented:</p>
+<ol class="arabic">
+<li><p class="first">You need a description of this external event in your device
+description. For this the following settings are needed (see <span class="xref std std-ref">Task configuration</span>):</p>
+<div class="line-block">
+<div class="line">(1) /DeviceDescription/Device/ExtendedSettings/ts:TargetSettings/ts:section[&#64;name=&#8217;taskconfiguration&#8217;]/ts:setting[&#64;name=&#8217;supportexternal&#8217;]/ts:value=1</div>
+</div>
+<div class="line-block">
+<div class="line">(2) /DeviceDescription/Device/ExtendedSettings/ts:TargetSettings/ts:section[&#64;name=&#8217;taskconfiguration&#8217;]/ts:setting[&#64;name=&#8217;externalevents&#8217;]/ts:value=&lt;externalevents&gt;
+&lt;externalevent&gt; &lt;name&gt;myCyclicInterrupt&lt;/name&gt;
+&lt;/externalevent&gt;&lt;/externalevents&gt;</div>
+</div>
+<div class="line-block">
+<div class="line">Example of an external event named &#8220;myCyclicInterrupt&#8221;:</div>
+</div>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nl">ts</span><span class="p">:</span><span class="n">section</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;taskconfiguration&quot;</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nl">ts</span><span class="p">:</span><span class="n">setting</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;externalevents&quot;</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;cdata&quot;</span> <span class="n">access</span><span class="o">=</span><span class="s">&quot;hide&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nl">ts</span><span class="p">:</span><span class="n">value</span><span class="o">&gt;&lt;!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span>
+         <span class="o">&lt;</span><span class="n">externalevents</span><span class="o">&gt;</span>
+             <span class="o">&lt;</span><span class="n">externalevent</span><span class="o">&gt;</span>
+                 <span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">myCyclicInterrupt</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span>
+             <span class="o">&lt;/</span><span class="n">externalevent</span><span class="o">&gt;</span>
+         <span class="o">&lt;/</span><span class="n">externalevents</span><span class="o">&gt;</span>
+     <span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="nl">ts</span><span class="p">:</span><span class="n">value</span><span class="o">&gt;</span>
+   <span class="o">&lt;/</span><span class="nl">ts</span><span class="p">:</span><span class="n">setting</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="nl">ts</span><span class="p">:</span><span class="n">section</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">The runtime system must be able to recognizes and store the event, that was assigned to the specified task. There are two ways:</p>
+<div class="line-block">
+<div class="line">Option 1:
+All schedulers of CODESYS Control are now supporting a new interface to easily implement &#8220;external events&#8221; which can be used for &#8220;external event tasks&#8221;.</div>
+<div class="line">The interface functions might be used like this:</div>
+</div>
+<blockquote>
+<div><div class="highlight-C"><div class="highlight"><pre><span></span>HookFunction():
+case CH\_INIT3:
+{
+s\_hExtEventTask = SchedRegisterExternalEvent(&quot;myCyclicInterrupt&quot;, NULL);
+...
+case CH\_EXIT3:
+{
+SchedUnregisterExternalEvent(s\_hExtEventTask);
+...
+myCyclicInterruptHandler():
+SchedPostExternalEvent(s\_hExtEventTask);
+...
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">Option 2:</div>
+<div class="line">In the runtime system, the CmpSchedule component offers two events called EVT_ExternalEventTaskCreateDone and EVT_PrepareExternalEventTaskDelete for the case that an external event task is created or deleted. So first you have to register to these events (how to handle an external event is implemented as an example in the CmpTemplate.c module of the Runtime Toolkit).</div>
+<div class="line">In your callback routine of the EVT_ExternalEventTaskCreateDone event you have to store the hEvent parameter. And in the callback routine of the EVT_PrepareExternalEventTaskDelete event, you have to remove the hEvent.</div>
+<div class="line">Last but not least you have to send this event always when the corresponding external event has occurred in the runtime system (like an interrupt, etc.). To activate the task once, that is assigned to this external event task, you have to send this event by CAL_SysEventSet(hEvent).</div>
+<div class="line">After this, you can assign the external event specified in the device description to your task in your IEC program. After downloading your application this task should be executed every time the event is sent in the runtime system.</div>
+</div>
+</li>
+</ol>
+<p>Equivalent to the handling in the runtime system, you can handle an
+external event in IEC-Code. All needed runtime system interfaces for
+that are available as external System-Libraries.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Debugging inside of external events is only supported for</p>
+</div>
+<p>CmpSchedule. All other scheduler variants are ignoring breakpoints
+within external events.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ov_kernel_scheduling.html" title="1.3.6. Scheduling"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ov_kernel_watchdog_handling.html" title="1.3.4. Watchdog Handling"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="overview_kernel.html" >1.3. Overview of the Kernel Components and Main Functions</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

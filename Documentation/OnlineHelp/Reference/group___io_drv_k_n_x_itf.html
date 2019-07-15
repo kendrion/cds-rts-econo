@@ -1,0 +1,599 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5.2.112. IoDrvKNXItf &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="5. Reference" href="index.html" />
+    <link rel="next" title="5.2.113. IoDrvUnsafeBridgeModuletestItf" href="group___io_drv_unsafe_bridge_moduletest_itf.html" />
+    <link rel="prev" title="5.2.111. IoDrvJoystickWinItf" href="group___io_drv_joystick_win_itf.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="group___io_drv_unsafe_bridge_moduletest_itf.html" title="5.2.113. IoDrvUnsafeBridgeModuletestItf"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="group___io_drv_joystick_win_itf.html" title="5.2.111. IoDrvJoystickWinItf"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">5. Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5.2.112. IoDrvKNXItf</a><ul>
+<li><a class="reference internal" href="#data-structures">5.2.112.1. Data Structures</a></li>
+<li><a class="reference internal" href="#macros">5.2.112.2. Macros</a></li>
+<li><a class="reference internal" href="#typedefs">5.2.112.3. Typedefs</a></li>
+<li><a class="reference internal" href="#functions">5.2.112.4. Functions</a></li>
+<li><a class="reference internal" href="#detailed-description">5.2.112.5. Detailed Description</a></li>
+<li><a class="reference internal" href="#macro-definition-documentation">5.2.112.6. Macro Definition Documentation</a><ul>
+<li><a class="reference internal" href="#define-eaccesstype-at-eread-rts-iec-int-c-0x1">5.2.112.6.1. #define EACCESSTYPE_AT_EREAD RTS_IEC_INT_C(0x1)</a></li>
+<li><a class="reference internal" href="#define-eaccesstype-at-ewrite-rts-iec-int-c-0x2">5.2.112.6.2. #define EACCESSTYPE_AT_EWRITE RTS_IEC_INT_C(0x2)</a></li>
+<li><a class="reference internal" href="#define-eaccesstype-at-ereadwrite-rts-iec-int-c-0x3">5.2.112.6.3. #define EACCESSTYPE_AT_EREADWRITE RTS_IEC_INT_C(0x3)</a></li>
+<li><a class="reference internal" href="#define-eaccesstype-rts-iec-int">5.2.112.6.4. #define EACCESSTYPE RTS_IEC_INT</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-enot-used-rts-iec-int-c-0x0">5.2.112.6.5. #define EKNXTYPE_KNX_ENOT_USED RTS_IEC_INT_C(0x0)</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt1-rts-iec-int-c-0x1-1-bit">5.2.112.6.6. #define EKNXTYPE_KNX_EDPT1 RTS_IEC_INT_C(0x1)   /* 1 bit */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt2-rts-iec-int-c-0x2-2-bit-control">5.2.112.6.7. #define EKNXTYPE_KNX_EDPT2 RTS_IEC_INT_C(0x2)   /* 2 bit control */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt3-rts-iec-int-c-0x3-4-bit-dimming-control">5.2.112.6.8. #define EKNXTYPE_KNX_EDPT3 RTS_IEC_INT_C(0x3)   /* 4 bit dimming control */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt4-rts-iec-int-c-0x4-char">5.2.112.6.9. #define EKNXTYPE_KNX_EDPT4 RTS_IEC_INT_C(0x4)   /* char */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt5-100-rts-iec-int-c-0x105-dpt5-001-value-0-100">5.2.112.6.10. #define EKNXTYPE_KNX_EDPT5_100 RTS_IEC_INT_C(0x105)     /* DPT5.001 - value (0..100) */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt5-360-rts-iec-int-c-0x305-dpt5-003-angle-0-360">5.2.112.6.11. #define EKNXTYPE_KNX_EDPT5_360 RTS_IEC_INT_C(0x305)     /* DPT5.003 - angle 0..360° */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt5-255-rts-iec-int-c-0x405-dpt5-004-relative-position-0-255">5.2.112.6.12. #define EKNXTYPE_KNX_EDPT5_255 RTS_IEC_INT_C(0x405)     /* DPT5.004 - relative Position (0..255) */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt6-rts-iec-int-c-0x6-signed-relative-value-128-127">5.2.112.6.13. #define EKNXTYPE_KNX_EDPT6 RTS_IEC_INT_C(0x6)   /* Signed Relative Value (-128 ... +127) */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt7-rts-iec-int-c-0x7-2-octet-unsigned-value">5.2.112.6.14. #define EKNXTYPE_KNX_EDPT7 RTS_IEC_INT_C(0x7)   /* 2-Octet Unsigned Value */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt8-rts-iec-int-c-0x8-2-octet-signed-value">5.2.112.6.15. #define EKNXTYPE_KNX_EDPT8 RTS_IEC_INT_C(0x8)   /* 2-Octet signed Value */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt9-rts-iec-int-c-0x9-2-octet-float-value">5.2.112.6.16. #define EKNXTYPE_KNX_EDPT9 RTS_IEC_INT_C(0x9)   /* 2-Octet float Value */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt10-rts-iec-int-c-0xa-time">5.2.112.6.17. #define EKNXTYPE_KNX_EDPT10 RTS_IEC_INT_C(0xA)  /* time */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt11-rts-iec-int-c-0xb-date">5.2.112.6.18. #define EKNXTYPE_KNX_EDPT11 RTS_IEC_INT_C(0xB)  /* date */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt12-rts-iec-int-c-0xc-4-octet-unsigned-value">5.2.112.6.19. #define EKNXTYPE_KNX_EDPT12 RTS_IEC_INT_C(0xC)  /* 4 octet unsigned value */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt13-rts-iec-int-c-0xd-4-octet-signed-value">5.2.112.6.20. #define EKNXTYPE_KNX_EDPT13 RTS_IEC_INT_C(0xD)  /* 4 octet signed value */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt14-rts-iec-int-c-0xe-4-octet-float-value">5.2.112.6.21. #define EKNXTYPE_KNX_EDPT14 RTS_IEC_INT_C(0xE)  /* 4 octet float value */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt16-rts-iec-int-c-0x10-string">5.2.112.6.22. #define EKNXTYPE_KNX_EDPT16 RTS_IEC_INT_C(0x10) /* string */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt17-rts-iec-int-c-0x11-scene">5.2.112.6.23. #define EKNXTYPE_KNX_EDPT17 RTS_IEC_INT_C(0x11) /* scene */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt18-rts-iec-int-c-0x12-scenecontrol">5.2.112.6.24. #define EKNXTYPE_KNX_EDPT18 RTS_IEC_INT_C(0x12) /* sceneControl */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt19-rts-iec-int-c-0x13-date-time">5.2.112.6.25. #define EKNXTYPE_KNX_EDPT19 RTS_IEC_INT_C(0x13) /* date time */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt20-rts-iec-int-c-0x14-n8">5.2.112.6.26. #define EKNXTYPE_KNX_EDPT20 RTS_IEC_INT_C(0x14) /* n8 */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-knx-edpt232-rts-iec-int-c-0xe8-rgb-color">5.2.112.6.27. #define EKNXTYPE_KNX_EDPT232 RTS_IEC_INT_C(0xE8)        /* RGB - color */</a></li>
+<li><a class="reference internal" href="#define-eknxtype-rts-iec-int">5.2.112.6.28. #define EKNXTYPE RTS_IEC_INT</a></li>
+<li><a class="reference internal" href="#define-esendingflag-sf-noautomaticsend-rts-iec-int-c-0x0">5.2.112.6.29. #define ESENDINGFLAG_SF_NOAUTOMATICSEND RTS_IEC_INT_C(0x0)</a></li>
+<li><a class="reference internal" href="#define-esendingflag-sf-sendonchange-rts-iec-int-c-0x1">5.2.112.6.30. #define ESENDINGFLAG_SF_SENDONCHANGE RTS_IEC_INT_C(0x1)</a></li>
+<li><a class="reference internal" href="#define-esendingflag-sf-sendondifference-rts-iec-int-c-0x2">5.2.112.6.31. #define ESENDINGFLAG_SF_SENDONDIFFERENCE RTS_IEC_INT_C(0x2)</a></li>
+<li><a class="reference internal" href="#define-esendingflag-rts-iec-int">5.2.112.6.32. #define ESENDINGFLAG RTS_IEC_INT</a></li>
+<li><a class="reference internal" href="#define-itf-iodrvknx">5.2.112.6.33. #define ITF_IoDrvKNX</a></li>
+<li><a class="reference internal" href="#define-extitf-iodrvknx">5.2.112.6.34. #define EXTITF_IoDrvKNX</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#typedef-documentation">5.2.112.7. Typedef Documentation</a><ul>
+<li><a class="reference internal" href="#typedef-struct-tagknxglobalflags-knxglobalflags">5.2.112.7.1. typedef struct tagKNXGlobalFlags  KNXGlobalFlags</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknxmetadata-knxmetadata">5.2.112.7.2. typedef struct tagKNXMetaData  KNXMetaData</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknxobjectdescr-knxobjectdescr">5.2.112.7.3. typedef struct tagKNXObjectDescr  KNXObjectDescr</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknxconfigobject-knxconfigobject">5.2.112.7.4. typedef struct tagKNXConfigObject  KNXConfigObject</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-cyclic-struct-knx-cyclic-struct">5.2.112.7.5. typedef struct tagknx_cyclic_struct  knx_cyclic_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-exit-struct-knx-exit-struct">5.2.112.7.6. typedef struct tagknx_exit_struct  knx_exit_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-getdatapointer-struct-knx-getdatapointer-struct">5.2.112.7.7. typedef struct tagknx_getdatapointer_struct  knx_getdatapointer_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-getglobalflags-struct-knx-getglobalflags-struct">5.2.112.7.8. typedef struct tagknx_getglobalflags_struct  knx_getglobalflags_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-getledpointer-struct-knx-getledpointer-struct">5.2.112.7.9. typedef struct tagknx_getledpointer_struct  knx_getledpointer_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-getmetadata-struct-knx-getmetadata-struct">5.2.112.7.10. typedef struct tagknx_getmetadata_struct  knx_getmetadata_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-getobjectinstance-struct-knx-getobjectinstance-struct">5.2.112.7.11. typedef struct tagknx_getobjectinstance_struct  knx_getobjectinstance_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-getprogrampointer-struct-knx-getprogrampointer-struct">5.2.112.7.12. typedef struct tagknx_getprogrampointer_struct  knx_getprogrampointer_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-getstatuspointer-struct-knx-getstatuspointer-struct">5.2.112.7.13. typedef struct tagknx_getstatuspointer_struct  knx_getstatuspointer_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-init-struct-knx-init-struct">5.2.112.7.14. typedef struct tagknx_init_struct  knx_init_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-setgateway-struct-knx-setgateway-struct">5.2.112.7.15. typedef struct tagknx_setgateway_struct  knx_setgateway_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-setipaddress-struct-knx-setipaddress-struct">5.2.112.7.16. typedef struct tagknx_setipaddress_struct  knx_setipaddress_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-setmacaddress-struct-knx-setmacaddress-struct">5.2.112.7.17. typedef struct tagknx_setmacaddress_struct  knx_setmacaddress_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-setmulticastaddress-struct-knx-setmulticastaddress-struct">5.2.112.7.18. typedef struct tagknx_setmulticastaddress_struct  knx_setmulticastaddress_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-setobjecttype-struct-knx-setobjecttype-struct">5.2.112.7.19. typedef struct tagknx_setobjecttype_struct  knx_setobjecttype_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-setserialnumber-struct-knx-setserialnumber-struct">5.2.112.7.20. typedef struct tagknx_setserialnumber_struct  knx_setserialnumber_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-setsubnetmask-struct-knx-setsubnetmask-struct">5.2.112.7.21. typedef struct tagknx_setsubnetmask_struct  knx_setsubnetmask_struct</a></li>
+<li><a class="reference internal" href="#typedef-struct-tagknx-transmitobject-struct-knx-transmitobject-struct">5.2.112.7.22. typedef struct tagknx_transmitobject_struct  knx_transmitobject_struct</a></li>
+<li><a class="reference internal" href="#typedef-iiodrvknx-c-iiodrvknx">5.2.112.7.23. typedef IIoDrvKNX_C IIoDrvKNX</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#function-documentation">5.2.112.8. Function Documentation</a><ul>
+<li><a class="reference internal" href="#void-knx-cyclic-knx-cyclic-struct-p">5.2.112.8.1. void knx_cyclic (knx_cyclic_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-exit-knx-exit-struct-p">5.2.112.8.2. void knx_exit (knx_exit_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-getdatapointer-knx-getdatapointer-struct-p">5.2.112.8.3. void knx_getdatapointer (knx_getdatapointer_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-getglobalflags-knx-getglobalflags-struct-p">5.2.112.8.4. void knx_getglobalflags (knx_getglobalflags_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-getledpointer-knx-getledpointer-struct-p">5.2.112.8.5. void knx_getledpointer (knx_getledpointer_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-getmetadata-knx-getmetadata-struct-p">5.2.112.8.6. void knx_getmetadata (knx_getmetadata_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-getobjectinstance-knx-getobjectinstance-struct-p">5.2.112.8.7. void knx_getobjectinstance (knx_getobjectinstance_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-getprogrampointer-knx-getprogrampointer-struct-p">5.2.112.8.8. void knx_getprogrampointer (knx_getprogrampointer_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-getstatuspointer-knx-getstatuspointer-struct-p">5.2.112.8.9. void knx_getstatuspointer (knx_getstatuspointer_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-init-knx-init-struct-p">5.2.112.8.10. void knx_init (knx_init_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-setgateway-knx-setgateway-struct-p">5.2.112.8.11. void knx_setgateway (knx_setgateway_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-setipaddress-knx-setipaddress-struct-p">5.2.112.8.12. void knx_setipaddress (knx_setipaddress_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-setmacaddress-knx-setmacaddress-struct-p">5.2.112.8.13. void knx_setmacaddress (knx_setmacaddress_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-setmulticastaddress-knx-setmulticastaddress-struct-p">5.2.112.8.14. void knx_setmulticastaddress (knx_setmulticastaddress_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-setobjecttype-knx-setobjecttype-struct-p">5.2.112.8.15. void knx_setobjecttype (knx_setobjecttype_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-setserialnumber-knx-setserialnumber-struct-p">5.2.112.8.16. void knx_setserialnumber (knx_setserialnumber_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-setsubnetmask-knx-setsubnetmask-struct-p">5.2.112.8.17. void knx_setsubnetmask (knx_setsubnetmask_struct *p)</a></li>
+<li><a class="reference internal" href="#void-knx-transmitobject-knx-transmitobject-struct-p">5.2.112.8.18. void knx_transmitobject (knx_transmitobject_struct *p)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="group___io_drv_joystick_win_itf.html"
+                        title="previous chapter">5.2.111. IoDrvJoystickWinItf</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="group___io_drv_unsafe_bridge_moduletest_itf.html"
+                        title="next chapter">5.2.113. IoDrvUnsafeBridgeModuletestItf</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Reference/group___io_drv_k_n_x_itf.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="iodrvknxitf">
+<span id="group-io-drv-k-n-x-itf"></span><h1>5.2.112. IoDrvKNXItf<a class="headerlink" href="#iodrvknxitf" title="Permalink to this headline">¶</a></h1>
+<p>Interface of IoDrvKNX. <a class="reference internal" href="#group-io-drv-k-n-x-itf-details"><span class="std std-ref">More...</span></a></p>
+<div class="section" id="data-structures">
+<h2>5.2.112.1. Data Structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>struct <a class="reference internal" href="structtag_k_n_x_global_flags.html#structtag-k-n-x-global-flags"><span class="std std-ref">tagKNXGlobalFlags</span></a></li>
+<li>struct <a class="reference internal" href="structtag_k_n_x_meta_data.html#structtag-k-n-x-meta-data"><span class="std std-ref">tagKNXMetaData</span></a></li>
+<li>struct <a class="reference internal" href="structtag_k_n_x_object_descr.html#structtag-k-n-x-object-descr"><span class="std std-ref">tagKNXObjectDescr</span></a></li>
+<li>struct <a class="reference internal" href="structtag_k_n_x_config_object.html#structtag-k-n-x-config-object"><span class="std std-ref">tagKNXConfigObject</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__cyclic__struct.html#structtagknx-cyclic-struct"><span class="std std-ref">tagknx_cyclic_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__exit__struct.html#structtagknx-exit-struct"><span class="std std-ref">tagknx_exit_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__getdatapointer__struct.html#structtagknx-getdatapointer-struct"><span class="std std-ref">tagknx_getdatapointer_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__getglobalflags__struct.html#structtagknx-getglobalflags-struct"><span class="std std-ref">tagknx_getglobalflags_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__getledpointer__struct.html#structtagknx-getledpointer-struct"><span class="std std-ref">tagknx_getledpointer_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__getmetadata__struct.html#structtagknx-getmetadata-struct"><span class="std std-ref">tagknx_getmetadata_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__getobjectinstance__struct.html#structtagknx-getobjectinstance-struct"><span class="std std-ref">tagknx_getobjectinstance_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__getprogrampointer__struct.html#structtagknx-getprogrampointer-struct"><span class="std std-ref">tagknx_getprogrampointer_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__getstatuspointer__struct.html#structtagknx-getstatuspointer-struct"><span class="std std-ref">tagknx_getstatuspointer_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__init__struct.html#structtagknx-init-struct"><span class="std std-ref">tagknx_init_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__setgateway__struct.html#structtagknx-setgateway-struct"><span class="std std-ref">tagknx_setgateway_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__setipaddress__struct.html#structtagknx-setipaddress-struct"><span class="std std-ref">tagknx_setipaddress_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__setmacaddress__struct.html#structtagknx-setmacaddress-struct"><span class="std std-ref">tagknx_setmacaddress_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__setmulticastaddress__struct.html#structtagknx-setmulticastaddress-struct"><span class="std std-ref">tagknx_setmulticastaddress_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__setobjecttype__struct.html#structtagknx-setobjecttype-struct"><span class="std std-ref">tagknx_setobjecttype_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__setserialnumber__struct.html#structtagknx-setserialnumber-struct"><span class="std std-ref">tagknx_setserialnumber_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__setsubnetmask__struct.html#structtagknx-setsubnetmask-struct"><span class="std std-ref">tagknx_setsubnetmask_struct</span></a></li>
+<li>struct <a class="reference internal" href="structtagknx__transmitobject__struct.html#structtagknx-transmitobject-struct"><span class="std std-ref">tagknx_transmitobject_struct</span></a></li>
+<li>struct <a class="reference internal" href="struct_i_io_drv_k_n_x___c.html#struct-i-io-drv-k-n-x-c"><span class="std std-ref">IIoDrvKNX_C</span></a></li>
+</ul>
+</div>
+<div class="section" id="macros">
+<h2>5.2.112.2. Macros<a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga1828fc8a2a053a7d2a57623af4d7d8f3"><span class="std std-ref">EACCESSTYPE_AT_EREAD</span></a> RTS_IEC_INT_C(0x1)</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gac9103dfd3047b0c4b2d405580f9d7135"><span class="std std-ref">EACCESSTYPE_AT_EWRITE</span></a> RTS_IEC_INT_C(0x2)</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gafaf6673d805d00c4733b685fe5714f10"><span class="std std-ref">EACCESSTYPE_AT_EREADWRITE</span></a> RTS_IEC_INT_C(0x3)</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga374c977281fc91c436fbcfbd4c2c415d"><span class="std std-ref">EACCESSTYPE</span></a> RTS_IEC_INT</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga6e6fce7dd349c527b699723b50a5b346"><span class="std std-ref">EKNXTYPE_KNX_ENOT_USED</span></a> RTS_IEC_INT_C(0x0)</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga94c6e8fa86ee1a3c6f50b3a3c693b368"><span class="std std-ref">EKNXTYPE_KNX_EDPT1</span></a> RTS_IEC_INT_C(0x1)   /* 1 bit <a href="#id1"><span class="problematic" id="id2">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga0187e71180d1066c77db3ba49c66cf2f"><span class="std std-ref">EKNXTYPE_KNX_EDPT2</span></a> RTS_IEC_INT_C(0x2)   /* 2 bit control <a href="#id3"><span class="problematic" id="id4">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gac80747d32f9df4d171d01fd530725ea4"><span class="std std-ref">EKNXTYPE_KNX_EDPT3</span></a> RTS_IEC_INT_C(0x3)   /* 4 bit dimming control <a href="#id5"><span class="problematic" id="id6">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga095ed1c337685b3c3734d396bc82e8b5"><span class="std std-ref">EKNXTYPE_KNX_EDPT4</span></a> RTS_IEC_INT_C(0x4)   /* char <a href="#id7"><span class="problematic" id="id8">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga9745401aacf6f4b2d7859baa3fd800f7"><span class="std std-ref">EKNXTYPE_KNX_EDPT5_100</span></a> RTS_IEC_INT_C(0x105)     /* DPT5.001 - value (0..100) <a href="#id9"><span class="problematic" id="id10">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gae2edb558631e4e76372e5eda8451dbfb"><span class="std std-ref">EKNXTYPE_KNX_EDPT5_360</span></a> RTS_IEC_INT_C(0x305)     /* DPT5.003 - angle 0..360° <a href="#id11"><span class="problematic" id="id12">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga6a614bf0277a6f89cdd6de533affc8ee"><span class="std std-ref">EKNXTYPE_KNX_EDPT5_255</span></a> RTS_IEC_INT_C(0x405)     /* DPT5.004 - relative Position (0..255) <a href="#id13"><span class="problematic" id="id14">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga7de99e14efa893e7890a216c3bf519e6"><span class="std std-ref">EKNXTYPE_KNX_EDPT6</span></a> RTS_IEC_INT_C(0x6)   /* Signed Relative Value (-128 ... +127) <a href="#id15"><span class="problematic" id="id16">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga4117396128f8b777f72a8de8b3334f19"><span class="std std-ref">EKNXTYPE_KNX_EDPT7</span></a> RTS_IEC_INT_C(0x7)   /* 2-Octet Unsigned Value <a href="#id17"><span class="problematic" id="id18">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gafd555fa6526220efd3980e5223946e39"><span class="std std-ref">EKNXTYPE_KNX_EDPT8</span></a> RTS_IEC_INT_C(0x8)   /* 2-Octet signed Value <a href="#id19"><span class="problematic" id="id20">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gacc228b6c3046928b2d110c63ea1f690f"><span class="std std-ref">EKNXTYPE_KNX_EDPT9</span></a> RTS_IEC_INT_C(0x9)   /* 2-Octet float Value <a href="#id21"><span class="problematic" id="id22">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga7731dc21bcced747e2645b291462d8f3"><span class="std std-ref">EKNXTYPE_KNX_EDPT10</span></a> RTS_IEC_INT_C(0xA)  /* time <a href="#id23"><span class="problematic" id="id24">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gafe4c5e0e5961d8a53fccf48b2da689fc"><span class="std std-ref">EKNXTYPE_KNX_EDPT11</span></a> RTS_IEC_INT_C(0xB)  /* date <a href="#id25"><span class="problematic" id="id26">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga4c7825c491a35544d9138e9c5e81c6b1"><span class="std std-ref">EKNXTYPE_KNX_EDPT12</span></a> RTS_IEC_INT_C(0xC)  /* 4 octet unsigned value <a href="#id27"><span class="problematic" id="id28">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga20061f2a47f369afbc7e9a886b756957"><span class="std std-ref">EKNXTYPE_KNX_EDPT13</span></a> RTS_IEC_INT_C(0xD)  /* 4 octet signed value <a href="#id29"><span class="problematic" id="id30">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga2e42028d82b47d36c8c3854aba43c869"><span class="std std-ref">EKNXTYPE_KNX_EDPT14</span></a> RTS_IEC_INT_C(0xE)  /* 4 octet float value <a href="#id31"><span class="problematic" id="id32">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga634ac0b93141dfb761c29cd613e06a81"><span class="std std-ref">EKNXTYPE_KNX_EDPT16</span></a> RTS_IEC_INT_C(0x10) /* string <a href="#id33"><span class="problematic" id="id34">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga600ae66e9cc7e5c0b51380457503e1f3"><span class="std std-ref">EKNXTYPE_KNX_EDPT17</span></a> RTS_IEC_INT_C(0x11) /* scene <a href="#id35"><span class="problematic" id="id36">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gae90111f815621f94a44d97604a80c3a7"><span class="std std-ref">EKNXTYPE_KNX_EDPT18</span></a> RTS_IEC_INT_C(0x12) /* sceneControl <a href="#id37"><span class="problematic" id="id38">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gaec36bc2e3108611884b48e937910f80e"><span class="std std-ref">EKNXTYPE_KNX_EDPT19</span></a> RTS_IEC_INT_C(0x13) /* date time <a href="#id39"><span class="problematic" id="id40">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga8caee60ac5d8e75283641a97321d4232"><span class="std std-ref">EKNXTYPE_KNX_EDPT20</span></a> RTS_IEC_INT_C(0x14) /* n8 <a href="#id41"><span class="problematic" id="id42">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gad1baa98fd15f880e5bb5ab6a773e65c8"><span class="std std-ref">EKNXTYPE_KNX_EDPT232</span></a> RTS_IEC_INT_C(0xE8)        /* RGB - color <a href="#id43"><span class="problematic" id="id44">*</span></a>/</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gad5ed5aad098f55f9d963f11f71a600f0"><span class="std std-ref">EKNXTYPE</span></a> RTS_IEC_INT</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gaba9cc5f281ee0dd51f88a623a5dce1f0"><span class="std std-ref">ESENDINGFLAG_SF_NOAUTOMATICSEND</span></a> RTS_IEC_INT_C(0x0)</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gaa156ee2a30f0a8dd2cafd5e56963061f"><span class="std std-ref">ESENDINGFLAG_SF_SENDONCHANGE</span></a> RTS_IEC_INT_C(0x1)</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga1a39ec2117279672154ba0713196f3eb"><span class="std std-ref">ESENDINGFLAG_SF_SENDONDIFFERENCE</span></a> RTS_IEC_INT_C(0x2)</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga086f90f1d4ac879fc85e32fb9a49c323"><span class="std std-ref">ESENDINGFLAG</span></a> RTS_IEC_INT</li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga6eba37a51517834cceafdf18333bbce5"><span class="std std-ref">ITF_IoDrvKNX</span></a></li>
+<li>#define <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gae7b721f3a25acc0cc52c2c2150a6b98d"><span class="std std-ref">EXTITF_IoDrvKNX</span></a></li>
+</ul>
+</div>
+<div class="section" id="typedefs">
+<h2>5.2.112.3. Typedefs<a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>typedef struct <a class="reference internal" href="structtag_k_n_x_global_flags.html#structtag-k-n-x-global-flags"><span class="std std-ref">tagKNXGlobalFlags</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gabeb3f488383255aa0204340c0e9a9ada"><span class="std std-ref">KNXGlobalFlags</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtag_k_n_x_meta_data.html#structtag-k-n-x-meta-data"><span class="std std-ref">tagKNXMetaData</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga0b75893f4b07284c1bcf58daf6f35733"><span class="std std-ref">KNXMetaData</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtag_k_n_x_object_descr.html#structtag-k-n-x-object-descr"><span class="std std-ref">tagKNXObjectDescr</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gac6595d3ed9aa85ba0bbac95343f0e6ad"><span class="std std-ref">KNXObjectDescr</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtag_k_n_x_config_object.html#structtag-k-n-x-config-object"><span class="std std-ref">tagKNXConfigObject</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga1a8f4c3dc57daaa70e516676de6d36f5"><span class="std std-ref">KNXConfigObject</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__cyclic__struct.html#structtagknx-cyclic-struct"><span class="std std-ref">tagknx_cyclic_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gad5a30b92e28a810cb39a0e909702355e"><span class="std std-ref">knx_cyclic_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__exit__struct.html#structtagknx-exit-struct"><span class="std std-ref">tagknx_exit_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga22dc2244090eda532f41209dc74bc869"><span class="std std-ref">knx_exit_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__getdatapointer__struct.html#structtagknx-getdatapointer-struct"><span class="std std-ref">tagknx_getdatapointer_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga073dc9539bd3c5c6605644995339aa13"><span class="std std-ref">knx_getdatapointer_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__getglobalflags__struct.html#structtagknx-getglobalflags-struct"><span class="std std-ref">tagknx_getglobalflags_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gad3912b7ca9016ca37cd5826980958db1"><span class="std std-ref">knx_getglobalflags_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__getledpointer__struct.html#structtagknx-getledpointer-struct"><span class="std std-ref">tagknx_getledpointer_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gad231505a17a331351ec9d8ba9767745e"><span class="std std-ref">knx_getledpointer_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__getmetadata__struct.html#structtagknx-getmetadata-struct"><span class="std std-ref">tagknx_getmetadata_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gae94d3035effd08b8c210a6c42351fec4"><span class="std std-ref">knx_getmetadata_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__getobjectinstance__struct.html#structtagknx-getobjectinstance-struct"><span class="std std-ref">tagknx_getobjectinstance_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gaa1c405b521f2ebf62a8fe407c913488b"><span class="std std-ref">knx_getobjectinstance_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__getprogrampointer__struct.html#structtagknx-getprogrampointer-struct"><span class="std std-ref">tagknx_getprogrampointer_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga5a03b8c501304cd721f2e34021d0a3c2"><span class="std std-ref">knx_getprogrampointer_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__getstatuspointer__struct.html#structtagknx-getstatuspointer-struct"><span class="std std-ref">tagknx_getstatuspointer_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gab1d0c67ed923a03ffc5800b71bbf75dc"><span class="std std-ref">knx_getstatuspointer_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__init__struct.html#structtagknx-init-struct"><span class="std std-ref">tagknx_init_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gaacd37d11292e49a9e6f9b4e45513fe24"><span class="std std-ref">knx_init_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__setgateway__struct.html#structtagknx-setgateway-struct"><span class="std std-ref">tagknx_setgateway_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gae5a080ea5600070db8d1a95603eb6a6c"><span class="std std-ref">knx_setgateway_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__setipaddress__struct.html#structtagknx-setipaddress-struct"><span class="std std-ref">tagknx_setipaddress_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga363270b63f276e377f8de8f616cec65b"><span class="std std-ref">knx_setipaddress_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__setmacaddress__struct.html#structtagknx-setmacaddress-struct"><span class="std std-ref">tagknx_setmacaddress_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga37d3a02095dbbd9c7fab305831759ce1"><span class="std std-ref">knx_setmacaddress_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__setmulticastaddress__struct.html#structtagknx-setmulticastaddress-struct"><span class="std std-ref">tagknx_setmulticastaddress_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gac8676654ef5d29e275c9b9e554cd9779"><span class="std std-ref">knx_setmulticastaddress_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__setobjecttype__struct.html#structtagknx-setobjecttype-struct"><span class="std std-ref">tagknx_setobjecttype_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga3b80c49872a850f1b5fab606b5bb21ba"><span class="std std-ref">knx_setobjecttype_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__setserialnumber__struct.html#structtagknx-setserialnumber-struct"><span class="std std-ref">tagknx_setserialnumber_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gaf92f5192cf5f0ff0a11eb87cdf9b318e"><span class="std std-ref">knx_setserialnumber_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__setsubnetmask__struct.html#structtagknx-setsubnetmask-struct"><span class="std std-ref">tagknx_setsubnetmask_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga7d9c9279c36878219bb8f7282a60d6b5"><span class="std std-ref">knx_setsubnetmask_struct</span></a></li>
+<li>typedef struct <a class="reference internal" href="structtagknx__transmitobject__struct.html#structtagknx-transmitobject-struct"><span class="std std-ref">tagknx_transmitobject_struct</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gacf2d08724a260dcaf44cbea691fe3912"><span class="std std-ref">knx_transmitobject_struct</span></a></li>
+<li>typedef <a class="reference internal" href="struct_i_io_drv_k_n_x___c.html#struct-i-io-drv-k-n-x-c"><span class="std std-ref">IIoDrvKNX_C</span></a> <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gae845666fa6e24be3fc4bbfabd503bd04"><span class="std std-ref">IIoDrvKNX</span></a></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>5.2.112.4. Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gac4b4a8b42904ea6163579633ce7ba93b"><span class="std std-ref">knx_cyclic</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1gad5a30b92e28a810cb39a0e909702355e"><span class="std std-ref">knx_cyclic_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gaac8b568f360b4d053d19c6ff38f2ef0c"><span class="std std-ref">knx_exit</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga22dc2244090eda532f41209dc74bc869"><span class="std std-ref">knx_exit_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gaea3e8081636adaf3e0d81dffc683d3e4"><span class="std std-ref">knx_getdatapointer</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga073dc9539bd3c5c6605644995339aa13"><span class="std std-ref">knx_getdatapointer_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gaadcb0486d01969f90b1605b76ab90c94"><span class="std std-ref">knx_getglobalflags</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1gad3912b7ca9016ca37cd5826980958db1"><span class="std std-ref">knx_getglobalflags_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga26541aab554b950bfd2e2e86c7cb69da"><span class="std std-ref">knx_getledpointer</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1gad231505a17a331351ec9d8ba9767745e"><span class="std std-ref">knx_getledpointer_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga32e4565b0c50c1740b92a45755b102f3"><span class="std std-ref">knx_getmetadata</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1gae94d3035effd08b8c210a6c42351fec4"><span class="std std-ref">knx_getmetadata_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga2eb77360715de3d20f114be03224ca94"><span class="std std-ref">knx_getobjectinstance</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1gaa1c405b521f2ebf62a8fe407c913488b"><span class="std std-ref">knx_getobjectinstance_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gab821e016925daabb6079d3c27cdefb3d"><span class="std std-ref">knx_getprogrampointer</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga5a03b8c501304cd721f2e34021d0a3c2"><span class="std std-ref">knx_getprogrampointer_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga9dbb5d0887211273fcbcb2a31adfd0f4"><span class="std std-ref">knx_getstatuspointer</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1gab1d0c67ed923a03ffc5800b71bbf75dc"><span class="std std-ref">knx_getstatuspointer_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga99091c9b6ae05a233331d954af278c98"><span class="std std-ref">knx_init</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1gaacd37d11292e49a9e6f9b4e45513fe24"><span class="std std-ref">knx_init_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga26e3ada19bb6f298db8f55536ae7a8a3"><span class="std std-ref">knx_setgateway</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1gae5a080ea5600070db8d1a95603eb6a6c"><span class="std std-ref">knx_setgateway_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga519be438c0c769e561d397d08e222c71"><span class="std std-ref">knx_setipaddress</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga363270b63f276e377f8de8f616cec65b"><span class="std std-ref">knx_setipaddress_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gabf2259db00ddfb44d30925e1b997749f"><span class="std std-ref">knx_setmacaddress</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga37d3a02095dbbd9c7fab305831759ce1"><span class="std std-ref">knx_setmacaddress_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga709ff26f0ec1a7d0023ef9b7cedd23b5"><span class="std std-ref">knx_setmulticastaddress</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1gac8676654ef5d29e275c9b9e554cd9779"><span class="std std-ref">knx_setmulticastaddress_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga3bc6e076b68e8fa747f741c5036ae484"><span class="std std-ref">knx_setobjecttype</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga3b80c49872a850f1b5fab606b5bb21ba"><span class="std std-ref">knx_setobjecttype_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1gaf9c6024435abb4552d00ad9106e8d7c4"><span class="std std-ref">knx_setserialnumber</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1gaf92f5192cf5f0ff0a11eb87cdf9b318e"><span class="std std-ref">knx_setserialnumber_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga28ece68db3f1242d7a9f32f3d3b157e9"><span class="std std-ref">knx_setsubnetmask</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga7d9c9279c36878219bb8f7282a60d6b5"><span class="std std-ref">knx_setsubnetmask_struct</span></a> * p)</li>
+<li>void <a class="reference internal" href="#group-io-drv-k-n-x-itf-1ga6fddfd7d504b2684330a0205761f30e2"><span class="std std-ref">knx_transmitobject</span></a> (<a class="reference internal" href="#group-io-drv-k-n-x-itf-1gacf2d08724a260dcaf44cbea691fe3912"><span class="std std-ref">knx_transmitobject_struct</span></a> * p)</li>
+</ul>
+</div>
+<div class="section" id="detailed-description">
+<span id="group-io-drv-k-n-x-itf-details"></span><h2>5.2.112.5. Detailed Description<a class="headerlink" href="#detailed-description" title="Permalink to this headline">¶</a></h2>
+<p>Interface of IoDrvKNX.</p>
+</div>
+<div class="section" id="macro-definition-documentation">
+<h2>5.2.112.6. Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="define-eaccesstype-at-eread-rts-iec-int-c-0x1">
+<span id="group-io-drv-k-n-x-itf-1ga1828fc8a2a053a7d2a57623af4d7d8f3"></span><h3>5.2.112.6.1. #define EACCESSTYPE_AT_EREAD RTS_IEC_INT_C(0x1)<a class="headerlink" href="#define-eaccesstype-at-eread-rts-iec-int-c-0x1" title="Permalink to this headline">¶</a></h3>
+<p>EXTERN LIB SECTION BEGIN</p>
+<p>Enum: EAccessType</p>
+</div>
+<div class="section" id="define-eaccesstype-at-ewrite-rts-iec-int-c-0x2">
+<span id="group-io-drv-k-n-x-itf-1gac9103dfd3047b0c4b2d405580f9d7135"></span><h3>5.2.112.6.2. #define EACCESSTYPE_AT_EWRITE RTS_IEC_INT_C(0x2)<a class="headerlink" href="#define-eaccesstype-at-ewrite-rts-iec-int-c-0x2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eaccesstype-at-ereadwrite-rts-iec-int-c-0x3">
+<span id="group-io-drv-k-n-x-itf-1gafaf6673d805d00c4733b685fe5714f10"></span><h3>5.2.112.6.3. #define EACCESSTYPE_AT_EREADWRITE RTS_IEC_INT_C(0x3)<a class="headerlink" href="#define-eaccesstype-at-ereadwrite-rts-iec-int-c-0x3" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eaccesstype-rts-iec-int">
+<span id="group-io-drv-k-n-x-itf-1ga374c977281fc91c436fbcfbd4c2c415d"></span><h3>5.2.112.6.4. #define EACCESSTYPE RTS_IEC_INT<a class="headerlink" href="#define-eaccesstype-rts-iec-int" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-enot-used-rts-iec-int-c-0x0">
+<span id="group-io-drv-k-n-x-itf-1ga6e6fce7dd349c527b699723b50a5b346"></span><h3>5.2.112.6.5. #define EKNXTYPE_KNX_ENOT_USED RTS_IEC_INT_C(0x0)<a class="headerlink" href="#define-eknxtype-knx-enot-used-rts-iec-int-c-0x0" title="Permalink to this headline">¶</a></h3>
+<p>Enum: EKnxType</p>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt1-rts-iec-int-c-0x1-1-bit">
+<span id="group-io-drv-k-n-x-itf-1ga94c6e8fa86ee1a3c6f50b3a3c693b368"></span><h3>5.2.112.6.6. #define EKNXTYPE_KNX_EDPT1 RTS_IEC_INT_C(0x1)   /* 1 bit <a href="#id45"><span class="problematic" id="id46">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt1-rts-iec-int-c-0x1-1-bit" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt2-rts-iec-int-c-0x2-2-bit-control">
+<span id="group-io-drv-k-n-x-itf-1ga0187e71180d1066c77db3ba49c66cf2f"></span><h3>5.2.112.6.7. #define EKNXTYPE_KNX_EDPT2 RTS_IEC_INT_C(0x2)   /* 2 bit control <a href="#id47"><span class="problematic" id="id48">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt2-rts-iec-int-c-0x2-2-bit-control" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt3-rts-iec-int-c-0x3-4-bit-dimming-control">
+<span id="group-io-drv-k-n-x-itf-1gac80747d32f9df4d171d01fd530725ea4"></span><h3>5.2.112.6.8. #define EKNXTYPE_KNX_EDPT3 RTS_IEC_INT_C(0x3)   /* 4 bit dimming control <a href="#id49"><span class="problematic" id="id50">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt3-rts-iec-int-c-0x3-4-bit-dimming-control" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt4-rts-iec-int-c-0x4-char">
+<span id="group-io-drv-k-n-x-itf-1ga095ed1c337685b3c3734d396bc82e8b5"></span><h3>5.2.112.6.9. #define EKNXTYPE_KNX_EDPT4 RTS_IEC_INT_C(0x4)   /* char <a href="#id51"><span class="problematic" id="id52">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt4-rts-iec-int-c-0x4-char" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt5-100-rts-iec-int-c-0x105-dpt5-001-value-0-100">
+<span id="group-io-drv-k-n-x-itf-1ga9745401aacf6f4b2d7859baa3fd800f7"></span><h3>5.2.112.6.10. #define EKNXTYPE_KNX_EDPT5_100 RTS_IEC_INT_C(0x105)     /* DPT5.001 - value (0..100) <a href="#id53"><span class="problematic" id="id54">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt5-100-rts-iec-int-c-0x105-dpt5-001-value-0-100" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt5-360-rts-iec-int-c-0x305-dpt5-003-angle-0-360">
+<span id="group-io-drv-k-n-x-itf-1gae2edb558631e4e76372e5eda8451dbfb"></span><h3>5.2.112.6.11. #define EKNXTYPE_KNX_EDPT5_360 RTS_IEC_INT_C(0x305)     /* DPT5.003 - angle 0..360° <a href="#id55"><span class="problematic" id="id56">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt5-360-rts-iec-int-c-0x305-dpt5-003-angle-0-360" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt5-255-rts-iec-int-c-0x405-dpt5-004-relative-position-0-255">
+<span id="group-io-drv-k-n-x-itf-1ga6a614bf0277a6f89cdd6de533affc8ee"></span><h3>5.2.112.6.12. #define EKNXTYPE_KNX_EDPT5_255 RTS_IEC_INT_C(0x405)     /* DPT5.004 - relative Position (0..255) <a href="#id57"><span class="problematic" id="id58">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt5-255-rts-iec-int-c-0x405-dpt5-004-relative-position-0-255" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt6-rts-iec-int-c-0x6-signed-relative-value-128-127">
+<span id="group-io-drv-k-n-x-itf-1ga7de99e14efa893e7890a216c3bf519e6"></span><h3>5.2.112.6.13. #define EKNXTYPE_KNX_EDPT6 RTS_IEC_INT_C(0x6)   /* Signed Relative Value (-128 ... +127) <a href="#id59"><span class="problematic" id="id60">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt6-rts-iec-int-c-0x6-signed-relative-value-128-127" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt7-rts-iec-int-c-0x7-2-octet-unsigned-value">
+<span id="group-io-drv-k-n-x-itf-1ga4117396128f8b777f72a8de8b3334f19"></span><h3>5.2.112.6.14. #define EKNXTYPE_KNX_EDPT7 RTS_IEC_INT_C(0x7)   /* 2-Octet Unsigned Value <a href="#id61"><span class="problematic" id="id62">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt7-rts-iec-int-c-0x7-2-octet-unsigned-value" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt8-rts-iec-int-c-0x8-2-octet-signed-value">
+<span id="group-io-drv-k-n-x-itf-1gafd555fa6526220efd3980e5223946e39"></span><h3>5.2.112.6.15. #define EKNXTYPE_KNX_EDPT8 RTS_IEC_INT_C(0x8)   /* 2-Octet signed Value <a href="#id63"><span class="problematic" id="id64">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt8-rts-iec-int-c-0x8-2-octet-signed-value" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt9-rts-iec-int-c-0x9-2-octet-float-value">
+<span id="group-io-drv-k-n-x-itf-1gacc228b6c3046928b2d110c63ea1f690f"></span><h3>5.2.112.6.16. #define EKNXTYPE_KNX_EDPT9 RTS_IEC_INT_C(0x9)   /* 2-Octet float Value <a href="#id65"><span class="problematic" id="id66">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt9-rts-iec-int-c-0x9-2-octet-float-value" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt10-rts-iec-int-c-0xa-time">
+<span id="group-io-drv-k-n-x-itf-1ga7731dc21bcced747e2645b291462d8f3"></span><h3>5.2.112.6.17. #define EKNXTYPE_KNX_EDPT10 RTS_IEC_INT_C(0xA)  /* time <a href="#id67"><span class="problematic" id="id68">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt10-rts-iec-int-c-0xa-time" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt11-rts-iec-int-c-0xb-date">
+<span id="group-io-drv-k-n-x-itf-1gafe4c5e0e5961d8a53fccf48b2da689fc"></span><h3>5.2.112.6.18. #define EKNXTYPE_KNX_EDPT11 RTS_IEC_INT_C(0xB)  /* date <a href="#id69"><span class="problematic" id="id70">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt11-rts-iec-int-c-0xb-date" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt12-rts-iec-int-c-0xc-4-octet-unsigned-value">
+<span id="group-io-drv-k-n-x-itf-1ga4c7825c491a35544d9138e9c5e81c6b1"></span><h3>5.2.112.6.19. #define EKNXTYPE_KNX_EDPT12 RTS_IEC_INT_C(0xC)  /* 4 octet unsigned value <a href="#id71"><span class="problematic" id="id72">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt12-rts-iec-int-c-0xc-4-octet-unsigned-value" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt13-rts-iec-int-c-0xd-4-octet-signed-value">
+<span id="group-io-drv-k-n-x-itf-1ga20061f2a47f369afbc7e9a886b756957"></span><h3>5.2.112.6.20. #define EKNXTYPE_KNX_EDPT13 RTS_IEC_INT_C(0xD)  /* 4 octet signed value <a href="#id73"><span class="problematic" id="id74">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt13-rts-iec-int-c-0xd-4-octet-signed-value" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt14-rts-iec-int-c-0xe-4-octet-float-value">
+<span id="group-io-drv-k-n-x-itf-1ga2e42028d82b47d36c8c3854aba43c869"></span><h3>5.2.112.6.21. #define EKNXTYPE_KNX_EDPT14 RTS_IEC_INT_C(0xE)  /* 4 octet float value <a href="#id75"><span class="problematic" id="id76">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt14-rts-iec-int-c-0xe-4-octet-float-value" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt16-rts-iec-int-c-0x10-string">
+<span id="group-io-drv-k-n-x-itf-1ga634ac0b93141dfb761c29cd613e06a81"></span><h3>5.2.112.6.22. #define EKNXTYPE_KNX_EDPT16 RTS_IEC_INT_C(0x10) /* string <a href="#id77"><span class="problematic" id="id78">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt16-rts-iec-int-c-0x10-string" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt17-rts-iec-int-c-0x11-scene">
+<span id="group-io-drv-k-n-x-itf-1ga600ae66e9cc7e5c0b51380457503e1f3"></span><h3>5.2.112.6.23. #define EKNXTYPE_KNX_EDPT17 RTS_IEC_INT_C(0x11) /* scene <a href="#id79"><span class="problematic" id="id80">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt17-rts-iec-int-c-0x11-scene" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt18-rts-iec-int-c-0x12-scenecontrol">
+<span id="group-io-drv-k-n-x-itf-1gae90111f815621f94a44d97604a80c3a7"></span><h3>5.2.112.6.24. #define EKNXTYPE_KNX_EDPT18 RTS_IEC_INT_C(0x12) /* sceneControl <a href="#id81"><span class="problematic" id="id82">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt18-rts-iec-int-c-0x12-scenecontrol" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt19-rts-iec-int-c-0x13-date-time">
+<span id="group-io-drv-k-n-x-itf-1gaec36bc2e3108611884b48e937910f80e"></span><h3>5.2.112.6.25. #define EKNXTYPE_KNX_EDPT19 RTS_IEC_INT_C(0x13) /* date time <a href="#id83"><span class="problematic" id="id84">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt19-rts-iec-int-c-0x13-date-time" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt20-rts-iec-int-c-0x14-n8">
+<span id="group-io-drv-k-n-x-itf-1ga8caee60ac5d8e75283641a97321d4232"></span><h3>5.2.112.6.26. #define EKNXTYPE_KNX_EDPT20 RTS_IEC_INT_C(0x14) /* n8 <a href="#id85"><span class="problematic" id="id86">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt20-rts-iec-int-c-0x14-n8" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-knx-edpt232-rts-iec-int-c-0xe8-rgb-color">
+<span id="group-io-drv-k-n-x-itf-1gad1baa98fd15f880e5bb5ab6a773e65c8"></span><h3>5.2.112.6.27. #define EKNXTYPE_KNX_EDPT232 RTS_IEC_INT_C(0xE8)        /* RGB - color <a href="#id87"><span class="problematic" id="id88">*</span></a>/<a class="headerlink" href="#define-eknxtype-knx-edpt232-rts-iec-int-c-0xe8-rgb-color" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-eknxtype-rts-iec-int">
+<span id="group-io-drv-k-n-x-itf-1gad5ed5aad098f55f9d963f11f71a600f0"></span><h3>5.2.112.6.28. #define EKNXTYPE RTS_IEC_INT<a class="headerlink" href="#define-eknxtype-rts-iec-int" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-esendingflag-sf-noautomaticsend-rts-iec-int-c-0x0">
+<span id="group-io-drv-k-n-x-itf-1gaba9cc5f281ee0dd51f88a623a5dce1f0"></span><h3>5.2.112.6.29. #define ESENDINGFLAG_SF_NOAUTOMATICSEND RTS_IEC_INT_C(0x0)<a class="headerlink" href="#define-esendingflag-sf-noautomaticsend-rts-iec-int-c-0x0" title="Permalink to this headline">¶</a></h3>
+<p>Enum: ESendingFlag</p>
+</div>
+<div class="section" id="define-esendingflag-sf-sendonchange-rts-iec-int-c-0x1">
+<span id="group-io-drv-k-n-x-itf-1gaa156ee2a30f0a8dd2cafd5e56963061f"></span><h3>5.2.112.6.30. #define ESENDINGFLAG_SF_SENDONCHANGE RTS_IEC_INT_C(0x1)<a class="headerlink" href="#define-esendingflag-sf-sendonchange-rts-iec-int-c-0x1" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-esendingflag-sf-sendondifference-rts-iec-int-c-0x2">
+<span id="group-io-drv-k-n-x-itf-1ga1a39ec2117279672154ba0713196f3eb"></span><h3>5.2.112.6.31. #define ESENDINGFLAG_SF_SENDONDIFFERENCE RTS_IEC_INT_C(0x2)<a class="headerlink" href="#define-esendingflag-sf-sendondifference-rts-iec-int-c-0x2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-esendingflag-rts-iec-int">
+<span id="group-io-drv-k-n-x-itf-1ga086f90f1d4ac879fc85e32fb9a49c323"></span><h3>5.2.112.6.32. #define ESENDINGFLAG RTS_IEC_INT<a class="headerlink" href="#define-esendingflag-rts-iec-int" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-itf-iodrvknx">
+<span id="group-io-drv-k-n-x-itf-1ga6eba37a51517834cceafdf18333bbce5"></span><h3>5.2.112.6.33. #define ITF_IoDrvKNX<a class="headerlink" href="#define-itf-iodrvknx" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-extitf-iodrvknx">
+<span id="group-io-drv-k-n-x-itf-1gae7b721f3a25acc0cc52c2c2150a6b98d"></span><h3>5.2.112.6.34. #define EXTITF_IoDrvKNX<a class="headerlink" href="#define-extitf-iodrvknx" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="typedef-documentation">
+<h2>5.2.112.7. Typedef Documentation<a class="headerlink" href="#typedef-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="typedef-struct-tagknxglobalflags-knxglobalflags">
+<span id="group-io-drv-k-n-x-itf-1gabeb3f488383255aa0204340c0e9a9ada"></span><h3>5.2.112.7.1. typedef struct tagKNXGlobalFlags  KNXGlobalFlags<a class="headerlink" href="#typedef-struct-tagknxglobalflags-knxglobalflags" title="Permalink to this headline">¶</a></h3>
+<p>KNXGlobalFlags</p>
+</div>
+<div class="section" id="typedef-struct-tagknxmetadata-knxmetadata">
+<span id="group-io-drv-k-n-x-itf-1ga0b75893f4b07284c1bcf58daf6f35733"></span><h3>5.2.112.7.2. typedef struct tagKNXMetaData  KNXMetaData<a class="headerlink" href="#typedef-struct-tagknxmetadata-knxmetadata" title="Permalink to this headline">¶</a></h3>
+<p>KNXMetaData</p>
+</div>
+<div class="section" id="typedef-struct-tagknxobjectdescr-knxobjectdescr">
+<span id="group-io-drv-k-n-x-itf-1gac6595d3ed9aa85ba0bbac95343f0e6ad"></span><h3>5.2.112.7.3. typedef struct tagKNXObjectDescr  KNXObjectDescr<a class="headerlink" href="#typedef-struct-tagknxobjectdescr-knxobjectdescr" title="Permalink to this headline">¶</a></h3>
+<p>KNXObjectDescr</p>
+</div>
+<div class="section" id="typedef-struct-tagknxconfigobject-knxconfigobject">
+<span id="group-io-drv-k-n-x-itf-1ga1a8f4c3dc57daaa70e516676de6d36f5"></span><h3>5.2.112.7.4. typedef struct tagKNXConfigObject  KNXConfigObject<a class="headerlink" href="#typedef-struct-tagknxconfigobject-knxconfigobject" title="Permalink to this headline">¶</a></h3>
+<p>KNXConfigObject</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-cyclic-struct-knx-cyclic-struct">
+<span id="group-io-drv-k-n-x-itf-1gad5a30b92e28a810cb39a0e909702355e"></span><h3>5.2.112.7.5. typedef struct tagknx_cyclic_struct  knx_cyclic_struct<a class="headerlink" href="#typedef-struct-tagknx-cyclic-struct-knx-cyclic-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_cyclic</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-exit-struct-knx-exit-struct">
+<span id="group-io-drv-k-n-x-itf-1ga22dc2244090eda532f41209dc74bc869"></span><h3>5.2.112.7.6. typedef struct tagknx_exit_struct  knx_exit_struct<a class="headerlink" href="#typedef-struct-tagknx-exit-struct-knx-exit-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_exit</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-getdatapointer-struct-knx-getdatapointer-struct">
+<span id="group-io-drv-k-n-x-itf-1ga073dc9539bd3c5c6605644995339aa13"></span><h3>5.2.112.7.7. typedef struct tagknx_getdatapointer_struct  knx_getdatapointer_struct<a class="headerlink" href="#typedef-struct-tagknx-getdatapointer-struct-knx-getdatapointer-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_getdatapointer</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-getglobalflags-struct-knx-getglobalflags-struct">
+<span id="group-io-drv-k-n-x-itf-1gad3912b7ca9016ca37cd5826980958db1"></span><h3>5.2.112.7.8. typedef struct tagknx_getglobalflags_struct  knx_getglobalflags_struct<a class="headerlink" href="#typedef-struct-tagknx-getglobalflags-struct-knx-getglobalflags-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_getglobalflags</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-getledpointer-struct-knx-getledpointer-struct">
+<span id="group-io-drv-k-n-x-itf-1gad231505a17a331351ec9d8ba9767745e"></span><h3>5.2.112.7.9. typedef struct tagknx_getledpointer_struct  knx_getledpointer_struct<a class="headerlink" href="#typedef-struct-tagknx-getledpointer-struct-knx-getledpointer-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_getledpointer</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-getmetadata-struct-knx-getmetadata-struct">
+<span id="group-io-drv-k-n-x-itf-1gae94d3035effd08b8c210a6c42351fec4"></span><h3>5.2.112.7.10. typedef struct tagknx_getmetadata_struct  knx_getmetadata_struct<a class="headerlink" href="#typedef-struct-tagknx-getmetadata-struct-knx-getmetadata-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_getmetadata</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-getobjectinstance-struct-knx-getobjectinstance-struct">
+<span id="group-io-drv-k-n-x-itf-1gaa1c405b521f2ebf62a8fe407c913488b"></span><h3>5.2.112.7.11. typedef struct tagknx_getobjectinstance_struct  knx_getobjectinstance_struct<a class="headerlink" href="#typedef-struct-tagknx-getobjectinstance-struct-knx-getobjectinstance-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_getobjectinstance</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-getprogrampointer-struct-knx-getprogrampointer-struct">
+<span id="group-io-drv-k-n-x-itf-1ga5a03b8c501304cd721f2e34021d0a3c2"></span><h3>5.2.112.7.12. typedef struct tagknx_getprogrampointer_struct  knx_getprogrampointer_struct<a class="headerlink" href="#typedef-struct-tagknx-getprogrampointer-struct-knx-getprogrampointer-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_getprogrampointer</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-getstatuspointer-struct-knx-getstatuspointer-struct">
+<span id="group-io-drv-k-n-x-itf-1gab1d0c67ed923a03ffc5800b71bbf75dc"></span><h3>5.2.112.7.13. typedef struct tagknx_getstatuspointer_struct  knx_getstatuspointer_struct<a class="headerlink" href="#typedef-struct-tagknx-getstatuspointer-struct-knx-getstatuspointer-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_getstatuspointer</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-init-struct-knx-init-struct">
+<span id="group-io-drv-k-n-x-itf-1gaacd37d11292e49a9e6f9b4e45513fe24"></span><h3>5.2.112.7.14. typedef struct tagknx_init_struct  knx_init_struct<a class="headerlink" href="#typedef-struct-tagknx-init-struct-knx-init-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_init</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-setgateway-struct-knx-setgateway-struct">
+<span id="group-io-drv-k-n-x-itf-1gae5a080ea5600070db8d1a95603eb6a6c"></span><h3>5.2.112.7.15. typedef struct tagknx_setgateway_struct  knx_setgateway_struct<a class="headerlink" href="#typedef-struct-tagknx-setgateway-struct-knx-setgateway-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_setgateway</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-setipaddress-struct-knx-setipaddress-struct">
+<span id="group-io-drv-k-n-x-itf-1ga363270b63f276e377f8de8f616cec65b"></span><h3>5.2.112.7.16. typedef struct tagknx_setipaddress_struct  knx_setipaddress_struct<a class="headerlink" href="#typedef-struct-tagknx-setipaddress-struct-knx-setipaddress-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_setipaddress</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-setmacaddress-struct-knx-setmacaddress-struct">
+<span id="group-io-drv-k-n-x-itf-1ga37d3a02095dbbd9c7fab305831759ce1"></span><h3>5.2.112.7.17. typedef struct tagknx_setmacaddress_struct  knx_setmacaddress_struct<a class="headerlink" href="#typedef-struct-tagknx-setmacaddress-struct-knx-setmacaddress-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_setmacaddress</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-setmulticastaddress-struct-knx-setmulticastaddress-struct">
+<span id="group-io-drv-k-n-x-itf-1gac8676654ef5d29e275c9b9e554cd9779"></span><h3>5.2.112.7.18. typedef struct tagknx_setmulticastaddress_struct  knx_setmulticastaddress_struct<a class="headerlink" href="#typedef-struct-tagknx-setmulticastaddress-struct-knx-setmulticastaddress-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_setmulticastaddress</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-setobjecttype-struct-knx-setobjecttype-struct">
+<span id="group-io-drv-k-n-x-itf-1ga3b80c49872a850f1b5fab606b5bb21ba"></span><h3>5.2.112.7.19. typedef struct tagknx_setobjecttype_struct  knx_setobjecttype_struct<a class="headerlink" href="#typedef-struct-tagknx-setobjecttype-struct-knx-setobjecttype-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_setobjecttype</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-setserialnumber-struct-knx-setserialnumber-struct">
+<span id="group-io-drv-k-n-x-itf-1gaf92f5192cf5f0ff0a11eb87cdf9b318e"></span><h3>5.2.112.7.20. typedef struct tagknx_setserialnumber_struct  knx_setserialnumber_struct<a class="headerlink" href="#typedef-struct-tagknx-setserialnumber-struct-knx-setserialnumber-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_setserialnumber</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-setsubnetmask-struct-knx-setsubnetmask-struct">
+<span id="group-io-drv-k-n-x-itf-1ga7d9c9279c36878219bb8f7282a60d6b5"></span><h3>5.2.112.7.21. typedef struct tagknx_setsubnetmask_struct  knx_setsubnetmask_struct<a class="headerlink" href="#typedef-struct-tagknx-setsubnetmask-struct-knx-setsubnetmask-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_setsubnetmask</p>
+</div>
+<div class="section" id="typedef-struct-tagknx-transmitobject-struct-knx-transmitobject-struct">
+<span id="group-io-drv-k-n-x-itf-1gacf2d08724a260dcaf44cbea691fe3912"></span><h3>5.2.112.7.22. typedef struct tagknx_transmitobject_struct  knx_transmitobject_struct<a class="headerlink" href="#typedef-struct-tagknx-transmitobject-struct-knx-transmitobject-struct" title="Permalink to this headline">¶</a></h3>
+<p>knx_transmitobject</p>
+</div>
+<div class="section" id="typedef-iiodrvknx-c-iiodrvknx">
+<span id="group-io-drv-k-n-x-itf-1gae845666fa6e24be3fc4bbfabd503bd04"></span><h3>5.2.112.7.23. typedef IIoDrvKNX_C IIoDrvKNX<a class="headerlink" href="#typedef-iiodrvknx-c-iiodrvknx" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="function-documentation">
+<h2>5.2.112.8. Function Documentation<a class="headerlink" href="#function-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="void-knx-cyclic-knx-cyclic-struct-p">
+<span id="group-io-drv-k-n-x-itf-1gac4b4a8b42904ea6163579633ce7ba93b"></span><h3>5.2.112.8.1. void knx_cyclic (knx_cyclic_struct <a href="#id89"><span class="problematic" id="id90">*</span></a>p)<a class="headerlink" href="#void-knx-cyclic-knx-cyclic-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-exit-knx-exit-struct-p">
+<span id="group-io-drv-k-n-x-itf-1gaac8b568f360b4d053d19c6ff38f2ef0c"></span><h3>5.2.112.8.2. void knx_exit (knx_exit_struct <a href="#id91"><span class="problematic" id="id92">*</span></a>p)<a class="headerlink" href="#void-knx-exit-knx-exit-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-getdatapointer-knx-getdatapointer-struct-p">
+<span id="group-io-drv-k-n-x-itf-1gaea3e8081636adaf3e0d81dffc683d3e4"></span><h3>5.2.112.8.3. void knx_getdatapointer (knx_getdatapointer_struct <a href="#id93"><span class="problematic" id="id94">*</span></a>p)<a class="headerlink" href="#void-knx-getdatapointer-knx-getdatapointer-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-getglobalflags-knx-getglobalflags-struct-p">
+<span id="group-io-drv-k-n-x-itf-1gaadcb0486d01969f90b1605b76ab90c94"></span><h3>5.2.112.8.4. void knx_getglobalflags (knx_getglobalflags_struct <a href="#id95"><span class="problematic" id="id96">*</span></a>p)<a class="headerlink" href="#void-knx-getglobalflags-knx-getglobalflags-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-getledpointer-knx-getledpointer-struct-p">
+<span id="group-io-drv-k-n-x-itf-1ga26541aab554b950bfd2e2e86c7cb69da"></span><h3>5.2.112.8.5. void knx_getledpointer (knx_getledpointer_struct <a href="#id97"><span class="problematic" id="id98">*</span></a>p)<a class="headerlink" href="#void-knx-getledpointer-knx-getledpointer-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-getmetadata-knx-getmetadata-struct-p">
+<span id="group-io-drv-k-n-x-itf-1ga32e4565b0c50c1740b92a45755b102f3"></span><h3>5.2.112.8.6. void knx_getmetadata (knx_getmetadata_struct <a href="#id99"><span class="problematic" id="id100">*</span></a>p)<a class="headerlink" href="#void-knx-getmetadata-knx-getmetadata-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-getobjectinstance-knx-getobjectinstance-struct-p">
+<span id="group-io-drv-k-n-x-itf-1ga2eb77360715de3d20f114be03224ca94"></span><h3>5.2.112.8.7. void knx_getobjectinstance (knx_getobjectinstance_struct <a href="#id101"><span class="problematic" id="id102">*</span></a>p)<a class="headerlink" href="#void-knx-getobjectinstance-knx-getobjectinstance-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-getprogrampointer-knx-getprogrampointer-struct-p">
+<span id="group-io-drv-k-n-x-itf-1gab821e016925daabb6079d3c27cdefb3d"></span><h3>5.2.112.8.8. void knx_getprogrampointer (knx_getprogrampointer_struct <a href="#id103"><span class="problematic" id="id104">*</span></a>p)<a class="headerlink" href="#void-knx-getprogrampointer-knx-getprogrampointer-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-getstatuspointer-knx-getstatuspointer-struct-p">
+<span id="group-io-drv-k-n-x-itf-1ga9dbb5d0887211273fcbcb2a31adfd0f4"></span><h3>5.2.112.8.9. void knx_getstatuspointer (knx_getstatuspointer_struct <a href="#id105"><span class="problematic" id="id106">*</span></a>p)<a class="headerlink" href="#void-knx-getstatuspointer-knx-getstatuspointer-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-init-knx-init-struct-p">
+<span id="group-io-drv-k-n-x-itf-1ga99091c9b6ae05a233331d954af278c98"></span><h3>5.2.112.8.10. void knx_init (knx_init_struct <a href="#id107"><span class="problematic" id="id108">*</span></a>p)<a class="headerlink" href="#void-knx-init-knx-init-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-setgateway-knx-setgateway-struct-p">
+<span id="group-io-drv-k-n-x-itf-1ga26e3ada19bb6f298db8f55536ae7a8a3"></span><h3>5.2.112.8.11. void knx_setgateway (knx_setgateway_struct <a href="#id109"><span class="problematic" id="id110">*</span></a>p)<a class="headerlink" href="#void-knx-setgateway-knx-setgateway-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-setipaddress-knx-setipaddress-struct-p">
+<span id="group-io-drv-k-n-x-itf-1ga519be438c0c769e561d397d08e222c71"></span><h3>5.2.112.8.12. void knx_setipaddress (knx_setipaddress_struct <a href="#id111"><span class="problematic" id="id112">*</span></a>p)<a class="headerlink" href="#void-knx-setipaddress-knx-setipaddress-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-setmacaddress-knx-setmacaddress-struct-p">
+<span id="group-io-drv-k-n-x-itf-1gabf2259db00ddfb44d30925e1b997749f"></span><h3>5.2.112.8.13. void knx_setmacaddress (knx_setmacaddress_struct <a href="#id113"><span class="problematic" id="id114">*</span></a>p)<a class="headerlink" href="#void-knx-setmacaddress-knx-setmacaddress-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-setmulticastaddress-knx-setmulticastaddress-struct-p">
+<span id="group-io-drv-k-n-x-itf-1ga709ff26f0ec1a7d0023ef9b7cedd23b5"></span><h3>5.2.112.8.14. void knx_setmulticastaddress (knx_setmulticastaddress_struct <a href="#id115"><span class="problematic" id="id116">*</span></a>p)<a class="headerlink" href="#void-knx-setmulticastaddress-knx-setmulticastaddress-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-setobjecttype-knx-setobjecttype-struct-p">
+<span id="group-io-drv-k-n-x-itf-1ga3bc6e076b68e8fa747f741c5036ae484"></span><h3>5.2.112.8.15. void knx_setobjecttype (knx_setobjecttype_struct <a href="#id117"><span class="problematic" id="id118">*</span></a>p)<a class="headerlink" href="#void-knx-setobjecttype-knx-setobjecttype-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-setserialnumber-knx-setserialnumber-struct-p">
+<span id="group-io-drv-k-n-x-itf-1gaf9c6024435abb4552d00ad9106e8d7c4"></span><h3>5.2.112.8.16. void knx_setserialnumber (knx_setserialnumber_struct <a href="#id119"><span class="problematic" id="id120">*</span></a>p)<a class="headerlink" href="#void-knx-setserialnumber-knx-setserialnumber-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-setsubnetmask-knx-setsubnetmask-struct-p">
+<span id="group-io-drv-k-n-x-itf-1ga28ece68db3f1242d7a9f32f3d3b157e9"></span><h3>5.2.112.8.17. void knx_setsubnetmask (knx_setsubnetmask_struct <a href="#id121"><span class="problematic" id="id122">*</span></a>p)<a class="headerlink" href="#void-knx-setsubnetmask-knx-setsubnetmask-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="void-knx-transmitobject-knx-transmitobject-struct-p">
+<span id="group-io-drv-k-n-x-itf-1ga6fddfd7d504b2684330a0205761f30e2"></span><h3>5.2.112.8.18. void knx_transmitobject (knx_transmitobject_struct <a href="#id123"><span class="problematic" id="id124">*</span></a>p)<a class="headerlink" href="#void-knx-transmitobject-knx-transmitobject-struct-p" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="group___io_drv_unsafe_bridge_moduletest_itf.html" title="5.2.113. IoDrvUnsafeBridgeModuletestItf"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="group___io_drv_joystick_win_itf.html" title="5.2.111. IoDrvJoystickWinItf"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >5. Reference</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

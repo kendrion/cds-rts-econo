@@ -1,0 +1,47 @@
+.. _io_drivers_in_c:
+
+I/O Drivers in C/C++
+--------------------
+
+An I/O driver that is written in C or C++ looks similar to an I/O driver
+written in IEC except the start up- and shutdown phase. This difference
+is explained in this chapter.
+
+An I/O driver in C/C++ must register its component interface at the
+component manager at start up of the runtime system (see :ref:`ov_kernel_startup_shutdown`) in
+the ComponentEntry function. This is identical for all component written
+in C or C++.
+
+After that, the typical start up sequence with the corresponding hooks
+is called by the component manager. In the CH_INIT2 hook, the I/O
+driver should detect its supported devices and should create one
+instance for each device with its local IoDrvCreate() function. After
+that, the I/O driver should register these instances at the I/O-manager
+or the Component-Manager. In the example code of the IoDrvTemplate, this
+looks like:
+
+.. code-block:: C
+
+  Ibase *s_pIBase = NULL;
+    case CH_INIT2:
+    {
+    int iInstance = 0;
+    RTS_RESULT Result;
+    RTS_HANDLE hIoDrv = 0;
+    /* Example: Create first instance */
+    s_pIBase = (Ibase *)CAL_IoDrvCreate(hIoDrv, CLASSID_CioDrvTemplate, iInstance, &Result);
+    CAL_IoMgrRegisterInstance(s_pIBase, NULL);
+
+To unregister and delete the instance, you have to call the following
+sequence in CH_EXIT2:
+
+.. code-block:: C
+
+  case CH_EXIT2:
+  {
+    /* Delete both instances */
+    IcmpIoDrv *pI;
+    CAL_IoMgrUnregisterInstance(s_pIBase);
+    pI = (IcmpIoDrv *)s_pIBase->QueryInterface(s_pIBase, ITFID_IcmpIoDrv, NULL);
+    s_pIBase->Release(s_pIBase);
+    CAL_IoDrvDelete((RTS_HANDLE)pI, (RTS_HANDLE)pI);

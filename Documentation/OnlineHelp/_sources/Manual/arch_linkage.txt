@@ -1,0 +1,33 @@
+.. _arch_linkage:
+
+Linkage
+-------
+
+All components of the runtime system can be linked together in 3
+different ways:
+
+1. Static Link: All components are linked together to one executable
+       file (e.g. \*.exe). This executable file is closed, so no
+       additional component can be added afterwards to this package.
+
+2. Dynamic Link: Each component is linked here separately to a
+       dynamically loadable module (e.g. \*.dll or \*.o). The components
+       are loaded dynamically during startup of the runtime system. So
+       at every start it can be decided, which components are to be
+       loaded and linked to the runtime system.
+
+3. Mixed Link: This is a mixture of both issues above. The basic
+       components are linked statically together to one executable file,
+       but can get extended by dynamically loaded components.
+
+How the linkage is done can be specified with compiler flags:
+
+-  STATIC\_LINK: For static linking
+
+-  MIXED\_LINK: For mixed linking
+
+-  DYNAMIC\_LINK (or nothing): This is the default, if none of the two
+       defines above is set
+
+The source code of the components is identical in all linkage models.
+How this is realized is described in the next chapter.

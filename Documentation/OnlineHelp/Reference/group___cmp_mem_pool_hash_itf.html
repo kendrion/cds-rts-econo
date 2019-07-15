@@ -1,0 +1,556 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5.2.64. CmpMemPoolHashItf &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="5. Reference" href="index.html" />
+    <link rel="next" title="5.2.65. CmpMemPoolItf" href="group___cmp_mem_pool_itf.html" />
+    <link rel="prev" title="5.2.63. CmpMemGCItf" href="group___cmp_mem_g_c_itf.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="group___cmp_mem_pool_itf.html" title="5.2.65. CmpMemPoolItf"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="group___cmp_mem_g_c_itf.html" title="5.2.63. CmpMemGCItf"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">5. Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5.2.64. CmpMemPoolHashItf</a><ul>
+<li><a class="reference internal" href="#data-structures">5.2.64.1. Data Structures</a></li>
+<li><a class="reference internal" href="#macros">5.2.64.2. Macros</a></li>
+<li><a class="reference internal" href="#typedefs">5.2.64.3. Typedefs</a></li>
+<li><a class="reference internal" href="#functions">5.2.64.4. Functions</a></li>
+<li><a class="reference internal" href="#detailed-description">5.2.64.5. Detailed Description</a></li>
+<li><a class="reference internal" href="#macro-definition-documentation">5.2.64.6. Macro Definition Documentation</a><ul>
+<li><a class="reference internal" href="#define-mempoolhashentry-cmutlhashentry">5.2.64.6.1. #define MemPoolHashEntry <code class="docutils literal"><span class="pre">CMUtlHashEntry</span></code></a></li>
+<li><a class="reference internal" href="#define-mempoolhash-get-hashtable-len-numofhashentries-sizeof-mempoolhashentry">5.2.64.6.2. #define MEMPOOLHASH_GET_HASHTABLE_LEN ((numOfHashEntries) * sizeof( <code class="docutils literal"><span class="pre">MemPoolHashEntry</span></code> **))</a></li>
+<li><a class="reference internal" href="#define-itf-cmpmempoolhash">5.2.64.6.3. #define ITF_CmpMemPoolHash</a></li>
+<li><a class="reference internal" href="#define-extitf-cmpmempoolhash">5.2.64.6.4. #define EXTITF_CmpMemPoolHash</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#typedef-documentation">5.2.64.7. Typedef Documentation</a><ul>
+<li><a class="reference internal" href="#typedef-icmpmempoolhash-c-icmpmempoolhash">5.2.64.7.1. typedef ICmpMemPoolHash_C ICmpMemPoolHash</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#function-documentation">5.2.64.8. Function Documentation</a><ul>
+<li><a class="reference internal" href="#rts-handle-mempoolcreatehashtable-rts-handle-hmempool-rts-size-snumhashentries-char-pszcomponentname-rts-result-presult">5.2.64.8.1. RTS_HANDLE MemPoolCreateHashTable (RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, char *pszComponentName, RTS_RESULT *pResult)</a></li>
+<li><a class="reference internal" href="#rts-handle-mempoolcreatehashtable2-rts-handle-hmempool-rts-size-snumhashentries-rts-ui8-phashtablebuffer-char-pszcomponentname-rts-result-presult">5.2.64.8.2. RTS_HANDLE MemPoolCreateHashTable2 (RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, RTS_UI8 *pHashTableBuffer, char *pszComponentName, RTS_RESULT *pResult)</a></li>
+<li><a class="reference internal" href="#rts-result-mempooldeletehashtable-rts-handle-hmempoolhashtable">5.2.64.8.3. RTS_RESULT MemPoolDeleteHashTable (RTS_HANDLE hMemPoolHashTable)</a></li>
+<li><a class="reference internal" href="#rts-handle-mempoolgetblockhashed-rts-handle-hmempoolhashtable-rts-ui32-nnumofnewelements-rts-result-presult">5.2.64.8.4. RTS_HANDLE MemPoolGetBlockHashed (RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_RESULT *pResult)</a></li>
+<li><a class="reference internal" href="#rts-handle-mempoolgetblockhashed2-rts-handle-hmempoolhashtable-rts-ui32-nnumofnewelements-rts-ui32-offsethashentry-rts-result-presult">5.2.64.8.5. RTS_HANDLE MemPoolGetBlockHashed2 (RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_UI32 offsetHashEntry, RTS_RESULT *pResult)</a></li>
+<li><a class="reference internal" href="#rts-result-mempoolremoveblockhashed-rts-handle-hmempoolhashtable-rts-handle-hhash">5.2.64.8.6. RTS_RESULT MemPoolRemoveBlockHashed (RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash)</a></li>
+<li><a class="reference internal" href="#void-mempoolgetblockbyhash-rts-handle-hmempoolhashtable-rts-handle-hhash-rts-result-presult">5.2.64.8.7. void* MemPoolGetBlockByHash (RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash, RTS_RESULT *pResult)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="group___cmp_mem_g_c_itf.html"
+                        title="previous chapter">5.2.63. CmpMemGCItf</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="group___cmp_mem_pool_itf.html"
+                        title="next chapter">5.2.65. CmpMemPoolItf</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Reference/group___cmp_mem_pool_hash_itf.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cmpmempoolhashitf">
+<span id="group-cmp-mem-pool-hash-itf"></span><h1>5.2.64. CmpMemPoolHashItf<a class="headerlink" href="#cmpmempoolhashitf" title="Permalink to this headline">¶</a></h1>
+<p>Interface of CmpMemPoolHash. <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-details"><span class="std std-ref">More...</span></a></p>
+<div class="section" id="data-structures">
+<h2>5.2.64.1. Data Structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>struct <a class="reference internal" href="struct_i_cmp_mem_pool_hash___c.html#struct-i-cmp-mem-pool-hash-c"><span class="std std-ref">ICmpMemPoolHash_C</span></a></li>
+</ul>
+</div>
+<div class="section" id="macros">
+<h2>5.2.64.2. Macros<a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>#define <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga34f3d729ce095e761b20c0d2add85d27"><span class="std std-ref">MemPoolHashEntry</span></a> <a class="reference internal" href="group___c_m_utils_hash_itf___hashentry.html#group-c-m-utils-hash-itf-hashentry-1gadd57a73c7ff3d9e8bfb558347e689613"><span class="std std-ref">CMUtlHashEntry</span></a></li>
+<li>#define <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga9f60c91c693921a70376127b86f1388b"><span class="std std-ref">MEMPOOLHASH_GET_HASHTABLE_LEN</span></a> ((numOfHashEntries) * sizeof( <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga34f3d729ce095e761b20c0d2add85d27"><span class="std std-ref">MemPoolHashEntry</span></a> <a href="#id1"><span class="problematic" id="id2">**</span></a>))</li>
+<li>#define <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1gab2bbfe28de30f02b00c58a82b3c13d8e"><span class="std std-ref">ITF_CmpMemPoolHash</span></a></li>
+<li>#define <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga1cb28bed9cdb06d1432b10dab59300ec"><span class="std std-ref">EXTITF_CmpMemPoolHash</span></a></li>
+</ul>
+</div>
+<div class="section" id="typedefs">
+<h2>5.2.64.3. Typedefs<a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>typedef <a class="reference internal" href="struct_i_cmp_mem_pool_hash___c.html#struct-i-cmp-mem-pool-hash-c"><span class="std std-ref">ICmpMemPoolHash_C</span></a> <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga487d300c803f3416bd3fe0fc2c4f13bf"><span class="std std-ref">ICmpMemPoolHash</span></a></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>5.2.64.4. Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>RTS_HANDLE <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga3b317bb71ce6376db3453696d2574e41"><span class="std std-ref">MemPoolCreateHashTable</span></a> (RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, char * pszComponentName, RTS_RESULT * pResult)</li>
+<li>RTS_HANDLE <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga9a93c94ef2df1c1eeedb08abaf74bde3"><span class="std std-ref">MemPoolCreateHashTable2</span></a> (RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, RTS_UI8 * pHashTableBuffer, char * pszComponentName, RTS_RESULT * pResult)</li>
+<li>RTS_RESULT <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga38c979d04bc49b5b5e31c699353a6c23"><span class="std std-ref">MemPoolDeleteHashTable</span></a> (RTS_HANDLE hMemPoolHashTable)</li>
+<li>RTS_HANDLE <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga2118fb08d8d41a80aa6d2a3bb5bbacaa"><span class="std std-ref">MemPoolGetBlockHashed</span></a> (RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_RESULT * pResult)</li>
+<li>RTS_HANDLE <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1gaca02b30c82f5ef3660f20edf00506294"><span class="std std-ref">MemPoolGetBlockHashed2</span></a> (RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_UI32 offsetHashEntry, RTS_RESULT * pResult)</li>
+<li>RTS_RESULT <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1gace9fd61d9783e887e4a66503ded1eea4"><span class="std std-ref">MemPoolRemoveBlockHashed</span></a> (RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash)</li>
+<li>void * <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga2420b362acd00b482fb60802f2ce0c54"><span class="std std-ref">MemPoolGetBlockByHash</span></a> (RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash, RTS_RESULT * pResult)</li>
+</ul>
+</div>
+<div class="section" id="detailed-description">
+<span id="group-cmp-mem-pool-hash-itf-details"></span><h2>5.2.64.5. Detailed Description<a class="headerlink" href="#detailed-description" title="Permalink to this headline">¶</a></h2>
+<p>Interface of CmpMemPoolHash.</p>
+<p>Interface to get a hash table around a MemPool. Because of this, you can use a unique handle to a MemPool object instead of the pointer to the MemPool object! This is because is you release a MemPool object, reuse it for a new MemPool operation and release the old one a second time</p>
+<p>Usage: 1. Creating a mempool hash table using static memory [recommended]:</p>
+<p>#define MY_NUM_OF_HASHENTRIES 10 RTS_UI8 s_hashTableBuffer[ <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga9f60c91c693921a70376127b86f1388b"><span class="std std-ref">MEMPOOLHASH_GET_HASHTABLE_LEN( MY_NUM_OF_HASHENTRIES )</span></a> ];</p>
+<p>// Create mempool hash table RTS_RESULT result RTS_HANDLE hMemPool = CAL_MemPoolCreateStatic(...); RTS_HANDLE hMemPoolHashTable = CAL_MemPoolCreateHashTable2(hMemPool, 10, s_hashTableBuffer, COMPONENT_NAME, &amp;result);</p>
+<ol class="arabic simple" start="2">
+<li>Creating a mempool hash table using dynamic memory:</li>
+</ol>
+<p>// Create mempool hash table RTS_RESULT result RTS_HANDLE hMemPool = CAL_MemPoolCreateStatic(...); RTS_HANDLE hMemPoolHashTable = CAL_MemPoolCreateHashTable(hMemPool, 10, COMPONENT_NAME, &amp;result);</p>
+<p>// Delete hash table CAL_MemPoolDeleteHashTable(hMemPoolHashTable);</p>
+<p>// Alloc a new MemPool block must be done in 2 steps: // Step1: Get handle/alloc new block out of the MemPool (instead of CAL_MemPoolGetBlock())! RTS_HANDLE hNewMemPoolBlock = CAL_MemPoolGetBlockHashed(hMemPoolHashTable, 1, &amp;result);</p>
+<p>// Step2: Get pointer MemPoolBlock (which is retrieved typically by CAL_MemPoolGetBlock()) voidpMemPoolBlock = CAL_MemPoolGetBlockByHash(hMemPoolHashTable, hNewMemPoolBlock, &amp;result)</p>
+<p>// Release a MemPool block must be done in 2 steps: // Step1: Remove a block from hash table and the MemPool iterator CAL_MemPoolRemoveBlockHashed(hMemPoolHashTable, hNewMemPoolBlock);</p>
+<p>// Step2: Release a MemPool block and put it back in the MemPool CAL_MemPoolPutBlock(hMemPoolHashTable, pMemPoolBlock)</p>
+<p><strong>Copyright:</strong></p>
+<p>Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.</p>
+</div>
+<div class="section" id="macro-definition-documentation">
+<h2>5.2.64.6. Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="define-mempoolhashentry-cmutlhashentry">
+<span id="group-cmp-mem-pool-hash-itf-1ga34f3d729ce095e761b20c0d2add85d27"></span><h3>5.2.64.6.1. #define MemPoolHashEntry <a class="reference internal" href="group___c_m_utils_hash_itf___hashentry.html#group-c-m-utils-hash-itf-hashentry-1gadd57a73c7ff3d9e8bfb558347e689613"><span class="std std-ref">CMUtlHashEntry</span></a><a class="headerlink" href="#define-mempoolhashentry-cmutlhashentry" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-mempoolhash-get-hashtable-len-numofhashentries-sizeof-mempoolhashentry">
+<span id="group-cmp-mem-pool-hash-itf-1ga9f60c91c693921a70376127b86f1388b"></span><h3>5.2.64.6.2. #define MEMPOOLHASH_GET_HASHTABLE_LEN ((numOfHashEntries) * sizeof( <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga34f3d729ce095e761b20c0d2add85d27"><span class="std std-ref">MemPoolHashEntry</span></a> <a href="#id3"><span class="problematic" id="id4">**</span></a>))<a class="headerlink" href="#define-mempoolhash-get-hashtable-len-numofhashentries-sizeof-mempoolhashentry" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-itf-cmpmempoolhash">
+<span id="group-cmp-mem-pool-hash-itf-1gab2bbfe28de30f02b00c58a82b3c13d8e"></span><h3>5.2.64.6.3. #define ITF_CmpMemPoolHash<a class="headerlink" href="#define-itf-cmpmempoolhash" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="define-extitf-cmpmempoolhash">
+<span id="group-cmp-mem-pool-hash-itf-1ga1cb28bed9cdb06d1432b10dab59300ec"></span><h3>5.2.64.6.4. #define EXTITF_CmpMemPoolHash<a class="headerlink" href="#define-extitf-cmpmempoolhash" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="typedef-documentation">
+<h2>5.2.64.7. Typedef Documentation<a class="headerlink" href="#typedef-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="typedef-icmpmempoolhash-c-icmpmempoolhash">
+<span id="group-cmp-mem-pool-hash-itf-1ga487d300c803f3416bd3fe0fc2c4f13bf"></span><h3>5.2.64.7.1. typedef ICmpMemPoolHash_C ICmpMemPoolHash<a class="headerlink" href="#typedef-icmpmempoolhash-c-icmpmempoolhash" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="function-documentation">
+<h2>5.2.64.8. Function Documentation<a class="headerlink" href="#function-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rts-handle-mempoolcreatehashtable-rts-handle-hmempool-rts-size-snumhashentries-char-pszcomponentname-rts-result-presult">
+<span id="group-cmp-mem-pool-hash-itf-1ga3b317bb71ce6376db3453696d2574e41"></span><h3>5.2.64.8.1. RTS_HANDLE MemPoolCreateHashTable (RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, char <a href="#id5"><span class="problematic" id="id6">*</span></a>pszComponentName, RTS_RESULT <a href="#id7"><span class="problematic" id="id8">*</span></a>pResult)<a class="headerlink" href="#rts-handle-mempoolcreatehashtable-rts-handle-hmempool-rts-size-snumhashentries-char-pszcomponentname-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Must be called _after_ MemPoolCreateDynamic / MemPoolCreateStatic to create a hash table on top of a memory pool</p>
+<p><strong>Parameters</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="2%" />
+<col width="4%" />
+<col width="94%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>[in]</td>
+<td>hMemPool</td>
+<td>Handle to the mem pool created by MemPoolCreateDynamic / MemPoolCreateStatic</td>
+</tr>
+<tr class="row-even"><td>[in]</td>
+<td>sNumHashEntries</td>
+<td>Lenght of the hash table respectively the number of elements that can be stored in the hash table without any collision. NOTE: Hash table is allocated on heap via <span class="xref std std-ref">SysMemAllocData()</span> within this function. If you would like to provide a static memory for the hash table. Use <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga9a93c94ef2df1c1eeedb08abaf74bde3"><span class="std std-ref">MemPoolCreateHashTable2()</span></a> instead!</td>
+</tr>
+<tr class="row-odd"><td>[in]</td>
+<td>pszComponentName</td>
+<td>Pointer to the component name of the caller</td>
+</tr>
+<tr class="row-even"><td>[out]</td>
+<td>pResult</td>
+<td>Pointer to error code</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="72%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>ERR_OK</td>
+<td>Hash table could be created</td>
+</tr>
+<tr class="row-even"><td>ERR_NOMEMORY</td>
+<td>No memory to create the hash table</td>
+</tr>
+<tr class="row-odd"><td>ERR_FAILED</td>
+<td>Hash table failed to create</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the create hash table around the mempool specified by hMemPool</p>
+</div>
+<div class="section" id="rts-handle-mempoolcreatehashtable2-rts-handle-hmempool-rts-size-snumhashentries-rts-ui8-phashtablebuffer-char-pszcomponentname-rts-result-presult">
+<span id="group-cmp-mem-pool-hash-itf-1ga9a93c94ef2df1c1eeedb08abaf74bde3"></span><h3>5.2.64.8.2. RTS_HANDLE MemPoolCreateHashTable2 (RTS_HANDLE hMemPool, RTS_SIZE sNumHashEntries, RTS_UI8 <a href="#id9"><span class="problematic" id="id10">*</span></a>pHashTableBuffer, char <a href="#id11"><span class="problematic" id="id12">*</span></a>pszComponentName, RTS_RESULT <a href="#id13"><span class="problematic" id="id14">*</span></a>pResult)<a class="headerlink" href="#rts-handle-mempoolcreatehashtable2-rts-handle-hmempool-rts-size-snumhashentries-rts-ui8-phashtablebuffer-char-pszcomponentname-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Must be called _after_ MemPoolCreateDynamic / MemPoolCreateStatic to create a hash table on top of a memory pool</p>
+<p><strong>Parameters</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="3%" />
+<col width="6%" />
+<col width="91%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>[in]</td>
+<td>hMemPool</td>
+<td>Handle to the mem pool created by MemPoolCreateDynamic / MemPoolCreateStatic</td>
+</tr>
+<tr class="row-even"><td>[in]</td>
+<td>sNumHashEntries</td>
+<td>Num of blocks that are managed in the hash table</td>
+</tr>
+<tr class="row-odd"><td>[in]</td>
+<td>pHashTableBuffer</td>
+<td>Pointer to the hash table (can be static memory). Length must be (sNumHashEntriessizeof(RTS_UI8))!. NOTE: If pHashTableBuffer = NULL. the hash table will be allocated on heap via <span class="xref std std-ref">SysMemAllocData()</span> within this function.</td>
+</tr>
+<tr class="row-even"><td>[in]</td>
+<td>pszComponentName</td>
+<td>Pointer to the component name of the caller</td>
+</tr>
+<tr class="row-odd"><td>[out]</td>
+<td>pResult</td>
+<td>Pointer to error code</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="72%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>ERR_OK</td>
+<td>Hash table could be created</td>
+</tr>
+<tr class="row-even"><td>ERR_NOMEMORY</td>
+<td>No memory to create the hash table</td>
+</tr>
+<tr class="row-odd"><td>ERR_FAILED</td>
+<td>Hash table failed to create</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the create hash table around the mempool specified by hMemPool</p>
+</div>
+<div class="section" id="rts-result-mempooldeletehashtable-rts-handle-hmempoolhashtable">
+<span id="group-cmp-mem-pool-hash-itf-1ga38c979d04bc49b5b5e31c699353a6c23"></span><h3>5.2.64.8.3. RTS_RESULT MemPoolDeleteHashTable (RTS_HANDLE hMemPoolHashTable)<a class="headerlink" href="#rts-result-mempooldeletehashtable-rts-handle-hmempoolhashtable" title="Permalink to this headline">¶</a></h3>
+<p>Must be called _before_ MemPoolDelete to release a hash table on top of a memory pool</p>
+<p><strong>Parameters</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="12%" />
+<col width="83%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>[in]</td>
+<td>hMemPoolHashTable</td>
+<td>Handle to the hash table created by <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga3b317bb71ce6376db3453696d2574e41"><span class="std std-ref">MemPoolCreateHashTable()</span></a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>ERR_OK</td>
+<td>Hash table could be released</td>
+</tr>
+<tr class="row-even"><td>ERR_PARAMETER</td>
+<td>Invalid hash table handle</td>
+</tr>
+<tr class="row-odd"><td>ERR_FAILED</td>
+<td>Hash table failed to release</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>error code</p>
+</div>
+<div class="section" id="rts-handle-mempoolgetblockhashed-rts-handle-hmempoolhashtable-rts-ui32-nnumofnewelements-rts-result-presult">
+<span id="group-cmp-mem-pool-hash-itf-1ga2118fb08d8d41a80aa6d2a3bb5bbacaa"></span><h3>5.2.64.8.4. RTS_HANDLE MemPoolGetBlockHashed (RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_RESULT <a href="#id15"><span class="problematic" id="id16">*</span></a>pResult)<a class="headerlink" href="#rts-handle-mempoolgetblockhashed-rts-handle-hmempoolhashtable-rts-ui32-nnumofnewelements-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Must be called instead of MemPoolGetBlock2! Returned the hash handle, that must be used instead of the MemPool handle directly!</p>
+<p><strong>Parameters</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="16%" />
+<col width="76%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>[in]</td>
+<td>hMemPool</td>
+<td>Handle to the mem pool created by MemPoolCreateDynamic / MemPoolCreateStatic</td>
+</tr>
+<tr class="row-even"><td>[in]</td>
+<td>nNumOfNewElements</td>
+<td>Number of new elements to extend in the underlying mem pool to get the new memory block</td>
+</tr>
+<tr class="row-odd"><td>[out]</td>
+<td>pResult</td>
+<td>Pointer to error code</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>ERR_OK</td>
+<td>New hashed mempool block can be retrieved</td>
+</tr>
+<tr class="row-even"><td>ERR_PARAMETER</td>
+<td>Invalid hash table handle</td>
+</tr>
+<tr class="row-odd"><td>ERR_NOMEMORY</td>
+<td>There is no more memory left to get the hashed mempool block</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the new mempool block</p>
+</div>
+<div class="section" id="rts-handle-mempoolgetblockhashed2-rts-handle-hmempoolhashtable-rts-ui32-nnumofnewelements-rts-ui32-offsethashentry-rts-result-presult">
+<span id="group-cmp-mem-pool-hash-itf-1gaca02b30c82f5ef3660f20edf00506294"></span><h3>5.2.64.8.5. RTS_HANDLE MemPoolGetBlockHashed2 (RTS_HANDLE hMemPoolHashTable, RTS_UI32 nNumOfNewElements, RTS_UI32 offsetHashEntry, RTS_RESULT <a href="#id17"><span class="problematic" id="id18">*</span></a>pResult)<a class="headerlink" href="#rts-handle-mempoolgetblockhashed2-rts-handle-hmempoolhashtable-rts-ui32-nnumofnewelements-rts-ui32-offsethashentry-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Must be called instead of MemPoolGetBlock2! Returned the hash handle, that must be used instead of the MemPool handle directly! NOTE: Instead of using <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga2118fb08d8d41a80aa6d2a3bb5bbacaa"><span class="std std-ref">MemPoolGetBlockHashed()</span></a> you can specify the new hash entry outside by the caller (MemPoolHashEntry)! So we don&#8217;t need to allocated new memory on the heap for a hash entry.</p>
+<p><strong>Parameters</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="3%" />
+<col width="7%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>[in]</td>
+<td>hMemPool</td>
+<td>Handle to the mem pool created by MemPoolCreateDynamic / MemPoolCreateStatic</td>
+</tr>
+<tr class="row-even"><td>[in]</td>
+<td>nNumOfNewElements</td>
+<td>Number of new elements to extend in the underlying mem pool to get the new memory block</td>
+</tr>
+<tr class="row-odd"><td>[in]</td>
+<td>offsetHashEntry</td>
+<td>Offset within the MemPoolBlock, where the member of MemPoolHashEntry is located NOTE: If offsetHashEntry = RTS_UI32_MAX, a new hash entry is allocated from heap via <span class="xref std std-ref">SysMemAllocData()</span> !</td>
+</tr>
+<tr class="row-even"><td>[out]</td>
+<td>pResult</td>
+<td>Pointer to error code</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>ERR_OK</td>
+<td>New hashed mempool block can be retrieved</td>
+</tr>
+<tr class="row-even"><td>ERR_PARAMETER</td>
+<td>Invalid hash table handle</td>
+</tr>
+<tr class="row-odd"><td>ERR_NOMEMORY</td>
+<td>There is no more memory left to get the hashed mempool block</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Handle to the new mempool block</p>
+</div>
+<div class="section" id="rts-result-mempoolremoveblockhashed-rts-handle-hmempoolhashtable-rts-handle-hhash">
+<span id="group-cmp-mem-pool-hash-itf-1gace9fd61d9783e887e4a66503ded1eea4"></span><h3>5.2.64.8.6. RTS_RESULT MemPoolRemoveBlockHashed (RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash)<a class="headerlink" href="#rts-result-mempoolremoveblockhashed-rts-handle-hmempoolhashtable-rts-handle-hhash" title="Permalink to this headline">¶</a></h3>
+<p>Must be called instead of MemPoolRemoveUsedBlock to remove a hashed memory block from hash table! <span class="xref std std-ref">MemPoolPutBlock()</span> must be called as is.</p>
+<p><strong>Parameters</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="3%" />
+<col width="4%" />
+<col width="93%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>[in]</td>
+<td>hMemPool</td>
+<td>Handle to the mem pool created by MemPoolCreateDynamic / MemPoolCreateStatic</td>
+</tr>
+<tr class="row-even"><td>[in]</td>
+<td>hHash</td>
+<td>Handle to the hashed mempool object retrieved by <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga2118fb08d8d41a80aa6d2a3bb5bbacaa"><span class="std std-ref">MemPoolGetBlockHashed()</span></a> or <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1gaca02b30c82f5ef3660f20edf00506294"><span class="std std-ref">MemPoolGetBlockHashed2()</span></a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>ERR_OK</td>
+<td>Hashed mempool object could be removed</td>
+</tr>
+<tr class="row-even"><td>ERR_PARAMETER</td>
+<td>Invalid hash table handle or hash mempool object</td>
+</tr>
+<tr class="row-odd"><td>ERR_FAILED</td>
+<td>Hashed mempool object failed to remove</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>error code</p>
+</div>
+<div class="section" id="void-mempoolgetblockbyhash-rts-handle-hmempoolhashtable-rts-handle-hhash-rts-result-presult">
+<span id="group-cmp-mem-pool-hash-itf-1ga2420b362acd00b482fb60802f2ce0c54"></span><h3>5.2.64.8.7. void* MemPoolGetBlockByHash (RTS_HANDLE hMemPoolHashTable, RTS_HANDLE hHash, RTS_RESULT <a href="#id19"><span class="problematic" id="id20">*</span></a>pResult)<a class="headerlink" href="#void-mempoolgetblockbyhash-rts-handle-hmempoolhashtable-rts-handle-hhash-rts-result-presult" title="Permalink to this headline">¶</a></h3>
+<p>Can be used to get the mempool data pointer specified by ith hash.</p>
+<p><strong>Parameters</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="3%" />
+<col width="4%" />
+<col width="93%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>[in]</td>
+<td>hMemPool</td>
+<td>Handle to the mem pool created by MemPoolCreateDynamic / MemPoolCreateStatic</td>
+</tr>
+<tr class="row-even"><td>[in]</td>
+<td>hHash</td>
+<td>Handle to the hashed mempool object retrieved by <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1ga2118fb08d8d41a80aa6d2a3bb5bbacaa"><span class="std std-ref">MemPoolGetBlockHashed()</span></a> or <a class="reference internal" href="#group-cmp-mem-pool-hash-itf-1gaca02b30c82f5ef3660f20edf00506294"><span class="std std-ref">MemPoolGetBlockHashed2()</span></a></td>
+</tr>
+<tr class="row-odd"><td>[out]</td>
+<td>pResult</td>
+<td>Pointer to error code</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Return values</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="78%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>ERR_OK</td>
+<td>Data pointer could be retrieved because of its hash</td>
+</tr>
+<tr class="row-even"><td>ERR_PARAMETER</td>
+<td>Invalid hash table handle or hash mempool object</td>
+</tr>
+<tr class="row-odd"><td>ERR_NO_OBJECT</td>
+<td>No data pointer found for this hash</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<p>Pointer to the data of the hashed mempool object</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="group___cmp_mem_pool_itf.html" title="5.2.65. CmpMemPoolItf"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="group___cmp_mem_g_c_itf.html" title="5.2.63. CmpMemGCItf"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >5. Reference</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

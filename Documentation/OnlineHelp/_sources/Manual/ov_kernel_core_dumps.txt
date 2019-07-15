@@ -1,0 +1,29 @@
+.. _ov_kernel_core_dumps:
+
+Core dumps (CmpCoreDump)
+------------------------
+
+A Core dump is a file which captures the state of an application at a
+certain point in its execution. Usually such a file is created after an
+exception or crash in the application occurs. This file can then be used
+to debug the crash without access to the PLC. When this file is loaded
+in CODESYS it allows to monitor all variables in the application and
+shows additional details about the crash, like the call stack. All
+information is retrieved solely from the file.
+
+For a CODESYS application this file contains the following information:
+
+-  Contents of the memory (the areas)
+
+-  The call stack
+
+-  The stack
+
+-  The device log
+
+If CmpCoreDump is included in the runtime, such a dump file is created
+automatically when an exception occurs in the application. If no storage
+is available on the PLC, a dump can also be created and stored on the
+engineering station with CODESYS. For this the component also provides
+additional services to make the dump as complete as possible.
+

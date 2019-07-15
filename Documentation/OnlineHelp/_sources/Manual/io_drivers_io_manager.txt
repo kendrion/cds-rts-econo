@@ -1,0 +1,31 @@
+.. _io_drivers_io_manager:
+
+I/O Manager
+-----------
+
+The I/O-Manager is the central component for managing all I/O-drivers
+and providing the access to the I/O-configuration. The name of the
+component is CmpIoMgr and the interface is named ".
+
+IO data consistency is realized in the generic part of the CmpIoMgr
+component. Thus it is not necessary that each IO driver separately takes
+care of this. If there is an active IO data exchange for reading inputs,
+writing outputs, or starting bus cycle on an IO-driver instance, each
+part will be protected against getting called from any other. This
+protection is done by a processor atomic bit operation and not via a
+semaphore and thus is a non-blocking operation.
+
+An I/O driver must register its instance after creating at the
+I/O-Manager. Therefore, two functions of the interface must be used:
+
+RTS_HANDLE IoMgrRegisterInstance(Ibase \*pIBase, , RTS_RESULT \*pResult):
+
+| This function should be used to register your I/O driver instance.
+  Therefore the Ibase pointer must be transmitted to the I/O-Manager.
+| A handle to the internal management entry is returned. This handle can
+  be used to remove the instance from the I/O-Manager.
+
+RTS_RESULT IoMgrUnregisterInstance(Ibase \*pIBase):
+
+This function is used to deregister the I/O driver instance from the
+I/O-Manager.

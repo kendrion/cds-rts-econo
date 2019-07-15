@@ -1,0 +1,275 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.2.6. Component Interface Architecture &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.2. Architecture" href="architecture.html" />
+    <link rel="next" title="1.2.7. M4 Mechanism" href="arch_m4_mechanism.html" />
+    <link rel="prev" title="1.2.5. Linkage" href="arch_linkage.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="arch_m4_mechanism.html" title="1.2.7. M4 Mechanism"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="arch_linkage.html" title="1.2.5. Linkage"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="architecture.html" accesskey="U">1.2. Architecture</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.2.6. Component Interface Architecture</a><ul>
+<li><a class="reference internal" href="#calling-convention">1.2.6.1. Calling convention</a></li>
+<li><a class="reference internal" href="#export-convention">1.2.6.2. Export convention</a></li>
+<li><a class="reference internal" href="#import-convention">1.2.6.3. Import convention</a></li>
+<li><a class="reference internal" href="#check-functions">1.2.6.4. Check functions</a></li>
+<li><a class="reference internal" href="#summary">1.2.6.5. Summary</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="arch_linkage.html"
+                        title="previous chapter">1.2.5. Linkage</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="arch_m4_mechanism.html"
+                        title="next chapter">1.2.7. M4 Mechanism</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/arch_comp_itf_architecture.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="component-interface-architecture">
+<span id="arch-comp-itf-architecture"></span><h1>1.2.6. Component Interface Architecture<a class="headerlink" href="#component-interface-architecture" title="Permalink to this headline">¶</a></h1>
+<p>The component interface of the runtime system must match the following
+requirements:</p>
+<ol class="arabic simple">
+<li><dl class="first docutils">
+<dt>For embedded targets, all runtime system components should be linked</dt>
+<dd>static with direct C-functions calls in order to have a maximum
+of performance.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>For more powerful systems with an operating system, the components</dt>
+<dd>should be loaded dynamically in order to have the flexibility to
+select components that should be used during startup time. Here,
+all functions of other components must be called via function
+pointers that are investigated during startup of the system.</dd>
+</dl>
+</li>
+<li>For C++ runtime systems, the C++ calling conventions (name mangling, virtual function calls, methods) should be used.</li>
+</ol>
+<p>To perform all these issues, 3S has developed an own interface
+technology based on C-macros.</p>
+<p>Every function call must be done not directly with a call of the
+C-function. You always have to use a special CAL_ prefix for that.</p>
+<p>Additionally the export and import of functions must be done by special
+EXP_ and GET_ macros.</p>
+<p>The usage of these macros is explained in the following:</p>
+<div class="section" id="calling-convention">
+<h2>1.2.6.1. Calling convention<a class="headerlink" href="#calling-convention" title="Permalink to this headline">¶</a></h2>
+<p>If a component Cmp1 wants to call a function (we use the placeholder &lt;Function&gt; for the cooresponding function name) of component Cmp2 and
+Cmp1 does not call the function directly, it will have to call the function via the specific CAL_ macro:</p>
+<p><strong>CAL_</strong> -macro:</p>
+<blockquote>
+<div><p>This macro is expanded in different environments like:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>Static Linking:         #define CAL_&lt;Function&gt;  &lt;Function&gt;
+Dynamic Linking:        #define CAL_&lt;Function&gt;  pf&lt;Function&gt;            // Function pointer to &lt;Function&gt;
+C++:                    #define CAL_&lt;Function&gt;  I&lt;Interface&gt;::&lt;Function&gt;
+</pre></div>
+</div>
+</div></blockquote>
+<p>As you can see, the CAL_ macro reaches the goal to adapt the calling
+convention to the linkage mechanism. On the other hand you can see that
+the caller does not see any difference, in which linking environment the
+component is embedded.</p>
+</div>
+<div class="section" id="export-convention">
+<h2>1.2.6.2. Export convention<a class="headerlink" href="#export-convention" title="Permalink to this headline">¶</a></h2>
+<p>To use a function from another component, the function first must be
+exported by this component. This is done with a second macro, the export
+macro. Therefore we created the so called EXP_ macro. Referring to the
+example shown above, Cmp2 has to export its Fct1 with the following
+macro at a specific moment during startup of the runtime system:</p>
+<p><strong>EXP_</strong> -macro:</p>
+<blockquote>
+<div><p>This macro is expanded in different environments like:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>Static Linking:         #define EXP_&lt;Function&gt;  ERR_OK
+Dynamic Linking:        #define EXP_&lt;Function&gt;  CMRegisterAPI( &quot;&lt;Function&gt;&quot;, (void *)&lt;Function&gt;, 0, 0)
+C++:                    #define EXP_&lt;Function&gt;  ERR_OK
+</pre></div>
+</div>
+</div></blockquote>
+<p>Only in case of dynamic linking, component Cmp2 has to register its
+function pointer of the exported function at the component manager to
+use it later from other components</p>
+</div>
+<div class="section" id="import-convention">
+<h2>1.2.6.3. Import convention<a class="headerlink" href="#import-convention" title="Permalink to this headline">¶</a></h2>
+<p>If a component needs to call functions from other components, it has a
+dependency to other components. This issue is covered by the third macro
+called <a href="#id1"><span class="problematic" id="id2">GET_</span></a> macro.</p>
+<p>In the example shown above, Cmp1 has to import Fct1 with the following
+macro at a specific moment during startup of the runtime system:</p>
+<p><strong>GET_</strong> -macro:</p>
+<blockquote>
+<div><p>This macro is expanded in different environments like:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>Static Linking:         #define GET_&lt;Function&gt;  ERR_OK
+Dynamic Linking:        #define GET_&lt;Function&gt;  CMGetAPI( &quot;&lt;Function&gt;&quot;, (void **)&amp;pf&lt;Function&gt;, 0)
+C++:                    #define GET_&lt;Function&gt;  ERR_OK
+</pre></div>
+</div>
+</div></blockquote>
+<p>Only in case of dynamic linking, component Cmp1 has to resolve the
+function pointer of the imported function from the component manager to
+use it later.</p>
+<p>In the case of dynamic linking you can see that there is a function
+pointer needed to hold the pointer to the function. For this a second
+macro is needed, that declares these function pointers. It is called
+USE_ macro.</p>
+<p>In the example shown above, Cmp1 has to declare a function pointer for
+Fct1 with the following macro at the beginning of its C-file:</p>
+<p><strong>USE_</strong> -macro:</p>
+<blockquote>
+<div><p>This macro is expanded in different environments like:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>Static Linking:         #define USE_&lt;Function&gt;
+Dynamic Linking:        #define USE_&lt;Function&gt;  PFFCT1 pf&lt;Function&gt;;
+C++:                    #define USE_&lt;Function&gt;
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="check-functions">
+<h2>1.2.6.4. Check functions<a class="headerlink" href="#check-functions" title="Permalink to this headline">¶</a></h2>
+<p>The last category of macros is the so called check macros. To check, if
+an interface function is available, there is always the possibility to
+use the <strong>CHK_</strong> macro. The macro will return 1, if the interface
+functions is available and 0 if not. In your code, this macro can be
+used as follows:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">CHK_</span><span class="o">&lt;</span><span class="n">Function</span><span class="o">&gt;</span><span class="p">)</span>
+        <span class="n">CAL_</span><span class="o">&lt;</span><span class="n">Function</span><span class="o">&gt;</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>1.2.6.5. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>As you can see, the component interface is basing on special C-macros.
+To pursue the example described above, the macros must be used in the
+two components as follows:</p>
+<p>Cmp1.c:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>USE_&lt;Function&gt;;
+int ImportFunctions(void)
+{
+            GET_&lt;Function&gt;;
+}
+int Code(void)
+{
+            …
+            CAL_&lt;Function&gt;();
+            …
+}
+</pre></div>
+</div>
+<p>Cmp2.c:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ExportFunctions</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+            <span class="n">EXP_</span><span class="o">&lt;</span><span class="n">Function</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>As you can see, there are a lot of macros necessary to realize the
+component interface mechanism. To simplify this, we generate these macros
+with the GNU m4-Compiler. This is declared in the next chapter.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="arch_m4_mechanism.html" title="1.2.7. M4 Mechanism"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="arch_linkage.html" title="1.2.5. Linkage"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="architecture.html" >1.2. Architecture</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

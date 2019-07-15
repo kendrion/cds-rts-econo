@@ -1,0 +1,29 @@
+.. _coding_guide_64bit_porting:
+
+64-Bit Porting rules
+--------------------
+
+There are some special rules which you have to follow, that your
+component can be compiled and can run on a 64-Bit Targets:
+
+1. All public interfaces and structures must use the predefined RTS\_
+   datatypes
+
+2. A pointer to an object must be a pointer or RTS\_HANDLE
+
+3. Integer calculations on pointers must be done with RTS\_UINTPTR resp.
+   RTS\_INTPTR
+
+4. All offset and sizes that worked with memory or file objects must use
+   the RTS\_SIZE datatype
+
+5. RTS\_PTRDIFF should be used for differences of pointers, loop
+   counters, array indexing, size storage and address arithmetic
+
+6. All variables with a fix size on every platform must use the RTS\_
+   datatypes with defined size, e.g. RTS\_UI16
+
+7. Portable format specifiers must be used for printf and scanf (see
+   next chapter)
+
+

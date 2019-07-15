@@ -1,0 +1,525 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.2.7. M4 Mechanism &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.2. Architecture" href="architecture.html" />
+    <link rel="next" title="1.2.8. Source Tree of the Runtime System" href="arch_source_tree.html" />
+    <link rel="prev" title="1.2.6. Component Interface Architecture" href="arch_comp_itf_architecture.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="arch_source_tree.html" title="1.2.8. Source Tree of the Runtime System"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="arch_comp_itf_architecture.html" title="1.2.6. Component Interface Architecture"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="architecture.html" accesskey="U">1.2. Architecture</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.2.7. M4 Mechanism</a><ul>
+<li><a class="reference internal" href="#interface-description-file">1.2.7.1. Interface description file</a></li>
+<li><a class="reference internal" href="#dependency-description-file">1.2.7.2. Dependency description file</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="arch_comp_itf_architecture.html"
+                        title="previous chapter">1.2.6. Component Interface Architecture</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="arch_source_tree.html"
+                        title="next chapter">1.2.8. Source Tree of the Runtime System</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/arch_m4_mechanism.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="m4-mechanism">
+<span id="arch-m4-mechanism"></span><h1>1.2.7. M4 Mechanism<a class="headerlink" href="#m4-mechanism" title="Permalink to this headline">¶</a></h1>
+<p>To reduce the effort for the generation of the component interface
+macros, we use the GNU M4 pre-processor. Therefore, two different types
+of description files must be used:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>*Itf.m4: The interface description file contains all information</dt>
+<dd>about an interface, that a component provides</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>*Dep.m4: The dependency file contains all dependencies on other</dt>
+<dd>components</dd>
+</dl>
+</li>
+</ul>
+<p>From these description files (interface and dependency) the GNU M4 macro
+pre-processor generates the associated header files, using the three
+control files Export.m4, Implementation.m4 and Util.m4.</p>
+<p>For generating the dependency header file the macro pre-processor
+accesses all interfaces used. No further file is required for generating
+the interface header file.</p>
+<p>The diagram below illustrates the generation of the header files for
+component CmpX1, where this component wants to import functions from
+component CmpX2.</p>
+<img alt="../_images/m4_mechanism.png" src="../_images/m4_mechanism.png" />
+<div class="section" id="interface-description-file">
+<h2>1.2.7.1. Interface description file<a class="headerlink" href="#interface-description-file" title="Permalink to this headline">¶</a></h2>
+<p>The interface description file must contain an entry for each function
+to be exported from the component. Each function must be defined with
+one of a set of specific keywords. The keywords always have the same
+structure:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">M4</span><span class="o">-</span><span class="n">KEYWORD</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="n">Return</span> <span class="n">type</span><span class="o">&gt;</span><span class="p">,</span> <span class="p">{</span><span class="n">CDECL</span> <span class="o">|</span> <span class="n">STDCALL</span><span class="p">},</span> <span class="o">&lt;</span><span class="n">Function</span> <span class="n">name</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Signature</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">LinkToIECApp</span><span class="o">&gt;=</span><span class="p">{</span><span class="mi">1</span><span class="o">|</span><span class="mi">0</span><span class="p">}])</span>
+</pre></div>
+</div>
+<p>Example for the function Fct1 with prototype <strong>int Fct1(int a)</strong>:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">DEF_API</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="n">CDECL</span><span class="p">,</span> <span class="n">Fct1</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>An interface function can be specified with one of the following
+keywords:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="92%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>DEF_API</td>
+<td><p class="first">C-functions (can be used for external libraries too)</p>
+<p class="last">In the runtime system we use the convention that a lower case function name indicates that this function can be called from the IEC application. With the lower case we separate C-functions that can be used by other components from the functions that can be used by the IEC program.</p>
+</td>
+</tr>
+<tr class="row-odd"><td>DEF_STATIC_API</td>
+<td><p class="first">Static C-functions</p>
+<p class="last">These interface functions cannot be used in the static linkage case. These functions are static and can only be used with dynamic linking and functions pointers.</p>
+</td>
+</tr>
+<tr class="row-even"><td>DEF_ITF_API</td>
+<td><p class="first">Singleton classes</p>
+<p class="last">Most of the classes in the runtime system are singleton classes. They implement one interface and always one instance is available.</p>
+</td>
+</tr>
+<tr class="row-odd"><td>DEF_STATICITF_API</td>
+<td><p class="first">Static class methods of Singleton classes</p>
+<p class="last">This is only relevant for C++ implementations. This interface is implemented static, that no instance pointer is required to call this interface function.</p>
+</td>
+</tr>
+<tr class="row-even"><td>DEF_CREATEITF_API</td>
+<td><p class="first">Instantiable class constructors</p>
+<p class="last">This is used for interfaces that are defined once and are implemented only by one class in one component (e.g. all System classes like SysFile)! The return value of a function, that is specified by this keyword, is the handle to the object (class instance)</p>
+</td>
+</tr>
+<tr class="row-odd"><td>DEF_HANDLEITF_API</td>
+<td><p class="first">Instantiable class methods</p>
+<p class="last">This is used for interfaces that are defined once and are implemented only by one class in one component! The first parameter of a function, that is specified by this keyword, is the handle to the object (class instance)</p>
+</td>
+</tr>
+<tr class="row-even"><td>DEF_CREATECLASSITF_API</td>
+<td><p class="first">Instantiable class constructors</p>
+<p class="last">This is used for interfaces that are defined once and can be implemented by more than one class in several components! One example is the CmpIoDrv-Interface that can be implemented by more than one I/O-driver. The return value of a function, that is specified by this keyword, is the handle to the object (class instance)</p>
+</td>
+</tr>
+<tr class="row-odd"><td>DEF_CLASSITF_API</td>
+<td><p class="first">Instantiable class methods</p>
+<p class="last">This is used for interfaces that are defined once and can be implemented by more than one class in several components! One example is the CmpIoDrv-Interface that can be implemented by more than one I/O-driver. The first parameter of a function, that is specified by this keyword, is the handle to the object (class instance)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>All keywords are expanded by the m4-compile process in the corresponding
+Itf-header files.</p>
+<p>The optional parameter <em>LinkToIECApp</em> indicates whether this function
+can be linked from an IEC application. If the parameter is not defined,
+&#8216;0&#8217; (i.e. not linkable to IEC applications) will be assumed. The above
+examples are also included in file CmpTemplateItf.m4.</p>
+<p>From each entry a function prototype, the definition of the function
+pointer, and the macros USE_xxx, EXT_xxx, GET_xxx, CAL_xxx, EXP_xxx
+and CHK_xxx are generated so that the functions can be used in a second
+module. In addition the signature checksum required by the component
+manager for registration and import of the function is calculated.</p>
+<ul class="simple">
+<li>for declaration of the function pointer (USE_...)</li>
+<li>for declaration of external function pointers (EXT_...)</li>
+<li>for importing (GET_...)</li>
+<li>for calling the function (CAL_...)</li>
+<li>for checking the function pointer (CHK_...)</li>
+<li>for exporting (EXP_...).</li>
+</ul>
+<p>The exported component functions should be defined in a uniform manner
+such that the return value always is an error code. If the function is
+to return variable values, parameters with pointer to the return value
+must be used.</p>
+<p>The macro pairs are distinguished by the following compiler flags:</p>
+<ol class="arabic simple">
+<li><dl class="first docutils">
+<dt>STATIC_LINK: If the components are linked statically, STATIC_LINK</dt>
+<dd>must be specified in the preprocessor options.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>MIXED_LINK: Must be specified if the components are linked</dt>
+<dd>statically with the option of expansion through dynamic reloading
+of further components.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>CPLUSPLUS: Must be specified if the runtime system is to be compiled</dt>
+<dd>in C++.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>DEFAULT: If no compiler flag is specified, the components later will</dt>
+<dd>be reloaded as modules.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&lt;component name&gt;_NOTIMPLEMENTED: Can be used to completely</dt>
+<dd>deactivate the interface of a component.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&lt;function&gt;_NOTIMPLEMENTED: Can be used to deactivate individual</dt>
+<dd>functions of a component.</dd>
+</dl>
+</li>
+</ol>
+<p>As an example the function CmpTemplateOpen of component CmpTemplate is
+examined:</p>
+<p>The function declaration can be taken over from the header file into the
+source code file, where it is also implemented:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">RTS_HANDLE</span> <span class="n">CDECL</span> <span class="nf">CmpTemplateOpen</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">pszTemplate</span><span class="p">,</span> <span class="n">RTS_RESULT</span> <span class="o">*</span><span class="n">pResult</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Function pointer to this function:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="nf">RTS_HANDLE</span> <span class="p">(</span><span class="n">CDECL</span> <span class="o">*</span><span class="n">PFCMPTEMPLATEOPEN</span><span class="p">)</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">pszTemplate</span><span class="p">,</span> <span class="n">RTS_RESULT</span> <span class="o">*</span><span class="n">pResult</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Macro definition if the whole component or this function is to be
+deactivated:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#if defined(CMPTEMPLATE_NOTIMPLEMENTED) || defined(CMPTEMPLATEOPEN_NOTIMPLEMENTED)</span>
+            <span class="cp">#define USE_CmpTemplateOpen</span>
+            <span class="cp">#define EXT_CmpTemplateOpen</span>
+            <span class="cp">#define GET_CmpTemplateOpen ERR_NOTIMPLEMENTED</span>
+            <span class="cp">#define CAL_CmpTemplateOpen(p0,p1) (RTS_HANDLE)ERR_FAILED</span>
+            <span class="cp">#define CHK_CmpTemplateOpen FALSE</span>
+            <span class="cp">#define EXP_CmpTemplateOpen ERR_OK</span>
+</pre></div>
+</div>
+<p>Macro definition for the statically linked runtime system:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#elif defined(STATIC_LINK)</span>
+</pre></div>
+</div>
+<p>In the statically linked runtime system no function pointers are
+required.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define USE_CmpTemplateOpen</span>
+</pre></div>
+</div>
+<p>The same applies to the external function pointer.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define EXT_CmpTemplateOpen</span>
+</pre></div>
+</div>
+<p>In the statically linked runtime system the function pointer import is
+minimal.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define GET_CmpTemplateOpen         ERR_OK**</span>
+</pre></div>
+</div>
+<p>The call is made directly as a function call.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define CAL_CmpTemplateOpen CmpTemplateOpen**</span>
+</pre></div>
+</div>
+<p>In the statically linked case the function pointer is always present.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define CHK_CmpTemplateOpen TRUE**</span>
+</pre></div>
+</div>
+<p>The function pointer does not have to be exported.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define EXP_CmpTemplateOpen ERR_OK</span>
+</pre></div>
+</div>
+<p>Macro definition for the runtime system with mixed links:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#elif defined(MIXED_LINK)</span>
+</pre></div>
+</div>
+<p>The runtime system with mixed links contains elements of the statically
+and the dynamically linked runtime system. The core components are
+statically linked, while optional modules can be reloaded.</p>
+<p>The core is statically linked, which means that no pointers are
+required.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define USE_CmpTemplateOpen</span>
+
+<span class="cp">#define EXT_CmpTemplateOpen</span>
+</pre></div>
+</div>
+<p>The core is statically linked, which means that no function pointers
+have to be imported.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define GET_CmpTemplateOpen ERR_OK</span>
+</pre></div>
+</div>
+<p>The call to the function can also be replaced with a direct function
+call.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define CAL_CmpTemplateOpen CmpTemplateOpen</span>
+</pre></div>
+</div>
+<p>Not required either</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define CHK_CmpTemplateOpen TRUE</span>
+</pre></div>
+</div>
+<p>In order to enable access to the functions of other components for
+dynamically linked optional components, the component manager must be
+notified of the function pointer.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define EXP_CmpTemplateOpen s_pfRegisterAPI( &quot;CmpTemplateOpen&quot;, (void *)CmpTemplateOpen, 0, 0)</span>
+</pre></div>
+</div>
+<p>Definition for the C++ runtime system (statically linked):</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#elif defined(CPLUSPLUS)</span>
+</pre></div>
+</div>
+<p>No function pointers are required since the C++ runtime system is also
+statically linked:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define USE_CmpTemplateOpen</span>
+
+<span class="cp">#define EXT_CmpTemplateOpen</span>
+</pre></div>
+</div>
+<p>The import of function pointers is also minimal</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define GET_CmpTemplateOpen ERR_OK</span>
+</pre></div>
+</div>
+<p>In the C++ runtime system function calls correspond to method calls.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define CAL_CmpTemplateOpen         ((ICmpTemplate*)s_pfCreateInstance(CLASSID_CCmpTemplate, NULL))-&gt;ICmpTemplateOpen</span>
+</pre></div>
+</div>
+<p>Before the call the existence of an object for the class must be
+verified:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define CHK_CmpTemplateOpen         (s_pfCreateInstance != NULL)</span>
+</pre></div>
+</div>
+<p>The export of functions is also minimal</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define EXP_CmpTemplateOpen         ERR_OK</span>
+</pre></div>
+</div>
+<p>Definition for the dynamically linked runtime system:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#else </span><span class="cm">/* DYNAMIC_LINK */</span><span class="cp"></span>
+</pre></div>
+</div>
+<p>If a function is to be used, the function pointer must be declared with
+the USE macro:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define USE_CmpTemplateOpen         PFCMPTEMPLATEOPEN pfCmpTemplateOpen;</span>
+</pre></div>
+</div>
+<p>Declaration of an external function pointer</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define EXT_CmpTemplateOpen         extern PFCMPTEMPLATEOPEN pfCmpTemplateOpen;</span>
+</pre></div>
+</div>
+<p>The function pointer fetches the GET macro via the GetApi function of
+the component manager:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define GET_CmpTemplateOpen         s_pfGetAPI( &quot;CmpTemplateOpen&quot;, (void **)&amp;pfCmpTemplateOpen, 0)</span>
+</pre></div>
+</div>
+<p>A function pointer is used for the call:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define CAL_CmpTemplateOpen         pfCmpTemplateOpen</span>
+</pre></div>
+</div>
+<p>Before each call the validity of the function pointer should be
+verified.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define CHK_CmpTemplateOpen         (pfCmpTemplateOpen != NULL)</span>
+</pre></div>
+</div>
+<p>During export a function pointer is registered in the component manager.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span><span class="cp">#define EXP_CmpTemplateOpen         s_pfRegisterAPI( &quot;CmpTemplateOpen&quot;, (void *)CmpTemplateOpen, 0, 0)</span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dependency-description-file">
+<h2>1.2.7.2. Dependency description file<a class="headerlink" href="#dependency-description-file" title="Permalink to this headline">¶</a></h2>
+<p>The file starts with a comment containing a textual description of the
+component. The tags defined above should be used.</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>1. SET_COMPONENT_NAME(`&lt;name of component&#39;).
+            // Sets the name for this component
+
+2. COMPONENT_SOURCES(`&lt;source file&gt;&#39;)
+            // Specifies the source file for this component.
+
+3. IMPLEMENT_ITF(`&lt;relative path to interface file&gt;.m4&#39;).
+            // This entry specifies which interface this component implements.
+                // This entry is used to generate an #include statement for the
+                // associated header file and the EXPORT_STMT macro, which should
+                // be called in the ExportFunctions function and which registers
+                // the interface functions in the component manager.
+
+4. USE_ITF(`&lt;relative path to interface file&gt;.m4&#39;).
+            // These entries specify interfaces from which functions are
+                // imported. They are mainly used to generate #include statements
+                // for the associated header files. The component manager also
+                // needs this information for checking the signatures of the
+                // imported functions.
+
+5. REQUIRED_IMPORTS(`&lt;function1&gt;&#39;, `&lt;function2&gt;&#39;, ...)
+            // This is used to generate the IMPORT_STMT macro. The component
+                // must call this macro in the ImportFunctions function. The
+                // specified functions are then imported by the component manager.
+                // If an error occurs an appropriate message is written into the
+                // log, and ExportFunctions is terminated with an error.
+
+6. OPTIONAL_IMPORTS(`&lt;function3&gt;&#39;, ...)
+            // Specifies non-critical functions for import, i.e. the component
+                // is executable without these functions. Special assert macros
+                // (see below) can be used to restrict this function.
+            // This macro also extends IMPORT_STMT with associated
+                // instructions.
+
+7. ASSERT_ONE_OF(&lt;A&gt;,&lt;B&gt;,&lt;C&gt;, ...)
+            // At least one of the specified functions must exist.
+</pre></div>
+</div>
+<p>CmpTemplateDep.m4 is illustrated as an example below:</p>
+<p>Component name:</p>
+<blockquote>
+<div><div class="highlight-C"><div class="highlight"><pre><span></span>SET_COMPONENT_NAME(`CmpTemplate&#39;)
+</pre></div>
+</div>
+</div></blockquote>
+<p>Source file for the component:</p>
+<blockquote>
+<div><div class="highlight-C"><div class="highlight"><pre><span></span>COMPONENT_SOURCES(`CmpTemplate.c&#39;)
+</pre></div>
+</div>
+</div></blockquote>
+<p>Interfaces implemented by this component:</p>
+<blockquote>
+<div><div class="highlight-C"><div class="highlight"><pre><span></span>IMPLEMENT_ITF(`CmpTemplateItf.m4&#39;,`CmpEventCallbackItf.m4&#39;)
+</pre></div>
+</div>
+</div></blockquote>
+<p>Interfaces from which this component imports functions:</p>
+<blockquote>
+<div><div class="highlight-C"><div class="highlight"><pre><span></span>USE_ITF(`CmpLogItf.m4&#39;)
+USE_ITF(`CmpSrvItf.m4&#39;)
+USE_ITF(`CmpBinTagUtilItf.m4&#39;)
+USE_ITF(`SysTaskItf.m4&#39;)
+USE_ITF(`SysMemItf.m4&#39;)
+USE_ITF(`CmpSettingsItf.m4&#39;)
+USE_ITF(`CmpAppItf.m4&#39;)
+USE_ITF(`CmpEventMgrItf.m4&#39;)
+</pre></div>
+</div>
+</div></blockquote>
+<p>Functions that must be imported:</p>
+<blockquote>
+<div><div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">REQUIRED_IMPORTS</span><span class="p">(</span>
+<span class="n">LogAdd</span><span class="p">,</span>
+<span class="p">...</span>
+<span class="n">SysMemAllocData</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Functions that can be imported optionally:</p>
+<blockquote>
+<div><div class="highlight-C"><div class="highlight"><pre><span></span><span class="n">OPTIONAL_IMPORTS</span><span class="p">(</span>
+<span class="n">ServerRegisterServiceHandler</span><span class="p">,</span>
+<span class="n">ServerUnregisterServiceHandler</span><span class="p">,</span>
+<span class="p">.</span> <span class="p">.</span> <span class="p">.</span>
+<span class="n">EventOpen</span><span class="p">,</span>
+<span class="n">EventClose</span><span class="p">,</span>
+<span class="n">EventRegisterCallbackFunction</span><span class="p">,</span>
+<span class="n">EventUnregisterCallbackFunction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="arch_source_tree.html" title="1.2.8. Source Tree of the Runtime System"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="arch_comp_itf_architecture.html" title="1.2.6. Component Interface Architecture"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="architecture.html" >1.2. Architecture</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

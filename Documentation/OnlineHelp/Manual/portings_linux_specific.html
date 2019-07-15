@@ -1,0 +1,445 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.4.2. Linux specific information &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.4. Portings" href="portings.html" />
+    <link rel="next" title="1.4.3. VxWorks Specific Information" href="portings_vxworks_specific.html" />
+    <link rel="prev" title="1.4.1. Windows Specific Information" href="portings_win_specific.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="portings_vxworks_specific.html" title="1.4.3. VxWorks Specific Information"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="portings_win_specific.html" title="1.4.1. Windows Specific Information"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="portings.html" accesskey="U">1.4. Portings</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.4.2. Linux specific information</a><ul>
+<li><a class="reference internal" href="#can-bus">1.4.2.1. CAN bus</a></li>
+<li><a class="reference internal" href="#environment-variables-and-command-line-parameters">1.4.2.2. Environment variables and command line parameters</a><ul>
+<li><a class="reference internal" href="#environment-variables">1.4.2.2.1. Environment variables:</a></li>
+<li><a class="reference internal" href="#command-line-parameters">1.4.2.2.2. Command line parameters:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#task-mapping">1.4.2.3. Task Mapping</a></li>
+<li><a class="reference internal" href="#multicore">1.4.2.4. Multicore</a></li>
+<li><a class="reference internal" href="#filesystem-layout">1.4.2.5. Filesystem layout</a></li>
+<li><a class="reference internal" href="#build-own-components">1.4.2.6. Build own components</a></li>
+<li><a class="reference internal" href="#dynamic-components">1.4.2.7. Dynamic components</a></li>
+<li><a class="reference internal" href="#build-static-runtime">1.4.2.8. Build static runtime</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="portings_win_specific.html"
+                        title="previous chapter">1.4.1. Windows Specific Information</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="portings_vxworks_specific.html"
+                        title="next chapter">1.4.3. VxWorks Specific Information</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/portings_linux_specific.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="linux-specific-information">
+<span id="portings-linux-specific"></span><h1>1.4.2. Linux specific information<a class="headerlink" href="#linux-specific-information" title="Permalink to this headline">¶</a></h1>
+<p>On Linux systems the runtime is a user space application. For realtime
+behavior the realtime-preempt patches from Ingo Molnar and Thomas Gleixner
+are needed. But the integration is transparent, so a standard vanilla kernel
+or a standard Linux distribution like e.g. debian also may be used.</p>
+<dl class="docutils">
+<dt>For full functionality the runtime has to be started with root</dt>
+<dd>privileges. Starting it as a regular user is possible, but the
+following functionality will fail and this causes severe drawbacks.
+There might be the possibility to set specific capabilities (see
+manpage capabilities) or resource limits (see manpage setrlimit) to
+avoid this:</dd>
+</dl>
+<ul class="simple">
+<li>set realtime priority (SCHED_FIFO) for threads -&gt; no realtime tasks
+possible</li>
+<li>lock process memory via mlockall() -&gt; realtime behavior might be bad</li>
+<li>creating raw sockets -&gt; ethernet based fieldbusses will not work</li>
+<li>ifconfig up/down -&gt; baudrate for CAN bus can&#8217;t be set</li>
+</ul>
+<div class="section" id="can-bus">
+<h2>1.4.2.1. CAN bus<a class="headerlink" href="#can-bus" title="Permalink to this headline">¶</a></h2>
+<p>For CAN bus access you have to provide a script for setting the
+baudrate of the CAN bus. The default name is &#8220;rts_set_baud.sh&#8221; and
+it will be called &#8221;./rts_set_baud.sh &lt;interfacename&gt;
+&lt;baudrate/1000&gt;&#8221;.
+Usually this can be done by the &#8220;ip link&#8221; command and the
+implementation may look like this:</p>
+<div class="highlight-C"><div class="highlight"><pre><span></span>#!/bin/sh
+BITRATE=`expr $2 \\* 1000`
+ifconfig $1 down
+echo ip link set $1 type can bitrate $BITRATE
+ip link set $1 type can bitrate $BITRATE
+ifconfig $1 up;
+</pre></div>
+</div>
+<p>For further templates refer to the
+Platforms/Linux/Templates/rts_set_baud folder of your toolkit.
+Configuration options are documented in the Online Help -&gt;
+CmpSocketCanDrvItf.</p>
+</div>
+<div class="section" id="environment-variables-and-command-line-parameters">
+<h2>1.4.2.2. Environment variables and command line parameters<a class="headerlink" href="#environment-variables-and-command-line-parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="environment-variables">
+<h3>1.4.2.2.1. Environment variables:<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">PlcConfigFile=&lt;path/filename&gt;</th>
+<th class="head">use this file as configuration file. Path is optional. Only evaluated if the configuration file was not set as a command line parameter.</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>QWS_COMMANDLINE_PARAM</td>
+<td>QT parameters to be passed to the implicitly generated QT Application (default: &#8220;-qws&#8221;).</td>
+</tr>
+</tbody>
+</table>
+<p>Target visualization on top of X11 based QT only:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">RTS_WINDOW_MAXIMIZED</th>
+<th class="head">not set: full screen mode(default) set(any value): maximized window</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>RTS_CURSER_VISIBLE=0|1</td>
+<td>0: hide cursor 1: show cursor(default)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="command-line-parameters">
+<h3>1.4.2.2.2. Command line parameters:<a class="headerlink" href="#command-line-parameters" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">Usage: codesyscontrol [OPTION]... [ConfigurationFile]</div>
+<div class="line">If [ConfigurationFile] isn&#8217;t specified, a file named
+CODESYSControl.cfg is expected to reside in the working directory of
+the runtime system</div>
+</div>
+<div class="line-block">
+<div class="line">Valid options:</div>
+<div class="line">-h, &#8211;help display this help and exit</div>
+<div class="line">-v, &#8211;version display version information and exit</div>
+<div class="line">d[level], &#8211;debug print additonal debug output</div>
+<div class="line">-b, &#8211;daemon run in the background</div>
+<div class="line">&#8211;printlostcycles print debug output if a cycle in a realtime iec
+tasks is lost</div>
+</div>
+</div>
+</div>
+<div class="section" id="task-mapping">
+<h2>1.4.2.3. Task Mapping<a class="headerlink" href="#task-mapping" title="Permalink to this headline">¶</a></h2>
+<p>For information about task priorities in the runtime refer to chapter
+3.7. The runtime priorities are mapped to the Linux priorities according
+to this scheme:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="24%" />
+<col width="31%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">runtime priority</th>
+<th class="head">Linux priority (default)</th>
+<th class="head">Corresponding IEC Task priority</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Name</td>
+<td>Value (default)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>System Base</td>
+<td>0</td>
+<td>99 (SCHED_FIFO)</td>
+<td>&#8211;</td>
+</tr>
+<tr class="row-even"><td>System End</td>
+<td>31</td>
+<td>68 (SCHED_FIFO)</td>
+<td>&#8211;</td>
+</tr>
+<tr class="row-odd"><td>RealTime Base</td>
+<td>32</td>
+<td>67 (SCHED_FIFO)</td>
+<td>0 (highest realtime Prio)</td>
+</tr>
+<tr class="row-even"><td>RealTime Base + 15</td>
+<td>47</td>
+<td>52 (SCHED_FIFO)</td>
+<td>15 (lowest realtime Prio)</td>
+</tr>
+<tr class="row-odd"><td>RealTime Base + 16</td>
+<td>48</td>
+<td>0 (SCHED_OTHER)</td>
+<td>16 (non realtime Prio)</td>
+</tr>
+<tr class="row-even"><td>RealTime End</td>
+<td>63</td>
+<td>0 (SCHED_OTHER)</td>
+<td>31 (non realtime Prio)</td>
+</tr>
+<tr class="row-odd"><td>High Base …</td>
+<td>&gt;= 64</td>
+<td>0 (SCHED_OTHER)</td>
+<td>&#8211;</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">If the runtime priority is in the range SystemBase-RealtimeBase+15 the
+Linux scheduling policy is set to SCHED_FIFO and the priority is
+computed this way:</div>
+<div class="line">sched_get_priority_max(SCHED_FIFO) – &lt;value of runtime priority&gt;.</div>
+<div class="line">Otherwise it is set to SCHED_OTHER with priority 0.</div>
+<div class="line">So it is possible to change this mapping by changing the values of the
+runtime priorities as described in the documentation of SysTaskItf .</div>
+</div>
+</div>
+<div class="section" id="multicore">
+<h2>1.4.2.4. Multicore<a class="headerlink" href="#multicore" title="Permalink to this headline">¶</a></h2>
+<p id="id1">By default Linux is balancing the processes and threads across all
+available cores. To avoid this behavior on multicore systems, it is
+recommended to use the Linux tool &#8220;taskset&#8221;.</p>
+<p>For example:</p>
+<p>taskset -a 02 codesyscontrol /etc/CODESYSControl.cfg</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">CODESYS doesn&#8217;t support the multicore processing on all systems.
+Please ask our support if you are unsure if your system supports this.</p>
+</div>
+</div>
+<div class="section" id="filesystem-layout">
+<h2>1.4.2.5. Filesystem layout<a class="headerlink" href="#filesystem-layout" title="Permalink to this headline">¶</a></h2>
+<p>Based on the &#8220;Filesystem Hierarchy Standard&#8221;, we are recommending the
+following filesystem layout for CODESYS Runtime, running on Linux:</p>
+<ul>
+<li><div class="first line-block">
+<div class="line">/etc – runtime configuration files (e.g. CODESYSControl.cfg)</div>
+<div class="line">As some sections of the runtime configuration file are changed
+during runtime (e.g. [CmpApp]), you may want to split the file into
+a user writeable and a static one. If /etc is write protected, you
+may want to move the user writeable file to a writeable directory
+and link it to /etc.</div>
+<div class="line">Also the license file 3S.dat, shall be placed under /etc. It can be
+mapped there with the following entry in the configuration file:</div>
+<div class="line">[SysFile]</div>
+<div class="line">FilePath.1=/etc/, 3S.dat</div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line">/var/opt/&lt;package-name&gt; - application specific files</div>
+<div class="line">The application specific files can be mapped with a setting in the
+configuration file:</div>
+<div class="line">[SysFile]</div>
+<div class="line">FilePath=/var/opt/&lt;package-name&gt;/</div>
+<div class="line">By default the working directory of the runtime will be used.</div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line">/opt/&lt;package-name&gt; - CODESYS Control binaries, scripts, etc...</div>
+<div class="line">All binaries, scripts, etc. which are necessary to run CODESYS,
+should be placed under &#8220;/opt/&lt;package-name&gt;/&#8221;.</div>
+</div>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Shared libraries, which are solely runtime dependent, should be placed
+under /opt/&lt;package-name&gt;, too. Otherwise they will be mixed up with system libraries.</p>
+</div>
+<p>In general it is recommended to use read-only mounted file-systems as
+far as possible. It is good to differentiate between three categories of
+files:</p>
+<ol class="arabic">
+<li><div class="first line-block">
+<div class="line">Read-Only:</div>
+<div class="line">The whole filesystem shall be read-only by default.</div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line">Read/Write:</div>
+<div class="line">All files, which are accessible by CODESYS have to be writeable and
+readable. Specifically this will be /var/opt/&lt;package-name&gt;, but
+might also be the whole /var folder.</div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line">Temporary:</div>
+<div class="line">Log files and those which don&#8217;t have to be stored across reboots,
+could be placed in a temporary filesystem (of type tempfs).
+Specifically this is important for /tmp.</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="build-own-components">
+<h2>1.4.2.6. Build own components<a class="headerlink" href="#build-own-components" title="Permalink to this headline">¶</a></h2>
+<p>In the folder Templates/ of the runtime toolkit, there are several
+Makefiles which can be used as a template to build your own components.
+In general, you need to call the cross compiler and set the following
+settings additionally:</p>
+<ul>
+<li><div class="first line-block">
+<div class="line">Compiler:</div>
+<div class="line">-DALIGNATTRIB= -DCDECL= -DHANDLE_WIN32_PRAGMA -DDLL_DECL=
+-D_REENTRANT= -DHUGEPTR= -DLINUX –fPIC</div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line">Linker:</div>
+<div class="line">-shared -Wl,-soname,libCmpTemplates</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="dynamic-components">
+<h2>1.4.2.7. Dynamic components<a class="headerlink" href="#dynamic-components" title="Permalink to this headline">¶</a></h2>
+<p>The CODESYS Control runtime is able to load components during runtime,
+which are not statically linked into the runtime binary. Those
+components have to fulfil the following criteria:</p>
+<ul>
+<li><div class="first line-block">
+<div class="line">They have to be found by the Linux system call &#8220;dlopen&#8221;.</div>
+<div class="line">So they can either be placed in the default search path for
+libraries, or the path can be given with the environment variable
+LD_LIBRARY_PATH.</div>
+</div>
+</li>
+<li><p class="first">They have to contain the prefix &#8220;lib&#8221;.</p>
+</li>
+<li><p class="first">They should not use versioning of shared objects.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="build-static-runtime">
+<h2>1.4.2.8. Build static runtime<a class="headerlink" href="#build-static-runtime" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Every CODESYS Linux Toolkit contains a static library beside the
+CODESYS binary. This library archive can be used to statically build
+customized runtimes. For example:</div>
+<div class="line">gcc -o codesyscontrol main.c codesyscontrol.a</div>
+</div>
+<p>To extend the runtime with more components, which are also statically
+linked, the list of static components from &#8220;profile.h&#8221; has to be
+extended.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The use of the CODESYS Runtime as a shared object is not recommended,
+and no longer supported. Instead it is recommended to use the static
+library approach to link all runtime components together. If it is
+necessary to use the CODESYS Runtime as shared object, no dynamic components shall be used.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="portings_vxworks_specific.html" title="1.4.3. VxWorks Specific Information"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="portings_win_specific.html" title="1.4.1. Windows Specific Information"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="portings.html" >1.4. Portings</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

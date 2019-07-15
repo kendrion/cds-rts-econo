@@ -1,0 +1,39 @@
+.. _ov_kernel_component_manager:
+
+Component Manager
+=================
+
+The component manager is the central component of the runtime system. It
+has the following job:
+
+1. Loading components statically or dynamically during startup sequence
+
+1. Initializing all components by calling the ComponentEntry() routines
+
+2. Calling the ImportFunctions() routine for each component and hold a
+       list of all API interface functions that are registered by the
+       ImportFunctions().
+
+3. Calling the ExportFunctions()routine for each component and Provides
+       all interface API functions
+
+4. Calling the CH\_ hooks of all components in the right manner of
+       startup and shutdown and in the operating mode.
+
+The component manager can be started by the main module with the
+CMInit() function. If this function returns with no error, the runtime
+system is completely started.
+
+The component manager can be shut down by the main module with the
+CMExit() function. If this function returns with no error, the runtime
+system is completely released and shutdown.
+
+In the operating mode, the main module can call the CMCallHook() routine
+like:
+
+.. code-block:: C
+
+    CMCallHook( CH\_COMM\_CYCLE, 0, 0, FALSE);
+
+In this hook, the component manager calls the HookFunction() routines of
+all loaded components.

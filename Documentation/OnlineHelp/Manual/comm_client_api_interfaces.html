@@ -1,0 +1,186 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.5.12. Client API Interfaces &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.5. Communication" href="communication.html" />
+    <link rel="next" title="1.5.13. Handling of certificates for HTTPS support of the webserver" href="comm_certificates_https_webserver.html" />
+    <link rel="prev" title="1.5.11. Modules" href="comm_modules.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="comm_certificates_https_webserver.html" title="1.5.13. Handling of certificates for HTTPS support of the webserver"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="comm_modules.html" title="1.5.11. Modules"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="communication.html" accesskey="U">1.5. Communication</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.5.12. Client API Interfaces</a><ul>
+<li><a class="reference internal" href="#channel-client-cmpchannelclient">1.5.12.1. Channel client (CmpChannelClient)</a></li>
+<li><a class="reference internal" href="#gateway-client-gwclient">1.5.12.2. Gateway client (GwClient)</a></li>
+<li><a class="reference internal" href="#plchandler">1.5.12.3. PLCHandler</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="comm_modules.html"
+                        title="previous chapter">1.5.11. Modules</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="comm_certificates_https_webserver.html"
+                        title="next chapter">1.5.13. Handling of certificates for HTTPS support of the webserver</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/comm_client_api_interfaces.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="client-api-interfaces">
+<span id="comm-client-api-interfaces"></span><h1>1.5.12. Client API Interfaces<a class="headerlink" href="#client-api-interfaces" title="Permalink to this headline">¶</a></h1>
+<p>There are three different levels to enter the CODESYS V3 PLC network.</p>
+<p>The lowest level is to enter the network in the runtime system itself.
+This is typically used, if you write your own component and want to
+communicate with another plc.</p>
+<p>The next level is the Gateway Client. This is typically used by a PlugIn
+in CODESYS or by CODESYS itself.</p>
+<p>The highest interface is the PLCHandler. It provides to enter the
+communication network from any other proprietary client.</p>
+<div class="section" id="channel-client-cmpchannelclient">
+<h2>1.5.12.1. Channel client (CmpChannelClient)<a class="headerlink" href="#channel-client-cmpchannelclient" title="Permalink to this headline">¶</a></h2>
+<p>The channel client component can be used from a component in the runtime
+system to enter the PLC communication network. The channel client can be
+used to open the communication to another PLC and to send native online
+service though this channel.</p>
+</div>
+<div class="section" id="gateway-client-gwclient">
+<h2>1.5.12.2. Gateway client (GwClient)<a class="headerlink" href="#gateway-client-gwclient" title="Permalink to this headline">¶</a></h2>
+<p>The Gateway-Client has a native C++ interface, so it can be used from
+.NET and C++ clients (like PlugIns in CODESYS). This interface provides
+to open the communication and to send native online service though this
+channel. In this layer, no symbolic access to variables in possible! To
+use symbolic access, you have to use the PLCHandler interface.</p>
+</div>
+<div class="section" id="plchandler">
+<h2>1.5.12.3. PLCHandler<a class="headerlink" href="#plchandler" title="Permalink to this headline">¶</a></h2>
+<p>This is the highest level API that is provided by 3S.</p>
+<p>The PLCHandler is a C++-class which on a comfortable level provides
+services for the communication between a client (e.g. visualization) and
+a 3S Automation-Alliance compliant PLC (controller).</p>
+<p>The following features and services are available:</p>
+<ul class="simple">
+<li>Establishing and terminating the communication with the PLC</li>
+<li>Reading all variables on the PLC</li>
+<li>Cyclic reading of variables&#8217; values from the PLC</li>
+<li>Synchronous reading of variables&#8217; values from the PLC</li>
+<li>Synchronous writing of variables&#8217; values to the PLC</li>
+<li><dl class="first docutils">
+<dt>Possibility of instancing for the purpose of a simultaneous</dt>
+<dd>communication with several PLCs</dd>
+</dl>
+</li>
+<li>Automatic reconnecting with the PLC after an break of the connection</li>
+<li>Automatic restart after a program download from CODESYS to the PLC</li>
+<li>Data transfer to and from PLC</li>
+</ul>
+<p>Thus the PLCHandler can be used as a basic component for OPC Servers or
+visualizations. The Handler is delivered as a SDK, i.e. all C++ header
+files, the static link library (PLCHandler.lib resp.
+PLCHandlerComplete.lib) and a sample program (main.cpp) are part of the
+package.</p>
+<p>The PLCHandler supports beneath the CODESYS V3 generation runtime
+systems additionally the CODESYS V2.x generation runtime systems! So you
+only have to handle one interface for all runtime systems in the field.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="comm_certificates_https_webserver.html" title="1.5.13. Handling of certificates for HTTPS support of the webserver"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="comm_modules.html" title="1.5.11. Modules"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="communication.html" >1.5. Communication</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

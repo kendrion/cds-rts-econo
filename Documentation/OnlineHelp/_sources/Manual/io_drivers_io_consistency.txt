@@ -1,0 +1,46 @@
+.. _io_drivers_io_consistency:
+
+IO Consistency
+--------------
+
+At the IO-update (reading inputs and writing outputs) all IO-channels
+must be transmitted task-consistent. That means only if a task has
+finished its IO-update completely, the IO-channels are allowed to
+transmit to the periphery!
+
+An IO-Update must reach the following 3 different constraints:
+
+1. Consistency
+2. Jitter
+3. Latency
+
+Task consistency must always be maximum! That means, Ios must be updated
+by a task contiguous. This means not, that a task cannot be interrupted
+during an IO update by another task.
+
+Jitter means the time shift between the calculated start time of a task
+and its real start time. This jitter should be minimum to avoid a bad
+real time influence.
+
+Latency is the time shift between the Ios are updated until they are
+updated at the hardware. This should be minimum too, to have a maximum
+real time behavior.
+
+To reach these 3 goals, the following mechanism are used in the runtime
+system:
+
+-  Bits are written in an atomic way, so Inputs and outputs must not be
+       pre-processed
+
+-  Bus cycle must not be executed during Ios update of another task to
+       realize consistency! To avoid jitter, the bus cycle is moved or
+       delayed when it can be done. Only a latency will occur in this
+       situation.
+
+-  A collision during a bus cycle can only be resolved by a delay of the
+       interrupt task. This leads to a small jitter, but no latency.
+       This is the only situation that is actually not handled in the
+       runtime!
+
+.. image:: ./images/io_drivers_task_consistency.png
+

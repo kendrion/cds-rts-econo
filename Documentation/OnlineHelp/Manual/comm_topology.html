@@ -1,0 +1,390 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.5.4. Network Topology and Addressing &#8212; RuntimeSystemOnlineHelp V3.5.14.0</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.5.14.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="RuntimeSystemOnlineHelp V3.5.14.0" href="../index.html" />
+    <link rel="up" title="1.5. Communication" href="communication.html" />
+    <link rel="next" title="1.5.5. Router Communication" href="comm_router.html" />
+    <link rel="prev" title="1.5.3. Communication Layers" href="comm_layers.html" /> 
+  </head>
+  <body role="document">
+	<div id="header">
+		<a href="#" title="CODESYS" target="_top" id="logo"><img src="../_static/logo.png" width="134" height="130" alt=""></a>
+		<a href="#" title="CODESYS Documentation" target="_top" id="logo-store"><img src="../_static/logo2.png" width="137" height="130" alt=""></a>
+	</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="comm_router.html" title="1.5.5. Router Communication"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="comm_layers.html" title="1.5.3. Communication Layers"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="communication.html" accesskey="U">1.5. Communication</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.5.4. Network Topology and Addressing</a><ul>
+<li><a class="reference internal" href="#topology">1.5.4.1. Topology</a></li>
+<li><a class="reference internal" href="#addressing-and-routing">1.5.4.2. Addressing and routing</a><ul>
+<li><a class="reference internal" href="#parallel-routing">1.5.4.2.1. Parallel routing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#address-determination">1.5.4.3. Address determination</a></li>
+<li><a class="reference internal" href="#address-structure">1.5.4.4. Address structure</a><ul>
+<li><a class="reference internal" href="#network-addresses">1.5.4.4.1. Network addresses</a></li>
+<li><a class="reference internal" href="#node-addresses">1.5.4.4.2. Node addresses</a></li>
+<li><a class="reference internal" href="#absolute-and-relative-addresses">1.5.4.4.3. Absolute and relative addresses</a></li>
+<li><a class="reference internal" href="#broadcast-addresses">1.5.4.4.4. Broadcast addresses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="comm_layers.html"
+                        title="previous chapter">1.5.3. Communication Layers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="comm_router.html"
+                        title="next chapter">1.5.5. Router Communication</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Manual/comm_topology.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="network-topology-and-addressing">
+<span id="comm-topology"></span><h1>1.5.4. Network Topology and Addressing<a class="headerlink" href="#network-topology-and-addressing" title="Permalink to this headline">¶</a></h1>
+<p>The aim is to create a system that largely configures itself (address
+assignment), transparently supports any communication media, and can
+route packets between different networks. The routing mechanism should
+be simple enough such that any node in the network, i.e. even nodes with
+low resources, can reroute packets. In particularly this means that
+large routing tables, complex calculations, or requests at runtime
+should be avoided.</p>
+<div class="section" id="topology">
+<h2>1.5.4.1. Topology<a class="headerlink" href="#topology" title="Permalink to this headline">¶</a></h2>
+<p>A control network should generally be configured hierarchically, i.e.
+each node has one parent node and any number of children. Cycles are not
+permitted, i.e. a control network has a tree structure.</p>
+<p>Parent-child relationships arise from the specification of network
+segments. A network segment corresponds to a local Ethernet or a serial
+point-to-point connection, for example. A distinction is made between
+the main network (<strong>main net</strong>) and the sub-networks (<strong>subnet</strong>). Each
+node may have several main nets as well as each main net may have
+several subnets. Each main net acts as a parent for the attached
+subnets.</p>
+<p>If the same network segment was simultaneously defined as a subnet of
+several nodes, the network would have several parents. This is an
+invalid configuration, since each network segment can only have one
+parent.</p>
+<p>A node without parent is referred to as <strong>top-level node</strong>.</p>
+</div>
+<div class="section" id="addressing-and-routing">
+<h2>1.5.4.2. Addressing and routing<a class="headerlink" href="#addressing-and-routing" title="Permalink to this headline">¶</a></h2>
+<p>Addresses map the topology of a control network to unique addresses.</p>
+<img alt="../_images/comm_topology.png" src="../_images/comm_topology.png" />
+<p>Node addresses are structured hierarchically. Each network connection is
+allocated a <strong>local address</strong> by the relevant block driver through which
+the node is unambiguously identified in the respective network. The node
+address is now formed by first appending the index of the subnet (in the
+parent) in which the node is located then subsequently the local address
+of the main network connection to the address of the parent. A node
+without main network is a <strong>top-level</strong> node with address 0. A node with
+a main network that does not contain a parent is assigned its local
+address in the main network.</p>
+<p>Due to the address structure the routing algorithm can be kept
+relatively lean. No routing tables are required. The only requirement is
+local information about the own address and the address of the parent
+node:</p>
+<ul class="simple">
+<li>Target address identical to own address? Current node is receiver</li>
+<li><dl class="first docutils">
+<dt>Target address starts with own address? Packet is intended for a</dt>
+<dd>child or descendant of the node. Forward to associated child
+node.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Otherwise: Packet is not a descendant of the current node. Forward to</dt>
+<dd>own parent.</dd>
+</dl>
+</li>
+</ul>
+<p>Relative addresses are a special feature. They do not contain the node
+number of the receiver node, but directly describe the path from the
+sender to the receiver. The principle is similar to a relative path in
+the file system: The address is comprised of the number of steps the
+packet has to move &#8220;up&#8221;, i.e. to the next respective parent, and the
+subsequent path down to the target node.</p>
+<p>The advantage of a relative address is that two nodes within the same
+sub tree can continue to communicate if the whole subtree is moved to
+another position within the overall control network. While the absolute
+node addresses change during such a move, the relative addresses are
+preserved.</p>
+<div class="section" id="parallel-routing">
+<h3>1.5.4.2.1. Parallel routing<a class="headerlink" href="#parallel-routing" title="Permalink to this headline">¶</a></h3>
+<p>Parallel routing represents a direct communication mechanism between two
+router instances on the same node. It is used when there are at least
+two networks on the same node that should not end up in a main net –
+subnet relationship (E.g. a PC with two network cards on independent
+Ethernet segments).</p>
+<p>The &#8220;ReceiverAdr&#8221; (see <a class="reference internal" href="comm_router.html#comm-router"><span class="std std-ref">Router Communication</span></a>) of an incoming packet is screened by
+the receiving router instance for a special marker identifying a
+parallel router on the same node. If this marker exists, both
+&#8220;ReceiverAdr &#8221; and &#8220;SenderAdr&#8221; are updated by the receiving router:</p>
+<ul class="simple">
+<li>The existing marker will be removed from the incoming &#8220;ReceiverAdr&#8221;.</li>
+<li><dl class="first docutils">
+<dt>A new marker will be added to the &#8220;SenderAdr&#8221; for identifying the</dt>
+<dd>current router.</dd>
+</dl>
+</li>
+</ul>
+<p>If the new &#8220;ReceiverAdr&#8221; is identical to the address of the parallel
+router, the acting node is the correct recipient and the packet will be
+handled locally. If not, the packet will directly be sent to the other
+network segment to be handled there by a different node.</p>
+</div>
+</div>
+<div class="section" id="address-determination">
+<h2>1.5.4.3. Address determination<a class="headerlink" href="#address-determination" title="Permalink to this headline">¶</a></h2>
+<p>In order to be able form its own address, each node must know the
+address of its parent node or detect that it is a top-level node. To
+this end it sends an address determination message as a broadcast to its
+main network during bootup. The parent node responds with an address
+notification. The node then passes on the modified address to its
+subnet. Until it receives a response to the address determination
+message the node considers itself to be a top-level node, although it
+will continue to try and detect a parent node at suitable intervals.</p>
+<p>Address determination can be executed at bootup or when requested by the
+programming PC.</p>
+<p>Once the address of a node is frozen, no further address determination
+is required. An address notification by the parent node with an address
+that differs from the stored address should be regarded as a fault.</p>
+</div>
+<div class="section" id="address-structure">
+<h2>1.5.4.4. Address structure<a class="headerlink" href="#address-structure" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="network-addresses">
+<h3>1.5.4.4.1. Network addresses<a class="headerlink" href="#network-addresses" title="Permalink to this headline">¶</a></h3>
+<p>Network addresses represent a mapping of the addresses of a network type
+(e.g. IP addresses) to a logical address within a control network. This
+mapping is handled by the respective block driver. Within an Ethernet
+with Class C IP addresses the first 3 bytes of the IP address are
+identical for all network devices. The last 8 bits of the IP address
+therefore suffice as network address, since they enable unambiguous
+mapping between the two addresses at the block driver.</p>
+<p>A node has separate network addresses for each network connection.
+Different network connections may have the same network address, since
+this address only has to be unique locally for each network connection.</p>
+<p><strong>Terminology:</strong> In general, the network address of node without
+statement of the network connection refers to the network address in the
+main network.</p>
+<p>The length of a network address is specified in bits and can be chosen
+by the block driver as required. Within a network segment the same
+length must be used for all nodes. A network address is represented as
+an array of bytes with the following coding:</p>
+<ul class="simple">
+<li>Length of the network address: n bits</li>
+<li>Required bytes: b = (n + 7) DIV 8</li>
+<li><dl class="first docutils">
+<dt>The (n MOD 8) lowest-order bits of the first byte and all remaining</dt>
+<dd>(n DIV 8) bytes are used for the network address.</dd>
+</dl>
+</li>
+</ul>
+<img alt="../_images/comm_network_addresses.png" src="../_images/comm_network_addresses.png" />
+</div>
+<div class="section" id="node-addresses">
+<h3>1.5.4.4.2. Node addresses<a class="headerlink" href="#node-addresses" title="Permalink to this headline">¶</a></h3>
+<p>The node address indicates the absolute address of a node within a
+control network and is therefore unique in the whole &#8220;tree&#8221;. It consists
+of up to 15 <strong>address components</strong>, each consisting of two bytes. The
+lower a node is located within the network hierarchy, the longer its
+address.</p>
+<p>The node address is comprised of the <strong>partial addresses</strong> of all
+predecessors of the node and the node itself. Each partial address
+consists of one or several address components. The length is therefore
+always a multiple of two. The partial address of a node is formed from
+the network address of the node in its main network and the <strong>subnet
+index</strong> of the main network in the parent node. The bits required for
+the subnet index are determined by the router of the parent node. Filler
+bits are inserted between the subnet index and the network address in
+order to ensure that the length of the partial address is a multiple of
+2 bytes.</p>
+<p>Special cases:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt><strong>Node has no main network:</strong> This means there is no subnet index nor</dt>
+<dd>a network address in the main network. In this case the address
+is set to 0x0000.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>Node with main network but without parent:</strong> In this case a subnet</dt>
+<dd>index with 0 bit length is assumed. The partial address
+corresponds to the network address, supplemented with filler bits
+if required.</dd>
+</dl>
+</li>
+</ul>
+<img alt="../_images/comm_node_addresses.png" src="../_images/comm_node_addresses.png" />
+<p>The node address representation is always hexadecimal. The individual
+address components (two bytes in each case) are separated by a &#8221;:&#8221;
+(colon). The bytes within a component appear sequentially without
+separator (see example above). Since this represents a byte array and
+not a 16-bit value, the components are <strong>not</strong> displayed in
+little-endian format. For manually entered addresses missing digits in
+an address component are filled with leading zeros from the left: &#8220;274&#8221;
+= &#8220;0274&#8221;. To improve readability the output should always <strong>include</strong>
+the leading zeros.</p>
+</div>
+<div class="section" id="absolute-and-relative-addresses">
+<h3>1.5.4.4.3. Absolute and relative addresses<a class="headerlink" href="#absolute-and-relative-addresses" title="Permalink to this headline">¶</a></h3>
+<p>Communication between two nodes can be based on relative or absolute
+addresses. Absolute addresses are identical to node addresses. Relative
+addresses specify a path from the sender to the receiver. They consist
+of an address offset and a descending path to the receiver.</p>
+<p>The (negative) address offset describes the number of address components
+that a packet has to be handed upwards in the tree before it can be
+handed down again from a common parent. Since nodes can use partial
+addresses consisting of more than one address component, the number of
+parent nodes to be passed is always = the address offset. This means
+that the demarcation between parent nodes is no longer unambiguous,
+which is why the common initial part of the addresses of the
+communication partners is used as parent address. Each address component
+is counted as an upward step, irrespective of the actual parent nodes.
+Any errors introduced by these assumptions can be detected by the
+respective parent node and must be handled correctly by the node.</p>
+<p>On arrival at the common parent the relative path (an array of address
+components) is then followed downwards in the normal way.</p>
+<p>Formal: The node address of the receiver is formed by removing the last
+AdressOffset components from the node address of the sender and
+appending the relative path to the remaining address.</p>
+<p>Example:</p>
+<div class="line-block">
+<div class="line">Node A: a.bc.d.ef.g</div>
+<div class="line">Node B: a.bc.i.j.kl.m</div>
+<div class="line">Address of the lowest common parent: a.bc</div>
+<div class="line">relative address from A to B: -4/i.j.kl.m</div>
+</div>
+<p>To ensure that the routing works correctly, the relative address must be
+adjusted with each pass through an intermediate node. It is sufficient
+to adjust the address offset. This is <strong>always done by the parent
+node</strong>: If a node receives a packet from one of its subnets, the address
+offset is increased by the length of the address component of this
+subnet. If the new address offset is &lt; 0 the packet must be forwarded to
+the parent node. If the address offset &gt;= 0 the packet must be forwarded
+to the child node whose local address is located at the position
+described by the address offset within the relative address. First, the
+address offset must be increased by the length of the local address of
+the child node to ensure that the node sees a correct address.</p>
+<p>A special case is created by a situation in which the above described
+error occurs when the common parent is determined. In this case the
+address offset at the &#8220;real&#8221; common parent is negative, but the
+magnitude is greater than the length of the partial address of the
+subnet from which the packet originates. The node must detect this case,
+calculate the local address of the next child node based on the address
+of the previous node and the length difference, and adapt the address
+offset such that the next node sees a correct relative address. Here too
+the address components themselves remain unchanged, only the address
+offset changes.</p>
+</div>
+<div class="section" id="broadcast-addresses">
+<h3>1.5.4.4.4. Broadcast addresses<a class="headerlink" href="#broadcast-addresses" title="Permalink to this headline">¶</a></h3>
+<p>There are two types of broadcast – global and local. A <strong>global
+broadcast</strong> is sent to all nodes within a control network. The empty
+node address (length 0) is reserved for this purpose.</p>
+<p><strong>Local broadcasts</strong> are sent to all devices of a network segment. For
+this purpose, all bits of the network address are set to 1. This is
+possible both in relative and in absolute addresses.</p>
+<p>A block driver must be able to handle both broadcast addresses, i.e.
+empty network addresses and network addresses with all bits set to 1
+must be interpreted and sent as broadcast.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="comm_router.html" title="1.5.5. Router Communication"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="comm_layers.html" title="1.5.3. Communication Layers"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RuntimeSystemOnlineHelp V3.5.14.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >1. CODESYS Control V3 - Manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="communication.html" >1.5. Communication</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, 3S-Smart Software Solutions GmbH.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>

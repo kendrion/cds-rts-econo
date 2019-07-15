@@ -1,0 +1,166 @@
+.. _arch_comp_itf_architecture:
+
+Component Interface Architecture
+--------------------------------
+
+The component interface of the runtime system must match the following
+requirements:
+
+1. For embedded targets, all runtime system components should be linked
+       static with direct C-functions calls in order to have a maximum
+       of performance.
+
+2. For more powerful systems with an operating system, the components
+       should be loaded dynamically in order to have the flexibility to
+       select components that should be used during startup time. Here,
+       all functions of other components must be called via function
+       pointers that are investigated during startup of the system.
+
+3. For C++ runtime systems, the C++ calling conventions (name mangling, virtual function calls, methods) should be used.
+
+To perform all these issues, 3S has developed an own interface
+technology based on C-macros.
+
+Every function call must be done not directly with a call of the
+C-function. You always have to use a special CAL\_ prefix for that.
+
+Additionally the export and import of functions must be done by special
+EXP\_ and GET\_ macros.
+
+The usage of these macros is explained in the following:
+
+Calling convention
+~~~~~~~~~~~~~~~~~~
+
+If a component Cmp1 wants to call a function (we use the placeholder <Function> for the cooresponding function name) of component Cmp2 and
+Cmp1 does not call the function directly, it will have to call the function via the specific CAL\_ macro:
+
+**CAL_** -macro:
+
+	This macro is expanded in different environments like:
+
+	.. code-block:: C	
+	
+		Static Linking: 	#define CAL_<Function> 	<Function>
+		Dynamic Linking: 	#define CAL_<Function> 	pf<Function>		// Function pointer to <Function>
+		C++: 			#define CAL_<Function> 	I<Interface>::<Function>
+
+As you can see, the CAL\_ macro reaches the goal to adapt the calling
+convention to the linkage mechanism. On the other hand you can see that
+the caller does not see any difference, in which linking environment the
+component is embedded.
+
+Export convention
+~~~~~~~~~~~~~~~~~
+
+To use a function from another component, the function first must be
+exported by this component. This is done with a second macro, the export
+macro. Therefore we created the so called EXP\_ macro. Referring to the
+example shown above, Cmp2 has to export its Fct1 with the following
+macro at a specific moment during startup of the runtime system:
+
+**EXP_** -macro:
+
+	This macro is expanded in different environments like:
+
+	.. code-block:: C			
+	
+		Static Linking: 	#define EXP_<Function> 	ERR_OK
+		Dynamic Linking: 	#define EXP_<Function> 	CMRegisterAPI( "<Function>", (void *)<Function>, 0, 0)
+		C++: 			#define EXP_<Function> 	ERR_OK
+
+Only in case of dynamic linking, component Cmp2 has to register its
+function pointer of the exported function at the component manager to
+use it later from other components
+
+Import convention
+~~~~~~~~~~~~~~~~~
+
+If a component needs to call functions from other components, it has a
+dependency to other components. This issue is covered by the third macro
+called GET_ macro.
+
+In the example shown above, Cmp1 has to import Fct1 with the following
+macro at a specific moment during startup of the runtime system:
+
+**GET_** -macro:
+
+	This macro is expanded in different environments like:
+
+	.. code-block:: C				
+	
+		Static Linking: 	#define GET_<Function> 	ERR_OK
+		Dynamic Linking:	#define GET_<Function> 	CMGetAPI( "<Function>", (void **)&pf<Function>, 0)
+		C++: 			#define GET_<Function> 	ERR_OK
+
+Only in case of dynamic linking, component Cmp1 has to resolve the
+function pointer of the imported function from the component manager to
+use it later.
+
+In the case of dynamic linking you can see that there is a function
+pointer needed to hold the pointer to the function. For this a second
+macro is needed, that declares these function pointers. It is called
+USE\_ macro.
+
+In the example shown above, Cmp1 has to declare a function pointer for
+Fct1 with the following macro at the beginning of its C-file:
+
+**USE_** -macro:
+
+	This macro is expanded in different environments like:
+	
+	.. code-block:: C
+
+		Static Linking: 	#define USE_<Function>
+		Dynamic Linking:	#define USE_<Function> 	PFFCT1 pf<Function>;
+		C++: 			#define USE_<Function>
+
+Check functions
+~~~~~~~~~~~~~~~
+
+The last category of macros is the so called check macros. To check, if
+an interface function is available, there is always the possibility to
+use the **CHK\_** macro. The macro will return 1, if the interface
+functions is available and 0 if not. In your code, this macro can be
+used as follows:
+
+.. code-block:: C
+
+	if (CHK_<Function>)
+		CAL_<Function>();
+
+Summary
+~~~~~~~
+
+As you can see, the component interface is basing on special C-macros.
+To pursue the example described above, the macros must be used in the
+two components as follows:
+
+Cmp1.c:
+
+.. code-block:: C
+
+    USE_<Function>;
+    int ImportFunctions(void)
+    {
+		GET_<Function>;
+    }
+    int Code(void)
+    {
+		…
+		CAL_<Function>();
+		…
+    }
+
+Cmp2.c:
+
+.. code-block:: C
+
+    int ExportFunctions(void)
+    {
+		EXP_<Function>;
+    }
+
+As you can see, there are a lot of macros necessary to realize the
+component interface mechanism. To simplify this, we generate these macros 
+with the GNU m4-Compiler. This is declared in the next chapter.

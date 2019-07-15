@@ -1,0 +1,506 @@
+.. _comm_implement_own_driver:
+
+Implementation of Own Communication Driver
+------------------------------------------
+
+In contrast to block drivers communication drivers are structured
+asymmetrically, i.e. there is a clear distinction between a client (on
+the client side) and a server (on the gateway side). The transfer
+perspective is also different from that of block drivers: While block
+drivers invariably send or receive whole blocks or nothing,
+communication drivers provide an "endless" data stream. Communication
+drivers therefore do not deliver received data directly to the
+gateway/client. Instead they report receipt of the data, which can then
+be retrieved by the higher-level layer in freely selectable portions as
+required.
+
+The fundamental principle of the send and receive functions is the same
+on both sides. However, the client must be able to actively establish a
+connection to the server, while server has to respond to incoming client
+connections. In addition the client must support a plug-in mechanism for
+generic configuration of the connection.
+
+Both sides make a secure **stream** available. Data may be sent and
+delivered in portions of any size. The only requirements are that the
+data must arrive at the receiver correctly, fully and in the right
+order. If necessary the communication driver must deal with packet
+repetition, checksums etc. If data are not retrieved fast enough from
+the driver, suitable flow control mechanisms should be provided to avoid
+data loss. If data have to be discarded or cannot be transferred
+correctly, the connection must be terminated since it violates the
+stream principle. In addition the communication driver should be able to
+detect connection interruptions independently.
+
+A normal TCP connection precisely meets the requirements of
+communication drivers and can therefore be regarded as reference.
+
+Communication driver for the gateway
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The communication driver for TCP, *CmpGWCommDrvTcp*, should be regarded
+as reference implementation.
+
+In its *Cgateway.h* interface the gateway component provides four
+functions for operation by a communication driver:
+
+-  **GWRegisterCommDrv**
+       For registration of a communication driver with the gateway.
+
+-  **GWClientConnect**
+       Notifies the gateway about the fact that a new connection
+       with a client was established.
+
+-  **GWClientDisconnect**
+       Notifies the gateway about the fact that a connection to a
+       client was terminated.
+
+-  **GWConnectionReady**
+       This callback notifies the gateway about the fact that new
+       data can be received via a connection or now further data can be
+       sent.
+
+These functions are described in more detail below.
+
+.. code-block:: C
+
+    Int CDECL GWRegisterCommDrv (COMMDRVINFO *pInfo,
+     unsigned long *pdwDriverId);
+    typedef struct
+
+    {
+     PFCOMMDRVSEND pfSend;
+     PFCOMMDRVRECEIVE pfReceive;
+     PFCOMMDRVCLOSE pfClose;
+    } COMMDRVINFO;
+
+    typedef int (CDECL *PFCOMMDRVSEND)(unsigned long dwConnHandle,
+    PROTOCOL_DATA_UNIT data, unsigned long *pdwSent);
+
+    typedef int (CDECL *PFCOMMDRVRECEIVE)(unsigned long dwConnHandle,
+    PROTOCOL_DATA_UNIT *pData);
+
+    typedef int (CDECL *PFCOMMDRVCLOSE)(unsigned long dwConnHandle);
+
+This function is used by a communication driver for registering at a
+gateway. In pInfo the driver passes on three function pointers for
+sending and receiving data and for terminating an existing connection.
+*pdwDriverId* is set by the gateway and must be passed to the gateway
+with all further calls as driver identification.
+
+- **PFCOMMDRVSEND**:
+  Sends data (*data*) via an existing connection (*dwConnHandle*). 
+  *pdwSent* must be set by the communication driver to the number 
+  of bytes that were actually sent (or copied to the internal send buffer). 
+  If not all bytes could be sent, the gateway will resent the unsent data 
+  during the next cycle.
+
+- **PFCOMMDRVRECEIVE**
+  Reads data for a connection (*dwConnHandle*) from the receive buffer 
+  of the communication driver. During a call *pData->ulCount* contains 
+  the maximum number of data to be read.
+  Existing data have to be copied to *pData->pBuffer*, and
+  *pData->ulCount* has to be set to the number of actually read data.
+
+- **PFCOMMDRVCLOSE**
+  Closes a connection (*dwConnHandle*). *GWClientDisconnect* must *not* be called.
+
+For all three functions the following applies:
+
+The function must not block and must not call gateways functions (either
+directly or indirectly), because this may lead to deadlocks that cannot
+be rectified!
+
+.. code-block:: C
+
+ Int CDECL GWClientConnect( unsigned long dwDriverId,
+ unsigned long dwConnHandle);
+
+This function is called by the communication driver once it has
+established an incoming connection from a client. *dwDriverId*
+identifies the communication driver and was returned by the gateway at
+*GWRegisterCommDrv*. *dwConnHandle* is a driver-specific handle for the
+new connection and is transferred by the gateway for *send, receive* and
+*close* calls.
+
+.. code-block:: C
+
+ Int CDECL GWClientDisconnect( unsigned long dwDriverId,
+ unsigned long dwConnHandle);
+
+This function is called by the communication driver if a connection to a
+client was cancelled or terminated by the client. *dwDriverId*
+identifies the communication driver and was returned by the gateway at
+*GWRegisterCommDrv*. *dwConnHandle* is the driver-specific handle for
+the terminated connection, which the driver had transferred at
+*GWClientConnect.*
+
+.. code-block:: C
+
+ Int CDECL GWConnectionReady(unsigned long dwDriverHandle,
+ unsigned long dwConnHandle,
+ int nAction);
+
+This function can optionally be called by the communication driver
+(*dwDriverHandle*) if new data are available for a connection
+(*dwConnHandle*) or data can be sent. *nAction can have one of the
+following values:*
+
+- COMMDRV_ACTION_SEND: There are free send buffers, i.e. data can be sent again.
+
+- COMMDRV\_ACTION\_RECEIVE: New data are available in the receive buffer.
+
+
+The same condition should not be signaled more than once per connection
+as long as the gateway has not responded. After a
+*COMMDRV\_ACTION\_SEND* for instance, this signal may only be triggered
+again after a *send* on this connection.
+
+Communication driver for the client
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The communication driver for TCP, in this case *CmpGWClientCommDrvTcp*,
+should be regarded as reference implementation.
+
+In its *CGWClientItf.h* interface a client provides two functions for
+interaction with communication drivers:
+
+- **GWClientRegisterCommDrv**
+  To register a communication driver
+
+- **GWClientConnectionReady**
+  Notifies the client that new data are available or the driver
+  is ready again to send data.
+
+.. code-block:: C
+  
+   Int CDECL GWClientRegisterCommDrv(COMMDRVITF *pItf,
+   COMMDRVINFO *pDrvInfo,
+   unsigned long *pdwDriverHandle);
+
+   typedef struct
+    {
+     PFCOMMDRVBEGINCONNECT pfBeginConnect;
+     PFCOMMDRVENDCONNECT pfEndConnect;
+     PFCOMMDRVSEND pfSend;
+     PFCOMMDRVRECEIVE pfReceive;
+     PFCOMMDRVCLOSE pfClose;
+    }COMMDRVITF;
+
+    typedef int (CDECL *PFCOMMDRVSEND)(unsigned long dwConnHandle,
+     PROTOCOL_DATA_UNIT data,
+     unsigned long *pdwSent);
+
+    typedef int (CDECL *PFCOMMDRVRECEIVE)(unsigned long dwConnHandle,
+     PROTOCOL_DATA_UNIT *pData,
+     unsigned long dwReceive);
+
+    typedef int (CDECL *PFCOMMDRVBEGINCONNECT)(PARAMLIST *pParams,
+     unsigned long *pdwConnHandle,
+     ASYNCRESULT *pAsyncRes);
+
+    typedef int (CDECL *PFCOMMDRVENDCONNECT) (ASYNCRESULT
+      *pAsyncRes,
+    unsigned long *pdwConnHandle);
+	
+    typedef int (CDECL *PFCOMMDRVCLOSE)(unsigned long dwConnHandle);
+	
+    typedef struct tagASYNCRESULT
+    {
+     void *pUser;
+     PFASYNCCALLBACK pfCallback;
+     unsigned long ulEvent;
+     unsigned long ulRequestId;
+    }ASYNCRESULT;
+    typedef void (STDCALL *PFASYNCCALLBACK)(ASYNCRESULT *pAsyncRes);
+
+The *GWClientRegisterCommDrv* function registers a communication driver
+with the client. *pdwDriverHandle* is set by the client and must be
+passed on by the communication driver to the client with all other
+calls. *pItf* contains function pointers to the communication driver
+functions, while *pDrvInfo* contains information about the driver itself
+and about the parameters required for establishing a connection.
+
+Functions required for *pItf*:
+
+-  **PFCOMMDRVSEND**
+       Sends data (*data*) via an existing connection
+       (*dwConnHandle*). *pdwSent* must be set by the communication
+       driver to the number of bytes that were actually sent (or copied
+       to the internal send buffer). If not all bytes could be sent, the
+       client will resent the unsent data during the next cycle.
+
+-  **PFCOMMDRVRECEIVE**
+       Reads data for a connection (*dwConnHandle*) from the receive
+       buffer of the communication driver. During a call
+       *pData->ulCount* contains the maximum number of data to be read.
+       Existing data have to be copied to *pData->pBuffer*, and
+       *pData->ulCount* has to be set to the number of actually read
+       data.
+
+-  **PFCOMMDRVBEGINCONNECT**
+       This function initiates a connection setup. The parameter
+       *pParams* is described in Section 5.9.2.1, Connection parameters.
+       This function is blocking if *pAsyncRes == NULL*. Otherwise this
+       function must be non-blocking. Two cases can be distinguished:
+
+**pAsyncRes != NULL and connection cannot be established immediately**
+The function returns ERR_PENDING, *pdwConnHandle* is not touched. The
+function initializes the following fields of *pAsyncResult*: *ulEvent*
+is assigned a handle for a SysEvent; *ulRequestId* can be used by the
+function as required for identifying this asynchronous request.
+The connection now has to be established in the background (e.g. in
+CH\_COMMCYCLE or in a dedicated thread). As soon as the connection has
+been established or failed the driver sets *ulEvent*. If
+*pAsyncRes->pfCallback* *!= NULL,* the driver calls this callback
+function.
+The caller of the function can call the function PFCOMMDRVENDCONNECT
+at any time, generally in *pAsyncRes->pfCallback* or after
+*pAsyncRes->ulEvent* was set, in order to retrieve the result of the
+connection setup.
+The driver may *not* remember the pointer to *pAsyncRes*. Instead it
+usually retains a copy of *\*pAsyncRes. pAsyncRes->pUser* is set by
+the caller and is not touched by the driver.
+
+**Otherwise:**
+*pAsyncRes* is not touched. The function blocks until the connection
+setup result is known. If successful, *pdwConnHandle* is set to the
+handle of the new connection, otherwise the function returns the
+associated error code.
+
+-  **PFCOMMDRVENDCONNECT**
+   This function returns the result of a previous asynchronous
+   call of *PFCOMMDRVBEGINCONNECT*. It must be called exactly once
+   if the asynchronous call returned *ERR\_PENDING*. In all other
+   cases, including multiple calls, an error is returned.
+   The function blocks until asynchronous connection setup is
+   complete, identified through *pAsyncRes->ulRequestId*. It then
+   returns the result in the same form as *PFCOMMDRVBEGINCONNECT*
+   in the synchronous case.
+
+-  **PFCOMMDRVCLOSE**
+   Closes a connection (*dwConnHandle*).
+
+The data required in *pDrvInfo* are described in :ref:`group___cmp_gw_client_itf`, Connection
+parameters.
+
+.. code-block:: C
+
+ Int CDECL GWClientConnectionReady(unsigned long dwDriverHandle, unsigned long dwConnHandle, int nAction);
+
+This function can optionally be called by the communication driver
+(*dwDriverHandle*) if new data are available for a connection
+(*dwConnHandle*) or data can be sent. nAction can have one of the
+following values:
+
+-  **COMMDRV_ACTION_SEND**
+   There are free send buffers, i.e. data can be sent again.
+
+-  **COMMDRV_ACTION_RECEIVE**
+   New data are available in the receive buffer.
+
+The same condition should not be signaled more than once per connection
+as long as the client has not responded. After a *COMMDRV\_ACTION\_SEND*
+for instance, this signal may only be triggered again after a *send* on
+this connection.
+
+Connection parameters
+^^^^^^^^^^^^^^^^^^^^^
+
+A connection to a gateway has to be parameterized in different ways,
+depending on the communication driver. A TCP connection, for example,
+requires the IP address and the port of the remote terminal, while a
+serial connection requires the COM port, baud rate, stop bits etc. The
+required parameters are therefore specified by the driver itself. Since
+the driver handle may change depending on the installed drivers, each
+driver is allocated a unique number that also unambiguously identifies
+the driver, even on different computers.
+
+The driver therefore describes itself with the parameter *pDrvInfo* on
+registration. This structure is defined as follows:
+
+.. code-block:: C
+
+    typedef struct
+    {
+     COMMDRIVERHANDLE hDriver;
+     GUID guid;
+     wchar_t *pwszName;
+     PARAMDEFLIST params;
+    }COMMDRVINFO;
+    typedef unsigned long COMMDRIVERHANDLE;
+    typedef struct
+    {
+     int nNumParams;
+     PARAMETERDEFINITION *pParam;
+    }PARAMDEFLIST;
+
+    typedef struct
+    {
+     wchar_t pwszName[MAX_PARAM_NAME+1];
+     unsigned long dwParamId;
+     unsigned long dwType; /* PT_xxx */
+    }PARAMETERDEFINITION;
+
+*hDriver* is set by the client. This parameter is independent of the
+driver. *Guid* is a GUID, as generated by the guidgen tool from
+Microsoft, for example. The GUID must be recreated for each driver. It
+identifies the driver across different client instances. *pwszName* is
+the name of the driver. It is displayed in the configuration dialog of
+the client, for example. *Params* defines the parameters required for
+connection setup for this driver. These parameters are also displayed in
+the generic configuration dialog of the client. Suitable names should
+therefore be chosen.
+
+*PARAMDEFLIST* is a list of parameters required for the driver. It
+includes the number of required parameters (*nNumParams*) and an array
+of *nNumParams* parameter definitions (*pParam*).
+
+A PARAMETER DEFINITION describes an individual parameter through a name
+(*pwszName*), Id (*dwParamId*, must be unique within the driver), and
+type. Types are defined by PT_xxx (e.g. PT_CHAR, PT_INT16,
+PT_string, ...) constants in file *CGWClientItf.h*. All common numeric
+data types and strings are available.
+
+An example:
+
+The communication driver for TCP requires two parameters. One *IP
+address* parameter with Id 0 that either contains the address or the DNS
+name of the gateway as a string, and one *Port* parameter, a 16-bit
+value with Id 1 that specifies the port for the gateway. The parameter
+array for the definition has the following structure:
+
+.. code-block:: C
+
+ static PARAMETERDEFINITION s_ParamDefinitions[] =
+    {
+      {L"IP-Address", (unsigned long)0, (unsigned long)PT_string},
+      {L"Port", 1, PT_uint16}
+    };
+
+From this list the client generates a parameter list (*pParams*) during
+connection setup (*PFCOMMDRVBEGINCONNECT*) containing specific values
+for the individual parameters. The values are transferred as pointers to
+the type corresponding to the parameter definition *(short*, int*,
+...)*. Strings are transferred in the usual way as pointers to the first
+element of the string, i.e. as *char**. The parameter list is defined
+as follows:
+
+.. code-block:: C
+
+    typedef struct
+    {
+     int nNumParams;
+     PARAMETER *pParam;
+    }PARAMLIST;
+
+    typedef struct
+    {
+     unsigned long dwParamId;
+     unsigned long type;
+     void * pValue;
+    }PARAMETER;
+
+An example:
+
+The following code establishes a connection to gateway 192.168.100.70 on
+port 1217 using the TCP communication driver from the previous example.
+In the interest of transparency the configuration is static in this case
+and uses the parameter definition of the communication driver described
+above. In real applications the list is generated dynamically based on
+the user inputs and the parameter definition of the driver.
+
+.. code-block:: C
+
+ Int nResult;
+ unsigned long ulConnHandle;
+ ASYNCRESULT async = {NULL,NULL,0,0};
+ char stAddr[] = "192.168.100.70";
+ unsigned short usPort = "1217";
+ PARAMETER params[2] =
+ {
+  {0, PT_string, stAddr}, /* stAddr is already a pointer */
+  {1, PT_uint16, &usPort} /* numeric values as pointer on value */
+    }
+    PARAMLIST list = {2, params};
+    nResult = pfCommDrvBeginConnect(&list, &ulConnHandle, &async);
+    if(nResult == ERR_PENDING)
+    {
+     CAL_SysEventWait(async.ulEvent, -1); /* Wait until finished */
+     nResult = pfCommDrvEndConnect(&async, &ulConnHandle);
+    }
+    if(nResult == ERR_OK)
+    {
+    /* Send and receive data */
+    …
+    pfCommDrvClose(ulConnHandle);
+    }
+    …
+
+Implementation of BeginConnect
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following code snippet illustrates the basic structure of the
+CommDrvBeginConnect and CommDrvEndConnect functions with correct
+handling of the *pAsyncResult* parameter. While other implementations
+are conceivable and indeed often desirable, connection setup is always
+asynchronous in the example. For the case *pAsyncRes* == *NULL* an
+additional short code snippet is included that converts the asynchronous
+function into a synchronous function through the function
+*CommDrvBeginConnect* recalling itself recursively and then blocking
+itself by calling *CommDrvEndConnect*. In the synchronous case
+CommCycleHook may therefore be blocked. In this implementation a
+separate thread must therefore be used for asynchronous connection
+setup.
+
+.. code-block:: C
+
+ Int BeginConnect(PARAMLIST *pList, ulong *pdwHandle, ASYNCRESULT *pAsyncRes)
+ {
+  int nRes;
+  unsigned long ulReqId;
+  if(pAsyncRes == NULL)
+  {
+   AsyncRes async = {NULL, NULL, 0, 0};
+   nRes = BeginConnect(pList, pdwHandle, &async);
+   if(nRes == ERR_PENDING)
+   nRes = EndConnect(&async, pdwHandle);
+   return nRes;
+  }
+  CheckParameters(pList); // All available? Correct types?
+  ulReqId = StartAsyncConnect(pList);
+  pAsyncRes->ulRequestId = ulReqId;
+  pAsyncRes->ulEvent = SysEventCreate(LongToString(ulReqId));
+  AddPendingRequest(*pAsyncRes);
+  return ERR_PENDING;
+ }
+
+  int EndConnect(ASYNCRESULT *pAsyncRes, ulong *pdwHandle)
+  {
+   Request req;
+   req = GetPendingRequest(pAsyncRes->ulRequestId);
+   if(req == NULL)
+   return ERR_PARAMETER;
+   SysEventWait(req.asyncRes.ulEvent, -1);
+   if(req.result == ERR_OK)
+   *pdwHandle = req.handle;
+   RemovePendingRequest(pAsyncRes->ulRequestId);
+   return req.result;
+  }
+   /* Callback example. We assume that this function is called by
+      the network layer, for example, as soon as connection setup was
+      either completed or has failed.
+      The function is intended to indicate driver behavior required for
+      signaling the end of the asynchronous call to the client
+      application.
+   */
+   void OnConnectFinished(int reqId, int nResult, ulong ulHandle)
+  {
+   Request req;
+   req = GetPendingRequest(reqId);
+   req.result = nResult;
+   req.handle = ulHandle;
+   SysEventSet(req.asyncRes.ulEvent);
+   if(req.asyncRes.pfCallback != NULL)
+   req.asyncRes.pfCallback(&(req.asyncRes));
+  }
+
