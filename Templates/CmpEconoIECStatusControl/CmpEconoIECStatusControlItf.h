@@ -35,23 +35,23 @@ extern "C" {
 typedef struct
 {
 	IBase_C *pBase;
-} ICmpIoDrvEcono_C;
+} ICmpEconoIECStatusControl_C;
 
 #ifdef CPLUSPLUS
-class ICmpIoDrvEcono : public IBase
+class ICmpEconoIECStatusControl : public IBase
 {
 	public:
 };
-	#ifndef ITF_CmpIoDrvEcono
-		#define ITF_CmpIoDrvEcono static ICmpIoDrvEcono *pICmpIoDrvEcono = NULL;
+	#ifndef ITF_CmpEconoIECStatusControl
+		#define ITF_CmpEconoIECStatusControl static ICmpEconoIECStatusControl *pICmpEconoIECStatusControl = NULL;
 	#endif
-	#define EXTITF_CmpIoDrvEcono
+	#define EXTITF_CmpEconoIECStatusControl
 #else	/*CPLUSPLUS*/
-	typedef ICmpIoDrvEcono_C		ICmpIoDrvEcono;
-	#ifndef ITF_CmpIoDrvEcono
-		#define ITF_CmpIoDrvEcono
+	typedef ICmpEconoIECStatusControl_C		ICmpEconoIECStatusControl;
+	#ifndef ITF_CmpEconoIECStatusControl
+		#define ITF_CmpEconoIECStatusControl
 	#endif
-	#define EXTITF_CmpIoDrvEcono
+	#define EXTITF_CmpEconoIECStatusControl
 #endif
 
 #ifdef CPLUSPLUS_ONLY

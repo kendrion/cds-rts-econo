@@ -1,4 +1,4 @@
-SET_INTERFACE_NAME(`CmpIoDrvEcono')
+SET_INTERFACE_NAME(`CmpEconoIECStatusControl')
 
 #include "CmpItf.h"
 

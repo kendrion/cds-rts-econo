@@ -7,7 +7,7 @@
 ## Author:      3s-software. (PhB)                                                  ##
 ######################################################################################
 
-TARGET = CmpIoDrvEcono
+TARGET = CmpEconoIECStatusControl
 
 INCLUDE = -I../ -I../../../Components -I../../../Platforms/Linux
 BUILDUTILS = ../../../BuildUtils

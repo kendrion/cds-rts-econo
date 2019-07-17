@@ -9,24 +9,24 @@
  *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
-SET_COMPONENT_NAME(`CmpIoDrvEcono')
-COMPONENT_SOURCES(`CmpIoDrvEcono.c')
+SET_COMPONENT_NAME(`CmpEconoIECStatusControl')
+COMPONENT_SOURCES(`CmpEconoIECStatusControl.c')
 
 COMPONENT_VERSION(`0x03050E00')
 
 /* NOTE: REPLACE 0x0001 BY YOUR VENDORID */
 COMPONENT_VENDORID(`0x0001')				
 
-#define CMPID_CmpIoDrvEcono		0x2000								/* NOTE: START HERE WITH YOUR COMPONENTIDS (see CmpItf.h */
-#define CLASSID_CCmpIoDrvEcono	ADDVENDORID(CMP_VENDORID, 0x2000)	/* NOTE: START HERE WITH YOUR CLASSIDS (see CmpItf.h */
-#define ITFID_ICmpIoDrvEcono		ADDVENDORID(CMP_VENDORID, 0x2000)	/* NOTE: START HERE WITH YOUR INTERFACEIDS (see CmpItf.h */
+#define CMPID_CmpEconoIECStatusControl		0x2001								/* NOTE: START HERE WITH YOUR COMPONENTIDS (see CmpItf.h */
+#define CLASSID_CCmpEconoIECStatusControl	ADDVENDORID(CMP_VENDORID, 0x2001)	/* NOTE: START HERE WITH YOUR CLASSIDS (see CmpItf.h */
+#define ITFID_ICmpEconoIECStatusControl		ADDVENDORID(CMP_VENDORID, 0x2001)	/* NOTE: START HERE WITH YOUR INTERFACEIDS (see CmpItf.h */
 
 CATEGORY(`Templates')
 
 USE_ITF(`CMUtilsItf.m4')
 USE_ITF(`SysFileItf.m4')
 
-IMPLEMENT_ITF(`CmpIoDrvEconoItf.m4')
+IMPLEMENT_ITF(`CmpEconoIECStatusControlItf.m4')
 
 REQUIRED_IMPORTS(
 CMUtlSafeStrCpy)

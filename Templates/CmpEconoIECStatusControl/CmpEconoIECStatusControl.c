@@ -15,7 +15,7 @@
  */
 
 #include "CmpStd.h"
-#include "CmpIoDrvEconoDep.h"
+#include "CmpEconoIECStatusControlDep.h"
 
 USE_STMT
 

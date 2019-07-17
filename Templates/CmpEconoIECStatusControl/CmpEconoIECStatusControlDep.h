@@ -17,9 +17,9 @@
 #ifndef _CMPTEMPLATEEMPTYDEP_H_
 #define _CMPTEMPLATEEMPTYDEP_H_
 
-#define COMPONENT_NAME "CmpIoDrvEcono" COMPONENT_NAME_POSTFIX
-#define COMPONENT_ID    ADDVENDORID(CMP_VENDORID, CMPID_CmpIoDrvEcono)
-#define COMPONENT_NAME_UNQUOTED CmpIoDrvEcono
+#define COMPONENT_NAME "CmpEconoIECStatusControl" COMPONENT_NAME_POSTFIX
+#define COMPONENT_ID    ADDVENDORID(CMP_VENDORID, CMPID_CmpEconoIECStatusControl)
+#define COMPONENT_NAME_UNQUOTED CmpEconoIECStatusControl
 
 
 
@@ -38,9 +38,9 @@
 #include "CmpLogItf.h"
 #include "CMUtilsItf.h"				
 
-#define CMPID_CmpIoDrvEcono		0x2000								/* NOTE: START HERE WITH YOUR COMPONENTIDS (see CmpItf.h */
-#define CLASSID_CCmpIoDrvEcono	ADDVENDORID(CMP_VENDORID, 0x2000)	/* NOTE: START HERE WITH YOUR CLASSIDS (see CmpItf.h */
-#define ITFID_ICmpIoDrvEcono		ADDVENDORID(CMP_VENDORID, 0x2000)	/* NOTE: START HERE WITH YOUR INTERFACEIDS (see CmpItf.h */
+#define CMPID_CmpEconoIECStatusControl		0x2000								/* NOTE: START HERE WITH YOUR COMPONENTIDS (see CmpItf.h */
+#define CLASSID_CCmpEconoIECStatusControl	ADDVENDORID(CMP_VENDORID, 0x2000)	/* NOTE: START HERE WITH YOUR CLASSIDS (see CmpItf.h */
+#define ITFID_ICmpEconoIECStatusControl		ADDVENDORID(CMP_VENDORID, 0x2000)	/* NOTE: START HERE WITH YOUR INTERFACEIDS (see CmpItf.h */
 
 
 /*Obsolete include: CMUtilsItf.m4*/
@@ -54,7 +54,7 @@
 
 
 
-#include "CmpIoDrvEconoItf.h"
+#include "CmpEconoIECStatusControlItf.h"
 
 
 
@@ -293,19 +293,19 @@
 
 
 #if defined(STATIC_LINK) || defined(MIXED_LINK) || defined(DYNAMIC_LINK) || defined(CPLUSPLUS_STATIC_LINK)
-    #define ComponentEntry CmpIoDrvEcono__Entry
+    #define ComponentEntry CmpEconoIECStatusControl__Entry
 #endif
 
 
 #ifdef CPLUSPLUS
 
-class CCmpIoDrvEcono : public ICmpIoDrvEcono 
+class CCmpEconoIECStatusControl : public ICmpEconoIECStatusControl 
 {
     public:
-        CCmpIoDrvEcono() : hCmpIoDrvEcono(RTS_INVALID_HANDLE), iRefCount(0)
+        CCmpEconoIECStatusControl() : hCmpEconoIECStatusControl(RTS_INVALID_HANDLE), iRefCount(0)
         {
         }
-        virtual ~CCmpIoDrvEcono()
+        virtual ~CCmpEconoIECStatusControl()
         {
         }
         virtual unsigned long AddRef(IBase *pIBase = NULL)
@@ -329,9 +329,9 @@ class CCmpIoDrvEcono : public ICmpIoDrvEcono
         {
             void *pItf;
             if (iid == ITFID_IBase)
-                pItf = dynamic_cast<IBase *>((ICmpIoDrvEcono *)this);            
-            else if (iid == ITFID_ICmpIoDrvEcono)
-                pItf = dynamic_cast<ICmpIoDrvEcono *>(this); 
+                pItf = dynamic_cast<IBase *>((ICmpEconoIECStatusControl *)this);            
+            else if (iid == ITFID_ICmpEconoIECStatusControl)
+                pItf = dynamic_cast<ICmpEconoIECStatusControl *>(this); 
             else
             {
                 if (pResult != NULL)
@@ -346,13 +346,13 @@ class CCmpIoDrvEcono : public ICmpIoDrvEcono
         }
 
     public:
-        RTS_HANDLE hCmpIoDrvEcono;
+        RTS_HANDLE hCmpEconoIECStatusControl;
         int iRefCount;
 };
 
 #endif /*CPLUSPLUS*/
 #ifdef RTS_COMPACT_MICRO
-/* CmpIoDrvEcono Declarations for uRTS */
+/* CmpEconoIECStatusControl Declarations for uRTS */
 /* This header is included only to have the CMP_EXT_FUNCTION_REF type definition. */
 /* In final version this type could be moved to CmpItf.h, if we will use */
 /* the same structure for representing an export entry. */
@@ -409,7 +409,7 @@ class CCmpIoDrvEcono : public ICmpIoDrvEcono
 #endif
 
 /* This wrapper is only required in uRTS */
-#define USE_HOOK_FUNCTION	RTS_RESULT CmpIoDrvEcono_HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)\
+#define USE_HOOK_FUNCTION	RTS_RESULT CmpEconoIECStatusControl_HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1, RTS_UINTPTR ulParam2)\
 {\
 	return HookFunction(ulHook, ulParam1, ulParam2);\
 }
@@ -419,7 +419,7 @@ class CCmpIoDrvEcono : public ICmpIoDrvEcono
 #define USE_CMEXPORTFUNCTIONS
 
 /* Exports table to IEC */
-#define USE_EXPORT_EXTREF const CMP_EXT_FUNCTION_REF CmpIoDrvEcono_ExternalsTable[] = \
+#define USE_EXPORT_EXTREF const CMP_EXT_FUNCTION_REF CmpEconoIECStatusControl_ExternalsTable[] = \
 	{\
 		EXPORT_EXTREF_STMT\
 		EXPORT_EXTREF2_STMT\
