@@ -209,10 +209,11 @@ static RTS_RESULT CDECL CyclicRunStopSwitch(void)
  */
 static void CDECL CBDenyStart(EventParam *pEventParam)
 {
+	EVTPARAM_CmpAppDenyStart *pParam;
 	if (pEventParam->CmpIdProvider == CMPID_CmpApp) {
 		switch (pEventParam->EventId) {
 		case EVT_DenyStart:
-			EVTPARAM_CmpAppDenyStart *pParam = 
+			pParam =
 			    (EVTPARAM_CmpAppDenyStart *)pEventParam->pParameter;
 			
 			if (!PollRunStopSwitch())

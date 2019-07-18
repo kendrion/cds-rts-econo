@@ -43,6 +43,7 @@
 #define ITFID_ICmpEconoIECStatusControl		ADDVENDORID(CMP_VENDORID, 0x2001)	/* NOTE: START HERE WITH YOUR INTERFACEIDS (see CmpItf.h */
 
 
+
 /*Obsolete include: CMUtilsItf.m4*/
 
 
@@ -53,6 +54,12 @@
 
 
 #include "CmpEventMgrItf.h"
+
+
+/*Obsolete include: CmpLogItf.m4*/
+
+
+#include "CmpAppItf.h"
 
 
 
@@ -108,7 +115,6 @@
 
      
 
-
 #ifdef CPLUSPLUS
     #define INIT_STMT \
     {\
@@ -132,7 +138,17 @@
                 pIBase->Release(pIBase); \
             } \
         } \
-        if (pICmpEventMgr == NULL && s_pfCMCreateInstance != NULL) \
+        if (pICmpApp == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpApp, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pICmpApp = (ICmpApp *)pIBase->QueryInterface(pIBase, ITFID_ICmpApp, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          /*Obsolete include CmpLog*/ \
+		  if (pICmpEventMgr == NULL && s_pfCMCreateInstance != NULL) \
         { \
             pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpEventMgr, &initResult); \
             if (pIBase != NULL) \
@@ -166,7 +182,9 @@
     {\
         pICmpLog = NULL; \
         pICMUtils = NULL; \
-        pICmpEventMgr = NULL; \
+        pICmpApp = NULL; \
+          /*Obsolete include CmpLog*/ \
+		  pICmpEventMgr = NULL; \
           pISysEvent = NULL; \
           pISysFile = NULL; \
           /*Obsolete include CMUtils*/ \
@@ -196,7 +214,18 @@
                     pICMUtils = NULL; \
             } \
         } \
-        if (pICmpEventMgr != NULL) \
+        if (pICmpApp != NULL) \
+        { \
+            pIBase = (IBase *)pICmpApp->QueryInterface(pICmpApp, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pICmpApp = NULL; \
+            } \
+        } \
+          /*Obsolete include CmpLog*/ \
+		  if (pICmpEventMgr != NULL) \
         { \
             pIBase = (IBase *)pICmpEventMgr->QueryInterface(pICmpEventMgr, ITFID_IBase, &exitResult); \
             if (pIBase != NULL) \
@@ -335,7 +364,9 @@
 	/*obsolete entry ITF_CMUtils*/      \
 	ITF_SysFile     \
 	ITF_SysEvent     \
-	ITF_CmpEventMgr      \
+	ITF_CmpEventMgr     \
+	/*obsolete entry ITF_CmpLog*/      \
+	ITF_CmpApp      \
     USE_EventCreate      \
     USE_EventCreate2      \
     USE_EventDelete      \
@@ -371,7 +402,9 @@
 	/*obsolete entry ITF_CMUtils*/     \
 	ITF_SysFile    \
 	ITF_SysEvent    \
-	ITF_CmpEventMgr     \
+	ITF_CmpEventMgr    \
+	/*obsolete entry ITF_CmpLog*/     \
+	ITF_CmpApp     \
     USE_EventCreate      \
     USE_EventCreate2      \
     USE_EventDelete      \
@@ -396,7 +429,9 @@
 	/*obsolete entry EXTITF_CMUtils*/     \
 	EXTITF_SysFile    \
 	EXTITF_SysEvent    \
-	EXTITF_CmpEventMgr     \
+	EXTITF_CmpEventMgr    \
+	/*obsolete entry EXTITF_CmpLog*/     \
+	EXTITF_CmpApp     \
     EXT_EventCreate  \
     EXT_EventCreate2  \
     EXT_EventDelete  \
