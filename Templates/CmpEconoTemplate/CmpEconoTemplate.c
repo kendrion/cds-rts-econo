@@ -92,22 +92,16 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1,
 {
 	switch (ulHook) {
 	case CH_INIT:
-		if (CHK_LogAdd)
 		break;
 	case CH_INIT2:
-		if (CHK_LogAdd)
 		break;
 	case CH_INIT3:
-		if (CHK_LogAdd)
 		break;
 	case CH_INIT_TASKS:
-		if (CHK_LogAdd)
 		break;
 	case CH_INIT_COMM:
-		if (CHK_LogAdd)
 		break;
 	case CH_INIT_FINISHED:
-		if (CHK_LogAdd)
 		break;
 
 	/* Cyclic */
@@ -115,24 +109,16 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1,
 		break;
 
 	case CH_EXIT_COMM:
-		if (CHK_LogAdd)
 		break;
 	case CH_EXIT_TASKS:
-		if (CHK_LogAdd)
 		break;
 	case CH_EXIT3:
-		if (CHK_LogAdd)
 		break;
 	case CH_EXIT2:
-		if (CHK_LogAdd)
 		break;
 	case CH_EXIT:
-	{
-		if (CHK_LogAdd)
 		EXIT_STMT;
 		break;
-	}
-
 
 	default:
 		break;
