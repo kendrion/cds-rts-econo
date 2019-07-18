@@ -1,8 +1,8 @@
  
 	
 	
-#ifndef _CMPTEMPLATEEMPTYITF_H_
-#define _CMPTEMPLATEEMPTYITF_H_
+#ifndef _CMPECONOIECSTATUSCONTROLITF_H_
+#define _CMPECONOIECSTATUSCONTROLITF_H_
 
 #include "CmpStd.h"
 
@@ -58,4 +58,4 @@ class ICmpEconoIECStatusControl : public IBase
   #undef CPLUSPLUS_ONLY
 #endif
 
-#endif /*_CMPTEMPLATEEMPTYITF_H_*/
+#endif /*_CMPECONOIECSTATUSCONTROLITF_H_*/

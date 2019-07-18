@@ -25,10 +25,25 @@ CATEGORY(`Templates')
 
 USE_ITF(`CMUtilsItf.m4')
 USE_ITF(`SysFileItf.m4')
+USE_ITF(`SysEventItf.m4')
+USE_ITF(`CmpEventMgrItf.m4')
 
 IMPLEMENT_ITF(`CmpEconoIECStatusControlItf.m4')
 
 REQUIRED_IMPORTS(
+EventCreate,
+EventCreate2,
+EventDelete,
+EventOpen,
+EventClose,
+EventRegisterCallbackFunction,
+EventUnregisterCallbackFunction,
+EventRegisterCallback,
+EventUnregisterCallback,
+EventPost,
+EventPostByEvent,
+AppStartApplications,
+AppStopApplications,
 CMUtlSafeStrCpy)
 
 OPTIONAL_IMPORTS(

@@ -14,8 +14,8 @@
  *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
-#ifndef _CMPTEMPLATEEMPTYDEP_H_
-#define _CMPTEMPLATEEMPTYDEP_H_
+#ifndef _CMPECONOIECSTATUSCONTROLDEP_H_
+#define _CMPECONOIECSTATUSCONTROLDEP_H_
 
 #define COMPONENT_NAME "CmpEconoIECStatusControl" COMPONENT_NAME_POSTFIX
 #define COMPONENT_ID    ADDVENDORID(CMP_VENDORID, CMPID_CmpEconoIECStatusControl)
@@ -38,15 +38,21 @@
 #include "CmpLogItf.h"
 #include "CMUtilsItf.h"				
 
-#define CMPID_CmpEconoIECStatusControl		0x2000								/* NOTE: START HERE WITH YOUR COMPONENTIDS (see CmpItf.h */
-#define CLASSID_CCmpEconoIECStatusControl	ADDVENDORID(CMP_VENDORID, 0x2000)	/* NOTE: START HERE WITH YOUR CLASSIDS (see CmpItf.h */
-#define ITFID_ICmpEconoIECStatusControl		ADDVENDORID(CMP_VENDORID, 0x2000)	/* NOTE: START HERE WITH YOUR INTERFACEIDS (see CmpItf.h */
+#define CMPID_CmpEconoIECStatusControl		0x2001								/* NOTE: START HERE WITH YOUR COMPONENTIDS (see CmpItf.h */
+#define CLASSID_CCmpEconoIECStatusControl	ADDVENDORID(CMP_VENDORID, 0x2001)	/* NOTE: START HERE WITH YOUR CLASSIDS (see CmpItf.h */
+#define ITFID_ICmpEconoIECStatusControl		ADDVENDORID(CMP_VENDORID, 0x2001)	/* NOTE: START HERE WITH YOUR INTERFACEIDS (see CmpItf.h */
 
 
 /*Obsolete include: CMUtilsItf.m4*/
 
 
 #include "SysFileItf.h"
+
+
+#include "SysEventItf.h"
+
+
+#include "CmpEventMgrItf.h"
 
 
 
@@ -63,7 +69,33 @@
 
 
     
+
+
+
+
+
+
+
+
+
+
+
+
+
      
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     
@@ -100,7 +132,25 @@
                 pIBase->Release(pIBase); \
             } \
         } \
-        if (pISysFile == NULL && s_pfCMCreateInstance != NULL) \
+        if (pICmpEventMgr == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpEventMgr, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pICmpEventMgr = (ICmpEventMgr *)pIBase->QueryInterface(pIBase, ITFID_ICmpEventMgr, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pISysEvent == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CSysEvent, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pISysEvent = (ISysEvent *)pIBase->QueryInterface(pIBase, ITFID_ISysEvent, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pISysFile == NULL && s_pfCMCreateInstance != NULL) \
         { \
             pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CSysFile, &initResult); \
             if (pIBase != NULL) \
@@ -116,7 +166,9 @@
     {\
         pICmpLog = NULL; \
         pICMUtils = NULL; \
-        pISysFile = NULL; \
+        pICmpEventMgr = NULL; \
+          pISysEvent = NULL; \
+          pISysFile = NULL; \
           /*Obsolete include CMUtils*/ \
 		   \
     }
@@ -144,7 +196,27 @@
                     pICMUtils = NULL; \
             } \
         } \
-        if (pISysFile != NULL) \
+        if (pICmpEventMgr != NULL) \
+        { \
+            pIBase = (IBase *)pICmpEventMgr->QueryInterface(pICmpEventMgr, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pICmpEventMgr = NULL; \
+            } \
+        } \
+          if (pISysEvent != NULL) \
+        { \
+            pIBase = (IBase *)pISysEvent->QueryInterface(pISysEvent, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pISysEvent = NULL; \
+            } \
+        } \
+          if (pISysFile != NULL) \
         { \
             pIBase = (IBase *)pISysFile->QueryInterface(pISysFile, ITFID_IBase, &exitResult); \
             if (pIBase != NULL) \
@@ -180,6 +252,19 @@
           if (ERR_OK == importResult ) TempResult = GET_SysFileClose(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_SysFileOpen(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) importResult = GET_CMUtlSafeStrCpy(0);\
+          if (ERR_OK == importResult ) importResult = GET_AppStopApplications(0);\
+          if (ERR_OK == importResult ) importResult = GET_AppStartApplications(0);\
+          if (ERR_OK == importResult ) importResult = GET_EventPostByEvent(0);\
+          if (ERR_OK == importResult ) importResult = GET_EventPost(0);\
+          if (ERR_OK == importResult ) importResult = GET_EventUnregisterCallback(0);\
+          if (ERR_OK == importResult ) importResult = GET_EventRegisterCallback(0);\
+          if (ERR_OK == importResult ) importResult = GET_EventUnregisterCallbackFunction(0);\
+          if (ERR_OK == importResult ) importResult = GET_EventRegisterCallbackFunction(0);\
+          if (ERR_OK == importResult ) importResult = GET_EventClose(0);\
+          if (ERR_OK == importResult ) importResult = GET_EventOpen(0);\
+          if (ERR_OK == importResult ) importResult = GET_EventDelete(0);\
+          if (ERR_OK == importResult ) importResult = GET_EventCreate2(0);\
+          if (ERR_OK == importResult ) importResult = GET_EventCreate(0);\
            \
         /* To make LINT happy */\
         TempResult = TempResult;\
@@ -248,7 +333,22 @@
     USE_CMUtlMemCpy  \
     USE_LogAdd \
 	/*obsolete entry ITF_CMUtils*/      \
-	ITF_SysFile      \
+	ITF_SysFile     \
+	ITF_SysEvent     \
+	ITF_CmpEventMgr      \
+    USE_EventCreate      \
+    USE_EventCreate2      \
+    USE_EventDelete      \
+    USE_EventOpen      \
+    USE_EventClose      \
+    USE_EventRegisterCallbackFunction      \
+    USE_EventUnregisterCallbackFunction      \
+    USE_EventRegisterCallback      \
+    USE_EventUnregisterCallback      \
+    USE_EventPost      \
+    USE_EventPostByEvent      \
+    USE_AppStartApplications      \
+    USE_AppStopApplications      \
     USE_CMUtlSafeStrCpy      \
     USE_SysFileOpen      \
     USE_SysFileClose      \
@@ -269,7 +369,22 @@
     USE_CMUtlMemCpy  \
     USE_LogAdd \
 	/*obsolete entry ITF_CMUtils*/     \
-	ITF_SysFile     \
+	ITF_SysFile    \
+	ITF_SysEvent    \
+	ITF_CmpEventMgr     \
+    USE_EventCreate      \
+    USE_EventCreate2      \
+    USE_EventDelete      \
+    USE_EventOpen      \
+    USE_EventClose      \
+    USE_EventRegisterCallbackFunction      \
+    USE_EventUnregisterCallbackFunction      \
+    USE_EventRegisterCallback      \
+    USE_EventUnregisterCallback      \
+    USE_EventPost      \
+    USE_EventPostByEvent      \
+    USE_AppStartApplications      \
+    USE_AppStopApplications      \
     USE_CMUtlSafeStrCpy      \
     USE_SysFileOpen      \
     USE_SysFileClose      \
@@ -279,7 +394,22 @@
     EXT_CMUtlMemCpy  \
     EXT_LogAdd \
 	/*obsolete entry EXTITF_CMUtils*/     \
-	EXTITF_SysFile     \
+	EXTITF_SysFile    \
+	EXTITF_SysEvent    \
+	EXTITF_CmpEventMgr     \
+    EXT_EventCreate  \
+    EXT_EventCreate2  \
+    EXT_EventDelete  \
+    EXT_EventOpen  \
+    EXT_EventClose  \
+    EXT_EventRegisterCallbackFunction  \
+    EXT_EventUnregisterCallbackFunction  \
+    EXT_EventRegisterCallback  \
+    EXT_EventUnregisterCallback  \
+    EXT_EventPost  \
+    EXT_EventPostByEvent  \
+    EXT_AppStartApplications  \
+    EXT_AppStopApplications  \
     EXT_CMUtlSafeStrCpy  \
     EXT_SysFileOpen  \
     EXT_SysFileClose  \
