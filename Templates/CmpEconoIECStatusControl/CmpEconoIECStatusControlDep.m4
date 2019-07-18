@@ -23,10 +23,13 @@ COMPONENT_VENDORID(`0x0001')
 
 CATEGORY(`Templates')
 
+
 USE_ITF(`CMUtilsItf.m4')
 USE_ITF(`SysFileItf.m4')
 USE_ITF(`SysEventItf.m4')
 USE_ITF(`CmpEventMgrItf.m4')
+USE_ITF(`CmpLogItf.m4')
+USE_ITF(`CmpAppItf.m4')
 
 IMPLEMENT_ITF(`CmpEconoIECStatusControlItf.m4')
 
