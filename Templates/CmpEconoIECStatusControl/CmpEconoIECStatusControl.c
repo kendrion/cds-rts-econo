@@ -148,7 +148,8 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1,
 }
 
 /**
- * <description>Function to init example at startup of the runtime system.
+ * <description>Function to init Run/Stop functionality at startup of the
+ * runtime system.
  *	USAGE:
  *	- Must be called in CH_INIT3 out of component HookFunction()!
  * </description>
@@ -166,7 +167,9 @@ static RTS_RESULT CDECL InitRunStopSwitch(void)
 }
 
 /**
- * <description>Function to exit example code at shutdown of the runtime system.
+ * <description>
+ * Function to exit Run/Stop functionality code at shutdown of the runtime
+ * system.
  *	USAGE:
  *	- Must be called in CH_EXIT3 out of component HookFunction()!
  * </description> 
@@ -182,7 +185,9 @@ static RTS_RESULT CDECL ExitRunStopSwitch(void)
 }
 
 /**
- * <description>Function to poll cyclically the state of the run/stop switch and to react correctly.
+ * <description>
+ * Function to poll cyclically the state of the run/stop switch and to react
+ * correctly.
  *	USAGE:
  *	- Must be cyclically. Can be called e.g. from CH_COMM_CYCLE.
  * </description> 
@@ -203,7 +208,9 @@ static RTS_RESULT CDECL CyclicRunStopSwitch(void)
 }
 
 /**
- * <description>Callback function to prevent from starting applications, if switch is in STOP position!
+ * <description>
+ * Callback function to prevent from starting applications, if switch is in STOP
+ * position!
  * <param name="pEventParam" type="IN">Pointer to event parameter set.</param>  
  * <result></result>
  */
@@ -226,7 +233,10 @@ static void CDECL CBDenyStart(EventParam *pEventParam)
 }
 
 /**
- * <description>Function to get the actual state of the run/stop switch. Is called cyclically from CyclicRunStopSwitch().</description> 
+ * <description>
+ * Function to get the actual state of the run/stop switch. Is called cyclically
+ * from CyclicRunStopSwitch().
+ * </description> 
  * <result>
  *  0 = switch is in stop state
  *  1 = switch is in run state
@@ -241,7 +251,8 @@ static RTS_I32 PollRunStopSwitch(void)
 	*/	
 	
 	static RTS_I32 s_bRunStopSwitch = 1;
-	/* Here you can simulate the state of the RunStop switch by writing the value of s_bRunStopSwitch in debugger. */
+	/* Here you can simulate the state of the RunStop switch by writing the
+	value of s_bRunStopSwitch in debugger. */
 	return s_bRunStopSwitch;
 }
 
