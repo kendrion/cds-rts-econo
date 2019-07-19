@@ -43,6 +43,8 @@
 #define ITFID_ICmpEconoIECStatusControl		ADDVENDORID(CMP_VENDORID, 0x2001)	/* NOTE: START HERE WITH YOUR INTERFACEIDS (see CmpItf.h */
 
 
+#include "CMItf.h"
+
 
 /*Obsolete include: CMUtilsItf.m4*/
 
@@ -105,7 +107,9 @@
 
 
 
+
      
+
 
 
 
@@ -226,7 +230,16 @@
             } \
         } \
           /*Obsolete include CMUtils*/ \
-		   \
+		  if (pICM == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCM, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pICM = (ICM *)pIBase->QueryInterface(pIBase, ITFID_ICM, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+           \
     }
     #define INIT_LOCALS_STMT \
     {\
@@ -241,7 +254,8 @@
           pISysEvent = NULL; \
           pISysFile = NULL; \
           /*Obsolete include CMUtils*/ \
-		   \
+		  pICM = NULL; \
+           \
     }
     #define EXIT_STMT \
     {\
@@ -339,7 +353,17 @@
             } \
         } \
           /*Obsolete include CMUtils*/ \
-		   \
+		  if (pICM != NULL) \
+        { \
+            pIBase = (IBase *)pICM->QueryInterface(pICM, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pICM = NULL; \
+            } \
+        } \
+           \
     }
 #else
     #define INIT_STMT
@@ -384,6 +408,7 @@
           if (ERR_OK == importResult ) importResult = GET_EventDelete(0);\
           if (ERR_OK == importResult ) importResult = GET_EventCreate2(0);\
           if (ERR_OK == importResult ) importResult = GET_EventCreate(0);\
+          if (ERR_OK == importResult ) importResult = GET_CMExit(0);\
            \
         /* To make LINT happy */\
         TempResult = TempResult;\
@@ -451,6 +476,7 @@
     ITF_CMUtils  \
     USE_CMUtlMemCpy  \
     USE_LogAdd \
+	ITF_CM     \
 	/*obsolete entry ITF_CMUtils*/      \
 	ITF_SysFile     \
 	ITF_SysEvent     \
@@ -460,6 +486,7 @@
 	ITF_CmpIecTask     \
 	ITF_CmpIoMgr     \
 	ITF_CmpIoDrv      \
+    USE_CMExit      \
     USE_EventCreate      \
     USE_EventCreate2      \
     USE_EventDelete      \
@@ -499,6 +526,7 @@
     ITF_CMUtils  \
     USE_CMUtlMemCpy  \
     USE_LogAdd \
+	ITF_CM    \
 	/*obsolete entry ITF_CMUtils*/     \
 	ITF_SysFile    \
 	ITF_SysEvent    \
@@ -508,6 +536,7 @@
 	ITF_CmpIecTask    \
 	ITF_CmpIoMgr    \
 	ITF_CmpIoDrv     \
+    USE_CMExit      \
     USE_EventCreate      \
     USE_EventCreate2      \
     USE_EventDelete      \
@@ -536,6 +565,7 @@
 #define USEEXTERN_STMT \
     EXT_CMUtlMemCpy  \
     EXT_LogAdd \
+	EXTITF_CM    \
 	/*obsolete entry EXTITF_CMUtils*/     \
 	EXTITF_SysFile    \
 	EXTITF_SysEvent    \
@@ -545,6 +575,7 @@
 	EXTITF_CmpIecTask    \
 	EXTITF_CmpIoMgr    \
 	EXTITF_CmpIoDrv     \
+    EXT_CMExit  \
     EXT_EventCreate  \
     EXT_EventCreate2  \
     EXT_EventDelete  \

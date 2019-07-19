@@ -23,7 +23,7 @@ COMPONENT_VENDORID(`0x0001')
 
 CATEGORY(`Templates')
 
-
+USE_ITF(`CMItf.m4')
 USE_ITF(`CMUtilsItf.m4')
 USE_ITF(`SysFileItf.m4')
 USE_ITF(`SysEventItf.m4')
@@ -37,6 +37,7 @@ USE_ITF(`CmpIoDrvItf.m4')
 IMPLEMENT_ITF(`CmpEconoIECStatusControlItf.m4')
 
 REQUIRED_IMPORTS(
+CMExit,
 EventCreate,
 EventCreate2,
 EventDelete,
