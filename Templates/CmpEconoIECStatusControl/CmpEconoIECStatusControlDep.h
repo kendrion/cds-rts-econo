@@ -108,7 +108,9 @@
 
 
 
+
      
+
 
 
 
@@ -395,6 +397,7 @@
           if (ERR_OK == importResult ) importResult = GET_AppGetNextApp(0);\
           if (ERR_OK == importResult ) importResult = GET_AppGetFirstApp(0);\
           if (ERR_OK == importResult ) importResult = GET_AppGetState(0);\
+          if (ERR_OK == importResult ) importResult = GET_AppSaveAllRetainAreas(0);\
           if (ERR_OK == importResult ) importResult = GET_AppStopApplications(0);\
           if (ERR_OK == importResult ) importResult = GET_AppStartApplications(0);\
           if (ERR_OK == importResult ) importResult = GET_EventPostByEvent(0);\
@@ -500,6 +503,7 @@
     USE_EventPostByEvent      \
     USE_AppStartApplications      \
     USE_AppStopApplications      \
+    USE_AppSaveAllRetainAreas      \
     USE_AppGetState      \
     USE_AppGetFirstApp      \
     USE_AppGetNextApp      \
@@ -550,6 +554,7 @@
     USE_EventPostByEvent      \
     USE_AppStartApplications      \
     USE_AppStopApplications      \
+    USE_AppSaveAllRetainAreas      \
     USE_AppGetState      \
     USE_AppGetFirstApp      \
     USE_AppGetNextApp      \
@@ -589,6 +594,7 @@
     EXT_EventPostByEvent  \
     EXT_AppStartApplications  \
     EXT_AppStopApplications  \
+    EXT_AppSaveAllRetainAreas  \
     EXT_AppGetState  \
     EXT_AppGetFirstApp  \
     EXT_AppGetNextApp  \
