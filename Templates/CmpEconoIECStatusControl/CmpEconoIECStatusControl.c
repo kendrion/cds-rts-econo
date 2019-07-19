@@ -39,12 +39,16 @@ typedef enum {GPIO_OFF, GPIO_ON} gpio_state;
 
 static RTS_I32 s_bRun = 1;
 static RTS_HANDLE s_hEventRSSDenyStart = RTS_INVALID_HANDLE;
+static RTS_HANDLE s_hEventStopDone = RTS_INVALID_HANDLE;
+static RTS_HANDLE s_hEventStartDone = RTS_INVALID_HANDLE;
+static RTS_HANDLE s_hEventDebugLoop = RTS_INVALID_HANDLE;
 
 static RTS_RESULT CDECL InitRunStopSwitch(void);
 static RTS_RESULT CDECL ExitRunStopSwitch(void);
 static RTS_RESULT CDECL CyclicRunStopSwitch(void);
 static void CDECL CBDenyStart(EventParam *pEventParam);
 static RTS_I32 PollRunStopSwitch(void);
+static void CDECL CBApp(EventParam *pEventParam);
 
 /*
  * GpioInit - Initialise gpio in Linux.
@@ -150,6 +154,9 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1,
 		break;
 	case CH_INIT3:
 		InitRunStopSwitch();
+		GpioInit(LED_GREEN_GPIO, "out");
+		GpioInit(LED_RED_GPIO, "out");
+		KuhnkeDoLED(LED_OFF);
 		break;
 	case CH_INIT_TASKS:
 		break;
@@ -200,6 +207,16 @@ static RTS_RESULT CDECL InitRunStopSwitch(void)
 					     &Result);
 	CAL_EventRegisterCallbackFunction(s_hEventRSSDenyStart, CBDenyStart, 0);
 
+	s_hEventStopDone = CAL_EventOpen(EVT_StopDone, CMPID_CmpApp, NULL);
+	CAL_EventRegisterCallbackFunction(s_hEventStopDone, CBApp, 0);
+
+	s_hEventStartDone = CAL_EventOpen(EVT_StartDone, CMPID_CmpApp, NULL);
+	CAL_EventRegisterCallbackFunction(s_hEventStartDone, CBApp, 0);
+
+	s_hEventDebugLoop = CAL_EventOpen(EVT_IecTaskDebugLoop, CMPID_CmpApp,
+					  NULL);
+	CAL_EventRegisterCallbackFunction(s_hEventDebugLoop, CBApp, 0);
+
 	GpioInit(BTN_START_STOP_GPIO, "in"); 
 	return ERR_OK;
 }
@@ -219,6 +236,13 @@ static RTS_RESULT CDECL ExitRunStopSwitch(void)
 	CAL_EventUnregisterCallbackFunction(s_hEventRSSDenyStart, CBDenyStart);
 	CAL_EventClose(s_hEventRSSDenyStart);
 	s_hEventRSSDenyStart = RTS_INVALID_HANDLE;
+
+	CAL_EventUnregisterCallbackFunction(s_hEventStopDone, CBApp);
+	CAL_EventClose(s_hEventStopDone);
+	CAL_EventUnregisterCallbackFunction(s_hEventStartDone, CBApp);
+	CAL_EventClose(s_hEventStartDone);
+	CAL_EventUnregisterCallbackFunction(s_hEventDebugLoop, CBApp);
+	CAL_EventClose(s_hEventDebugLoop);
 	return ERR_OK;
 }
 
@@ -316,6 +340,24 @@ static RTS_I32 PollRunStopSwitch(void)
 
 
 	return s_bRunStopSwitch;
+}
+
+static void CDECL CBApp(EventParam *pEventParam)
+{
+	if (pEventParam->usVersion < EVTVERSION_CmpApp)
+		return;
+
+	switch (pEventParam->EventId) {
+	case EVT_StopDone:
+		KuhnkeDoLED(LED_RED);
+		break;
+	case EVT_StartDone:
+		KuhnkeDoLED(LED_GREEN);
+		break;
+	case EVT_IecTaskDebugLoop:
+		KuhnkeDoLED(LED_YELLOW);
+		break;
+	}
 }
 
 void GpioInit(uint8_t gpio_n, char str_direction[4])
