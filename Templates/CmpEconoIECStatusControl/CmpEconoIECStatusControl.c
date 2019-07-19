@@ -306,11 +306,13 @@ static RTS_I32 PollRunStopSwitch(void)
 	bool button_pressed = FALSE;
 	static RTS_I32 s_bRunStopSwitch = 1;
 
+	// Button's gpio has inverse logic. TRUE - is unpressed 
 	bool s_btn_state = TRUE;
 	static bool s_btn_previous_state = TRUE;
 
 	s_btn_state = GetGpio(BTN_START_STOP_GPIO);
 	
+	// detection front 
 	button_pressed = !s_btn_state && s_btn_previous_state;
 
 	s_btn_previous_state = s_btn_state;
@@ -443,11 +445,18 @@ static RTS_RESULT RefreshAppStateLED(void)
 
 void PowerFailControl(void)
 {
+
 	RTS_RESULT result;
-	if (GetGpio(POWER_FAIL_SIGNAL_GPIO)) {
+	static bool previous_gpio_state = FALSE;
+	bool gpio_state = GetGpio(POWER_FAIL_SIGNAL_GPIO);
+
+	if (gpio_state && !previous_gpio_state) {
 		CAL_AppStopApplications(RTS_TIMEOUT_DEFAULT, APP_STOP_REASON_SHUTDOWN);
 		CAL_AppSaveAllRetainAreas();
-		//PlcExitAsync();
-		//CAL_CMExit();
+
+		CAL_LogAdd(STD_LOGGER, COMPONENT_ID, LOG_INFO, ERR_OK, 0,
+				   "Power fail detected! Applications are stopped. Retain variables are saved.");
+
 	}
+	previous_gpio_state = gpio_state;
 }
