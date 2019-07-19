@@ -12,7 +12,7 @@ TARGET = CmpEconoTemplate
 INCLUDE = -I../ -I../../../Components -I../../../Platforms/Linux
 BUILDUTILS = ../../../BuildUtils
 
-CXX = gcc
+CXX = arm-linux-gcc
 # TRG_X86 | TRG_PPC | TRG_ARM | TRG_CORTEX
 CXXFLAGS = -DTRG_ARM
 DEBFLAGS = -g

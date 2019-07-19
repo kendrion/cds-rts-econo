@@ -290,14 +290,14 @@ static RTS_I32 PollRunStopSwitch(void)
 
 	if (button_pressed) {
 		s_bRunStopSwitch =  s_bRunStopSwitch ? 0 : 1;
-		// if (s_bRunStopSwitch)
-		// 	CAL_LogAdd(STD_LOGGER, COMPONENT_ID,
-		// 				   LOG_INFO, ERR_OK, 0,
-		// 				   LOG_STR_RUN);
-		// else
-		// 	CAL_LogAdd(STD_LOGGER, COMPONENT_ID,
-		// 				   LOG_INFO, ERR_OK, 0,
-		// 				   LOG_STR_STOP);
+		if (s_bRunStopSwitch)
+			CAL_LogAdd(STD_LOGGER, COMPONENT_ID,
+				   LOG_INFO, ERR_OK, 0,
+				   "Application is stopped by Run/Stop button");
+		else
+			CAL_LogAdd(STD_LOGGER, COMPONENT_ID,
+				   LOG_INFO, ERR_OK, 0,
+				   "Application is run by Run/Stop button");
 	}
 
 
@@ -310,8 +310,9 @@ void GpioInit(uint8_t gpio_n, char str_direction[4])
 	int fd;
 	char str[80];
 
-	sprintf(str, "%d", gpio_n);
+	printf("GpioInit\n");
 
+	sprintf(str, "%d", gpio_n);
 	fd = open("/sys/class/gpio/export", O_WRONLY);
 	write(fd, str, strlen(str));
 	close(fd);
