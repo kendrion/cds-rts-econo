@@ -443,7 +443,11 @@ static RTS_RESULT RefreshAppStateLED(void)
 
 void PowerFailControl(void)
 {
-
-	if (GetGpio(POWER_FAIL_SIGNAL_GPIO))
-		CAL_CMExit();
+	RTS_RESULT result;
+	if (GetGpio(POWER_FAIL_SIGNAL_GPIO)) {
+		CAL_AppStopApplications(RTS_TIMEOUT_DEFAULT, APP_STOP_REASON_SHUTDOWN);
+		CAL_AppSaveAllRetainAreas();
+		//PlcExitAsync();
+		//CAL_CMExit();
+	}
 }
