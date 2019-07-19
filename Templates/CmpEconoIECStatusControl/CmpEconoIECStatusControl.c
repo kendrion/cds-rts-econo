@@ -19,8 +19,20 @@
 
 #include "CmpStd.h"
 #include "CmpEconoIECStatusControlDep.h"
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdbool.h>
 
 USE_STMT
+
+#define BTN_START_STOP_GPIO 81
+#define LED_APP_STATUS_GPIO 117
+
+// GPIOs have inverse logic and give result in ASCII.
+// 49 is ASCCII of "1", 48 - "0"
+#define NOT_PRESSED_BUTTON_CODE 49 
+#define PRESSED_BUTTON_CODE 48 
+#define START_STOP_PRESS_BUTTON_INTERVAL 2000 // milliseconds
 
 static RTS_I32 s_bRun = 1;
 static RTS_HANDLE s_hEventRSSDenyStart = RTS_INVALID_HANDLE;
@@ -30,6 +42,16 @@ static RTS_RESULT CDECL ExitRunStopSwitch(void);
 static RTS_RESULT CDECL CyclicRunStopSwitch(void);
 static void CDECL CBDenyStart(EventParam *pEventParam);
 static RTS_I32 PollRunStopSwitch(void);
+
+/*
+ * Initialise gpio in Linux.
+ * Parameters: 
+ *  gpio_n - number of gpio in Linux. Example for GPIO4_IO21 (GPIO bank 4,
+ *  IO 21) the number is (4-1)*32 + 21 = 117	
+ *  
+ *  str_direction - string "in" or "out" direction of gpio is beeing init.
+ */
+void GpioInit(uint8_t gpio_n, char str_direction[4]);
 
 /**
  * <description>Entry function of the component. Called at startup for each
@@ -163,6 +185,8 @@ static RTS_RESULT CDECL InitRunStopSwitch(void)
 	s_hEventRSSDenyStart = CAL_EventOpen(EVT_DenyStart, CMPID_CmpApp,
 					     &Result);
 	CAL_EventRegisterCallbackFunction(s_hEventRSSDenyStart, CBDenyStart, 0);
+
+	GpioInit(BTN_START_STOP_GPIO, "in"); 
 	return ERR_OK;
 }
 
@@ -244,15 +268,56 @@ static void CDECL CBDenyStart(EventParam *pEventParam)
  */
 static RTS_I32 PollRunStopSwitch(void)
 {
-	/*
-	* Poll the state of the run stop switch:
-	* return 1: switch is in run
-	* return 0: switch is in stop
-	*/	
-	
+
+	char str[30];
+	int fd;
+	bool button_pressed = FALSE;
 	static RTS_I32 s_bRunStopSwitch = 1;
-	/* Here you can simulate the state of the RunStop switch by writing the
-	value of s_bRunStopSwitch in debugger. */
+	static char s_old_button_code = NOT_PRESSED_BUTTON_CODE;
+
+	sprintf(str, "/sys/class/gpio/gpio%d/value", BTN_START_STOP_GPIO);
+	fd = open(str, O_RDONLY);
+	read(fd, str, 1);
+	close(fd);
+
+	if (str[0] == PRESSED_BUTTON_CODE
+	    && s_old_button_code == NOT_PRESSED_BUTTON_CODE) 
+		button_pressed = TRUE;
+	else
+		button_pressed = FALSE;
+
+	s_old_button_code = str[0];
+
+	if (button_pressed) {
+		s_bRunStopSwitch =  s_bRunStopSwitch ? 0 : 1;
+		// if (s_bRunStopSwitch)
+		// 	CAL_LogAdd(STD_LOGGER, COMPONENT_ID,
+		// 				   LOG_INFO, ERR_OK, 0,
+		// 				   LOG_STR_RUN);
+		// else
+		// 	CAL_LogAdd(STD_LOGGER, COMPONENT_ID,
+		// 				   LOG_INFO, ERR_OK, 0,
+		// 				   LOG_STR_STOP);
+	}
+
+
 	return s_bRunStopSwitch;
 }
 
+void GpioInit(uint8_t gpio_n, char str_direction[4])
+{
+
+	int fd;
+	char str[80];
+
+	sprintf(str, "%d", gpio_n);
+
+	fd = open("/sys/class/gpio/export", O_WRONLY);
+	write(fd, str, strlen(str));
+	close(fd);
+
+	sprintf(str, "/sys/class/gpio/gpio%d/direction", gpio_n);
+	fd = open(str, O_WRONLY);
+	write(fd, str_direction, strlen(str_direction));
+	close(fd);
+}
