@@ -30,6 +30,7 @@ USE_ITF(`SysEventItf.m4')
 USE_ITF(`CmpEventMgrItf.m4')
 USE_ITF(`CmpLogItf.m4')
 USE_ITF(`CmpAppItf.m4')
+USE_ITF(`CmpIecTaskItf.m4')
 
 IMPLEMENT_ITF(`CmpEconoIECStatusControlItf.m4')
 

@@ -62,6 +62,9 @@
 #include "CmpAppItf.h"
 
 
+#include "CmpIecTaskItf.h"
+
+
 
 
 
@@ -138,7 +141,16 @@
                 pIBase->Release(pIBase); \
             } \
         } \
-        if (pICmpApp == NULL && s_pfCMCreateInstance != NULL) \
+        if (pICmpIecTask == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpIecTask, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pICmpIecTask = (ICmpIecTask *)pIBase->QueryInterface(pIBase, ITFID_ICmpIecTask, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pICmpApp == NULL && s_pfCMCreateInstance != NULL) \
         { \
             pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpApp, &initResult); \
             if (pIBase != NULL) \
@@ -182,7 +194,8 @@
     {\
         pICmpLog = NULL; \
         pICMUtils = NULL; \
-        pICmpApp = NULL; \
+        pICmpIecTask = NULL; \
+          pICmpApp = NULL; \
           /*Obsolete include CmpLog*/ \
 		  pICmpEventMgr = NULL; \
           pISysEvent = NULL; \
@@ -214,7 +227,17 @@
                     pICMUtils = NULL; \
             } \
         } \
-        if (pICmpApp != NULL) \
+        if (pICmpIecTask != NULL) \
+        { \
+            pIBase = (IBase *)pICmpIecTask->QueryInterface(pICmpIecTask, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pICmpIecTask = NULL; \
+            } \
+        } \
+          if (pICmpApp != NULL) \
         { \
             pIBase = (IBase *)pICmpApp->QueryInterface(pICmpApp, ITFID_IBase, &exitResult); \
             if (pIBase != NULL) \
@@ -366,7 +389,8 @@
 	ITF_SysEvent     \
 	ITF_CmpEventMgr     \
 	/*obsolete entry ITF_CmpLog*/      \
-	ITF_CmpApp      \
+	ITF_CmpApp     \
+	ITF_CmpIecTask      \
     USE_EventCreate      \
     USE_EventCreate2      \
     USE_EventDelete      \
@@ -404,7 +428,8 @@
 	ITF_SysEvent    \
 	ITF_CmpEventMgr    \
 	/*obsolete entry ITF_CmpLog*/     \
-	ITF_CmpApp     \
+	ITF_CmpApp    \
+	ITF_CmpIecTask     \
     USE_EventCreate      \
     USE_EventCreate2      \
     USE_EventDelete      \
@@ -431,7 +456,8 @@
 	EXTITF_SysEvent    \
 	EXTITF_CmpEventMgr    \
 	/*obsolete entry EXTITF_CmpLog*/     \
-	EXTITF_CmpApp     \
+	EXTITF_CmpApp    \
+	EXTITF_CmpIecTask     \
     EXT_EventCreate  \
     EXT_EventCreate2  \
     EXT_EventDelete  \
