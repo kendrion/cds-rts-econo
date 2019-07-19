@@ -39,9 +39,6 @@ typedef enum {GPIO_OFF, GPIO_ON} gpio_state;
 
 static RTS_I32 s_bRun = 1;
 static RTS_HANDLE s_hEventRSSDenyStart = RTS_INVALID_HANDLE;
-static RTS_HANDLE s_hEventStopDone = RTS_INVALID_HANDLE;
-static RTS_HANDLE s_hEventStartDone = RTS_INVALID_HANDLE;
-static RTS_HANDLE s_hEventDebugLoop = RTS_INVALID_HANDLE;
 
 static RTS_RESULT CDECL InitRunStopSwitch(void);
 static RTS_RESULT CDECL ExitRunStopSwitch(void);
@@ -50,7 +47,6 @@ static RTS_RESULT RefreshAppStateLED(void);
 
 static void CDECL CBDenyStart(EventParam *pEventParam);
 static RTS_I32 PollRunStopSwitch(void);
-static void CDECL CBApp(EventParam *pEventParam);
 
 
 /*
@@ -164,7 +160,6 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1,
 	case CH_INIT_TASKS:
 		break;
 	case CH_INIT_COMM:
-		RefreshAppStateLED();
 		break;
 	case CH_INIT_FINISHED:
 		break;
@@ -172,6 +167,7 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1,
 	/* Cyclic */
 	case CH_COMM_CYCLE:
 		CyclicRunStopSwitch();
+		RefreshAppStateLED();
 		break;
 
 	case CH_EXIT_COMM:
@@ -211,16 +207,6 @@ static RTS_RESULT CDECL InitRunStopSwitch(void)
 					     &Result);
 	CAL_EventRegisterCallbackFunction(s_hEventRSSDenyStart, CBDenyStart, 0);
 
-	s_hEventStopDone = CAL_EventOpen(EVT_StopDone, CMPID_CmpApp, NULL);
-	CAL_EventRegisterCallbackFunction(s_hEventStopDone, CBApp, 0);
-
-	s_hEventStartDone = CAL_EventOpen(EVT_StartDone, CMPID_CmpApp, NULL);
-	CAL_EventRegisterCallbackFunction(s_hEventStartDone, CBApp, 0);
-
-	s_hEventDebugLoop = CAL_EventOpen(EVT_IecTaskDebugLoop, CMPID_CmpApp,
-					  NULL);
-	CAL_EventRegisterCallbackFunction(s_hEventDebugLoop, CBApp, 0);
-
 	GpioInit(BTN_START_STOP_GPIO, "in"); 
 	return ERR_OK;
 }
@@ -241,12 +227,6 @@ static RTS_RESULT CDECL ExitRunStopSwitch(void)
 	CAL_EventClose(s_hEventRSSDenyStart);
 	s_hEventRSSDenyStart = RTS_INVALID_HANDLE;
 
-	CAL_EventUnregisterCallbackFunction(s_hEventStopDone, CBApp);
-	CAL_EventClose(s_hEventStopDone);
-	CAL_EventUnregisterCallbackFunction(s_hEventStartDone, CBApp);
-	CAL_EventClose(s_hEventStartDone);
-	CAL_EventUnregisterCallbackFunction(s_hEventDebugLoop, CBApp);
-	CAL_EventClose(s_hEventDebugLoop);
 	return ERR_OK;
 }
 
@@ -342,29 +322,7 @@ static RTS_I32 PollRunStopSwitch(void)
 				   "Application is run by Run/Stop button");
 	}
 
-
 	return s_bRunStopSwitch;
-}
-
-static void CDECL CBApp(EventParam *pEventParam)
-{
-	if (pEventParam->usVersion < EVTVERSION_CmpApp)
-		return;
-
-	switch (pEventParam->EventId) {
-	case EVT_StopDone:
-		KuhnkeDoLED(LED_RED);
-		break;
-	case EVT_StartDone:
-		KuhnkeDoLED(LED_GREEN);
-		break;
-	case EVT_IecTaskDebugLoop:
-		KuhnkeDoLED(LED_YELLOW);
-		CAL_LogAdd(STD_LOGGER, COMPONENT_ID,
-				   LOG_INFO, ERR_OK, 0,
-				  "Test");
-		break;
-	}
 }
 
 void GpioInit(uint8_t gpio_n, char str_direction[4])
@@ -426,47 +384,41 @@ void SetGpio(uint8_t gpio_n, gpio_state state)
 
 static RTS_RESULT RefreshAppStateLED(void)
 {
+
 	char szConfigApp[255];
 	APPLICATION* pApp;
 	unsigned long nMaxLen = 255;
 	RTS_RESULT Result;
-	
-	/*Find Config Application*/
-	Result = CAL_IoMgrGetConfigApplication(szConfigApp, &nMaxLen);
-	if (Result != ERR_OK) {
-		/* No Config Application, set Application NOT FOUND */
-		KuhnkeDoLED(LED_OFF);
-		return ERR_OK;
-	}
+	bool run_app_exist = FALSE;
+	bool bp_app_exist = FALSE;
+	bool app_exist = FALSE;
 
 	pApp = CAL_AppGetFirstApp(&Result);
 
 	while (pApp != 0) {
-		/*Look for Config App*/
-		if (strcmp(pApp->szName, szConfigApp) == 0) {
-			/*Config App found, set LED state*/
-			switch (pApp->ulState) {
-			case AS_DEBUG_HALT_ON_BP:
-				KuhnkeDoLED(LED_YELLOW);
-				break;
-			case AS_RUN:
-				KuhnkeDoLED(LED_GREEN);
-				break;
-			case AS_STOP:
-				KuhnkeDoLED(LED_RED);
-				break;
-			}
-
-			return ERR_OK;
+		/*Config App found, set LED state*/
+		app_exist = TRUE;
+		switch (pApp->ulState) {
+		case AS_DEBUG_HALT_ON_BP:
+			bp_app_exist = TRUE;
+			break;
+		case AS_RUN:
+			run_app_exist = TRUE;
+			break;
 		}
 
 		pApp = CAL_AppGetNextApp(pApp, &Result);
 	}
 
-	/*No config Application found, set Application NOT RUNNING*/
-	KuhnkeDoLED(LED_OFF);
+	if (!app_exist)
+		/*No config Application found, set Application NOT EXIST*/
+		KuhnkeDoLED(LED_OFF);
+	else if (bp_app_exist)
+		KuhnkeDoLED(LED_YELLOW);
+	else if (run_app_exist)
+		KuhnkeDoLED(LED_GREEN);
+	else
+		KuhnkeDoLED(LED_RED);
+
 	return ERR_OK;
 }
-
-
-
