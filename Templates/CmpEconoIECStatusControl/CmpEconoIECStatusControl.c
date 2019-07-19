@@ -26,7 +26,10 @@
 USE_STMT
 
 #define BTN_START_STOP_GPIO 81
-#define LED_APP_STATUS_GPIO 117
+#define LED_RED_GPIO 117
+#define LED_GREEN_GPIO 118
+typedef enum {LED_OFF, LED_GREEN, LED_RED, LED_YELLOW} led_status;
+typedef enum {GPIO_OFF, GPIO_ON} gpio_state;
 
 // GPIOs have inverse logic and give result in ASCII.
 // 49 is ASCCII of "1", 48 - "0"
@@ -44,7 +47,7 @@ static void CDECL CBDenyStart(EventParam *pEventParam);
 static RTS_I32 PollRunStopSwitch(void);
 
 /*
- * Initialise gpio in Linux.
+ * GpioInit - Initialise gpio in Linux.
  * Parameters: 
  *  gpio_n - number of gpio in Linux. Example for GPIO4_IO21 (GPIO bank 4,
  *  IO 21) the number is (4-1)*32 + 21 = 117	
@@ -52,6 +55,17 @@ static RTS_I32 PollRunStopSwitch(void);
  *  str_direction - string "in" or "out" direction of gpio is beeing init.
  */
 void GpioInit(uint8_t gpio_n, char str_direction[4]);
+
+/*
+ * KuhnkeDoLED - led state manager switches on and off leds.
+ * NOTE: it handles LEDs App status only!
+ */
+void KuhnkeDoLED(led_status status);
+
+/*
+ * SetGpio set gpio with number "gpio_n" to "state".
+ */
+void SetGpio(uint8_t gpio_n, gpio_state state);
 
 /**
  * <description>Entry function of the component. Called at startup for each
@@ -293,7 +307,7 @@ static RTS_I32 PollRunStopSwitch(void)
 		if (s_bRunStopSwitch)
 			CAL_LogAdd(STD_LOGGER, COMPONENT_ID,
 				   LOG_INFO, ERR_OK, 0,
-				   "Application is stopped by Run/Stop button");
+				  "Application is run by Run/Stop button");
 		else
 			CAL_LogAdd(STD_LOGGER, COMPONENT_ID,
 				   LOG_INFO, ERR_OK, 0,
@@ -310,8 +324,6 @@ void GpioInit(uint8_t gpio_n, char str_direction[4])
 	int fd;
 	char str[80];
 
-	printf("GpioInit\n");
-
 	sprintf(str, "%d", gpio_n);
 	fd = open("/sys/class/gpio/export", O_WRONLY);
 	write(fd, str, strlen(str));
@@ -322,3 +334,47 @@ void GpioInit(uint8_t gpio_n, char str_direction[4])
 	write(fd, str_direction, strlen(str_direction));
 	close(fd);
 }
+
+void KuhnkeDoLED(led_status status)
+{
+
+	int fd;
+	char str[80];
+
+	// NOTE: GPIO has inverse logic!
+	switch (status) {
+	case LED_OFF:
+		SetGpio(LED_GREEN_GPIO, GPIO_ON); 
+		SetGpio(LED_RED_GPIO, GPIO_ON);
+		break;
+	case LED_GREEN:
+		SetGpio(LED_GREEN_GPIO, GPIO_OFF);
+		SetGpio(LED_RED_GPIO, GPIO_ON);
+		break;
+	case LED_RED:
+		SetGpio(LED_GREEN_GPIO, GPIO_ON);
+		SetGpio(LED_RED_GPIO, GPIO_OFF);
+		break;
+	case LED_YELLOW:
+		SetGpio(LED_GREEN_GPIO, GPIO_OFF);
+		SetGpio(LED_RED_GPIO, GPIO_OFF);
+		break;		
+	}
+}
+
+void SetGpio(uint8_t gpio_n, gpio_state state)
+{
+	int fd;
+	char str[40];
+	sprintf(str, "/sys/class/gpio/gpio%d/value", gpio_n);
+	fd = open(str, O_WRONLY);
+	if (state == GPIO_ON)
+		write(fd, "1", 1);
+	else
+		write(fd, "0", 1);
+	close(fd);
+}
+
+
+
+
