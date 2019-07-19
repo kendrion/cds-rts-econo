@@ -65,6 +65,12 @@
 #include "CmpIecTaskItf.h"
 
 
+#include "CmpIoMgrItf.h"
+
+
+#include "CmpIoDrvItf.h"
+
+
 
 
 
@@ -92,7 +98,21 @@
 
 
 
+
+
+
+
+
+
+
      
+
+
+
+
+
+
+
 
 
 
@@ -141,7 +161,25 @@
                 pIBase->Release(pIBase); \
             } \
         } \
-        if (pICmpIecTask == NULL && s_pfCMCreateInstance != NULL) \
+        if (pICmpIoDrv == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpIoDrv, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pICmpIoDrv = (ICmpIoDrv *)pIBase->QueryInterface(pIBase, ITFID_ICmpIoDrv, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pICmpIoMgr == NULL && s_pfCMCreateInstance != NULL) \
+        { \
+            pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpIoMgr, &initResult); \
+            if (pIBase != NULL) \
+            { \
+                pICmpIoMgr = (ICmpIoMgr *)pIBase->QueryInterface(pIBase, ITFID_ICmpIoMgr, &initResult); \
+                pIBase->Release(pIBase); \
+            } \
+        } \
+          if (pICmpIecTask == NULL && s_pfCMCreateInstance != NULL) \
         { \
             pIBase = (IBase *)s_pfCMCreateInstance(CLASSID_CCmpIecTask, &initResult); \
             if (pIBase != NULL) \
@@ -194,7 +232,9 @@
     {\
         pICmpLog = NULL; \
         pICMUtils = NULL; \
-        pICmpIecTask = NULL; \
+        pICmpIoDrv = NULL; \
+          pICmpIoMgr = NULL; \
+          pICmpIecTask = NULL; \
           pICmpApp = NULL; \
           /*Obsolete include CmpLog*/ \
 		  pICmpEventMgr = NULL; \
@@ -227,7 +267,27 @@
                     pICMUtils = NULL; \
             } \
         } \
-        if (pICmpIecTask != NULL) \
+        if (pICmpIoDrv != NULL) \
+        { \
+            pIBase = (IBase *)pICmpIoDrv->QueryInterface(pICmpIoDrv, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pICmpIoDrv = NULL; \
+            } \
+        } \
+          if (pICmpIoMgr != NULL) \
+        { \
+            pIBase = (IBase *)pICmpIoMgr->QueryInterface(pICmpIoMgr, ITFID_IBase, &exitResult); \
+            if (pIBase != NULL) \
+            { \
+                 pIBase->Release(pIBase); \
+                 if (pIBase->Release(pIBase) == 0) /* The object will be deleted here! */ \
+                    pICmpIoMgr = NULL; \
+            } \
+        } \
+          if (pICmpIecTask != NULL) \
         { \
             pIBase = (IBase *)pICmpIecTask->QueryInterface(pICmpIecTask, ITFID_IBase, &exitResult); \
             if (pIBase != NULL) \
@@ -304,6 +364,13 @@
           if (ERR_OK == importResult ) TempResult = GET_SysFileClose(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) TempResult = GET_SysFileOpen(CM_IMPORT_OPTIONAL_FUNCTION);\
           if (ERR_OK == importResult ) importResult = GET_CMUtlSafeStrCpy(0);\
+          if (ERR_OK == importResult ) importResult = GET_IoMgrConfigGetConnectorList(0);\
+          if (ERR_OK == importResult ) importResult = GET_IoMgrConfigGetNextConnector(0);\
+          if (ERR_OK == importResult ) importResult = GET_IoMgrConfigGetFirstConnector(0);\
+          if (ERR_OK == importResult ) importResult = GET_IoMgrGetConfigApplication(0);\
+          if (ERR_OK == importResult ) importResult = GET_AppGetNextApp(0);\
+          if (ERR_OK == importResult ) importResult = GET_AppGetFirstApp(0);\
+          if (ERR_OK == importResult ) importResult = GET_AppGetState(0);\
           if (ERR_OK == importResult ) importResult = GET_AppStopApplications(0);\
           if (ERR_OK == importResult ) importResult = GET_AppStartApplications(0);\
           if (ERR_OK == importResult ) importResult = GET_EventPostByEvent(0);\
@@ -390,7 +457,9 @@
 	ITF_CmpEventMgr     \
 	/*obsolete entry ITF_CmpLog*/      \
 	ITF_CmpApp     \
-	ITF_CmpIecTask      \
+	ITF_CmpIecTask     \
+	ITF_CmpIoMgr     \
+	ITF_CmpIoDrv      \
     USE_EventCreate      \
     USE_EventCreate2      \
     USE_EventDelete      \
@@ -404,6 +473,13 @@
     USE_EventPostByEvent      \
     USE_AppStartApplications      \
     USE_AppStopApplications      \
+    USE_AppGetState      \
+    USE_AppGetFirstApp      \
+    USE_AppGetNextApp      \
+    USE_IoMgrGetConfigApplication      \
+    USE_IoMgrConfigGetFirstConnector      \
+    USE_IoMgrConfigGetNextConnector      \
+    USE_IoMgrConfigGetConnectorList      \
     USE_CMUtlSafeStrCpy      \
     USE_SysFileOpen      \
     USE_SysFileClose      \
@@ -429,7 +505,9 @@
 	ITF_CmpEventMgr    \
 	/*obsolete entry ITF_CmpLog*/     \
 	ITF_CmpApp    \
-	ITF_CmpIecTask     \
+	ITF_CmpIecTask    \
+	ITF_CmpIoMgr    \
+	ITF_CmpIoDrv     \
     USE_EventCreate      \
     USE_EventCreate2      \
     USE_EventDelete      \
@@ -443,6 +521,13 @@
     USE_EventPostByEvent      \
     USE_AppStartApplications      \
     USE_AppStopApplications      \
+    USE_AppGetState      \
+    USE_AppGetFirstApp      \
+    USE_AppGetNextApp      \
+    USE_IoMgrGetConfigApplication      \
+    USE_IoMgrConfigGetFirstConnector      \
+    USE_IoMgrConfigGetNextConnector      \
+    USE_IoMgrConfigGetConnectorList      \
     USE_CMUtlSafeStrCpy      \
     USE_SysFileOpen      \
     USE_SysFileClose      \
@@ -457,7 +542,9 @@
 	EXTITF_CmpEventMgr    \
 	/*obsolete entry EXTITF_CmpLog*/     \
 	EXTITF_CmpApp    \
-	EXTITF_CmpIecTask     \
+	EXTITF_CmpIecTask    \
+	EXTITF_CmpIoMgr    \
+	EXTITF_CmpIoDrv     \
     EXT_EventCreate  \
     EXT_EventCreate2  \
     EXT_EventDelete  \
@@ -471,6 +558,13 @@
     EXT_EventPostByEvent  \
     EXT_AppStartApplications  \
     EXT_AppStopApplications  \
+    EXT_AppGetState  \
+    EXT_AppGetFirstApp  \
+    EXT_AppGetNextApp  \
+    EXT_IoMgrGetConfigApplication  \
+    EXT_IoMgrConfigGetFirstConnector  \
+    EXT_IoMgrConfigGetNextConnector  \
+    EXT_IoMgrConfigGetConnectorList  \
     EXT_CMUtlSafeStrCpy  \
     EXT_SysFileOpen  \
     EXT_SysFileClose  \

@@ -31,6 +31,8 @@ USE_ITF(`CmpEventMgrItf.m4')
 USE_ITF(`CmpLogItf.m4')
 USE_ITF(`CmpAppItf.m4')
 USE_ITF(`CmpIecTaskItf.m4')
+USE_ITF(`CmpIoMgrItf.m4')
+USE_ITF(`CmpIoDrvItf.m4')
 
 IMPLEMENT_ITF(`CmpEconoIECStatusControlItf.m4')
 
@@ -48,6 +50,13 @@ EventPost,
 EventPostByEvent,
 AppStartApplications,
 AppStopApplications,
+AppGetState,
+AppGetFirstApp,
+AppGetNextApp,
+IoMgrGetConfigApplication,
+IoMgrConfigGetFirstConnector,
+IoMgrConfigGetNextConnector,
+IoMgrConfigGetConnectorList,
 CMUtlSafeStrCpy)
 
 OPTIONAL_IMPORTS(
