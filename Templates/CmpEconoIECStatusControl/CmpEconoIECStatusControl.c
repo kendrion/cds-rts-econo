@@ -46,9 +46,12 @@ static RTS_HANDLE s_hEventDebugLoop = RTS_INVALID_HANDLE;
 static RTS_RESULT CDECL InitRunStopSwitch(void);
 static RTS_RESULT CDECL ExitRunStopSwitch(void);
 static RTS_RESULT CDECL CyclicRunStopSwitch(void);
+static RTS_RESULT RefreshAppStateLED(void);
+
 static void CDECL CBDenyStart(EventParam *pEventParam);
 static RTS_I32 PollRunStopSwitch(void);
 static void CDECL CBApp(EventParam *pEventParam);
+
 
 /*
  * GpioInit - Initialise gpio in Linux.
@@ -161,6 +164,7 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1,
 	case CH_INIT_TASKS:
 		break;
 	case CH_INIT_COMM:
+		RefreshAppStateLED();
 		break;
 	case CH_INIT_FINISHED:
 		break;
@@ -356,6 +360,9 @@ static void CDECL CBApp(EventParam *pEventParam)
 		break;
 	case EVT_IecTaskDebugLoop:
 		KuhnkeDoLED(LED_YELLOW);
+		CAL_LogAdd(STD_LOGGER, COMPONENT_ID,
+				   LOG_INFO, ERR_OK, 0,
+				  "Test");
 		break;
 	}
 }
@@ -417,6 +424,49 @@ void SetGpio(uint8_t gpio_n, gpio_state state)
 	close(fd);
 }
 
+static RTS_RESULT RefreshAppStateLED(void)
+{
+	char szConfigApp[255];
+	APPLICATION* pApp;
+	unsigned long nMaxLen = 255;
+	RTS_RESULT Result;
+	
+	/*Find Config Application*/
+	Result = CAL_IoMgrGetConfigApplication(szConfigApp, &nMaxLen);
+	if (Result != ERR_OK) {
+		/* No Config Application, set Application NOT FOUND */
+		KuhnkeDoLED(LED_OFF);
+		return ERR_OK;
+	}
+
+	pApp = CAL_AppGetFirstApp(&Result);
+
+	while (pApp != 0) {
+		/*Look for Config App*/
+		if (strcmp(pApp->szName, szConfigApp) == 0) {
+			/*Config App found, set LED state*/
+			switch (pApp->ulState) {
+			case AS_DEBUG_HALT_ON_BP:
+				KuhnkeDoLED(LED_YELLOW);
+				break;
+			case AS_RUN:
+				KuhnkeDoLED(LED_GREEN);
+				break;
+			case AS_STOP:
+				KuhnkeDoLED(LED_RED);
+				break;
+			}
+
+			return ERR_OK;
+		}
+
+		pApp = CAL_AppGetNextApp(pApp, &Result);
+	}
+
+	/*No config Application found, set Application NOT RUNNING*/
+	KuhnkeDoLED(LED_OFF);
+	return ERR_OK;
+}
 
 
 
