@@ -26,6 +26,7 @@
 USE_STMT
 
 #define BTN_START_STOP_GPIO 81
+#define POWER_FAIL_SIGNAL_GPIO 5
 #define LED_RED_GPIO 117
 #define LED_GREEN_GPIO 118
 typedef enum {LED_OFF, LED_GREEN, LED_RED, LED_YELLOW} led_status;
@@ -69,6 +70,13 @@ void KuhnkeDoLED(led_status status);
  * SetGpio set gpio with number "gpio_n" to "state".
  */
 void SetGpio(uint8_t gpio_n, gpio_state state);
+
+/*
+ * GetGpio reads gpio and returns TRUE if gpio == 1^ else FALSE.
+ */
+bool GetGpio(uint8_t gpio_n);
+
+void PowerFailControl(void);
 
 /**
  * <description>Entry function of the component. Called at startup for each
@@ -153,6 +161,7 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1,
 		break;
 	case CH_INIT3:
 		InitRunStopSwitch();
+		GpioInit(POWER_FAIL_SIGNAL_GPIO, "in");
 		GpioInit(LED_GREEN_GPIO, "out");
 		GpioInit(LED_RED_GPIO, "out");
 		KuhnkeDoLED(LED_OFF);
@@ -168,6 +177,7 @@ static RTS_RESULT CDECL HookFunction(RTS_UI32 ulHook, RTS_UINTPTR ulParam1,
 	case CH_COMM_CYCLE:
 		CyclicRunStopSwitch();
 		RefreshAppStateLED();
+		PowerFailControl();
 		break;
 
 	case CH_EXIT_COMM:
@@ -295,20 +305,15 @@ static RTS_I32 PollRunStopSwitch(void)
 	int fd;
 	bool button_pressed = FALSE;
 	static RTS_I32 s_bRunStopSwitch = 1;
-	static char s_old_button_code = NOT_PRESSED_BUTTON_CODE;
 
-	sprintf(str, "/sys/class/gpio/gpio%d/value", BTN_START_STOP_GPIO);
-	fd = open(str, O_RDONLY);
-	read(fd, str, 1);
-	close(fd);
+	bool s_btn_state = TRUE;
+	static bool s_btn_previous_state = TRUE;
 
-	if (str[0] == PRESSED_BUTTON_CODE
-	    && s_old_button_code == NOT_PRESSED_BUTTON_CODE) 
-		button_pressed = TRUE;
-	else
-		button_pressed = FALSE;
+	s_btn_state = GetGpio(BTN_START_STOP_GPIO);
+	
+	button_pressed = !s_btn_state && s_btn_previous_state;
 
-	s_old_button_code = str[0];
+	s_btn_previous_state = s_btn_state;
 
 	if (button_pressed) {
 		s_bRunStopSwitch =  s_bRunStopSwitch ? 0 : 1;
@@ -382,6 +387,19 @@ void SetGpio(uint8_t gpio_n, gpio_state state)
 	close(fd);
 }
 
+bool GetGpio(uint8_t gpio_n)
+{
+
+	int fd;
+	char str[40];
+	sprintf(str, "/sys/class/gpio/gpio%d/value", gpio_n);
+	fd = open(str, O_RDONLY);
+	read(fd, str, 1);
+	close(fd);
+
+	return str[0] == 49;
+}
+
 static RTS_RESULT RefreshAppStateLED(void)
 {
 
@@ -421,4 +439,11 @@ static RTS_RESULT RefreshAppStateLED(void)
 		KuhnkeDoLED(LED_RED);
 
 	return ERR_OK;
+}
+
+void PowerFailControl(void)
+{
+
+	if (GetGpio(POWER_FAIL_SIGNAL_GPIO))
+		CAL_CMExit();
 }
