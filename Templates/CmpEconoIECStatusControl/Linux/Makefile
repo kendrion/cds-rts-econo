@@ -12,7 +12,7 @@ TARGET = CmpEconoIECStatusControl
 INCLUDE = -I../ -I../../../Components -I../../../Platforms/Linux
 BUILDUTILS = ../../../BuildUtils
 
-CXX = arm-linux-gcc
+CXX = $(CC)
 # TRG_X86 | TRG_PPC | TRG_ARM | TRG_CORTEX
 CXXFLAGS = -DTRG_ARM
 DEBFLAGS = -g
