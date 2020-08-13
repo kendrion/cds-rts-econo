@@ -1422,14 +1422,14 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrWriteOutputs', `(IoConfigTaskMap *pTask
 
 /**
  * <description>
- * <p>This function is deprecated. Newer versions of the iostandard library,
+ * <p>This function is deprecated. Newer versions of the IoStandard library,
  * are using IoMgrStartBusCycle2.</p>
  * </description>
  * <param name="pConnector" type="IN" range="[NULL,VALID_CONNECTOR_1,INVALID_CONNECTOR]">Pointer to the connector that needs a bus cycle</param>
+ * <result>error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">All registered drivers where called</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pConnector may not be null</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">No Driver found</errorcode>
- * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrStartBusCycle', `(IoConfigConnector *pConnector)')
 
@@ -1445,10 +1445,10 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrStartBusCycle', `(IoConfigConnector *pC
  * </description>
  * <param name="pConnector" type="IN" range="[NULL,VALID_CONNECTOR_1,INVALID_CONNECTOR]">Pointer to the connector that needs a bus cycle</param>
  * <param name="dwType" type="IN" range="[BCT_START,BCT_END]">Type of the bus cycle</param>
+ * <result>error code</result>
  * <errorcode name="RTS_RESULT" type="ERR_OK">All registered drivers where called</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pConnector may not be null</errorcode>
  * <errorcode name="RTS_RESULT" type="ERR_FAILED">No Driver found</errorcode>
- * <result>error code</result>
  */
 DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrStartBusCycle2', `(IoConfigConnector *pConnector, RTS_UI32 dwType)')
 
@@ -1458,17 +1458,19 @@ DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrStartBusCycle2', `(IoConfigConnector *p
  * IoDrvStartBusCycle, to determine if this bus cycle was called at the
  * beginning or at the end of a task cycle.</p>
  * <p>Note: When this function is called when an application is loaded, that
- * uses an older version of the iostandard library, the function will return
+ * uses an older version of the IoStandard library, the function will return
  * ERR_FAILED, as the caller context can't be determined.</p>
  * </description>
  * <param name="pConnector" type="IN" range="[NULL,VALID_CONNECTOR_1,INVALID_CONNECTOR]">Pointer to the connector that got the bus cycle</param>
  * <param name="pResult" type="OUT">Pointer to the error code</param>
- * <errorcode name="RTS_RESULT" type="ERR_OK">The current type was returned successfully</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_PARAMETER">pConnector was null, or didn't contain a valid driver handle</errorcode>
- * <errorcode name="RTS_RESULT" type="ERR_FAILED">The function was called outside of IoDrvStartBuscycle or the iostandard library was too old</errorcode>
- * <result>error code</result>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_OK">The current type was returned successfully</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_PARAMETER">pConnector was null, or didn't contain a valid driver handle</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_FAILED">The function was called outside of IoDrvStartBuscycle or the IoStandard library was too old</errorcode>
+ * <errorcode name="RTS_RESULT pResult" type="ERR_NOT_SUPPORTED">Function is called not in IoMgrStartBusCycle2() but in IoMgrStartBusCycle(), where is 
+ *	no separation between the beginning and end of the IEC task cycle!</errorcode>
+ * <result>Bus Cycle Type</result>
  */
-DEF_ITF_API(`RTS_RESULT', `CDECL', `IoMgrGetBusCycleType', `(IoConfigConnector *pConnector, RTS_RESULT *pResult)')
+DEF_ITF_API(`RTS_UI32', `CDECL', `IoMgrGetBusCycleType', `(IoConfigConnector *pConnector, RTS_RESULT *pResult)')
 
 /**
  * <description>

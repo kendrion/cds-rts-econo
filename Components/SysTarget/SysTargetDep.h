@@ -25,9 +25,9 @@
 
 
 
-#define CMP_VERSION         UINT32_C(0x03050E0A)
-#define CMP_VERSION_STRING "3.5.14.10"
-#define CMP_VERSION_RC      3,5,14,10
+#define CMP_VERSION         UINT32_C(0x03050E28)
+#define CMP_VERSION_STRING "3.5.14.40"
+#define CMP_VERSION_RC      3,5,14,40
 #define CMP_VENDORID       RTS_VENDORID_3S
 
 #ifndef WIN32_RESOURCES

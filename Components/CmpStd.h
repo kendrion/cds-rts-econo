@@ -80,9 +80,9 @@ typedef void*	OBJREF;
 /*
  * The RTS_VERSION below is to be changed only by 3S - Smart Software Solutions. 
  */
-#define RTS_VERSION							UINT32_C(0x03050E0A)
-#define RTS_VERSION_STRING					"3.5.14.10"
-#define RTS_VERSION_RC						3,5,14,10
+#define RTS_VERSION							UINT32_C(0x03050E28)
+#define RTS_VERSION_STRING					"3.5.14.40"
+#define RTS_VERSION_RC						3,5,14,40
 
 #define RTS_GETVERSION_MAJOR(version)		(((version)>>24) & UINT32_C(0x000000FF))
 #define RTS_GETVERSION_SUB(version)			(((version)>>16) & UINT32_C(0x000000FF))

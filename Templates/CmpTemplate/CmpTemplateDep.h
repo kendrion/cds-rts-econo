@@ -11,7 +11,7 @@
  *  which are intended to be used for anything. Use at your own risk.
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 #ifndef _CMPTEMPLATEDEP_H_
@@ -26,9 +26,9 @@
 
 
 
-#define CMP_VERSION         UINT32_C(0x03050E00)
-#define CMP_VERSION_STRING "3.5.14.0"
-#define CMP_VERSION_RC      3,5,14,0
+#define CMP_VERSION         UINT32_C(0x03050E1E)
+#define CMP_VERSION_STRING "3.5.14.30"
+#define CMP_VERSION_RC      3,5,14,30
 
 /* NOTE: REPLACE 0x0001 BY YOUR VENDORID */
 #define CMP_VENDORID       0x0001

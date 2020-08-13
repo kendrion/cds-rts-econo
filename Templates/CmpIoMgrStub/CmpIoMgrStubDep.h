@@ -11,7 +11,7 @@
  *  implemented IOMgr is necessary.
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 #ifndef _CMPIOMGRSTUBDEP_H_
@@ -26,9 +26,9 @@
 
 
 
-#define CMP_VERSION         UINT32_C(0x03050E00)
-#define CMP_VERSION_STRING "3.5.14.0"
-#define CMP_VERSION_RC      3,5,14,0
+#define CMP_VERSION         UINT32_C(0x03050E1E)
+#define CMP_VERSION_STRING "3.5.14.30"
+#define CMP_VERSION_RC      3,5,14,30
 #define CMP_VENDORID       RTS_VENDORID_3S
 
 #ifndef WIN32_RESOURCES
@@ -393,7 +393,7 @@ class CCmpIoMgrStub : public ICmpIoMgr
         virtual RTS_RESULT CDECL IIoMgrWriteOutputs(IoConfigTaskMap *pTaskMap);
         virtual RTS_RESULT CDECL IIoMgrStartBusCycle(IoConfigConnector *pConnector);
         virtual RTS_RESULT CDECL IIoMgrStartBusCycle2(IoConfigConnector *pConnector, RTS_UI32 dwType);
-        virtual RTS_RESULT CDECL IIoMgrGetBusCycleType(IoConfigConnector *pConnector, RTS_RESULT *pResult);
+        virtual RTS_UI32 CDECL IIoMgrGetBusCycleType(IoConfigConnector *pConnector, RTS_RESULT *pResult);
         virtual RTS_RESULT CDECL IIoMgrScanModules(IoConfigConnector *pConnector, IoConfigConnector **ppConnectorList, int *pnCount);
         virtual RTS_RESULT CDECL IIoMgrGetModuleDiagnosis(IoConfigConnector *pConnector);
         virtual RTS_RESULT CDECL IIoMgrIdentify(IoConfigConnector *pConnector);

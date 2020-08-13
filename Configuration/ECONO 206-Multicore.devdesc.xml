@@ -6,11 +6,11 @@
   <Device>
     <DeviceIdentification>
       <Type>4102</Type>
-      <Id>10a4 0060</Id>
-      <Version>3.5.14.10</Version>
+      <Id>10a4 0062</Id>
+      <Version>3.5.14.40</Version>
     </DeviceIdentification>
     <DeviceInfo>
-      <Name name="local:typename">ECONO 206</Name>
+      <Name name="local:typename">ECONO 206-Multicore</Name>
       <Description name="local:typedescription">CODESYS Control from Kendrion Kuhnke </Description>
       <Vendor name="local:3S">Kendrion Kuhnke Automation</Vendor>
       <OrderNumber>???</OrderNumber>
@@ -33,7 +33,7 @@
       <ts:TargetSettings>
         <ts:section name="runtime_identification">
           <ts:setting name="version" type="string" access="visible">
-            <ts:value>3.5.14.10</ts:value>
+            <ts:value>3.5.14.40</ts:value>
           </ts:setting>
         </ts:section>
         <ts:section name="onlinemanager">
@@ -69,6 +69,9 @@
             <ts:value>1</ts:value>
           </ts:setting>
           <ts:setting name="set_next_statement_supported" type="boolean" access="visible">
+            <ts:value>1</ts:value>
+          </ts:setting>
+          <ts:setting name="support-multicore" type="boolean" access="visible">
             <ts:value>1</ts:value>
           </ts:setting>
         </ts:section>
@@ -790,6 +793,14 @@
               <ts:value>low linux default priority (SCHED OTHER 20)</ts:value>
             </ts:setting>
           </ts:section>
+          <ts:section name="taskgroups">
+            <ts:setting name="taskgroups-editable" type="boolean" access="visible">
+              <ts:value>1</ts:value>
+            </ts:setting>
+          </ts:section>
+          <ts:setting name="multicore-cores" type="string" access="visible">
+            <ts:value>-2,0</ts:value>
+          </ts:setting>
         </ts:section>
         <ts:section name="library-management">
           <ts:section name="library-manager-filter">
@@ -805,10 +816,10 @@
               <ts:value>IoDrvEL6224, 3.5.13.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvEL6731" type="string" access="visible">
-              <ts:value>IoDrvEL6731, 3.5.13.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvEL6731, 3.5.14.30 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IODrvEtherCAT" type="string" access="visible">
-              <ts:value>IODrvEtherCAT, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IODrvEtherCAT, 3.5.14.30 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvEtherNetIP" type="string" access="visible">
               <ts:value>IoDrvEtherNetIP, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
@@ -874,7 +885,7 @@
               <ts:value>CmpAppBP, 3.5.13.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpAsyncMgr" type="string" access="visible">
-              <ts:value>CmpAsyncMgr, 3.5.12.0 (System)</ts:value>
+              <ts:value>CmpAsyncMgr, 3.5.14.30 (System)</ts:value>
             </ts:setting>
             <ts:setting name="CmpBinTagUtilIec" type="string" access="visible">
               <ts:value>CmpBinTagUtilIec, 3.5.5.0 (System)</ts:value>
@@ -973,10 +984,10 @@
               <ts:value>DHCP Client, 3.5.11.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvProfinet" type="string" access="visible">
-              <ts:value>IoDrvProfinet, 3.5.14.10 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvProfinet, 3.5.14.30 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="Profinet" type="string" access="visible">
-              <ts:value>Profinet, 3.5.14.10 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>Profinet, 3.5.14.40 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="ARP" type="string" access="visible">
               <ts:value>ARP, 3.5.11.0 (3S - Smart Software Solutions GmbH)</ts:value>
@@ -985,7 +996,7 @@
               <ts:value>Remote Procedure Calls, 3.5.14.0 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <ts:setting name="IoDrvCifXBase" type="string" access="visible">
-              <ts:value>IoDrvCifXBase, 3.5.14.10 (3S - Smart Software Solutions GmbH)</ts:value>
+              <ts:value>IoDrvCifXBase, 3.5.14.30 (3S - Smart Software Solutions GmbH)</ts:value>
             </ts:setting>
             <!-- Take care, the IoDrvCIFXProfibus library is resolved by two placeholders! -->
             <ts:setting name="IoDrvCIFXProfibus" type="string" access="visible">
@@ -1035,7 +1046,7 @@
               <ts:value>SysFile, 3.5.9.0 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysFileAsync" type="string" access="visible">
-              <ts:value>SysFileAsync, 3.5.12.0 (System)</ts:value>
+              <ts:value>SysFileAsync, 3.5.14.30 (System)</ts:value>
             </ts:setting>
             <ts:setting name="SysInt" type="string" access="visible">
               <ts:value>SysInt, 3.5.5.0 (System)</ts:value>
@@ -1154,7 +1165,7 @@
               <ts:value>CAA FB Factory, 3.5.13.0 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA File" type="string" access="visible">
-              <ts:value>CAA File, 3.5.13.0 (CAA Technical Workgroup)</ts:value>
+              <ts:value>CAA File, 3.5.13.40 (CAA Technical Workgroup)</ts:value>
             </ts:setting>
             <ts:setting name="CAA List And Tree" type="string" access="visible">
               <ts:value>CAA List And Tree, 3.5.11.0 (CAA Technical Workgroup)</ts:value>

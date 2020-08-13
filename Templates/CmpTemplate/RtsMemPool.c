@@ -290,7 +290,7 @@ static RTS_RESULT UseCase_ReleaseSingleBlock2(void *pBlock, void *pParam)
 	if (result == ERR_OK)
 	{
 		/* NOTE:
-		 * Exit of the block is done implicitly in the MemPoolPutBlock2() delete function, which was specified in the MemPoolCreate() function!
+		 * Exit of the block is done implicitly in the MemPoolPutBlock_LF() delete function, which was specified in the MemPoolCreate() function!
 		 */
 		result = CAL_MemPoolPutBlock_LF(pBlock, pParam);
 	}
@@ -374,7 +374,7 @@ static RTS_RESULT UseCase_IterateOverAllBlocksInUse_NearlyLockFree(RTS_HANDLE hP
 		/* Here you get a NULL pointer, if block was marked as deleted during we iterate over the pool */
 		if (pTest != NULL)
 		{
-			/* TODO: Here you can access the object in a safe way, because the pool is occupied with CAL_MemPoolAddRef/CAL_MemPoolReleaseRef */
+			/* TODO: Here you can access the object in a safe way, because the pool is occupied with CAL_MemPoolAddRef_LF/CAL_MemPoolReleaseRef_LF */
 
 			if (ppBlock != NULL)
 				*ppBlock = pTest;
@@ -384,7 +384,7 @@ static RTS_RESULT UseCase_IterateOverAllBlocksInUse_NearlyLockFree(RTS_HANDLE hP
 		/* Here you get a NULL pointer, if block was marked as deleted during we iterate over the pool */
 		if (pTest != NULL && !MEM_IS_BLOCK_DELETED(pTest))
 		{
-			/* TODO: Here you can access the object in a safe way, because the pool is occupied with CAL_MemPoolAddRef/CAL_MemPoolReleaseRef */
+			/* TODO: Here you can access the object in a safe way, because the pool is occupied with CAL_MemPoolAddRef_LF/CAL_MemPoolReleaseRef_LF */
 		}
 	}
 	CAL_MemPoolReleaseRef_LF(hPool);
@@ -396,7 +396,7 @@ static RTS_RESULT UseCase_CheckBlock_NearlyLockFree(RTS_HANDLE hPool, void *pBlo
 {
 	if (CAL_MemPoolIsValidBlock_LF(hPool, pBlock) == ERR_OK)
 	{
-		/* TODO: The pool is protected by a MemPoolAddRef implicitly! So we can use this block here and have to release the pool with MemPoolReleaseRef. */
+		/* TODO: The pool is protected by a MemPoolAddRef_LF implicitly! So we can use this block here and have to release the pool with MemPoolReleaseRef_LF. */
 
 		CAL_MemPoolReleaseRef_LF(hPool);
 		return ERR_OK;
@@ -470,7 +470,7 @@ static RTS_RESULT UseCase_ReleaseAllBlocksInPool2(RTS_HANDLE hPool, void *pParam
 			if (result == ERR_OK)
 			{
 				/* NOTE:
-				 * Exit of the block is done implicitly in the MemPoolPutBlock2() delete function, which was specified in the MemPoolCreate() function!
+				 * Exit of the block is done implicitly in the MemPoolPutBlock_LF() delete function, which was specified in the MemPoolCreate() function!
 				 */
 				result = CAL_MemPoolPutBlock_LF(pToDelete, pParam);
 			}

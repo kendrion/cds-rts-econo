@@ -285,6 +285,9 @@ typedef struct
  *		NOTE:
  *		For blocks which are still marked as deleted, you get a NULL pointer here!</element>
  */
+#define MEM_GET_BCB_FROM_BLOCK(pBlock)		((RTS_BCB*)((RTS_UI8*)pBlock - sizeof(RTS_BCB)))
+#define MEM_GET_BLOCK_FROM_BCB(pBCB)		(void *)(((RTS_BCB*)pBCB) + 1)
+
 #ifdef MEMPOOL_FUNCTIONS
 	static int MEM_GET_FIRST(RTS_HANDLE hPool, MemIterator *pIt)
 	{
@@ -329,7 +332,7 @@ typedef struct
 
 	#define MEM_GET_FIRST(ppool, pit)		MemPoolIteratorGetFirst((ppool), (pit))
 	#define MEM_GET_NEXT(pit)				MemPoolIteratorGetNext((pit))
-	#define MEM_IS_BLOCK_DELETED(pBlock)	((((RTS_BCB *)pBlock)->flags & MEM_POOL_FLAGS_BLOCK_DELETE) != 0)
+	#define MEM_IS_BLOCK_DELETED(pBlock)	((MEM_GET_BCB_FROM_BLOCK(pBlock)->flags & MEM_POOL_FLAGS_BLOCK_DELETE) != 0)
 	#define MEM_GET_DATA(pit)				(((MemIterator*)(pit))->pNext + 1)
 	#define MEM_GET_DATA_SKIP_DELETE(pIt)	( (((RTS_BCB *)((MemIterator*)(pIt)->pNext)->flags & MEM_POOL_FLAGS_BLOCK_DELETE) == 0 ? (((MemIterator*)(pit))->pNext + 1) + 1 : NULL )
 	#define MEM_GET_NEXT_FROM_DATA(pdata)	MemPoolIteratorGetNextFromData((pdata))
@@ -337,7 +340,7 @@ typedef struct
 	#define __MEM_GET_ITERATOR_NEXT(pIt)	((MemIterator*)pIt)->pNext
 	#define __MEM_GET_ITERATOR_HEAD(pIt)	((MemIterator*)pIt)->pHead
 
-	#define MEM_IS_BLOCK_DELETED(pBlock)	((((RTS_BCB *)pBlock)->flags & MEM_POOL_FLAGS_BLOCK_DELETE) != 0)
+	#define MEM_IS_BLOCK_DELETED(pBlock)	((MEM_GET_BCB_FROM_BLOCK(pBlock)->flags & MEM_POOL_FLAGS_BLOCK_DELETE) != 0)
 	#define MEM_GET_FIRST(pPool,pIt)		/*lint -e{506,522} */((__MEM_GET_ITERATOR_HEAD(pIt) = ((RTS_PCB *)pPool)->pBlocksInUse) != NULL ? ((__MEM_GET_ITERATOR_NEXT(pIt) = NULL) != NULL ? 0 : 1) : ((__MEM_GET_ITERATOR_NEXT(pIt) = NULL) != NULL ? 1 : 0))
 	#define MEM_GET_NEXT(pIt)				/*lint -e{506} */((__MEM_GET_ITERATOR_NEXT(pIt) == NULL) ? (__MEM_GET_ITERATOR_NEXT(pIt) = __MEM_GET_ITERATOR_HEAD(pIt)) : (__MEM_GET_ITERATOR_NEXT(pIt) = __MEM_GET_ITERATOR_NEXT(pIt)->pBCB))
 	#define MEM_GET_DATA(pIt)				( __MEM_GET_ITERATOR_NEXT(pIt) + 1 )
@@ -2606,7 +2609,6 @@ typedef RTS_RESULT (CDECL * PFMEMPOOLISVALIDBLOCK_LF) (RTS_HANDLE hMemPool, void
 	#define CHK_MemPoolIsValidBlock_LF  (pfMemPoolIsValidBlock_LF != NULL)
 	#define EXP_MemPoolIsValidBlock_LF  s_pfCMRegisterAPI( (const CMP_EXT_FUNCTION_REF*)"MemPoolIsValidBlock_LF", (RTS_UINTPTR)MemPoolIsValidBlock_LF, 0, 0) 
 #endif
-
 
 
 

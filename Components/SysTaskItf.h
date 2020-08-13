@@ -89,7 +89,7 @@
  * </description>
  *	
  * <copyright>
- * Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ * Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  * </copyright>
  */
 
@@ -377,7 +377,7 @@
  * <description>
  *	Setting to specify the OS specifiy task stacksize. For smaller embedded systems with tasks, this setting is necessary.
  *	NOTE:
- *	Actually this setting is only supported by Linux platforms!
+ *	Actually this setting is only supported by Linux/QNX platforms!
  * </description>
  */
 #define SYSTASKKEY_INT_TASK_STACKSIZE									"StackSize"
@@ -417,6 +417,21 @@
 #define SYSTASKKEY_INT_QNX_DISABLETICKBASEDSCHEDULER			"QNX.DisableTickBasedScheduler"
 #ifndef SYSTASKVALUE_INT_QNX_DISABLETICKBASEDSCHEDULER
 #define SYSTASKVALUE_INT_QNX_DISABLETICKBASEDSCHEDULER_DEFAULT	0
+#endif
+
+/**
+ * <category>Settings</category>
+ * <type>Int</type>
+ * <description>
+ *	1:	If the computed starting time of the next task cycle is in the past this cycle will be skipped. The task will wait until the next starting time in the future.
+ *	0(DEFAULT):	If the computed starting time of the next task cycle is in the past the task will be scheduled immediately.	
+ *	NOTE:
+ *	Actually this setting is only supported by Linux/QNX platforms!
+ * </description>
+ */
+#define SYSTASKKEY_INT_LINUX_SKIPLOSTCYCLES						"Linux.SkipLostCycles"
+#ifndef SYSTASKVALUE_INT_LINUX_SKIPLOSTCYCLES_DEFAULT
+	#define SYSTASKVALUE_INT_LINUX_SKIPLOSTCYCLES_DEFAULT		0
 #endif
 
 RTS_RESULT CDECL TaskExceptionHandler(RTS_HANDLE hTask, RTS_UI32 ulException, RegContext Context);

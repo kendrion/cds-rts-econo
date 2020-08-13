@@ -47,6 +47,7 @@
 
 #include "CmpItf.h"
 #include "CmpCryptMD5Itf.h"
+#include "CmpMemPoolItf.h"
 
 /**
  * <category>Static defines</category>
@@ -149,6 +150,8 @@ typedef struct
 	RTS_HANDLE hUserList;
 	RTS_HANDLE hGroupList;
 	RTS_UI32 ulProperty;
+	RTS_UI8 userList[MEM_GET_STATIC_LEN_(0, 0)];
+	RTS_UI8 groupList[MEM_GET_STATIC_LEN_(0, 0)];
 } GroupDBEntry;
 
 

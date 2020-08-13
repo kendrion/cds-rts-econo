@@ -35,6 +35,7 @@ int SysExcept__Entry(INIT_STRUCT *pInitStruct); \
 int SysEvent__Entry(INIT_STRUCT *pInitStruct); \
 int SysEthernet__Entry(INIT_STRUCT *pInitStruct); \
 int SysDir__Entry(INIT_STRUCT *pInitStruct); \
+int SysCpuMultiCore__Entry(INIT_STRUCT *pInitStruct); \
 int SysCpuHandling__Entry(INIT_STRUCT *pInitStruct); \
 int SysCom__Entry(INIT_STRUCT *pInitStruct); \
 int CmpUserMgr__Entry(INIT_STRUCT *pInitStruct); \
@@ -130,6 +131,7 @@ int CM__Entry(INIT_STRUCT *pInitStruct);
 {"SysEvent", SysEvent__Entry, 0}, \
 {"SysEthernet", SysEthernet__Entry, 0}, \
 {"SysDir", SysDir__Entry, 0}, \
+{"SysCpuMultiCore", SysCpuMultiCore__Entry, 0}, \
 {"SysCpuHandling", SysCpuHandling__Entry, 0}, \
 {"SysCom", SysCom__Entry, 0}, \
 {"CmpUserMgr", CmpUserMgr__Entry, 0}, \
@@ -210,7 +212,6 @@ int CM__Entry(INIT_STRUCT *pInitStruct);
 #define CMPSIL2_NOTIMPLEMENTED
 #define CMPSUPERVISOR_NOTIMPLEMENTED
 #define SYSCPUBREAKPOINTS_NOTIMPLEMENTED
-#define SYSCPUMULTICORE_NOTIMPLEMENTED
 #define SYSFLASH_NOTIMPLEMENTED
 #define SYSINT_NOTIMPLEMENTED
 #define SYSREADWRITELOCK_NOTIMPLEMENTED

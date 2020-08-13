@@ -84,6 +84,7 @@ typedef struct tagObjectEntry
 	RTS_UI32 ulID;
 	RTS_UI32 ulUsedRights;
     RTS_UI32 ulProperties;
+	RTS_UI8 groupRightsList[MEM_GET_STATIC_LEN_(0, 0)];
 } ObjectEntry;
 
 #ifdef __cplusplus

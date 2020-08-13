@@ -180,7 +180,7 @@ RTS_RESULT CDECL CCmpIoMgrStub::IIoMgrStartBusCycle2(IoConfigConnector *pConnect
 	return IoMgrStartBusCycle2(pConnector,dwType);
 }
 
-RTS_RESULT CDECL CCmpIoMgrStub::IIoMgrGetBusCycleType(IoConfigConnector *pConnector, RTS_RESULT *pResult)
+RTS_UI32 CDECL CCmpIoMgrStub::IIoMgrGetBusCycleType(IoConfigConnector *pConnector, RTS_RESULT *pResult)
 {
 	return IoMgrGetBusCycleType(pConnector,pResult);
 }

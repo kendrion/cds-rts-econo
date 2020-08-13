@@ -21,10 +21,11 @@
  */
 typedef enum
 {
-	FILE_MWRITE = 0,
-	FILE_MREAD = 1,
-	FILE_MRDWR = 2,
-	FILE_MAPPD = 3
+	FILE_MWRITE = 0,	/* Write access, file will be overwritten or created */
+	FILE_MREAD = 1,		/* Read access, file will only be opened for reading */
+	FILE_MRDWR = 2,		/* Read- and Write access, the file will be overwritten or created */
+	FILE_MAPPD = 3,		/* File will be opened in WRITE mode, but the written data will be appended at the end of the file */
+	FILE_MREADPLUS = 4	/* Open an existing file with Read/Write access. If file does not exist, Open fails */
 } FILE_MODE;
 
 /**

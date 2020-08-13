@@ -6,13 +6,13 @@
  *  which are intended to be used for anything. Use at your own risk.
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 SET_COMPONENT_NAME(`CmpTemplate')
 COMPONENT_SOURCES(`CmpTemplate.c')
 
-COMPONENT_VERSION(`0x03050E00')
+COMPONENT_VERSION(`0x03050E1E')
 
 /* NOTE: REPLACE 0x0001 BY YOUR VENDORID */
 COMPONENT_VENDORID(`0x0001')				

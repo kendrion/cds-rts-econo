@@ -6,13 +6,13 @@
  *  implemented IOMgr is necessary.
  *  </description>
  *  <copyright>
- *  Copyright (c) 2017-2018 CODESYS GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
+ *  Copyright (c) 2017-2019 CODESYS Development GmbH, Copyright (c) 1994-2016 3S-Smart Software Solutions GmbH. All rights reserved.
  *  </copyright>
  */
 SET_COMPONENT_NAME(`CmpIoMgrStub')
 COMPONENT_SOURCES(`CmpIoMgrStub.c')
 
-COMPONENT_VERSION(`0x03050E00')
+COMPONENT_VERSION(`0x03050E1E')
 COMPONENT_VENDORID(`RTS_VENDORID_3S')
 
 #define CMPID_CmpIoMgrStub		0x2000								/* To prevent conflicts with "real" components, we use this component id in the oem range */
